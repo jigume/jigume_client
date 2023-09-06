@@ -13,7 +13,8 @@
     "@goorm-dev/gds-goormthon": "^0.0.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "reactstrap": "^9.2.0"
+    "reactstrap": "^9.2.0",
+    "recoil": "^0.7.7"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
