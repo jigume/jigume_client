@@ -1,13 +1,8 @@
 import React from 'react';
-import { ActivityIcon, CheckCircleIcon } from '@goorm-dev/gds-goormthon';
+import Router from './Router';
 
 function App() {
-  return (
-    <div className="text-3xl font-bold underline">
-      <ActivityIcon width="1rem" className="ActivityIcon__icon" />
-      Hello earth
-    </div>
-  );
+  return <Router />;
 }
 
 export default App;
