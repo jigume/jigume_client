@@ -30,7 +30,7 @@ jobs:
               spa: true
               npmrc: |-
                 @goorm-dev:registry=https://npm.pkg.github.com/
-                //npm.pkg.github.com/:_authToken=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
+                //npm.pkg.github.com/:_authToken=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
             context:
               git:
                 url: git@github.com:${{ github.repository }}.git
