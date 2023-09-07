@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
-import { CloseIcon } from '@goorm-dev/gds-goormthon';
 import CategoryTag from './CategoryTag';
-import categories from '../data';
+import category from '../data';
 import Filter from '../../../../../asset/icon/Filter.svg';
+import CloseIcon from '../../../../../asset/icon/CloseIcon.svg';
 
 export default function ContentHeader() {
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState(
-    categories.map((item) => {
+    category.map((item) => {
       return { ...item, checked: false };
     }),
   );
 
   return (
     <div className="absolute top-[76px] bg-white z-50 w-full">
-      <div className="border-b border-gray100">
+      <div className="border-b border-gray-100">
         <div className="px-[16px] py-[12px] ">
           <div className="h4 mb-0">공동 구매 폼 내역 보기</div>
         </div>
         <div className="px-[16px] py-[12px] grid grid-cols-8">
-          <div className="col-span-7 h-[1.5rem] overflow-x-scroll   whitespace-nowrap text-gray600">
+          <div className="col-span-7 h-[1.5rem] overflow-x-scroll   whitespace-nowrap text-gray-600">
             {filter.find(({ checked }) => checked) ? (
               filter.map(
                 (item, index) =>
@@ -39,12 +39,12 @@ export default function ContentHeader() {
                       }}
                     >
                       <span>{item.name}</span>
-                      <CloseIcon className="inline-block pb-[3px] " />
+                      <img src={CloseIcon} className="inline-block pb-[3px] " />
                     </span>
                   ),
               )
             ) : (
-              <div className="caption text-gray600">
+              <div className="caption text-gray-600">
                 제품군 카테고리 필터를 켜보세요
               </div>
             )}

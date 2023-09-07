@@ -4,6 +4,7 @@ import getCurrentLocation from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
 import ItemMarker from './components/ItemMarker';
+import { getGoods } from './api';
 
 const initPosition = {
   lat: 33.450701,
@@ -35,7 +36,6 @@ export default function Map() {
   };
 
   const handleImplicitPosition = () => {
-    console.log('hello', implicit, position);
     if (implicit !== undefined) {
       setPosition(implicit);
     }
@@ -47,7 +47,7 @@ export default function Map() {
   }, []);
 
   useEffect(() => {
-    console.log(position);
+    getGoods().then((res) => console.log(res));
   }, []);
 
   return (
