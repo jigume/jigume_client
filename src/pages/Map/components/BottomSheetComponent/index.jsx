@@ -36,7 +36,7 @@ export default function BottomSheetComponent({
           lastSnap ?? Math.min(...snapPoints)
         }
         snapPoints={({ maxHeight }) => [
-          maxHeight * 0.15,
+          maxHeight * 0.1,
           maxHeight - maxHeight / 5,
           maxHeight * 0.6,
         ]}
