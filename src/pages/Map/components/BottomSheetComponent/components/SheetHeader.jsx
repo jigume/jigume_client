@@ -3,11 +3,11 @@ import LocationIcon from '../../../../../asset/icon/LocationIcon.svg';
 import UserOutlineIcon from '../../../../../asset/icon/UserOutlineIcon.svg';
 import Fab from './Fab';
 
-export default function SheetHeader({ address }) {
+export default function SheetHeader({ address, handleImplicitPosition }) {
   return (
     <>
       <div className="absolute top-[-50px] right-4 flex flex-row gap-2">
-        <Fab />
+        <Fab handleImplicitPosition={handleImplicitPosition} />
       </div>
       <div className="flex items-center justify-between">
         {address === '-' ? (
