@@ -8,6 +8,7 @@ export default {
         primaryJade: '#8CDDE2',
         primaryPurple: '#E4CCFF',
         primaryBlue: '#0D99FF',
+        success: '#1EBAD2',
       },
     },
   },

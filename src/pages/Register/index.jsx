@@ -17,13 +17,15 @@ function Register() {
     position: { lat: 0, lng: 0 },
     announce: '',
   });
+
   return (
     <>
       <div className="w-full h-[48px] px-[1rem] flex flex-row items-center">
-        <div onClick={() => navigate(-1)} className="px-2">
-          <img className="w-[24px] h-[24px] " src={ChevronLeft} />
+        <div onClick={() => navigate(-1)} className="pr-2">
+          <img className="w-[32px] h-[32px] " src={ChevronLeft} />
         </div>
       </div>
+
       <div className="container mx-auto max-w-screen-sm px-4">
         <Outlet context={{ data, setData }} />
       </div>
