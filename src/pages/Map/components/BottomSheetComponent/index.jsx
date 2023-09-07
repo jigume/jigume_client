@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css';
-import Header from './components/header';
+import Header from './components/Header';
+import ItemList from './components/ItemList';
 import './index.css';
 
 export default function BottomSheetComponent({ address }) {
-  const sheetRef = useRef();
   const [block, setBlock] = useState(false);
+  const sheetRef = useRef();
 
   const handleBlocking = () => {
     sheetRef.current.snapTo(126, { source: 'snap-to-bottom' });
@@ -37,7 +38,7 @@ export default function BottomSheetComponent({ address }) {
         }}
         header={<Header address={address} />}
       >
-        {address}
+        <ItemList />
       </BottomSheet>
     </>
   );

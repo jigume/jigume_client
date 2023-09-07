@@ -4,6 +4,8 @@ export default {
   theme: {
     extend: {
       colors: {
+        gray100: 'var(--gray-100)',
+        gray600: 'var(--gray-600)',
         gray950: 'var(--gray-950)',
       },
     },
