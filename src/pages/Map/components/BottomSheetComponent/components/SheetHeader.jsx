@@ -15,7 +15,7 @@ export default function SheetHeader({ address, handleImplicitPosition }) {
         ) : (
           <div className="flex items-center gap-[4px]">
             <img src={LocationIcon} />
-            <div className="h6 mb-0 text-gray600">{address}</div>
+            <div className="h6 mb-0 text-gray-600">{address}</div>
           </div>
         )}
         <img src={UserOutlineIcon} className="p-[12px]" />

@@ -24,7 +24,7 @@ function Register() {
           <img className="w-[24px] h-[24px] " src={ChevronLeft} />
         </div>
       </div>
-      <div className="container mx-auto max-w-screen-sm px-0">
+      <div className="container mx-auto max-w-screen-sm px-4">
         <Outlet context={{ data, setData }} />
       </div>
     </>
