@@ -12,7 +12,7 @@ export default function ItemComponent({
 }) {
   return (
     <div
-      className={`flex flex-row px-[16px] py-[20px] gap-4 border border-b border-gray100 ${
+      className={`flex flex-row px-[16px] py-[20px] gap-4  ${
         !title ? 'animate-pulse' : ''
       }`}
     >

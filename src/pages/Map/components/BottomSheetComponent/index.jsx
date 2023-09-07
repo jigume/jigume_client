@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { BottomSheet } from 'react-spring-bottom-sheet';
-import Header from './components/Header';
+import SheetHeader from './components/SheetHeader';
 import ItemList from './components/ItemList';
+import ContentHeader from './components/ContentHeader';
 import 'react-spring-bottom-sheet/dist/style.css';
 import './index.css';
 
@@ -28,16 +29,20 @@ export default function BottomSheetComponent({ address }) {
         open
         blocking={false}
         ref={sheetRef}
-        snapPoints={({ maxHeight, minHeight }) => [
-          minHeight + 40,
-          maxHeight * 0.5,
-          maxHeight * 0.8,
+        defaultSnap={({ snapPoints, lastSnap }) =>
+          lastSnap ?? Math.min(...snapPoints)
+        }
+        snapPoints={({ maxHeight }) => [
+          76,
+          maxHeight - maxHeight / 5,
+          maxHeight * 0.6,
         ]}
         onSpringEnd={(event) => {
           if (event.type === 'SNAP') setBlock(true);
         }}
-        header={<Header address={address} />}
+        header={<SheetHeader address={address} />}
       >
+        <ContentHeader />
         <ItemList />
       </BottomSheet>
     </>

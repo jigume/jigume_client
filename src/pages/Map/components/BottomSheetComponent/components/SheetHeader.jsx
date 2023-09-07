@@ -3,7 +3,7 @@ import LocationIcon from '../../../../../asset/icon/LocationIcon.svg';
 import UserOutlineIcon from '../../../../../asset/icon/UserOutlineIcon.svg';
 import Fab from './Fab';
 
-export default function Header({ address }) {
+export default function SheetHeader({ address }) {
   return (
     <>
       <div className="absolute top-[-50px] right-4 flex flex-row gap-2">
