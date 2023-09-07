@@ -8,6 +8,11 @@ export default {
         gray100: 'var(--gray-100)',
         gray600: 'var(--gray-600)',
         gray950: 'var(--gray-950)',
+
+        primaryYello: '#FFAE39',
+        primaryJade: '#8CDDE2',
+        primaryPurple: '#E4CCFF',
+        primaryBlue: '#0D99FF',
       },
     },
   },
