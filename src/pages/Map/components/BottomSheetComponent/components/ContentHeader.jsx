@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import CategoryTag from './CategoryTag';
-import categories from '../data';
+import category from '../data';
 import Filter from '../../../../../asset/icon/Filter.svg';
 import CloseIcon from '../../../../../asset/icon/CloseIcon.svg';
 
 export default function ContentHeader() {
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState(
-    categories.map((item) => {
+    category.map((item) => {
       return { ...item, checked: false };
     }),
   );

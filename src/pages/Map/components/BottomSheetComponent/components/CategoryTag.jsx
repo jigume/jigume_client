@@ -18,7 +18,7 @@ export default function CategoryTag({ item, index, filter, setFilter }) {
       }}
     >
       <img className="inline-block mr-2 w-[16px] h-[16px]" src={item.icon} />
-      <span className="caption">{item.name}</span>
+      <span className="text-sm">{item.name}</span>
     </div>
   );
 }
