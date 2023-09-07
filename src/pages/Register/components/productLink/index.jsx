@@ -23,7 +23,7 @@ const ProductLink = () => {
           placeholder="카테고리를 선택해주세요."
         />
       </label>
-      <Link to="/RegistrationForms/ProductAmount">
+      <Link to="/Register/ProductAmount">
         <NextButton />
       </Link>
     </form>

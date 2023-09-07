@@ -6,12 +6,13 @@ function ProductImage() {
   const { data, setData } = useOutletContext();
 
   return (
-    <form>
+    <div className="w-full h-[calc(100svh-48px)] flex flex-col justify-between">
       <div className="h-10 w-10 bg-indigo-500">a</div>
-      <Link to="/RegistrationForms/ProductDetail">
+
+      <Link to="/register/ProductDetail" className="py-3">
         <NextButton />
       </Link>
-    </form>
+    </div>
   );
 }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import ProductAmount from '../productAmount';
 import ProductDetail from '../productDetail';
 
-function RegistrationForms() {
+function Register() {
   return (
     <>
       <ProductDetail />
@@ -11,4 +11,4 @@ function RegistrationForms() {
   );
 }
 
-export default RegistrationForms;
+export default Register;

@@ -20,7 +20,7 @@ const ProductDetail = () => {
           placeholder="공백 포함 200자 까지 작성 가능해요."
         />
       </label>
-      <Link to="/RegistrationForms/ProductLink">
+      <Link to="/Register/ProductLink">
         <NextButton />
       </Link>
     </form>

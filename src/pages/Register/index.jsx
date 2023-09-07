@@ -1,8 +1,8 @@
-import { ChevronLeftIcon } from '@goorm-dev/gds-goormthon';
 import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
+import ChevronLeft from '../../asset/icon/chevron-left.svg';
 
-function RegistrationForms() {
+function Register() {
   const navigate = useNavigate();
   const [data, setData] = useState({
     image: [],
@@ -21,12 +21,14 @@ function RegistrationForms() {
     <>
       <div className="w-full h-[48px] px-[1rem] flex flex-row items-center">
         <div onClick={() => navigate(-1)} className="px-2">
-          <ChevronLeftIcon className="w-[24px] h-[24px] " />
+          <img className="w-[24px] h-[24px] " src={ChevronLeft} />
         </div>
       </div>
-      <Outlet context={{ data, setData }} />
+      <div className="container mx-auto max-w-screen-sm px-0">
+        <Outlet context={{ data, setData }} />
+      </div>
     </>
   );
 }
 
-export default RegistrationForms;
+export default Register;
