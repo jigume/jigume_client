@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import NextButton from '../nextButton';
 
 function ProductImage() {
-  const { data, setData } = useOutletContext();
+  // const { data, setData } = useOutletContext();
 
   return (
     <form>
