@@ -4,10 +4,20 @@ import getCurrentLocation from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
 
+import ItemMarker from './components/ItemMarker';
+
 const initPosition = {
   lat: 33.450701,
   lng: 126.570667,
 };
+
+const tempMarker = [
+  { lat: 33.44853, lng: 126.91604 },
+  { lat: 33.44933, lng: 126.91535 },
+  { lat: 33.44652, lng: 126.91734 },
+  { lat: 33.44752, lng: 126.91634 },
+  { lat: 33.44532, lng: 126.91324 },
+];
 
 export default function Map() {
   const { kakao } = window;
@@ -18,9 +28,8 @@ export default function Map() {
   const getAddress = () => {
     const geocoder = new kakao.maps.services.Geocoder();
     const callback = (result, status) => {
-      if (status === kakao.maps.services.Status.OK) {
+      if (status === kakao.maps.services.Status.OK)
         setAddress(result[0].address.address_name);
-      }
     };
     geocoder.coord2Address(position.lng, position.lat, callback);
   };
@@ -41,7 +50,14 @@ export default function Map() {
             height: '100svh',
           }}
           level={3}
-        />
+        >
+          {tempMarker.map((item) => (
+            <ItemMarker
+              position={{ lat: item.lat, lng: item.lng }}
+              key={item.lat}
+            />
+          ))}
+        </KakaoMap>
       ) : (
         <Loading />
       )}
