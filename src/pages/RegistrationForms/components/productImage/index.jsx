@@ -1,8 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import NextButton from '../nextButton';
 
-const ProductImage = () => {
+function ProductImage() {
+  const { data, setData } = useOutletContext();
+
   return (
     <form>
       <div className="h-10 w-10 bg-indigo-500">a</div>
@@ -11,6 +13,6 @@ const ProductImage = () => {
       </Link>
     </form>
   );
-};
+}
 
 export default ProductImage;

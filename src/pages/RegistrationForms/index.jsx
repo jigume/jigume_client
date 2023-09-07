@@ -24,7 +24,7 @@ function RegistrationForms() {
           <ChevronLeftIcon className="w-[24px] h-[24px] " />
         </div>
       </div>
-      <Outlet data={data} setData={setData} />
+      <Outlet context={{ data, setData }} />
     </>
   );
 }
