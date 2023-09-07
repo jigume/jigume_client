@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InputText = (props) => {
+function InputText(props) {
   return (
     <input
       type="text"
@@ -8,6 +8,6 @@ const InputText = (props) => {
       className="mt-1 h-10 w-50 bg-slate-200"
     />
   );
-};
+}
 
 export default InputText;
