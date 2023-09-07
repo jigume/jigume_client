@@ -15,7 +15,7 @@ export default function Fab({ handleImplicitPosition }) {
       </div>
       <div
         className="flex flex-row gap-1 bg-gray-900 items-center px-[20px] rounded-full cursor-pointer drop-shadow"
-        onClick={() => navigate('/')}
+        onClick={() => navigate('/register')}
       >
         <img className="w-4 h-4" src={EditIcon} />
         <span className="h6 mb-0 text-white min-w-fit">공구 열기</span>
