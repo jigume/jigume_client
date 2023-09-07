@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css';
 import Header from './components/header';
+import './index.css';
 
 export default function BottomSheetComponent({ address }) {
   const sheetRef = useRef();
@@ -22,7 +23,7 @@ export default function BottomSheetComponent({ address }) {
       )}
 
       <BottomSheet
-        className="fixed z-50"
+        className="fixed z-50 mx-auto bottom_sheet_root"
         open={true}
         blocking={false}
         ref={sheetRef}

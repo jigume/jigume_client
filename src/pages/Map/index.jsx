@@ -24,7 +24,6 @@ export default function Map() {
 
   useEffect(() => {
     getCurrentLocation(setPosition);
-
     getAddress();
   }, []);
 
