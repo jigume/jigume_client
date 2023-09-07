@@ -2,13 +2,13 @@ import React from 'react';
 import ProductAmount from '../productAmount';
 import ProductDetail from '../productDetail';
 
-const RegistrationForms = () => {
+function RegistrationForms() {
   return (
     <>
       <ProductDetail />
       <ProductAmount />
     </>
   );
-};
+}
 
 export default RegistrationForms;
