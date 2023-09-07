@@ -7,8 +7,6 @@ export default function CategoryTag({ item, index, filter, setFilter }) {
         !item.checked ? 'bg-white' : 'bg-gray950 text-white'
       }`}
       onClick={() => {
-        console.log(item.checked);
-
         const prevData = [...filter];
 
         prevData[index] = {
