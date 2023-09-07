@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Map as KakaoMap } from 'react-kakao-maps-sdk';
+import { CustomOverlayMap, Map as KakaoMap } from 'react-kakao-maps-sdk';
 import getCurrentLocation from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
-
 import ItemMarker from './components/ItemMarker';
 
 const initPosition = {
@@ -23,6 +22,7 @@ export default function Map() {
   const { kakao } = window;
   const mapRef = useRef();
   const [position, setPosition] = useState(initPosition);
+  const [implicit, setImplicit] = useState(undefined);
   const [address, setAddress] = useState('-');
 
   const getAddress = () => {
@@ -34,9 +34,20 @@ export default function Map() {
     geocoder.coord2Address(position.lng, position.lat, callback);
   };
 
+  const handleImplicitPosition = () => {
+    console.log('hello', implicit, position);
+    if (implicit !== undefined) {
+      setPosition(implicit);
+    }
+  };
+
   useEffect(() => {
-    getCurrentLocation(setPosition);
+    getCurrentLocation(setPosition, setImplicit);
     getAddress();
+  }, []);
+
+  useEffect(() => {
+    console.log(position);
   }, []);
 
   return (
@@ -45,12 +56,19 @@ export default function Map() {
         <KakaoMap
           ref={mapRef}
           center={position}
+          isPanto
           style={{
             width: '100%',
             height: '100svh',
           }}
           level={3}
         >
+          <CustomOverlayMap position={implicit}>
+            <div className="w-[32px] h-[32px] rounded-full bg-primaryBlue flex items-center justify-center">
+              <div className="w-[16px] h-[16px] rounded-full bg-white relative z-30" />
+              <div className="bg-primaryBlue w-[30px] h-[30px] absolute rounded-full z-10 animate-ping" />
+            </div>
+          </CustomOverlayMap>
           {tempMarker.map((item) => (
             <ItemMarker
               position={{ lat: item.lat, lng: item.lng }}
@@ -62,7 +80,10 @@ export default function Map() {
         <Loading />
       )}
 
-      <BottomSheetComponent address={address} />
+      <BottomSheetComponent
+        address={address}
+        handleImplicitPosition={handleImplicitPosition}
+      />
     </div>
   );
 }
