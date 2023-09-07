@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { BottomSheet } from 'react-spring-bottom-sheet';
-import 'react-spring-bottom-sheet/dist/style.css';
 import Header from './components/Header';
 import ItemList from './components/ItemList';
+import 'react-spring-bottom-sheet/dist/style.css';
 import './index.css';
 
 export default function BottomSheetComponent({ address }) {
@@ -25,7 +25,7 @@ export default function BottomSheetComponent({ address }) {
 
       <BottomSheet
         className="fixed z-50 mx-auto bottom_sheet_root"
-        open={true}
+        open
         blocking={false}
         ref={sheetRef}
         snapPoints={({ maxHeight, minHeight }) => [

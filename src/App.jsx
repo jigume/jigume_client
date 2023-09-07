@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import Router from './Router';
+import React from 'react';
 import { RecoilRoot } from 'recoil';
+import Router from './Router';
 
 function App() {
   return (

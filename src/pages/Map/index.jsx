@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Map as KakaoMap } from 'react-kakao-maps-sdk';
-import { getCurrentLocation } from '../../utils';
+import getCurrentLocation from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 
 export default function Map() {

@@ -1,4 +1,4 @@
-export const getCurrentLocation = async (setPosition) => {
+const getCurrentLocation = async (setPosition) => {
   await navigator.geolocation.getCurrentPosition((position) => {
     setPosition({
       lat: position.coords.latitude,
@@ -6,3 +6,5 @@ export const getCurrentLocation = async (setPosition) => {
     });
   });
 };
+
+export default getCurrentLocation;
