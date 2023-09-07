@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { CloseIcon } from '@goorm-dev/gds-goormthon';
 import CategoryTag from './CategoryTag';
 import categories from '../data';
 import Filter from '../../../../../asset/icon/Filter.svg';
+import CloseIcon from '../../../../../asset/icon/CloseIcon.svg';
 
 export default function ContentHeader() {
   const [open, setOpen] = useState(false);
@@ -39,7 +39,7 @@ export default function ContentHeader() {
                       }}
                     >
                       <span>{item.name}</span>
-                      <CloseIcon className="inline-block pb-[3px] " />
+                      <img src={CloseIcon} className="inline-block pb-[3px] " />
                     </span>
                   ),
               )
