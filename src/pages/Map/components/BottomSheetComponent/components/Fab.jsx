@@ -3,18 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import NavigationIcon from '../../../../../asset/icon/NavigationIcon.svg';
 import EditIcon from '../../../../../asset/icon/EditIcon.svg';
 
-export default function Fab() {
+export default function Fab({ handleImplicitPosition }) {
   const navigate = useNavigate();
   return (
     <>
       <div
         className="p-2 bg-white rounded-full cursor-pointer drop-shadow"
-        onClick={() => navigate('/')}
+        onClick={() => handleImplicitPosition()}
       >
         <img className="w-6 h-6" src={NavigationIcon} />
       </div>
       <div
-        className="flex flex-row gap-1 bg-gray950 items-center px-[20px] rounded-full cursor-pointer drop-shadow"
+        className="flex flex-row gap-1 bg-gray-900 items-center px-[20px] rounded-full cursor-pointer drop-shadow"
         onClick={() => navigate('/')}
       >
         <img className="w-4 h-4" src={EditIcon} />
