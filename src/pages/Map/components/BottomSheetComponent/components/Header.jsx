@@ -6,7 +6,7 @@ import Fab from './Fab';
 export default function Header({ address }) {
   return (
     <>
-      <div className="absolute top-[-50px] right-4 flex col-row gap-2">
+      <div className="absolute top-[-50px] right-4 flex flex-row gap-2">
         <Fab />
       </div>
       <div className="flex items-center justify-between">
