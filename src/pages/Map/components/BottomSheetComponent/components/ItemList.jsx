@@ -14,6 +14,7 @@ export default function ItemList({ imgArr, filter }) {
           const trueArr = filter.filter(({ checked }) => checked);
 
           if (!trueArr.find(({ idx }) => idx === item.data.category))
+            // eslint-disable-next-line react/no-array-index-key
             return <div key={index} />;
           // console.log(item.data.category);
           return (

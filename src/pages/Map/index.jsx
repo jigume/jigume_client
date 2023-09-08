@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { CustomOverlayMap, Map as KakaoMap } from 'react-kakao-maps-sdk';
+import { useNavigate } from 'react-router-dom';
 import getCurrentLocation from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
@@ -11,14 +12,6 @@ const initPosition = {
   lng: 126.570667,
 };
 
-const tempMarker = [
-  { lat: 33.44853, lng: 126.91604 },
-  { lat: 33.44933, lng: 126.91535 },
-  { lat: 33.44652, lng: 126.91734 },
-  { lat: 33.44752, lng: 126.91634 },
-  { lat: 33.44532, lng: 126.91324 },
-];
-
 export default function Map() {
   const { kakao } = window;
   const mapRef = useRef();
@@ -26,6 +19,7 @@ export default function Map() {
   const [implicit, setImplicit] = useState(undefined);
   const [address, setAddress] = useState('-');
   const [marker, setMarker] = useState([]);
+  const navigate = useNavigate();
 
   const getAddress = () => {
     const geocoder = new kakao.maps.services.Geocoder();
@@ -74,20 +68,16 @@ export default function Map() {
               <div className="bg-primaryBlue w-[30px] h-[30px] absolute rounded-full z-10 animate-ping" />
             </div>
           </CustomOverlayMap>
-          {tempMarker.map((item) => (
-            <ItemMarker
-              position={{ lat: item.lat, lng: item.lng }}
-              key={item.lat}
-            />
-          ))}
-          {marker.map((item) => {
+          {marker.map((item, idx) => {
             console.log(item);
             const numX = Math.random() / 100;
             const numY = (Math.random() / 100) * -1;
 
             return (
-              <div key={item.name}>
-                {item.name}
+              <div
+                key={item.name}
+                onClick={() => navigate(`/introduce/${idx}`)}
+              >
                 <ItemMarker
                   position={{
                     lat: position.lat + numX,

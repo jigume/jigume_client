@@ -65,7 +65,7 @@ export default function ItemComponent({
             {!count ? (
               <div className="w-20 h-[12px] bg-gray-100 rounded-sm" />
             ) : (
-              <div className="text-gray-600">7 번째 구매 리드</div>
+              <div className="text-gray-600">{count} 번째 구매 리드</div>
             )}
           </div>
         </div>
