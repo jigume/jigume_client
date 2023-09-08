@@ -1,5 +1,27 @@
 import React from 'react';
-import { primaryYello } from '../../../../../common';
+import Avatar from 'boring-avatars';
+import {
+  primaryBlue,
+  primaryJade,
+  primaryPurple,
+  primaryYello,
+} from '../../../../../common';
+
+const nickname = [
+  'jeju',
+  'hackathon',
+  'goorm',
+  'kakao',
+  '카카dh',
+  '구름좋아',
+  '클라우드',
+  '눈사람',
+  '무지',
+  '라이언',
+  '춘식이',
+  '춘삼이',
+  '카카오맵',
+];
 
 export default function ItemComponent({
   image,
@@ -10,6 +32,7 @@ export default function ItemComponent({
   deliveryCost,
   people,
 }) {
+  const num = Math.floor(Math.random() * 10);
   return (
     <div
       className={`flex flex-row px-[16px] py-[20px] gap-4  ${
@@ -19,30 +42,47 @@ export default function ItemComponent({
       {!image ? (
         <div className="border border-gray50 w-32 h-32 rounded-lg bg-gray-100 flex-none" />
       ) : (
-        ''
+        <img
+          src={image}
+          className="border border-gray50 w-32 h-32 rounded-lg bg-gray-100 flex-none"
+        />
       )}
       <div className="flex flex-col truncate pt-2">
         {!title ? (
           <div className="w-48 h-[12px] mb-[12px] bg-gray-100 rounded-sm" />
         ) : (
-          <div className="h6 truncate">
-            오늘의 집에서 이거 같이 구매하실 제주도 사람 구해용
-          </div>
+          <div className="h6 truncate">{title}</div>
         )}
 
         <div className="flex flex-row items-center gap-2  pb-[14px]">
-          <div className="w-[18px] h-[18px] rounded-full bg-gray-100" />
+          {!username ? (
+            <div className="w-[18px] h-[18px] rounded-full bg-gray-100" />
+          ) : (
+            <Avatar
+              size={18}
+              name={title}
+              variant="beam"
+              colors={[
+                primaryYello,
+                primaryJade,
+                primaryPurple,
+                '#C271B4',
+                primaryBlue,
+              ]}
+            />
+          )}
+          {/* <div className="w-[18px] h-[18px] rounded-full bg-gray-100" /> */}
           <div className="flex flex-row caption gap-1">
             {!username ? (
               <div className="w-16 h-[12px] bg-gray-100 rounded-sm" />
             ) : (
-              <div>졸린 춘식이</div>
+              <div>{nickname[num]}</div>
             )}
             <div className="text-gray-600">|</div>
             {!count ? (
               <div className="w-20 h-[12px] bg-gray-100 rounded-sm" />
             ) : (
-              <div className="text-gray-600">7 번째 구매 리드</div>
+              <div className="text-gray-600">{count} 번째 구매 리드</div>
             )}
           </div>
         </div>
@@ -51,7 +91,7 @@ export default function ItemComponent({
           {!itemCost ? (
             <div className="w-12 h-[12px] mb-[6px] bg-gray-100 rounded-sm" />
           ) : (
-            <div>구매가:</div>
+            <div>구매가: {itemCost}</div>
           )}
           <div className="flex flex-row gap-1">
             {!deliveryCost ? (
@@ -64,7 +104,8 @@ export default function ItemComponent({
               <div className="w-20 h-[12px] bg-gray-100 rounded-sm" />
             ) : (
               <span>
-                <span className={`text-[${primaryYello}]`}>7</span> 명 분할 중
+                <span className={`text-[${primaryYello}]`}>{people}</span> 명
+                분할 중
               </span>
             )}
           </div>

@@ -22,7 +22,7 @@ function ProductLink() {
         </div>
 
         <div className="mb-1">
-          <div className="text-sm mb-2">상품 링크</div>
+          <div className="text-sm mb-2 font-thin">상품 링크</div>
           <input
             type="text"
             name="productLink"
@@ -43,7 +43,7 @@ function ProductLink() {
           </div>
         </div>
         <div className="pt-4">
-          <div className="text-sm mb-2">카테고리</div>
+          <div className="text-sm mb-2 font-thin">카테고리</div>
           <div className="flex flex-wrap justify-center gap-2 ">
             {filter.map((item, index) => (
               <div

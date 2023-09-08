@@ -13,8 +13,9 @@ function ProductDetail() {
           <br />
           끌리는 제목과 내용으로 폼을 만들어요!
         </div>
+
         <div className="pb-10">
-          <div className="text-sm mb-2">폼 제목</div>
+          <div className="text-sm mb-2 font-thin">폼 제목</div>
           <div className="border rounded-md w-full p-3 flex flex-row gap-2">
             <input
               className="w-full text-sm"
@@ -32,7 +33,7 @@ function ProductDetail() {
           </div>
         </div>
         <div>
-          <div className="text-sm mb-2">폼 내용</div>
+          <div className="text-sm mb-2 font-thin">폼 내용</div>
           <textarea
             name="introduce"
             className="border rounded-md w-full p-3 text-sm"
