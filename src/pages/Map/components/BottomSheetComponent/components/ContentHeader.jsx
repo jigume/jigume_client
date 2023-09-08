@@ -33,7 +33,7 @@ export default function ContentHeader({ filter, setFilter }) {
                       }}
                     >
                       <span>{item.name}</span>
-                      <img className="inline-block pb-[3px] " src={CloseIcon} />
+                      <img src={CloseIcon} className="inline-block pb-[3px] " />
                     </span>
                   ),
               )

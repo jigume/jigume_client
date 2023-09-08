@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { backURL, backURL2 } from '../../common';
 
 export const getGoods = async () => {

@@ -2,6 +2,8 @@ import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Register from './pages/Register';
 import Map from './pages/Map';
+import Introduce from './pages/Introduce';
+import Announcement from './pages/Announcement';
 import ProductImage from './pages/Register/components/productImage';
 import ProductDetail from './pages/Register/components/productDetail';
 import ProductLink from './pages/Register/components/productLink';
@@ -13,6 +15,14 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Map />,
+  },
+  {
+    path: '/Introduce',
+    element: <Introduce />,
+  },
+  {
+    path: '/Announcement',
+    element: <Announcement />,
   },
   {
     path: '/Register/*',
