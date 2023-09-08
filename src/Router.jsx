@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     element: <Map />,
   },
   {
-    path: '/Introduce',
+    path: '/Introduce/:idx',
     element: <Introduce />,
   },
   {

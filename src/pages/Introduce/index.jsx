@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 import TitleBox from './components/titleBox';
 import Information from './components/information';
 import UserCheck from './components/userCheck';
 import Image from './components/image';
-import { backURL, backURL2 } from '../../common';
+import { backURL2 } from '../../common';
 
 // import ProductImage from './components/productImage';
 
-export const getGoods = async () => {
-  const response = await axios(`${backURL2}/api/goods/1/page`, {
+export const getGoods = async (idx) => {
+  const response = await axios(`${backURL2}/api/goods/${idx}/page`, {
     withCredentials: true,
   }).then((res) => {
     return res.data;
@@ -19,6 +20,8 @@ export const getGoods = async () => {
 };
 
 export default function Introduce() {
+  const { idx } = useParams();
+  const navigate = useNavigate();
   const [goods, setGoods] = useState({
     name: '',
     link: '',
@@ -30,7 +33,7 @@ export default function Introduce() {
     goodsLimitTime: '',
   });
   useEffect(() => {
-    getGoods().then((res) => {
+    getGoods(idx).then((res) => {
       console.log(res);
       setGoods({
         name: res.goodsDto.name,
@@ -67,7 +70,10 @@ export default function Introduce() {
         />
         <UserCheck />
         <div className="absolute w-[295px] h-[50px]">
-          <button className="flex flex-col w-[295px] h-[50px] justify-center items-center mx-10 mb-10 bg-blue-400 rounded-[8px]">
+          <button
+            className="flex flex-col w-[295px] h-[50px] justify-center items-center mx-10 mb-10 bg-blue-400 rounded-[8px]"
+            onClick={() => navigate('/register')}
+          >
             구매 참여하기
           </button>
         </div>
