@@ -10,7 +10,7 @@ import { backURL2 } from '../../common';
 // import ProductImage from './components/productImage';
 
 export const getGoods = async (idx) => {
-  const response = await axios(`${backURL2}/api/goods/${idx}/page`, {
+  const response = await axios(`${backURL2}/api/goods/${idx + 1}/page`, {
     withCredentials: true,
   }).then((res) => {
     return res.data;
