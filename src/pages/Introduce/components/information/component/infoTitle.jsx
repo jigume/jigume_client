@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import InfoContent from './infoContent';
 
 export default function InfoTitle({
@@ -12,9 +13,12 @@ export default function InfoTitle({
       <div className="w-[343px] mb-[16px] text-left align-middle text-gray-950 font-bold">
         상품 정보
       </div>
-      {/* <div className="w-[343px] h-[92px] mb-[16px] text-[18px] font-bold text-gray-950">
-        {link}
-      </div> */}
+      <Link
+        className="w-[343px] h-[92px] mb-[16px] text-[18px] font-bold text-gray-950"
+        to={link}
+      >
+        상품 페이지 이동
+      </Link>
       <div className="w-[343px] font-normal text-gray950 text-[146x]">
         <div>구매가 : {goodsPrice} 원</div>
         <div>
