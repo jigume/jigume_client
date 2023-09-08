@@ -7,6 +7,22 @@ import {
   primaryYello,
 } from '../../../../../common';
 
+const nickname = [
+  'jeju',
+  'hackathon',
+  'goorm',
+  'kakao',
+  '카카dh',
+  '구름좋아',
+  '클라우드',
+  '눈사람',
+  '무지',
+  '라이언',
+  '춘식이',
+  '춘삼이',
+  '카카오맵',
+];
+
 export default function ItemComponent({
   image,
   title,
@@ -16,6 +32,7 @@ export default function ItemComponent({
   deliveryCost,
   people,
 }) {
+  const num = Math.floor(Math.random() * 10);
   return (
     <div
       className={`flex flex-row px-[16px] py-[20px] gap-4  ${
@@ -59,7 +76,7 @@ export default function ItemComponent({
             {!username ? (
               <div className="w-16 h-[12px] bg-gray-100 rounded-sm" />
             ) : (
-              <div>졸린 춘식이</div>
+              <div>{nickname[num]}</div>
             )}
             <div className="text-gray-600">|</div>
             {!count ? (
