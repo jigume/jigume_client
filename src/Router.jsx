@@ -1,13 +1,13 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import RegistrationForms from './pages/RegistrationForms';
+import Register from './pages/Register';
 import Map from './pages/Map';
-import ProductImage from './pages/RegistrationForms/components/productImage';
-import ProductDetail from './pages/RegistrationForms/components/productDetail';
-import ProductLink from './pages/RegistrationForms/components/productLink';
-import ProductAmount from './pages/RegistrationForms/components/productAmount';
-import ProductDeadline from './pages/RegistrationForms/components/productDeadline';
-import GetPlace from './pages/RegistrationForms/components/getPlace';
+import ProductImage from './pages/Register/components/productImage';
+import ProductDetail from './pages/Register/components/productDetail';
+import ProductLink from './pages/Register/components/productLink';
+import ProductAmount from './pages/Register/components/productAmount';
+import ProductDeadline from './pages/Register/components/productDeadline';
+import GetPlace from './pages/Register/components/getPlace';
 
 const router = createBrowserRouter([
   {
@@ -15,8 +15,8 @@ const router = createBrowserRouter([
     element: <Map />,
   },
   {
-    path: '/RegistrationForms/*',
-    element: <RegistrationForms />,
+    path: '/Register/*',
+    element: <Register />,
     children: [
       { index: true, element: <ProductImage /> },
       {

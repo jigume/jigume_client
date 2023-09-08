@@ -1,6 +1,6 @@
 import React from 'react';
 
-function InputText(props) {
+function InputText({ props }) {
   return (
     <input
       type="text"

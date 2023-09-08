@@ -17,13 +17,13 @@ export default function ItemComponent({
       }`}
     >
       {!image ? (
-        <div className="border border-gray50 w-32 h-32 rounded-lg bg-gray100 flex-none" />
+        <div className="border border-gray50 w-32 h-32 rounded-lg bg-gray-100 flex-none" />
       ) : (
         ''
       )}
       <div className="flex flex-col truncate pt-2">
         {!title ? (
-          <div className="w-48 h-[12px] mb-[12px] bg-gray100 rounded-sm" />
+          <div className="w-48 h-[12px] mb-[12px] bg-gray-100 rounded-sm" />
         ) : (
           <div className="h6 truncate">
             오늘의 집에서 이거 같이 구매하실 제주도 사람 구해용
@@ -31,37 +31,37 @@ export default function ItemComponent({
         )}
 
         <div className="flex flex-row items-center gap-2  pb-[14px]">
-          <div className="w-[18px] h-[18px] rounded-full bg-gray100" />
+          <div className="w-[18px] h-[18px] rounded-full bg-gray-100" />
           <div className="flex flex-row caption gap-1">
             {!username ? (
-              <div className="w-16 h-[12px] bg-gray100 rounded-sm" />
+              <div className="w-16 h-[12px] bg-gray-100 rounded-sm" />
             ) : (
               <div>졸린 춘식이</div>
             )}
-            <div className="text-gray600">|</div>
+            <div className="text-gray-600">|</div>
             {!count ? (
-              <div className="w-20 h-[12px] bg-gray100 rounded-sm" />
+              <div className="w-20 h-[12px] bg-gray-100 rounded-sm" />
             ) : (
-              <div className="text-gray600">7 번째 구매 리드</div>
+              <div className="text-gray-600">7 번째 구매 리드</div>
             )}
           </div>
         </div>
 
-        <div className="paragraph-sm text-gray600">
+        <div className="paragraph-sm text-gray-600">
           {!itemCost ? (
-            <div className="w-12 h-[12px] mb-[6px] bg-gray100 rounded-sm" />
+            <div className="w-12 h-[12px] mb-[6px] bg-gray-100 rounded-sm" />
           ) : (
             <div>구매가:</div>
           )}
           <div className="flex flex-row gap-1">
             {!deliveryCost ? (
-              <div className="w-12 h-[12px] mb-4 bg-gray100 rounded-sm" />
+              <div className="w-12 h-[12px] mb-4 bg-gray-100 rounded-sm" />
             ) : (
               <span>배송비: {deliveryCost}</span>
             )}
             <span>/</span>
             {!people ? (
-              <div className="w-20 h-[12px] bg-gray100 rounded-sm" />
+              <div className="w-20 h-[12px] bg-gray-100 rounded-sm" />
             ) : (
               <span>
                 <span className={`text-[${primaryYello}]`}>7</span> 명 분할 중

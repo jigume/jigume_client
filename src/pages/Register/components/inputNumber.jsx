@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InputNumber = (props) => {
+function InputNumber({ props }) {
   return (
     <input
       type="number"
@@ -8,6 +8,6 @@ const InputNumber = (props) => {
       className="mt-1 h-10 w-50 bg-slate-200"
     />
   );
-};
+}
 
 export default InputNumber;
