@@ -69,14 +69,12 @@ export default function Introduce() {
           goodsLimitTime={goods.goodsLimitTime}
         />
         <UserCheck />
-        <div className="absolute w-[295px] h-[50px]">
-          <button
-            className="flex flex-col w-[295px] h-[50px] justify-center items-center mx-10 mb-10 bg-blue-400 rounded-[8px]"
-            onClick={() => navigate('/register')}
-          >
-            구매 참여하기
-          </button>
-        </div>
+        <button
+          className="mx-auto fixed bottom-[20px] left-1/2 -translate-x-1/2 w-[295px] h-[50px] mb-10 bg-blue-400 rounded-[8px]"
+          onClick={() => navigate('/register')}
+        >
+          구매 참여하기
+        </button>
       </div>
     </div>
   );

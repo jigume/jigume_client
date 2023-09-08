@@ -21,6 +21,7 @@ export default function ItemList({ imgArr, filter }) {
             <ItemComponent
               // eslint-disable-next-line react/no-array-index-key
               key={index}
+              index={index}
               image={item.image}
               title={item.data.name}
               username={item.data.name}

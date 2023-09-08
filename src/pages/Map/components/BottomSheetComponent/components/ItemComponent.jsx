@@ -1,5 +1,6 @@
 import React from 'react';
 import Avatar from 'boring-avatars';
+import { useNavigate } from 'react-router-dom';
 import {
   primaryBlue,
   primaryJade,
@@ -31,13 +32,16 @@ export default function ItemComponent({
   itemCost,
   deliveryCost,
   people,
+  index,
 }) {
+  const navigate = useNavigate();
   const num = Math.floor(Math.random() * 10);
   return (
     <div
-      className={`flex flex-row px-[16px] py-[20px] gap-4  ${
+      className={`flex flex-row px-[16px] py-[20px] gap-4 cursor-pointer ${
         !title ? 'animate-pulse' : ''
       }`}
+      onClick={() => navigate(`/introduce/${index}`)}
     >
       {!image ? (
         <div className="border border-gray50 w-32 h-32 rounded-lg bg-gray-100 flex-none" />
