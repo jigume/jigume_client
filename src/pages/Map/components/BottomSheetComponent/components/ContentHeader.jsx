@@ -1,22 +1,16 @@
 import React, { useState } from 'react';
 import CategoryTag from './CategoryTag';
-import category from '../data';
 import Filter from '../../../../../asset/icon/Filter.svg';
 import CloseIcon from '../../../../../asset/icon/CloseIcon.svg';
 
-export default function ContentHeader() {
+export default function ContentHeader({ filter, setFilter }) {
   const [open, setOpen] = useState(false);
-  const [filter, setFilter] = useState(
-    category.map((item) => {
-      return { ...item, checked: false };
-    }),
-  );
 
   return (
     <div className="absolute top-[76px] bg-white z-50 w-full">
       <div className="border-b border-gray-100">
         <div className="px-[16px] py-[12px] ">
-          <div className="h4 mb-0">공동 구매 폼 내역 보기</div>
+          <div className="font-bold text-lg mb-0">공동 구매 폼 내역 보기</div>
         </div>
         <div className="px-[16px] py-[12px] grid grid-cols-8">
           <div className="col-span-7 h-[1.5rem] overflow-x-scroll   whitespace-nowrap text-gray-600">
@@ -44,7 +38,7 @@ export default function ContentHeader() {
                   ),
               )
             ) : (
-              <div className="caption text-gray-600">
+              <div className="text-sm text-gray-600">
                 제품군 카테고리 필터를 켜보세요
               </div>
             )}

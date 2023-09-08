@@ -1,22 +1,61 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import SheetHeader from './components/SheetHeader';
 import ItemList from './components/ItemList';
 import ContentHeader from './components/ContentHeader';
 import 'react-spring-bottom-sheet/dist/style.css';
 import './index.css';
+import { backURL2 } from '../../../../common';
+import category from './data';
 
 export default function BottomSheetComponent({
   address,
   handleImplicitPosition,
 }) {
   const [block, setBlock] = useState(false);
+  const [imgArr, setImgArr] = useState([]);
   const sheetRef = useRef();
+  const [filter, setFilter] = useState(
+    category.map((item) => {
+      return { ...item, checked: true };
+    }),
+  );
 
   const handleBlocking = () => {
     sheetRef.current.snapTo(126, { source: 'snap-to-bottom' });
     setBlock(false);
   };
+
+  useEffect(() => {
+    axios.get(`${backURL2}/api/goods`).then((res) => {
+      // console.log(res.data);
+      if (res.status === 200) {
+        res.data.map((item, idx) => {
+          return axios
+            .get(`${backURL2}/api/${idx + 1}/image`, { responseType: 'blob' })
+            .then((res_) => {
+              const myFile = new File([res_.data], 'imageName');
+              const reader = new FileReader();
+              reader.onload = (ev) => {
+                const previewImage = String(ev.target?.result);
+                // setMyImage(previewImage); // myImage라는 state에 저장
+                // console.log(previewImage);
+                setImgArr((oldArray) => [
+                  ...oldArray,
+                  { image: previewImage, data: item },
+                ]);
+              };
+              reader.readAsDataURL(myFile);
+            });
+        });
+      }
+    });
+  }, []);
+
+  // useEffect(() => {
+  //   console.log(imgArr);
+  // }, [imgArr]);
 
   return (
     <>
@@ -50,8 +89,8 @@ export default function BottomSheetComponent({
           />
         }
       >
-        <ContentHeader />
-        <ItemList />
+        <ContentHeader filter={filter} setFilter={setFilter} />
+        <ItemList imgArr={imgArr} filter={filter} />
       </BottomSheet>
     </>
   );
