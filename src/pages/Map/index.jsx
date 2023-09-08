@@ -25,6 +25,7 @@ export default function Map() {
   const [position, setPosition] = useState(initPosition);
   const [implicit, setImplicit] = useState(undefined);
   const [address, setAddress] = useState('-');
+  const [marker, setMarker] = useState([]);
 
   const getAddress = () => {
     const geocoder = new kakao.maps.services.Geocoder();
@@ -47,8 +48,12 @@ export default function Map() {
   }, []);
 
   useEffect(() => {
-    getGoods().then((res) => console.log(res));
+    getGoods().then((res) => setMarker(res));
   }, []);
+
+  useEffect(() => {
+    console.log(marker);
+  }, [marker]);
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
@@ -75,6 +80,23 @@ export default function Map() {
               key={item.lat}
             />
           ))}
+          {marker.map((item) => {
+            console.log(item);
+            const numX = Math.random() / 100;
+            const numY = (Math.random() / 100) * -1;
+
+            return (
+              <div key={item.name}>
+                {item.name}
+                <ItemMarker
+                  position={{
+                    lat: position.lat + numX,
+                    lng: position.lng + numY,
+                  }}
+                />
+              </div>
+            );
+          })}
         </KakaoMap>
       ) : (
         <Loading />
