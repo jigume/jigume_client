@@ -4,10 +4,10 @@ import { BottomSheet } from 'react-spring-bottom-sheet';
 import SheetHeader from './components/SheetHeader';
 import ItemList from './components/ItemList';
 import ContentHeader from './components/ContentHeader';
-import 'react-spring-bottom-sheet/dist/style.css';
-import './index.css';
 import { backURL2 } from '../../../../common';
 import category from './data';
+import 'react-spring-bottom-sheet/dist/style.css';
+import './index.css';
 
 export default function BottomSheetComponent({
   address,
@@ -39,7 +39,6 @@ export default function BottomSheetComponent({
               const reader = new FileReader();
               reader.onload = (ev) => {
                 const previewImage = String(ev.target?.result);
-                // setMyImage(previewImage); // myImage라는 state에 저장
                 // console.log(previewImage);
                 setImgArr((oldArray) => [
                   ...oldArray,

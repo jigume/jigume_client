@@ -4,7 +4,7 @@ import ItemComponent from './ItemComponent';
 
 export default function ItemList({ imgArr, filter }) {
   useEffect(() => {
-    console.log(filter);
+    // console.log(filter);
   }, []);
 
   return (

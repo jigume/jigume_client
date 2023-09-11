@@ -5,7 +5,7 @@ import getCurrentLocation from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
 import ItemMarker from './components/ItemMarker';
-import { getGoods } from './api';
+import getGoods from './api';
 
 const initPosition = {
   lat: 33.450701,
@@ -31,14 +31,11 @@ export default function Map() {
   };
 
   const handleImplicitPosition = () => {
-    if (implicit !== undefined) {
-      setPosition(implicit);
-    }
+    if (implicit !== undefined) setPosition(implicit);
   };
 
   useEffect(() => {
     getCurrentLocation(setPosition, setImplicit);
-    getAddress();
   }, []);
 
   useEffect(() => {
@@ -46,7 +43,11 @@ export default function Map() {
   }, []);
 
   useEffect(() => {
-    console.log(marker);
+    if (implicit !== undefined) getAddress();
+  }, [position]);
+
+  useEffect(() => {
+    // console.log(marker);
   }, [marker]);
 
   return (
@@ -69,7 +70,7 @@ export default function Map() {
             </div>
           </CustomOverlayMap>
           {marker.map((item, idx) => {
-            console.log(item);
+            // console.log(item);
             const numX = Math.random() / 100;
             const numY = (Math.random() / 100) * -1;
 
