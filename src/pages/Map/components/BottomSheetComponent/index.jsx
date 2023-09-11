@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import { BottomSheet } from 'react-spring-bottom-sheet';
+import { motion } from 'framer-motion';
+import { getGoodsDetail } from '../../api';
 import SheetHeader from './components/SheetHeader';
 import ItemList from './components/ItemList';
 import ContentHeader from './components/ContentHeader';
-import { backURL2 } from '../../../../common';
 import category from './data';
 import 'react-spring-bottom-sheet/dist/style.css';
 import './index.css';
+import useBottomSheet from '../../../../hooks/useBottomSheet';
 
 export default function BottomSheetComponent({
   address,
@@ -17,59 +18,48 @@ export default function BottomSheetComponent({
   const [imgArr, setImgArr] = useState([]);
   const sheetRef = useRef();
   const [filter, setFilter] = useState(
-    category.map((item) => {
-      return { ...item, checked: true };
-    }),
+    category.map((item) => ({ ...item, checked: true })),
   );
+  const { sheet, content } = useBottomSheet();
 
   const handleBlocking = () => {
+    console.log('blocking: ', block);
     sheetRef.current.snapTo(126, { source: 'snap-to-bottom' });
     setBlock(false);
   };
 
-  useEffect(() => {
-    axios.get(`${backURL2}/api/goods`).then((res) => {
-      // console.log(res.data);
-      if (res.status === 200) {
-        res.data.map((item, idx) => {
-          return axios
-            .get(`${backURL2}/api/${idx + 1}/image`, { responseType: 'blob' })
-            .then((res_) => {
-              const myFile = new File([res_.data], 'imageName');
-              const reader = new FileReader();
-              reader.onload = (ev) => {
-                const previewImage = String(ev.target?.result);
-                // console.log(previewImage);
-                setImgArr((oldArray) => [
-                  ...oldArray,
-                  { image: previewImage, data: item },
-                ]);
-              };
-              reader.readAsDataURL(myFile);
-            });
-        });
-      }
-    });
-  }, []);
+  const scrollingBlocking = () => {
+    console.log('scrolling', sheetRef.current.height);
+    if (sheetRef.current.height < 120) setBlock(false);
+    else setBlock(true);
+  };
 
-  // useEffect(() => {
-  //   console.log(imgArr);
-  // }, [imgArr]);
+  useEffect(() => {
+    getGoodsDetail(setImgArr);
+  }, []);
 
   return (
     <>
-      {block && (
+      {block ? (
         <div
-          className="bg-red w-screen h-screen fixed top-0 left-0 z-30"
+          className="bg-white/50 w-screen h-screen fixed top-0 left-0 z-[30]"
           onClick={handleBlocking}
         />
+      ) : (
+        ''
       )}
+      <motion.div
+        ref={sheet}
+        className="fixed bottom-0 z-50 w-full h-20 bg-white"
+      >
+        <motion.div ref={content}>hello</motion.div>
+      </motion.div>
 
       <BottomSheet
         className="fixed z-50 mx-auto bottom_sheet_root"
-        open
-        blocking={false}
         ref={sheetRef}
+        open={false}
+        blocking={false}
         defaultSnap={({ snapPoints, lastSnap }) =>
           lastSnap ?? Math.min(...snapPoints)
         }
@@ -78,8 +68,17 @@ export default function BottomSheetComponent({
           maxHeight - maxHeight / 5,
           maxHeight * 0.6,
         ]}
+        onSpringStart={(event) => {
+          console.log('start event: ', event, sheetRef.current.height);
+          scrollingBlocking();
+        }}
+        onSpringCancel={(event) => {
+          console.log('cancel event: ', event, sheetRef.current.height);
+          scrollingBlocking();
+        }}
         onSpringEnd={(event) => {
-          if (event.type === 'SNAP') setBlock(true);
+          console.log('end event: ', event, sheetRef.current.height);
+          scrollingBlocking();
         }}
         header={
           <SheetHeader

@@ -5,7 +5,7 @@ import getCurrentLocation from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
 import ItemMarker from './components/ItemMarker';
-import getGoods from './api';
+import { getGoods } from './api';
 
 const initPosition = {
   lat: 33.450701,
@@ -36,19 +36,12 @@ export default function Map() {
 
   useEffect(() => {
     getCurrentLocation(setPosition, setImplicit);
-  }, []);
-
-  useEffect(() => {
     getGoods().then((res) => setMarker(res));
   }, []);
 
   useEffect(() => {
     if (implicit !== undefined) getAddress();
   }, [position]);
-
-  useEffect(() => {
-    // console.log(marker);
-  }, [marker]);
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
