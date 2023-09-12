@@ -8,19 +8,18 @@ export default function ItemList({ imgArr, filter }) {
   }, []);
 
   return (
-    <div className="pt-[96px]">
-      <div className="h-full overflow-auto">
-        {imgArr.map((item, index) => {
-          const trueArr = filter.filter(({ checked }) => checked);
+    <div className="h-full overflow-x-scroll absolute top-[96px] pt-[96px] pb-[192px]">
+      {imgArr.map((item, index) => {
+        const trueArr = filter.filter(({ checked }) => checked);
 
-          if (!trueArr.find(({ idx }) => idx === item.data.category))
-            // eslint-disable-next-line react/no-array-index-key
-            return <div key={index} />;
-          // console.log(item.data.category);
-          return (
+        if (!trueArr.find(({ idx }) => idx === item.data.category))
+          // eslint-disable-next-line react/no-array-index-key
+          return <div key={index} />;
+        // console.log(item.data.category);
+        return (
+          // eslint-disable-next-line react/no-array-index-key
+          <div className="px-[16px]" key={index}>
             <ItemComponent
-              // eslint-disable-next-line react/no-array-index-key
-              key={index}
               index={index}
               image={item.image}
               title={item.data.name}
@@ -30,9 +29,9 @@ export default function ItemList({ imgArr, filter }) {
               deliveryCost={item.data.deliveryFee}
               people={item.data.deliveryFee / item.data.realDeliveryFee}
             />
-          );
-        })}
-      </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

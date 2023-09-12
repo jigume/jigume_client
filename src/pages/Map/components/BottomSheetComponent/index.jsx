@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { BottomSheet } from 'react-spring-bottom-sheet';
+import React, { useEffect, useState } from 'react';
 import { getGoodsDetail } from '../../api';
 import SheetHeader from './components/SheetHeader';
 import ItemList from './components/ItemList';
@@ -14,25 +13,11 @@ export default function BottomSheetComponent({
   address,
   handleImplicitPosition,
 }) {
-  const [block, setBlock] = useState(false);
   const [imgArr, setImgArr] = useState([]);
-  const sheetRef = useRef();
   const [filter, setFilter] = useState(
     category.map((item) => ({ ...item, checked: true })),
   );
-  const { sheet, content, handle } = useBottomSheet();
-
-  const handleBlocking = () => {
-    console.log('blocking: ', block);
-    sheetRef.current.snapTo(126, { source: 'snap-to-bottom' });
-    setBlock(false);
-  };
-
-  const scrollingBlocking = () => {
-    console.log('scrolling', sheetRef.current.height);
-    if (sheetRef.current.height < 120) setBlock(false);
-    else setBlock(true);
-  };
+  const { sheet, content, handle, isOpen } = useBottomSheet();
 
   useEffect(() => {
     getGoodsDetail(setImgArr);
@@ -40,11 +25,8 @@ export default function BottomSheetComponent({
 
   return (
     <>
-      {block ? (
-        <div
-          className="bg-white/50 w-screen h-screen fixed top-0 left-0 z-[30]"
-          onClick={handleBlocking}
-        />
+      {isOpen ? (
+        <div className="bg-white/50 w-screen h-screen fixed top-0 left-0 z-[30] ease-out duration-300" />
       ) : (
         ''
       )}
@@ -57,44 +39,9 @@ export default function BottomSheetComponent({
           />
         }
       >
-        <div>bottom sheet</div>
-      </Sheet>
-
-      <BottomSheet
-        className="fixed z-50 mx-auto bottom_sheet_root"
-        ref={sheetRef}
-        open={false}
-        blocking={false}
-        defaultSnap={({ snapPoints, lastSnap }) =>
-          lastSnap ?? Math.min(...snapPoints)
-        }
-        snapPoints={({ maxHeight }) => [
-          maxHeight * 0.1,
-          maxHeight - maxHeight / 5,
-          maxHeight * 0.6,
-        ]}
-        onSpringStart={(event) => {
-          console.log('start event: ', event, sheetRef.current.height);
-          scrollingBlocking();
-        }}
-        onSpringCancel={(event) => {
-          console.log('cancel event: ', event, sheetRef.current.height);
-          scrollingBlocking();
-        }}
-        onSpringEnd={(event) => {
-          console.log('end event: ', event, sheetRef.current.height);
-          scrollingBlocking();
-        }}
-        header={
-          <SheetHeader
-            address={address}
-            handleImplicitPosition={handleImplicitPosition}
-          />
-        }
-      >
         <ContentHeader filter={filter} setFilter={setFilter} />
         <ItemList imgArr={imgArr} filter={filter} />
-      </BottomSheet>
+      </Sheet>
     </>
   );
 }

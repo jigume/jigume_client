@@ -16,9 +16,8 @@ const Sheet = ({ children, header }, ref) => {
         </div>
         {header}
       </div>
-      <motion.div ref={content}>
+      <motion.div className="h-full overflow-x-scroll" ref={content}>
         {children}
-        <div>여긴 아니야</div>
       </motion.div>
     </motion.div>
   );

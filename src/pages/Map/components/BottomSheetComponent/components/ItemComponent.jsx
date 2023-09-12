@@ -38,7 +38,7 @@ export default function ItemComponent({
   const num = Math.floor(Math.random() * 10);
   return (
     <div
-      className={`flex flex-row px-[16px] py-[20px] gap-4 cursor-pointer ${
+      className={`flex flex-row py-[20px] w-[calc(100vw-32px)] gap-4 cursor-pointer ${
         !title ? 'animate-pulse' : ''
       }`}
       onClick={() => navigate(`/introduce/${index}`)}
@@ -55,7 +55,7 @@ export default function ItemComponent({
         {!title ? (
           <div className="w-48 h-[12px] mb-[12px] bg-gray-100 rounded-sm" />
         ) : (
-          <div className="h6 truncate">{title}</div>
+          <div className="text-lg truncate">{title}</div>
         )}
 
         <div className="flex flex-row items-center gap-2  pb-[14px]">
@@ -82,22 +82,22 @@ export default function ItemComponent({
             ) : (
               <div>{nickname[num]}</div>
             )}
-            <div className="text-gray-600">|</div>
+            <div className="text-gray-500">|</div>
             {!count ? (
               <div className="w-20 h-[12px] bg-gray-100 rounded-sm" />
             ) : (
-              <div className="text-gray-600">{count} 번째 구매 리드</div>
+              <div className="text-gray-500">{count} 번째 구매 리드</div>
             )}
           </div>
         </div>
 
-        <div className="paragraph-sm text-gray-600">
+        <div className="paragraph-sm text-gray-500">
           {!itemCost ? (
             <div className="w-12 h-[12px] mb-[6px] bg-gray-100 rounded-sm" />
           ) : (
             <div>구매가: {itemCost}</div>
           )}
-          <div className="flex flex-row gap-1">
+          <div className="flex flex-row gap-1 font-light">
             {!deliveryCost ? (
               <div className="w-12 h-[12px] mb-4 bg-gray-100 rounded-sm" />
             ) : (
@@ -108,7 +108,7 @@ export default function ItemComponent({
               <div className="w-20 h-[12px] bg-gray-100 rounded-sm" />
             ) : (
               <span>
-                <span className={`text-[${primaryYello}]`}>{people}</span> 명
+                <span className="text-[#FFAE39] font-bold">{people}</span> 명
                 분할 중
               </span>
             )}

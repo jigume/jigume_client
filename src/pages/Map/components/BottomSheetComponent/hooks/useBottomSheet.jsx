@@ -1,10 +1,11 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 export default function useBottomSheet() {
   const MIN_Y = 68;
   const MIDDLE_Y = window.innerHeight / 2;
   const MAX_Y = window.innerHeight - 100;
 
+  const [isOpen, setOpen] = useState(false);
   const sheet = useRef(null);
   const handle = useRef(null);
   const content = useRef(null);
@@ -93,7 +94,7 @@ export default function useBottomSheet() {
       if (sheet.current === undefined) return;
       // Snap Animation
       const currentSheetY = sheet.current.getBoundingClientRect().y;
-      const boundary = 100;
+      const boundary = 130;
 
       // 중간 사이즈
       if (currentSheetY !== MIN_Y) {
@@ -105,17 +106,22 @@ export default function useBottomSheet() {
             'transform',
             `translateY(${MIN_Y - MIDDLE_Y}px)`,
           );
+          setOpen(true);
           return;
         }
 
-        if (touchMove.movingDirection === 'down')
+        if (touchMove.movingDirection === 'down') {
           sheet.current.style.setProperty('transform', 'translateY(0)');
+          setOpen(false);
+        }
 
-        if (touchMove.movingDirection === 'up')
+        if (touchMove.movingDirection === 'up') {
           sheet.current.style.setProperty(
             'transform',
             `translateY(${MIN_Y - MAX_Y}px)`,
           );
+          setOpen(true);
+        }
       }
 
       // metrics 초기화.
@@ -148,7 +154,7 @@ export default function useBottomSheet() {
       content.current.addEventListener('touchstart', handleTouchStart);
   }, []);
 
-  return { handle, sheet, content };
+  return { handle, sheet, content, isOpen };
 }
 
 // ref: https://velog.io/@boris0716/%EB%A6%AC%EC%95%A1%ED%8A%B8%EC%97%90%EC%84%9C-Bottom-Sheet-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EC%9E%91%EC%84%B1%EC%A4%91
