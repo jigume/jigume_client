@@ -4,10 +4,9 @@ import SheetHeader from './components/SheetHeader';
 import ItemList from './components/ItemList';
 import ContentHeader from './components/ContentHeader';
 import category from './data';
-import 'react-spring-bottom-sheet/dist/style.css';
-import './index.css';
 import useBottomSheet from './hooks/useBottomSheet';
 import Sheet from './components/Sheet';
+import './index.css';
 
 export default function BottomSheetComponent({
   address,
