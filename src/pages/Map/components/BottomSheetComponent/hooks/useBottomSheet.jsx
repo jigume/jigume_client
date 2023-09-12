@@ -1,10 +1,11 @@
 import { useRef, useEffect, useState } from 'react';
 
 export default function useBottomSheet() {
-  const MIN_Y = 68;
-  const MIDDLE_Y = window.innerHeight / 2;
-  const MAX_Y = window.innerHeight - 100;
-
+  const [threshold, setThreshold] = useState({
+    min: 68,
+    mid: window.innerHeight / 2,
+    max: window.innerHeight - 100,
+  });
   const [isOpen, setOpen] = useState(false);
   const sheet = useRef(null);
   const handle = useRef(null);
@@ -21,6 +22,29 @@ export default function useBottomSheet() {
     isContentAreaTouched: false,
   });
 
+  /**
+   * sheet를 컨트롤할 수 있음
+   * @param {*} level string: min | mid | max
+   */
+  const handleSheet = (level = 'min') => {
+    if (level === 'min') {
+      sheet.current.style.setProperty('transform', 'translateY(0)');
+      setOpen(false);
+      return;
+    }
+    if (level === 'mid')
+      sheet.current.style.setProperty(
+        'transform',
+        `translateY(${threshold.min - threshold.mid}px)`,
+      );
+    if (level === 'max')
+      sheet.current.style.setProperty(
+        'transform',
+        `translateY(${threshold.min - threshold.max}px)`,
+      );
+    setOpen(true);
+  };
+
   useEffect(() => {
     const canUserMoveBottomSheet = () => {
       const { touchMove, isContentAreaTouched } = metrics.current;
@@ -30,7 +54,8 @@ export default function useBottomSheet() {
       if (sheet.current === undefined) return false;
       if (content.current === undefined) return false;
 
-      if (sheet.current.getBoundingClientRect().y !== MIN_Y) return true;
+      if (sheet.current.getBoundingClientRect().y !== threshold.min)
+        return true;
       if (touchMove.movingDirection === 'down')
         return content.current.scrollTop <= 0;
 
@@ -67,21 +92,21 @@ export default function useBottomSheet() {
         const touchOffset = currentTouch.clientY - touchStart.touchY;
         let nextSheetY = touchStart.sheetY + touchOffset;
         // 상황에 따라 바닥 높이만큼 조절하는 변수
-        let x = MIN_Y;
+        let x = threshold.min;
 
-        if (nextSheetY <= MIN_Y) {
-          nextSheetY = MIN_Y;
-          x = MIN_Y;
+        if (nextSheetY <= threshold.min) {
+          nextSheetY = threshold.min;
+          x = threshold.min;
         }
-        if (nextSheetY >= MAX_Y) {
-          nextSheetY = MAX_Y;
+        if (nextSheetY >= threshold.max) {
+          nextSheetY = threshold.max;
           x = 0;
         }
 
         if (sheet.current !== undefined)
           sheet.current.style.setProperty(
             'transform',
-            `translateY(${nextSheetY - MAX_Y - x}px)`,
+            `translateY(${nextSheetY - threshold.max - x}px)`,
           ); // 바닥 만큼은 빼야쥬...
       } else {
         document.body.style.overflowY = 'hidden';
@@ -94,17 +119,17 @@ export default function useBottomSheet() {
       if (sheet.current === undefined) return;
       // Snap Animation
       const currentSheetY = sheet.current.getBoundingClientRect().y;
-      const boundary = 130;
+      const boundary = threshold.mid * 0.4;
 
       // 중간 사이즈
-      if (currentSheetY !== MIN_Y) {
+      if (currentSheetY !== threshold.min) {
         if (
-          currentSheetY < MIDDLE_Y + boundary &&
-          currentSheetY > MIDDLE_Y - boundary
+          currentSheetY < threshold.mid + boundary &&
+          currentSheetY > threshold.mid - boundary
         ) {
           sheet.current.style.setProperty(
             'transform',
-            `translateY(${MIN_Y - MIDDLE_Y}px)`,
+            `translateY(${threshold.min - threshold.mid}px)`,
           );
           setOpen(true);
           return;
@@ -118,7 +143,7 @@ export default function useBottomSheet() {
         if (touchMove.movingDirection === 'up') {
           sheet.current.style.setProperty(
             'transform',
-            `translateY(${MIN_Y - MAX_Y}px)`,
+            `translateY(${threshold.min - threshold.max}px)`,
           );
           setOpen(true);
         }
@@ -137,11 +162,34 @@ export default function useBottomSheet() {
         isContentAreaTouched: false,
       };
     };
-    if (handle.current) {
-      handle.current.addEventListener('touchstart', handleTouchStart);
-      handle.current.addEventListener('touchmove', handleTouchMove);
-      handle.current.addEventListener('touchend', handleTouchEnd);
+    handle.current.addEventListener('touchstart', handleTouchStart);
+    handle.current.addEventListener('touchmove', handleTouchMove);
+    handle.current.addEventListener('touchend', handleTouchEnd);
+
+    console.log(threshold);
+    if (typeof window !== 'undefined') {
+      const handleResize = () => {
+        console.log(threshold);
+        setThreshold({
+          min: 68,
+          mid: window.innerHeight / 2,
+          max: window.innerHeight - 100,
+        });
+
+        handle.current.removeEventListener('touchstart', handleTouchStart);
+        handle.current.removeEventListener('touchmove', handleTouchMove);
+        handle.current.removeEventListener('touchend', handleTouchEnd);
+      };
+
+      // resize 이벤트가 발생할 때 handleResize 함수가 실행되도록 한다.
+      window.addEventListener('resize', handleResize);
+
+      return () => window.removeEventListener('resize', handleResize);
     }
+    return () =>
+      window.removeEventListener('resize', () => {
+        return null;
+      });
   }, []);
 
   useEffect(() => {
@@ -154,7 +202,34 @@ export default function useBottomSheet() {
       content.current.addEventListener('touchstart', handleTouchStart);
   }, []);
 
-  return { handle, sheet, content, isOpen };
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     const handleResize = () => {
+  //       setThreshold({
+  //         min: 68,
+  //         mid: window.innerHeight / 2,
+  //         max: window.innerHeight - 100,
+  //       });
+
+  //       if (handle.current) {
+  //         handle.current.removeEventListener('touchstart', handleTouchStart);
+  //         handle.current.removeEventListener('touchmove', handleTouchMove);
+  //         handle.current.removeEventListener('touchend', handleTouchEnd);
+  //       }
+  //     };
+
+  //     // resize 이벤트가 발생할 때 handleResize 함수가 실행되도록 한다.
+  //     window.addEventListener('resize', handleResize);
+
+  //     return () => window.removeEventListener('resize', handleResize);
+  //   }
+  //   return () =>
+  //     window.removeEventListener('resize', () => {
+  //       return null;
+  //     });
+  // }, []);
+
+  return { handle, sheet, content, isOpen, handleSheet };
 }
 
 // ref: https://velog.io/@boris0716/%EB%A6%AC%EC%95%A1%ED%8A%B8%EC%97%90%EC%84%9C-Bottom-Sheet-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EC%9E%91%EC%84%B1%EC%A4%91

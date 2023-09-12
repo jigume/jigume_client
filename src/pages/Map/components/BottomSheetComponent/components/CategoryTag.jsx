@@ -3,7 +3,7 @@ import React from 'react';
 export default function CategoryTag({ item, index, filter, setFilter }) {
   return (
     <div
-      className={`py-[6px] px-[8px] border border-gray-100 rounded-lg ${
+      className={`p-[8px] border border-gray-100 rounded-lg ${
         !item.checked ? 'bg-white' : 'bg-gray-900 text-white'
       }`}
       onClick={() => {

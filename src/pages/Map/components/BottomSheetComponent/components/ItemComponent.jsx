@@ -51,14 +51,14 @@ export default function ItemComponent({
           className="border border-gray50 w-32 h-32 rounded-lg bg-gray-100 flex-none"
         />
       )}
-      <div className="flex flex-col truncate pt-2">
+      <div className="flex flex-col truncate pt-1">
         {!title ? (
           <div className="w-48 h-[12px] mb-[12px] bg-gray-100 rounded-sm" />
         ) : (
           <div className="text-lg truncate">{title}</div>
         )}
 
-        <div className="flex flex-row items-center gap-2  pb-[14px]">
+        <div className="flex flex-row items-center gap-2 pb-2">
           {!username ? (
             <div className="w-[18px] h-[18px] rounded-full bg-gray-100" />
           ) : (

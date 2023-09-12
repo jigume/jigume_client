@@ -6,7 +6,6 @@ import ContentHeader from './components/ContentHeader';
 import category from './data';
 import useBottomSheet from './hooks/useBottomSheet';
 import Sheet from './components/Sheet';
-import './index.css';
 
 export default function BottomSheetComponent({
   address,
@@ -16,7 +15,7 @@ export default function BottomSheetComponent({
   const [filter, setFilter] = useState(
     category.map((item) => ({ ...item, checked: true })),
   );
-  const { sheet, content, handle, isOpen } = useBottomSheet();
+  const { sheet, content, handle, isOpen, handleSheet } = useBottomSheet();
 
   useEffect(() => {
     getGoodsDetail(setImgArr);
@@ -25,7 +24,10 @@ export default function BottomSheetComponent({
   return (
     <>
       {isOpen ? (
-        <div className="bg-white/50 w-screen h-screen fixed top-0 left-0 z-[30] ease-out duration-300" />
+        <div
+          className="w-screen h-screen fixed top-0 left-0 z-[30] ease-out duration-300"
+          onClick={() => handleSheet('min')}
+        />
       ) : (
         ''
       )}
