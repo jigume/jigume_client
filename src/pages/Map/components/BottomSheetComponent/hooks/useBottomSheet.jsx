@@ -1,5 +1,3 @@
-// ref: https://velog.io/@boris0716/%EB%A6%AC%EC%95%A1%ED%8A%B8%EC%97%90%EC%84%9C-Bottom-Sheet-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EC%9E%91%EC%84%B1%EC%A4%91
-
 import { useRef, useEffect } from 'react';
 
 export default function useBottomSheet() {
@@ -27,19 +25,19 @@ export default function useBottomSheet() {
 
       if (!isContentAreaTouched) return true;
 
-      if (content.current !== undefined)
-        if (sheet.current.getBoundingClientRect().y !== MIN_Y) return true;
+      if (sheet.current === undefined) return false;
+      if (content.current === undefined) return false;
 
-      if (content.current !== undefined)
-        if (touchMove.movingDirection === 'down')
-          return content.current.scrollTop <= 0;
+      if (sheet.current.getBoundingClientRect().y !== MIN_Y) return true;
+      if (touchMove.movingDirection === 'down')
+        return content.current.scrollTop <= 0;
 
       return false;
     };
 
     const handleTouchStart = (e) => {
       const { touchStart } = metrics.current;
-      if (content.current === undefined) return;
+      if (sheet.current === undefined) return;
       touchStart.sheetY = sheet.current.getBoundingClientRect().y;
       touchStart.touchY = e.touches[0].clientY;
     };
@@ -66,14 +64,22 @@ export default function useBottomSheet() {
 
         const touchOffset = currentTouch.clientY - touchStart.touchY;
         let nextSheetY = touchStart.sheetY + touchOffset;
+        // 상황에 따라 바닥 높이만큼 조절하는 변수
+        let x = MIN_Y;
 
-        if (nextSheetY <= MIN_Y) nextSheetY = MIN_Y;
-        if (nextSheetY >= MAX_Y) nextSheetY = MAX_Y;
+        if (nextSheetY <= MIN_Y) {
+          nextSheetY = MIN_Y;
+          x = MIN_Y;
+        }
+        if (nextSheetY >= MAX_Y) {
+          nextSheetY = MAX_Y;
+          x = 0;
+        }
 
-        if (content.current !== undefined)
+        if (sheet.current !== undefined)
           sheet.current.style.setProperty(
             'transform',
-            `translateY(${nextSheetY - MAX_Y}px)`,
+            `translateY(${nextSheetY - MAX_Y - x}px)`,
           ); // 바닥 만큼은 빼야쥬...
       } else {
         document.body.style.overflowY = 'hidden';
@@ -83,10 +89,12 @@ export default function useBottomSheet() {
     const handleTouchEnd = () => {
       document.body.style.overflowY = 'auto';
       const { touchMove } = metrics.current;
-      if (content.current === undefined) return;
+      if (sheet.current === undefined) return;
       // Snap Animation
       const currentSheetY = sheet.current.getBoundingClientRect().y;
-      const boundary = 120;
+      const boundary = 100;
+
+      // 중간 사이즈
       if (currentSheetY !== MIN_Y) {
         if (
           currentSheetY < MIDDLE_Y + boundary &&
@@ -122,7 +130,7 @@ export default function useBottomSheet() {
         isContentAreaTouched: false,
       };
     };
-    if (content.current !== undefined) {
+    if (sheet.current) {
       sheet.current.addEventListener('touchstart', handleTouchStart);
       sheet.current.addEventListener('touchmove', handleTouchMove);
       sheet.current.addEventListener('touchend', handleTouchEnd);
@@ -131,13 +139,15 @@ export default function useBottomSheet() {
 
   useEffect(() => {
     const handleTouchStart = () => {
-      if (content.current !== undefined)
+      if (metrics.current !== undefined)
         metrics.current.isContentAreaTouched = true;
     };
 
-    if (content.current !== undefined)
+    if (content.current)
       content.current.addEventListener('touchstart', handleTouchStart);
   }, []);
 
   return { sheet, content };
 }
+
+// ref: https://velog.io/@boris0716/%EB%A6%AC%EC%95%A1%ED%8A%B8%EC%97%90%EC%84%9C-Bottom-Sheet-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EC%9E%91%EC%84%B1%EC%A4%91

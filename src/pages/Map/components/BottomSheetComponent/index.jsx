@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { BottomSheet } from 'react-spring-bottom-sheet';
-import { motion } from 'framer-motion';
 import { getGoodsDetail } from '../../api';
 import SheetHeader from './components/SheetHeader';
 import ItemList from './components/ItemList';
@@ -8,7 +7,8 @@ import ContentHeader from './components/ContentHeader';
 import category from './data';
 import 'react-spring-bottom-sheet/dist/style.css';
 import './index.css';
-import useBottomSheet from '../../../../hooks/useBottomSheet';
+import useBottomSheet from './hooks/useBottomSheet';
+import Sheet from './components/Sheet';
 
 export default function BottomSheetComponent({
   address,
@@ -48,12 +48,9 @@ export default function BottomSheetComponent({
       ) : (
         ''
       )}
-      <motion.div
-        ref={sheet}
-        className="fixed bottom-0 z-50 w-full h-20 bg-white"
-      >
-        <motion.div ref={content}>hello</motion.div>
-      </motion.div>
+      <Sheet ref={{ sheet, content }}>
+        <div>bottom sheet</div>
+      </Sheet>
 
       <BottomSheet
         className="fixed z-50 mx-auto bottom_sheet_root"
