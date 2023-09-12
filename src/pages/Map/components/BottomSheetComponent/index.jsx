@@ -20,7 +20,7 @@ export default function BottomSheetComponent({
   const [filter, setFilter] = useState(
     category.map((item) => ({ ...item, checked: true })),
   );
-  const { sheet, content } = useBottomSheet();
+  const { sheet, content, handle } = useBottomSheet();
 
   const handleBlocking = () => {
     console.log('blocking: ', block);
@@ -48,7 +48,15 @@ export default function BottomSheetComponent({
       ) : (
         ''
       )}
-      <Sheet ref={{ sheet, content }}>
+      <Sheet
+        ref={{ sheet, content, handle }}
+        header={
+          <SheetHeader
+            address={address}
+            handleImplicitPosition={handleImplicitPosition}
+          />
+        }
+      >
         <div>bottom sheet</div>
       </Sheet>
 

@@ -1,11 +1,12 @@
 import { useRef, useEffect } from 'react';
 
 export default function useBottomSheet() {
-  const MIN_Y = 60;
+  const MIN_Y = 68;
   const MIDDLE_Y = window.innerHeight / 2;
-  const MAX_Y = window.innerHeight - 160;
+  const MAX_Y = window.innerHeight - 100;
 
   const sheet = useRef(null);
+  const handle = useRef(null);
   const content = useRef(null);
   const metrics = useRef({
     touchStart: {
@@ -130,10 +131,10 @@ export default function useBottomSheet() {
         isContentAreaTouched: false,
       };
     };
-    if (sheet.current) {
-      sheet.current.addEventListener('touchstart', handleTouchStart);
-      sheet.current.addEventListener('touchmove', handleTouchMove);
-      sheet.current.addEventListener('touchend', handleTouchEnd);
+    if (handle.current) {
+      handle.current.addEventListener('touchstart', handleTouchStart);
+      handle.current.addEventListener('touchmove', handleTouchMove);
+      handle.current.addEventListener('touchend', handleTouchEnd);
     }
   }, []);
 
@@ -147,7 +148,7 @@ export default function useBottomSheet() {
       content.current.addEventListener('touchstart', handleTouchStart);
   }, []);
 
-  return { sheet, content };
+  return { handle, sheet, content };
 }
 
 // ref: https://velog.io/@boris0716/%EB%A6%AC%EC%95%A1%ED%8A%B8%EC%97%90%EC%84%9C-Bottom-Sheet-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EC%9E%91%EC%84%B1%EC%A4%91

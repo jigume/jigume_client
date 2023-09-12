@@ -1,16 +1,20 @@
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 
-const Sheet = ({ children }, ref) => {
-  const { sheet, content } = ref;
-  const BOTTOM_SHEET_HEIGHT = window.innerHeight - 60;
+const Sheet = ({ children, header }, ref) => {
+  const { sheet, content, handle } = ref;
+
   return (
     <motion.div
       ref={sheet}
-      className="flex flex-col fixed z-50 top-[calc(100%-68px)] left-0 right-0 h-[calc(100svh-60px)] rounded-t-[20px] bg-white ease-out drop-shadow-xl"
+      className="flex flex-col fixed z-50 top-[calc(100%-68px)] left-0 right-0 h-[calc(100svh-24px)] rounded-t-[20px] bg-white ease-out duration-300 drop-shadow-xl"
     >
-      <div className="w-full h-5 flex items-center">
-        <div className="bg-[#ddd] w-16 h-1 rounded-full mx-auto" />
+      {/* header */}
+      <div ref={handle} className="w-full flex items-center flex-col">
+        <div className="h-5 flex items-center">
+          <div className="bg-[#ddd] w-16 h-1 rounded-full mx-auto" />
+        </div>
+        {header}
       </div>
       <motion.div ref={content}>
         {children}
