@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import LocationIcon from '../../../../../asset/icon/LocationIcon.svg';
 import UserOutlineIcon from '../../../../../asset/icon/UserOutlineIcon.svg';
 import Fab from './Fab';
 
 export default function SheetHeader({ address, handleImplicitPosition }) {
+  const navigate = useNavigate();
   return (
     <>
       <div className="absolute top-[-50px] right-4 flex flex-row gap-2">
@@ -18,7 +20,9 @@ export default function SheetHeader({ address, handleImplicitPosition }) {
             <div className="h6 mb-0 text-gray-600">{address}</div>
           </div>
         )}
-        <img src={UserOutlineIcon} className="p-[12px]" />
+        <div className="p-[12px]" onClick={() => navigate('/mypage')}>
+          <img src={UserOutlineIcon} />
+        </div>
       </div>
     </>
   );

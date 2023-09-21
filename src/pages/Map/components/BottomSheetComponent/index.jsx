@@ -23,15 +23,14 @@ export default function BottomSheetComponent({
 
   return (
     <>
-      {isOpen ? (
+      {isOpen && (
         <div
-          className="w-screen h-screen fixed top-0 left-0 z-[30] ease-out duration-300"
+          className="w-screen h-screen fixed top-0 left-0 z-[30] touch-pan-y cursor-pointer ease-out duration-300"
           onClick={() => handleSheet('min')}
         />
-      ) : (
-        ''
       )}
       <Sheet
+        onClick={() => handleSheet('max')}
         ref={{ sheet, content, handle }}
         header={
           <SheetHeader
