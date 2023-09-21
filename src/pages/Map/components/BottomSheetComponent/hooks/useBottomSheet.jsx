@@ -1,11 +1,14 @@
 import { useRef, useEffect, useState } from 'react';
 
-export default function useBottomSheet() {
-  const [threshold, setThreshold] = useState({
+const getThreshold = () => {
+  return {
     min: 68,
     mid: window.innerHeight / 2,
     max: window.innerHeight - 100,
-  });
+  };
+};
+
+export default function useBottomSheet() {
   const [isOpen, setOpen] = useState(false);
   const sheet = useRef(null);
   const handle = useRef(null);
@@ -35,27 +38,28 @@ export default function useBottomSheet() {
     if (level === 'mid')
       sheet.current.style.setProperty(
         'transform',
-        `translateY(${threshold.min - threshold.mid}px)`,
+        `translateY(${getThreshold().min - getThreshold().mid}px)`,
       );
     if (level === 'max')
       sheet.current.style.setProperty(
         'transform',
-        `translateY(${threshold.min - threshold.max}px)`,
+        `translateY(${getThreshold().min - getThreshold().max}px)`,
       );
     setOpen(true);
   };
 
+  // Touch Event 핸들러들 등록
   useEffect(() => {
     const canUserMoveBottomSheet = () => {
       const { touchMove, isContentAreaTouched } = metrics.current;
+      if (!sheet.current || !content.current) return false;
 
-      if (!isContentAreaTouched) return true;
-
-      if (sheet.current === undefined) return false;
-      if (content.current === undefined) return false;
-
-      if (sheet.current.getBoundingClientRect().y !== threshold.min)
+      if (
+        !isContentAreaTouched ||
+        sheet.current.getBoundingClientRect().y !== getThreshold().min
+      )
         return true;
+
       if (touchMove.movingDirection === 'down')
         return content.current.scrollTop <= 0;
 
@@ -64,7 +68,7 @@ export default function useBottomSheet() {
 
     const handleTouchStart = (e) => {
       const { touchStart } = metrics.current;
-      if (sheet.current === undefined) return;
+      if (!sheet.current) return;
       touchStart.sheetY = sheet.current.getBoundingClientRect().y;
       touchStart.touchY = e.touches[0].clientY;
     };
@@ -73,40 +77,39 @@ export default function useBottomSheet() {
       const { touchStart, touchMove } = metrics.current;
       const currentTouch = e.touches[0];
 
-      if (touchMove.prevTouchY === undefined)
-        touchMove.prevTouchY = touchStart.touchY;
+      if (!touchMove.prevTouchY) touchMove.prevTouchY = touchStart.touchY;
 
-      if (touchMove.prevTouchY === 0)
-        // 맨 처음 앱 시작하고 시작시
-        touchMove.prevTouchY = touchStart.touchY;
+      // 맨 처음 앱 시작하고 시작시
+      if (touchMove.prevTouchY === 0) touchMove.prevTouchY = touchStart.touchY;
 
+      // 방향 조절
       if (touchMove.prevTouchY < currentTouch.clientY)
         touchMove.movingDirection = 'down';
-
       if (touchMove.prevTouchY > currentTouch.clientY)
         touchMove.movingDirection = 'up';
 
       if (canUserMoveBottomSheet()) {
+        // content에서 scroll이 발생하는 것을 막습니다.
         e.preventDefault();
 
         const touchOffset = currentTouch.clientY - touchStart.touchY;
         let nextSheetY = touchStart.sheetY + touchOffset;
         // 상황에 따라 바닥 높이만큼 조절하는 변수
-        let x = threshold.min;
+        let x = getThreshold().min;
 
-        if (nextSheetY <= threshold.min) {
-          nextSheetY = threshold.min;
-          x = threshold.min;
+        if (nextSheetY <= getThreshold().min) {
+          nextSheetY = getThreshold().min;
+          x = getThreshold().min;
         }
-        if (nextSheetY >= threshold.max) {
-          nextSheetY = threshold.max;
+        if (nextSheetY >= getThreshold().max) {
+          nextSheetY = getThreshold().max;
           x = 0;
         }
 
-        if (sheet.current !== undefined)
+        if (sheet.current)
           sheet.current.style.setProperty(
             'transform',
-            `translateY(${nextSheetY - threshold.max - x}px)`,
+            `translateY(${nextSheetY - getThreshold().max - x}px)`,
           ); // 바닥 만큼은 빼야쥬...
       } else {
         document.body.style.overflowY = 'hidden';
@@ -116,20 +119,20 @@ export default function useBottomSheet() {
     const handleTouchEnd = () => {
       document.body.style.overflowY = 'auto';
       const { touchMove } = metrics.current;
-      if (sheet.current === undefined) return;
+      if (!sheet.current) return;
       // Snap Animation
       const currentSheetY = sheet.current.getBoundingClientRect().y;
-      const boundary = threshold.mid * 0.4;
+      const boundary = getThreshold().mid * 0.4;
 
       // 중간 사이즈
-      if (currentSheetY !== threshold.min) {
+      if (currentSheetY !== getThreshold().min) {
         if (
-          currentSheetY < threshold.mid + boundary &&
-          currentSheetY > threshold.mid - boundary
+          currentSheetY < getThreshold().mid + boundary &&
+          currentSheetY > getThreshold().mid - boundary
         ) {
           sheet.current.style.setProperty(
             'transform',
-            `translateY(${threshold.min - threshold.mid}px)`,
+            `translateY(${getThreshold().min - getThreshold().mid}px)`,
           );
           setOpen(true);
           return;
@@ -143,7 +146,7 @@ export default function useBottomSheet() {
         if (touchMove.movingDirection === 'up') {
           sheet.current.style.setProperty(
             'transform',
-            `translateY(${threshold.min - threshold.max}px)`,
+            `translateY(${getThreshold().min - getThreshold().max}px)`,
           );
           setOpen(true);
         }
@@ -166,68 +169,33 @@ export default function useBottomSheet() {
     handle.current.addEventListener('touchmove', handleTouchMove);
     handle.current.addEventListener('touchend', handleTouchEnd);
 
-    console.log(threshold);
-    if (typeof window !== 'undefined') {
-      const handleResize = () => {
-        console.log(threshold);
-        setThreshold({
-          min: 68,
-          mid: window.innerHeight / 2,
-          max: window.innerHeight - 100,
-        });
-
-        handle.current.removeEventListener('touchstart', handleTouchStart);
-        handle.current.removeEventListener('touchmove', handleTouchMove);
-        handle.current.removeEventListener('touchend', handleTouchEnd);
-      };
-
-      // resize 이벤트가 발생할 때 handleResize 함수가 실행되도록 한다.
-      window.addEventListener('resize', handleResize);
-
-      return () => window.removeEventListener('resize', handleResize);
-    }
-    return () =>
-      window.removeEventListener('resize', () => {
-        return null;
-      });
+    return () => {
+      handle.current.removeEventListener('touchstart', handleTouchStart);
+      handle.current.removeEventListener('touchmove', handleTouchMove);
+      handle.current.removeEventListener('touchend', handleTouchEnd);
+    };
   }, []);
 
   useEffect(() => {
+    // content 영역을 터치하는 것을 기록합니다.
     const handleTouchStart = () => {
-      if (metrics.current !== undefined)
-        metrics.current.isContentAreaTouched = true;
+      if (!metrics.current) metrics.current.isContentAreaTouched = true;
     };
 
-    if (content.current)
+    content.current.addEventListener('touchstart', handleTouchStart);
+
+    return () =>
       content.current.addEventListener('touchstart', handleTouchStart);
   }, []);
 
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     const handleResize = () => {
-  //       setThreshold({
-  //         min: 68,
-  //         mid: window.innerHeight / 2,
-  //         max: window.innerHeight - 100,
-  //       });
+  useEffect(() => {
+    // resize event
+    window.addEventListener('resize', () => {
+      handleSheet('min');
+    });
 
-  //       if (handle.current) {
-  //         handle.current.removeEventListener('touchstart', handleTouchStart);
-  //         handle.current.removeEventListener('touchmove', handleTouchMove);
-  //         handle.current.removeEventListener('touchend', handleTouchEnd);
-  //       }
-  //     };
-
-  //     // resize 이벤트가 발생할 때 handleResize 함수가 실행되도록 한다.
-  //     window.addEventListener('resize', handleResize);
-
-  //     return () => window.removeEventListener('resize', handleResize);
-  //   }
-  //   return () =>
-  //     window.removeEventListener('resize', () => {
-  //       return null;
-  //     });
-  // }, []);
+    return () => window.removeEventListener('resize', null);
+  }, []);
 
   return { handle, sheet, content, isOpen, handleSheet };
 }

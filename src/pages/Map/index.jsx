@@ -5,7 +5,7 @@ import getCurrentLocation from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
 import ItemMarker from './components/ItemMarker';
-import { getGoods } from './api';
+// import { getGoods } from './api';
 
 const initPosition = {
   lat: 33.450701,
@@ -18,7 +18,7 @@ export default function Map() {
   const [position, setPosition] = useState(initPosition);
   const [implicit, setImplicit] = useState(undefined);
   const [address, setAddress] = useState('-');
-  const [marker, setMarker] = useState([]);
+  const [marker] = useState([]);
   const navigate = useNavigate();
 
   const getAddress = () => {
@@ -36,7 +36,7 @@ export default function Map() {
 
   useEffect(() => {
     getCurrentLocation(setPosition, setImplicit);
-    getGoods().then((res) => setMarker(res));
+    // getGoods().then((res) => setMarker(res));
   }, []);
 
   useEffect(() => {
