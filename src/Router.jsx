@@ -26,7 +26,7 @@ export default function Router() {
   const router = createBrowserRouter([
     // 로그인
     {
-      path: 'login',
+      path: '/login',
       element: <Login />,
       loader: () => user.role !== 'GUEST' && redirect('/'),
     },
@@ -42,6 +42,7 @@ export default function Router() {
           path: '/Introduce/:idx',
           element: <Introduce />,
         },
+        // 상품 공지
         {
           path: '/Announcement',
           element: <Announcement />,
