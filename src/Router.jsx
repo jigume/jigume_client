@@ -26,9 +26,9 @@ export default function Router() {
   const router = createBrowserRouter([
     // 로그인
     {
-      path: '/login',
+      path: 'login',
       element: <Login />,
-      loader: () => user.role !== 'GEUST' && redirect('/'),
+      loader: () => user.role !== 'GUEST' && redirect('/'),
     },
     { path: '/auth', element: <Auth /> },
     {

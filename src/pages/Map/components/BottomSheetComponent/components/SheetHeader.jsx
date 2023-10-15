@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import LocationIcon from '../../../../../asset/icon/LocationIcon.svg';
 import UserOutlineIcon from '../../../../../asset/icon/UserOutlineIcon.svg';
@@ -11,7 +10,6 @@ export default function SheetHeader({
   handleImplicitPosition,
   onClick,
 }) {
-  const navigate = useNavigate();
   const [, setUser] = useRecoilState(userState);
 
   return (
@@ -31,13 +29,14 @@ export default function SheetHeader({
             <div className="h6 mb-0 text-gray-600">{address}</div>
           </div>
         )}
+        {/* 임시 로그아웃 */}
         <div
           className="p-[12px]"
           onClick={() =>
             setUser((prev) => {
               return {
                 ...prev,
-                role: 'GEUST',
+                role: 'GUEST',
               };
             })
           }
