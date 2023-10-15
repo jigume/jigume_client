@@ -1,22 +1,22 @@
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import { backURL } from '../../../common';
+import Loading from '../../Map/components/Loading';
 
 export default function Auth() {
   const [searchParams] = useSearchParams();
   const code = searchParams.get('code');
 
-  useEffect(() => {
-    axios
-      .get(
-        `${backURL}/api/login?login-provider=kakao&authorization-code=${code}`,
-      )
-      .then((res) => console.log(res));
-  }, []);
-  return (
-    <div className="w-full h-[100svh] flex items-center justify-center">
-      authing...
-    </div>
-  );
+  const codeProvide = async () => {
+    const response = await axios.get(
+      `${backURL}/api/login?login-provider=kakao&authorization-code=${code}`,
+    );
+    return response;
+  };
+
+  const auth = useQuery('oauth', codeProvide);
+
+  return <Loading />;
 }

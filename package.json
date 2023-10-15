@@ -24,6 +24,7 @@
     "react-dom": "^18.2.0",
     "react-dropdown": "^1.11.0",
     "react-kakao-maps-sdk": "^1.1.18",
+    "react-query": "^3.39.3",
     "react-router-dom": "^6.15.0",
     "reactstrap": "^9.2.0",
     "recoil": "^0.7.7",

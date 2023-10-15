@@ -3,6 +3,7 @@ import logo from '../../asset/images/login/login_logo.png';
 import kakaoLogin from '../../asset/images/login/kakao_login.png';
 
 export default function Login() {
+  // kakao oauth
   const handleLogin = async () => {
     const REST_API_KEY = import.meta.env.VITE_KAKAO_JS_KEY;
     const REDIRECT_URI = 'http://localhost:5173/auth';
@@ -21,6 +22,7 @@ export default function Login() {
             <br /> 제주도만의 지도 공동구매 플랫폼
           </p>
         </div>
+
         {/* login button */}
         <div role="button" onClick={handleLogin}>
           <img src={kakaoLogin} className="active:opacity-80" />
