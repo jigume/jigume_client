@@ -42,6 +42,9 @@ export default function Map() {
   useEffect(() => {
     if (implicit !== undefined) getAddress();
   }, [position]);
+  useEffect(() => {
+    console.log(implicit);
+  }, [implicit]);
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
@@ -63,7 +66,6 @@ export default function Map() {
             </div>
           </CustomOverlayMap>
           {marker.map((item, idx) => {
-            // console.log(item);
             const numX = Math.random() / 100;
             const numY = (Math.random() / 100) * -1;
 

@@ -4,14 +4,21 @@ import LocationIcon from '../../../../../asset/icon/LocationIcon.svg';
 import UserOutlineIcon from '../../../../../asset/icon/UserOutlineIcon.svg';
 import Fab from './Fab';
 
-export default function SheetHeader({ address, handleImplicitPosition }) {
+export default function SheetHeader({
+  address,
+  handleImplicitPosition,
+  onClick,
+}) {
   const navigate = useNavigate();
   return (
     <>
       <div className="absolute top-[-50px] right-4 flex flex-row gap-2">
         <Fab handleImplicitPosition={handleImplicitPosition} />
       </div>
-      <div className="flex items-center justify-between w-full px-4">
+      <div
+        className="flex items-center justify-between w-full px-4"
+        onClick={onClick}
+      >
         {address === '-' ? (
           <div className="animate-pulse bg-slate-200 h-3 w-64 rounded-md" />
         ) : (

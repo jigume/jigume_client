@@ -30,10 +30,10 @@ export default function BottomSheetComponent({
         />
       )}
       <Sheet
-        onClick={() => handleSheet('max')}
         ref={{ sheet, content, handle }}
         header={
           <SheetHeader
+            onClick={() => handleSheet('max')}
             address={address}
             handleImplicitPosition={handleImplicitPosition}
           />

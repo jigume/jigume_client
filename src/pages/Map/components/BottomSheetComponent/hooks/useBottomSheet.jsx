@@ -168,12 +168,6 @@ export default function useBottomSheet() {
     handle.current.addEventListener('touchstart', handleTouchStart);
     handle.current.addEventListener('touchmove', handleTouchMove);
     handle.current.addEventListener('touchend', handleTouchEnd);
-
-    return () => {
-      handle.current.removeEventListener('touchstart', handleTouchStart);
-      handle.current.removeEventListener('touchmove', handleTouchMove);
-      handle.current.removeEventListener('touchend', handleTouchEnd);
-    };
   }, []);
 
   useEffect(() => {
@@ -183,9 +177,6 @@ export default function useBottomSheet() {
     };
 
     content.current.addEventListener('touchstart', handleTouchStart);
-
-    return () =>
-      content.current.addEventListener('touchstart', handleTouchStart);
   }, []);
 
   useEffect(() => {
@@ -193,8 +184,6 @@ export default function useBottomSheet() {
     window.addEventListener('resize', () => {
       handleSheet('min');
     });
-
-    return () => window.removeEventListener('resize', null);
   }, []);
 
   return { handle, sheet, content, isOpen, handleSheet };
