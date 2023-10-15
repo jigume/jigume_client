@@ -10,13 +10,16 @@ export default function Auth() {
   const code = searchParams.get('code');
 
   const codeProvide = async () => {
-    const response = await axios.get(
-      `${backURL}/api/login?login-provider=kakao&authorization-code=${code}`,
+    const response = await axios.post(
+      `${backURL}/api/member/login?login-provider=kakao&authorization-code=${code}`,
     );
     return response;
   };
 
-  const auth = useQuery('oauth', codeProvide);
+  useQuery('oauth', codeProvide, {
+    retry: false,
+    onSuccess: (res) => console.log(res),
+  });
 
   return <Loading />;
 }
