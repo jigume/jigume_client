@@ -1,7 +1,7 @@
 import React from 'react';
 import DaumPostcodeEmbed from 'react-daum-postcode';
 
-const Postcode = () => {
+function Postcode() {
   const handleComplete = (data) => {
     let fullAddress = data.address;
     let extraAddress = '';
@@ -21,6 +21,6 @@ const Postcode = () => {
   };
 
   return <DaumPostcodeEmbed onComplete={handleComplete} />;
-};
+}
 
 export default Postcode;

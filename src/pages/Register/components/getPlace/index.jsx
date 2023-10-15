@@ -1,7 +1,7 @@
 import React from 'react';
 import Postcode from './component/postcode';
 
-const GetPlace = () => {
+function GetPlace() {
   return (
     <form className="flex flex-col">
       <div className="mt-1 h-10 w-20 bg-slate-200">픽업 주소검색</div>
@@ -14,6 +14,6 @@ const GetPlace = () => {
       />
     </form>
   );
-};
+}
 
 export default GetPlace;

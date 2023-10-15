@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { getGoodsDetail } from '../../api';
 import SheetHeader from './components/SheetHeader';
 import ItemList from './components/ItemList';
 import ContentHeader from './components/ContentHeader';
@@ -11,15 +10,11 @@ export default function BottomSheetComponent({
   address,
   handleImplicitPosition,
 }) {
-  const [imgArr, setImgArr] = useState([]);
+  const [imgArr] = useState([]);
   const [filter, setFilter] = useState(
     category.map((item) => ({ ...item, checked: true })),
   );
   const { sheet, content, handle, isOpen, handleSheet } = useBottomSheet();
-
-  useEffect(() => {
-    getGoodsDetail(setImgArr);
-  }, []);
 
   return (
     <>

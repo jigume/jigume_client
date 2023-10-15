@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 
-const Sheet = ({ children, header, onClick }, ref) => {
+function Sheet({ children, header, onClick }, ref) {
   const { sheet, content, handle } = ref;
 
   return (
@@ -25,6 +25,6 @@ const Sheet = ({ children, header, onClick }, ref) => {
       </motion.div>
     </motion.div>
   );
-};
+}
 
 export default forwardRef(Sheet);

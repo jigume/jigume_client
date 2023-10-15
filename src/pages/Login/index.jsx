@@ -27,7 +27,6 @@ export default function Login() {
               };
             })
           }
-          aria-hidden
         >
           <img src={kakaoLogin} className="active:opacity-80" />
         </div>

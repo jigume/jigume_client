@@ -22,7 +22,7 @@ function Register() {
     <>
       <div className="w-full h-[48px] px-[1rem] flex flex-row items-center">
         <div onClick={() => navigate(-1)} className="pr-2">
-          <img className="w-[32px] h-[32px] " src={ChevronLeft} />
+          <img className="w-[32px] h-[32px]" src={ChevronLeft} />
         </div>
       </div>
 

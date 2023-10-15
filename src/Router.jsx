@@ -23,6 +23,7 @@ export default function Router() {
   const [user] = useRecoilState(userState);
 
   const router = createBrowserRouter([
+    // 로그인
     {
       path: '/login',
       element: <Login />,
@@ -32,7 +33,9 @@ export default function Router() {
       path: '/',
       loader: () => user.role !== 'USER' && redirect('/login'),
       children: [
+        // 지도 (메인)
         { index: true, element: <Map /> },
+        // 상품 상세
         {
           path: '/Introduce/:idx',
           element: <Introduce />,
@@ -41,6 +44,7 @@ export default function Router() {
           path: '/Announcement',
           element: <Announcement />,
         },
+        // 상품 등록
         {
           path: '/Register/*',
           element: <Register />,
@@ -67,6 +71,15 @@ export default function Router() {
               element: <GetPlace />,
             },
           ],
+        },
+        {
+          path: '/logout',
+          // loader: setUser((prev) => {
+          //   return {
+          //     ...prev,
+          //     role: 'GEUST',
+          //   };
+          // }),
         },
       ],
     },
