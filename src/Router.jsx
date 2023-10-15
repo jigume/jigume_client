@@ -72,15 +72,6 @@ export default function Router() {
             },
           ],
         },
-        {
-          path: '/logout',
-          // loader: setUser((prev) => {
-          //   return {
-          //     ...prev,
-          //     role: 'GEUST',
-          //   };
-          // }),
-        },
       ],
     },
   ]);
