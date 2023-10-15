@@ -1,8 +1,11 @@
 import React from 'react';
+import { useRecoilState } from 'recoil';
 import logo from '../../asset/images/login/login_logo.png';
 import kakaoLogin from '../../asset/images/login/kakao_login.png';
+import userState from '../../recoli/userState';
 
 export default function Login() {
+  const [, setUser] = useRecoilState(userState);
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
       <div className="h-[100svh] flex flex-col justify-around px-4">
@@ -14,7 +17,20 @@ export default function Login() {
           </p>
         </div>
         {/* login button */}
-        <img src={kakaoLogin} className="active:opacity-80" />
+        <div
+          role="button"
+          onClick={() =>
+            setUser((prev) => {
+              return {
+                ...prev,
+                role: 'USER',
+              };
+            })
+          }
+          aria-hidden
+        >
+          <img src={kakaoLogin} className="active:opacity-80" />
+        </div>
       </div>
     </div>
   );
