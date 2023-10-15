@@ -17,6 +17,7 @@ import ProductDeadline from './pages/Register/components/productDeadline';
 import GetPlace from './pages/Register/components/getPlace';
 import Login from './pages/Login';
 import userState from './recoli/userState';
+import Auth from './pages/Login/components/auth';
 
 export default function Router() {
   // recoil state로 access roles 관리
@@ -29,6 +30,7 @@ export default function Router() {
       element: <Login />,
       loader: () => user.role !== 'GEUST' && redirect('/'),
     },
+    { path: '/auth', element: <Auth /> },
     {
       path: '/',
       loader: () => user.role !== 'USER' && redirect('/login'),

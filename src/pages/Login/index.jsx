@@ -1,11 +1,16 @@
 import React from 'react';
-import { useRecoilState } from 'recoil';
 import logo from '../../asset/images/login/login_logo.png';
 import kakaoLogin from '../../asset/images/login/kakao_login.png';
-import userState from '../../recoli/userState';
 
 export default function Login() {
-  const [, setUser] = useRecoilState(userState);
+  const handleLogin = async () => {
+    const REST_API_KEY = import.meta.env.VITE_KAKAO_JS_KEY;
+    const REDIRECT_URI = 'http://localhost:5173/auth';
+    const url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
+
+    window.location.href = url;
+  };
+
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
       <div className="h-[100svh] flex flex-col justify-around px-4">
@@ -17,17 +22,7 @@ export default function Login() {
           </p>
         </div>
         {/* login button */}
-        <div
-          role="button"
-          onClick={() =>
-            setUser((prev) => {
-              return {
-                ...prev,
-                role: 'USER',
-              };
-            })
-          }
-        >
+        <div role="button" onClick={handleLogin}>
           <img src={kakaoLogin} className="active:opacity-80" />
         </div>
       </div>

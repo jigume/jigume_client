@@ -1,8 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import LocationIcon from '../../../../../asset/icon/LocationIcon.svg';
 import UserOutlineIcon from '../../../../../asset/icon/UserOutlineIcon.svg';
 import Fab from './Fab';
+import userState from '../../../../../recoli/userState';
 
 export default function SheetHeader({
   address,
@@ -10,6 +12,8 @@ export default function SheetHeader({
   onClick,
 }) {
   const navigate = useNavigate();
+  const [, setUser] = useRecoilState(userState);
+
   return (
     <>
       <div className="absolute top-[-50px] right-4 flex flex-row gap-2">
@@ -27,7 +31,17 @@ export default function SheetHeader({
             <div className="h6 mb-0 text-gray-600">{address}</div>
           </div>
         )}
-        <div className="p-[12px]" onClick={() => navigate('/mypage')}>
+        <div
+          className="p-[12px]"
+          onClick={() =>
+            setUser((prev) => {
+              return {
+                ...prev,
+                role: 'GEUST',
+              };
+            })
+          }
+        >
           <img src={UserOutlineIcon} />
         </div>
       </div>
