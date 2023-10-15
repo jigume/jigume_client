@@ -10,6 +10,7 @@ import ProductLink from './pages/Register/components/productLink';
 import ProductAmount from './pages/Register/components/productAmount';
 import ProductDeadline from './pages/Register/components/productDeadline';
 import GetPlace from './pages/Register/components/getPlace';
+import Login from './pages/Login';
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+  { path: '/login', element: <Login /> },
 ]);
 
 export default function Router() {
