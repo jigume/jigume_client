@@ -7,33 +7,40 @@ import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
 import ItemMarker from './components/ItemMarker';
 import { userState } from '../../recoil';
-// import { getGoods } from './api';
-
-const initPosition = {
-  lat: 33.450701,
-  lng: 126.570667,
-};
 
 export default function Map() {
   const { kakao } = window;
   const mapRef = useRef();
-  const [position, setPosition] = useState(initPosition);
+  const [position, setPosition] = useState(undefined);
   const [address, setAddress] = useState('-');
   const [marker] = useState([]);
   const navigate = useNavigate();
   const [user, setUser] = useRecoilState(userState);
 
+  // geocoder
   const getAddress = () => {
-    const geocoder = new kakao.maps.services.Geocoder();
+    if (!position) return;
     const callback = (result, status) => {
       if (status === kakao.maps.services.Status.OK)
         setAddress(result[0].address.address_name);
     };
-    geocoder.coord2Address(position.lng, position.lat, callback);
+    new kakao.maps.services.Geocoder().coord2Address(
+      position.lng,
+      position.lat,
+      callback,
+    );
   };
 
   const handleToCenter = () => {
-    if (user.position !== undefined) setPosition(user.position);
+    if (user.position) setPosition(user.position);
+  };
+
+  // 맵 조작이 종료 되었을 때 실행하는 callback fn
+  const handleDragEndMap = (map) => {
+    setPosition({
+      lat: map.getCenter().getLat(),
+      lng: map.getCenter().getLng(),
+    });
   };
 
   useEffect(() => {
@@ -42,19 +49,19 @@ export default function Map() {
   }, []);
 
   useEffect(() => {
-    if (user.position !== undefined) getAddress();
-
-    setUser((prev) => {
-      return {
-        ...prev,
-        position,
-      };
-    });
-  }, [position]);
+    if (user.position && position !== undefined) getAddress();
+    else
+      setUser((prev) => {
+        return {
+          ...prev,
+          position,
+        };
+      });
+  }, [position, user.position]);
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
-      {position.lat !== initPosition.lat ? (
+      {position ? (
         <KakaoMap
           ref={mapRef}
           center={position}
@@ -64,13 +71,15 @@ export default function Map() {
             height: '100svh',
           }}
           level={3}
+          onDragEnd={handleDragEndMap}
         >
-          <CustomOverlayMap position={position}>
+          <CustomOverlayMap position={user.position}>
             <div className="w-[32px] h-[32px] rounded-full bg-primaryBlue flex items-center justify-center">
               <div className="w-[16px] h-[16px] rounded-full bg-white relative z-30" />
               <div className="bg-primaryBlue w-[30px] h-[30px] absolute rounded-full z-10 animate-ping" />
             </div>
           </CustomOverlayMap>
+
           {marker.map((item, idx) => {
             const numX = Math.random() / 100;
             const numY = (Math.random() / 100) * -1;
