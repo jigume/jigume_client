@@ -19,6 +19,7 @@ import Login from './pages/Login';
 import Auth from './pages/Login/components/auth';
 import Refresh from './pages/Refresh';
 import { authState } from './recoil';
+import NotMatch from './pages/NotMatch';
 
 export default function Router() {
   // recoil state로 access roles 관리
@@ -81,6 +82,7 @@ export default function Router() {
         },
       ],
     },
+    { path: '*', element: <NotMatch /> },
   ]);
 
   return <RouterProvider router={router} />;
