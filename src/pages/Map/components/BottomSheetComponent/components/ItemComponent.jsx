@@ -38,7 +38,7 @@ export default function ItemComponent({
   const num = Math.floor(Math.random() * 10);
   return (
     <div
-      className={`flex flex-row py-[20px] w-[calc(100vw-32px)] gap-4 cursor-pointer ${
+      className={`flex flex-row py-[20px] px-4 w-[calc(100vw-32px)] gap-4 cursor-pointer ${
         !title ? 'animate-pulse' : ''
       }`}
       onClick={() => navigate(`/introduce/${index}`)}
@@ -76,13 +76,13 @@ export default function ItemComponent({
             />
           )}
           {/* <div className="w-[18px] h-[18px] rounded-full bg-gray-100" /> */}
-          <div className="flex flex-row caption gap-1">
+          <div className="flex flex-row caption gap-1 items-center">
             {!username ? (
               <div className="w-16 h-[12px] bg-gray-100 rounded-sm" />
             ) : (
               <div>{nickname[num]}</div>
             )}
-            <div className="text-gray-500">|</div>
+            <div className="bg-gray-500 w-[1px] h-3" />
             {!count ? (
               <div className="w-20 h-[12px] bg-gray-100 rounded-sm" />
             ) : (
@@ -97,9 +97,9 @@ export default function ItemComponent({
           ) : (
             <div>구매가: {itemCost}</div>
           )}
-          <div className="flex flex-row gap-1 font-light">
+          <div className="flex flex-row gap-1 font-light items-center">
             {!deliveryCost ? (
-              <div className="w-12 h-[12px] mb-4 bg-gray-100 rounded-sm" />
+              <div className="w-12 h-[12px] bg-gray-100 rounded-sm" />
             ) : (
               <span>배송비: {deliveryCost}</span>
             )}

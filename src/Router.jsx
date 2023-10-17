@@ -33,11 +33,11 @@ export default function Router() {
         { index: true, element: <Auth /> },
         { path: 'login', element: <Login /> },
       ],
-      // loader: () => auth.role !== 'GUEST' && redirect('/'),
+      loader: () => auth.role !== 'GUEST' && redirect('/'),
     },
     {
       path: '/',
-      // loader: () => auth.role !== 'USER' && redirect('/auth/login'),
+      loader: () => auth.role !== 'USER' && redirect('/auth/login'),
       element: <Refresh />,
       children: [
         // 지도 (메인)
