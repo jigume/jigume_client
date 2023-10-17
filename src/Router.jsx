@@ -26,14 +26,16 @@ export default function Router() {
   const router = createBrowserRouter([
     // 로그인
     {
-      path: '/login',
-      element: <Login />,
+      path: '/auth/*',
+      children: [
+        { index: true, element: <Auth /> },
+        { path: 'login', element: <Login /> },
+      ],
       loader: () => user.role !== 'GUEST' && redirect('/'),
     },
-    { path: '/auth', element: <Auth /> },
     {
       path: '/',
-      loader: () => user.role !== 'USER' && redirect('/login'),
+      loader: () => user.role !== 'USER' && redirect('/auth/login'),
       children: [
         // 지도 (메인)
         { index: true, element: <Map /> },

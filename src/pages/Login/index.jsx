@@ -14,9 +14,9 @@ export default function Login() {
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
-      <div className="h-[100svh] flex flex-col justify-around px-4">
+      <div className="h-[100svh] flex flex-col justify-evenly px-4">
         <div className="flex flex-col gap-5">
-          <img src={logo} className="mx-auto" />
+          <img src={logo} className="mx-auto sm:max-w-[320px]" />
           <p className="text-center font-light">
             한 명만 모여도 추가 배송비가 내려가는,
             <br /> 제주도만의 지도 공동구매 플랫폼
@@ -25,7 +25,10 @@ export default function Login() {
 
         {/* login button */}
         <div role="button" onClick={handleLogin}>
-          <img src={kakaoLogin} className="active:opacity-80" />
+          <img
+            src={kakaoLogin}
+            className="active:opacity-80 sm:max-w-[320px] mx-auto"
+          />
         </div>
       </div>
     </div>
