@@ -9,13 +9,13 @@ import ItemMarker from './components/ItemMarker';
 import { userState } from '../../recoil';
 
 export default function Map() {
+  const navigate = useNavigate();
+  const [user, setUser] = useRecoilState(userState);
   const { kakao } = window;
   const mapRef = useRef();
   const [position, setPosition] = useState(undefined);
   const [address, setAddress] = useState('-');
   const [marker] = useState([]);
-  const navigate = useNavigate();
-  const [user, setUser] = useRecoilState(userState);
 
   // geocoder
   const getAddress = () => {
@@ -32,7 +32,9 @@ export default function Map() {
   };
 
   const handleToCenter = () => {
-    if (user.position) setPosition(user.position);
+    getCurrentLocation(setPosition).then(() => {
+      if (user.position) setPosition(user.position);
+    });
   };
 
   // 맵 조작이 종료 되었을 때 실행하는 callback fn
