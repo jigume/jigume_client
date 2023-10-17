@@ -6,7 +6,9 @@ export default function Login() {
   // kakao oauth
   const handleLogin = async () => {
     const REST_API_KEY = import.meta.env.VITE_KAKAO_JS_KEY;
-    const REDIRECT_URI = 'http://localhost:5173/auth';
+    const REDIRECT_URI = import.meta.env.DEV
+      ? 'http://localhost:5173/auth'
+      : 'https://www.jigume.site/auth';
     const url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
 
     window.location.href = url;
