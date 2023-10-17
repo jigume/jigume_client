@@ -3,14 +3,14 @@ import { useRecoilState } from 'recoil';
 import LocationIcon from '../../../../../asset/icon/LocationIcon.svg';
 import UserOutlineIcon from '../../../../../asset/icon/UserOutlineIcon.svg';
 import Fab from './Fab';
-import userState from '../../../../../recoli/userState';
+import { authState } from '../../../../../recoil';
 
 export default function SheetHeader({
   address,
   handleImplicitPosition,
   onClick,
 }) {
-  const [, setUser] = useRecoilState(userState);
+  const [, setUser] = useRecoilState(authState);
 
   return (
     <>

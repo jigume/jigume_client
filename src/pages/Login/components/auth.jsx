@@ -5,10 +5,10 @@ import { useQuery } from 'react-query';
 import { useRecoilState } from 'recoil';
 import { backURL } from '../../../common';
 import Loading from '../../Map/components/Loading';
-import userState from '../../../recoli/userState';
+import { authState } from '../../../recoil';
 
 export default function Auth() {
-  const [, setUser] = useRecoilState(userState);
+  const [, setUser] = useRecoilState(authState);
   const [searchParams] = useSearchParams();
   const code = searchParams.get('code');
 
@@ -30,6 +30,8 @@ export default function Auth() {
         return {
           ...prev,
           role: 'USER',
+          token: res.data.tokenDto.accessToken,
+          re_token: res.data.tokenDto.refreshToken,
         };
       });
     },

@@ -16,12 +16,12 @@ import ProductAmount from './pages/Register/components/productAmount';
 import ProductDeadline from './pages/Register/components/productDeadline';
 import GetPlace from './pages/Register/components/getPlace';
 import Login from './pages/Login';
-import userState from './recoli/userState';
 import Auth from './pages/Login/components/auth';
+import { authState } from './recoil';
 
 export default function Router() {
   // recoil state로 access roles 관리
-  const [user] = useRecoilState(userState);
+  const [user] = useRecoilState(authState);
 
   const router = createBrowserRouter([
     // 로그인
