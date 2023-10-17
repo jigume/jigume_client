@@ -8,7 +8,8 @@ export const authState = atom({
   default: {
     role: 'GUEST',
     token: '',
-    re_token: '',
+    refreshToken: '',
+    expired: undefined,
   },
   effects_UNSTABLE: [persistAtom],
 });
@@ -16,7 +17,7 @@ export const authState = atom({
 export const userState = atom({
   key: 'jigumeUser',
   default: {
-    position: { lat: 0, lng: 0 },
+    position: undefined,
     filter: [],
   },
 });

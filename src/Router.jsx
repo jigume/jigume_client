@@ -17,11 +17,12 @@ import ProductDeadline from './pages/Register/components/productDeadline';
 import GetPlace from './pages/Register/components/getPlace';
 import Login from './pages/Login';
 import Auth from './pages/Login/components/auth';
+import Refresh from './pages/Refresh';
 import { authState } from './recoil';
 
 export default function Router() {
   // recoil state로 access roles 관리
-  const [user] = useRecoilState(authState);
+  const [auth] = useRecoilState(authState);
 
   const router = createBrowserRouter([
     // 로그인
@@ -31,11 +32,12 @@ export default function Router() {
         { index: true, element: <Auth /> },
         { path: 'login', element: <Login /> },
       ],
-      loader: () => user.role !== 'GUEST' && redirect('/'),
+      loader: () => auth.role !== 'GUEST' && redirect('/'),
     },
     {
       path: '/',
-      loader: () => user.role !== 'USER' && redirect('/auth/login'),
+      loader: () => auth.role !== 'USER' && redirect('/auth/login'),
+      element: <Refresh />,
       children: [
         // 지도 (메인)
         { index: true, element: <Map /> },

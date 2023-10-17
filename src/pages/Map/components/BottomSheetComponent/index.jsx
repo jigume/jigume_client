@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import SheetHeader from './components/SheetHeader';
 import ItemList from './components/ItemList';
 import ContentHeader from './components/ContentHeader';
@@ -6,10 +6,7 @@ import category from './data';
 import useBottomSheet from './hooks/useBottomSheet';
 import Sheet from './components/Sheet';
 
-export default function BottomSheetComponent({
-  address,
-  handleImplicitPosition,
-}) {
+export default function BottomSheetComponent({ address, handleToCenter }) {
   const [imgArr] = useState([]);
   const [filter, setFilter] = useState(
     category.map((item) => ({ ...item, checked: true })),
@@ -30,7 +27,7 @@ export default function BottomSheetComponent({
           <SheetHeader
             onClick={() => handleSheet('max')}
             address={address}
-            handleImplicitPosition={handleImplicitPosition}
+            handleToCenter={handleToCenter}
           />
         }
       >

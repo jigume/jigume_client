@@ -5,17 +5,13 @@ import UserOutlineIcon from '../../../../../asset/icon/UserOutlineIcon.svg';
 import Fab from './Fab';
 import { authState } from '../../../../../recoil';
 
-export default function SheetHeader({
-  address,
-  handleImplicitPosition,
-  onClick,
-}) {
-  const [, setUser] = useRecoilState(authState);
+export default function SheetHeader({ address, handleToCenter, onClick }) {
+  const [, setAuth] = useRecoilState(authState);
 
   return (
     <>
       <div className="absolute top-[-50px] right-4 flex flex-row gap-2">
-        <Fab handleImplicitPosition={handleImplicitPosition} />
+        <Fab handleToCenter={handleToCenter} />
       </div>
       <div
         className="flex items-center justify-between w-full px-4"
@@ -33,7 +29,7 @@ export default function SheetHeader({
         <div
           className="p-[12px]"
           onClick={() =>
-            setUser((prev) => {
+            setAuth((prev) => {
               return {
                 ...prev,
                 role: 'GUEST',

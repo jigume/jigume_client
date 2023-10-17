@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { CustomOverlayMap, Map as KakaoMap } from 'react-kakao-maps-sdk';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import getCurrentLocation from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
 import ItemMarker from './components/ItemMarker';
+import { userState } from '../../recoil';
 // import { getGoods } from './api';
 
 const initPosition = {
@@ -16,10 +18,10 @@ export default function Map() {
   const { kakao } = window;
   const mapRef = useRef();
   const [position, setPosition] = useState(initPosition);
-  const [implicit, setImplicit] = useState(undefined);
   const [address, setAddress] = useState('-');
   const [marker] = useState([]);
   const navigate = useNavigate();
+  const [user, setUser] = useRecoilState(userState);
 
   const getAddress = () => {
     const geocoder = new kakao.maps.services.Geocoder();
@@ -30,21 +32,25 @@ export default function Map() {
     geocoder.coord2Address(position.lng, position.lat, callback);
   };
 
-  const handleImplicitPosition = () => {
-    if (implicit !== undefined) setPosition(implicit);
+  const handleToCenter = () => {
+    if (user.position !== undefined) setPosition(user.position);
   };
 
   useEffect(() => {
-    getCurrentLocation(setPosition, setImplicit);
+    getCurrentLocation(setPosition);
     // getGoods().then((res) => setMarker(res));
   }, []);
 
   useEffect(() => {
-    if (implicit !== undefined) getAddress();
+    if (user.position !== undefined) getAddress();
+
+    setUser((prev) => {
+      return {
+        ...prev,
+        position,
+      };
+    });
   }, [position]);
-  useEffect(() => {
-    console.log(implicit);
-  }, [implicit]);
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
@@ -59,7 +65,7 @@ export default function Map() {
           }}
           level={3}
         >
-          <CustomOverlayMap position={implicit}>
+          <CustomOverlayMap position={position}>
             <div className="w-[32px] h-[32px] rounded-full bg-primaryBlue flex items-center justify-center">
               <div className="w-[16px] h-[16px] rounded-full bg-white relative z-30" />
               <div className="bg-primaryBlue w-[30px] h-[30px] absolute rounded-full z-10 animate-ping" />
@@ -88,10 +94,7 @@ export default function Map() {
         <Loading />
       )}
 
-      <BottomSheetComponent
-        address={address}
-        handleImplicitPosition={handleImplicitPosition}
-      />
+      <BottomSheetComponent address={address} handleToCenter={handleToCenter} />
     </div>
   );
 }
