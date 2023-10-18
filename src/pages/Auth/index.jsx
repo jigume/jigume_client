@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 import { add } from 'date-fns';
 import Loading from '../Map/components/Loading';
 import { authState } from '../../recoil';
-import { codeProvide } from '../api/user';
+import { codeProvide } from '../../api/user';
 
 export default function Auth() {
   const [, setAuth] = useRecoilState(authState);

@@ -2,8 +2,8 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import { useQuery } from 'react-query';
 import { Outlet } from 'react-router-dom';
-import { authState } from '../../recoil';
-import { handleRefreshToken } from '../api/user';
+import { authState } from '../../../../recoil';
+import { handleRefreshToken } from '../../../../api/user';
 
 export default function Refresh() {
   const [, setAuth] = useRecoilState(authState);

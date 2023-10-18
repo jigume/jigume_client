@@ -3,7 +3,7 @@ import SheetHeader from './components/SheetHeader';
 import ItemList from './components/ItemList';
 import ContentHeader from './components/ContentHeader';
 import category from './data';
-import useBottomSheet from './hooks/useBottomSheet';
+import useBottomSheet from '../../../../hooks/useBottomSheet';
 import Sheet from './components/Sheet';
 
 export default function BottomSheetComponent({ address, handleToCenter }) {
