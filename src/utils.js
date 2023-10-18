@@ -1,3 +1,7 @@
+/**
+ *
+ * @param {* function()} setPosition
+ */
 const getCurrentLocation = async (setPosition) => {
   await navigator.geolocation.getCurrentPosition((position) => {
     setPosition({
