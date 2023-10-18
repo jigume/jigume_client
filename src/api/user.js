@@ -1,18 +1,16 @@
 import axios from 'axios';
-import { compareAsc } from 'date-fns';
 
-const { accessToken, refreshToken, expired } = JSON.parse(
-  localStorage.getItem('recoil-persist'),
-).jigumeAuth;
+const recoilLocal = JSON.parse(localStorage.getItem('recoil-persist'));
+const { accessToken, refreshToken, expired } = recoilLocal?.jigumeAuth ?? {};
 
 /**
  *
- * @param {data:{query: }} data
+ * @param {query} query
  * @returns
  */
 export const setNewUser = (data) => {
   const result = axios.post('/api/member/new', data.query, {
-    headers: { Authorization: `Bearer ${data.accessToken}` },
+    headers: { Authorization: `Bearer ${accessToken}` },
     withCredentials: true,
     crossDomain: true,
     credentials: 'include',
@@ -49,12 +47,18 @@ export const handleRefreshToken = async () => {
  * }}
  */
 export const codeProvide = async (code) => {
-  /** @type {string} */
-  if (!code) {
-    throw Error('인가코드가 옳바르지 않습니다.');
-  }
-  const response = await axios.post(
-    `/api/member/login?login-provider=kakao&authorization-code=${code}`,
-  );
-  return response;
+  return {
+    data: {
+      baseRole: 'GUEST',
+      tokenDto: { accessToken: '123', refreshToken: '123' },
+    },
+  };
+  // /** @type {string} */
+  // if (!code) {
+  //   throw Error('인가코드가 옳바르지 않습니다.');
+  // }
+  // const response = await axios.post(
+  //   `/api/member/login?login-provider=kakao&authorization-code=${code}`,
+  // );
+  // return response;
 };

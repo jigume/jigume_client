@@ -29,12 +29,10 @@ export default function SheetHeader({ address, handleToCenter, onClick }) {
         <div
           className="p-[12px]"
           onClick={() =>
-            setAuth((prev) => {
-              return {
-                ...prev,
-                role: 'GUEST',
-              };
-            })
+            setAuth((prev) => ({
+              ...prev,
+              role: 'GUEST',
+            }))
           }
         >
           <img src={UserOutlineIcon} />

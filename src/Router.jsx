@@ -17,7 +17,6 @@ import ProductDeadline from './pages/Register/components/productDeadline';
 import GetPlace from './pages/Register/components/getPlace';
 import Login from './pages/Auth/components/login';
 import Auth from './pages/Auth';
-
 import { authState } from './recoil';
 import NotMatch from './pages/NotMatch';
 import InitUser from './pages/Auth/components/Init/components/initUser';
@@ -27,6 +26,13 @@ import Refresh from './pages/Auth/components/Refresh';
 
 export default function Router() {
   // recoil state로 access roles 관리
+  /** @type {[{
+   *  accessToken: string;
+   *  refreshToken: string;
+   *  role: "ADMIN" | "USER" | "GUEST";
+   *  expired: TimeStapm
+   * }]}
+   * */
   const [auth] = useRecoilState(authState);
 
   const router = createBrowserRouter([
@@ -34,8 +40,22 @@ export default function Router() {
     {
       path: '/auth/*',
       children: [
-        { index: true, element: <Auth /> },
-        { path: 'login', element: <Login /> },
+        {
+          index: true,
+          element: <Auth />,
+          loader: () => {
+            if (auth.accessToken) return redirect('/auth/init');
+            return null;
+          },
+        },
+        {
+          path: 'login',
+          element: <Login />,
+          loader: () => {
+            if (auth.accessToken) return redirect('/auth/init');
+            return null;
+          },
+        },
         {
           path: 'init',
           element: <Init />,
@@ -43,13 +63,19 @@ export default function Router() {
             { index: true, element: <InitUser /> },
             { path: 'address', element: <InitAddress /> },
           ],
+          loader: () => {
+            if (!auth.accessToken) return redirect('/auth/login');
+            return null;
+          },
         },
       ],
-      loader: () => auth.role !== 'GUEST' && redirect('/'),
+      loader: () => {
+        if (auth.role !== 'GUEST') return redirect('/');
+        return null;
+      },
     },
     {
       path: '/',
-      loader: () => auth.role !== 'USER' && redirect('/auth/login'),
       element: <Refresh />,
       children: [
         // 지도 (메인)
@@ -93,6 +119,10 @@ export default function Router() {
           ],
         },
       ],
+      loader: () => {
+        if (auth.role !== 'USER') return redirect('/auth/login');
+        return null;
+      },
     },
     { path: '*', element: <NotMatch /> },
   ]);

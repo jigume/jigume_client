@@ -53,12 +53,10 @@ export default function Map() {
   useEffect(() => {
     if (user.position && position !== undefined) getAddress();
     else
-      setUser((prev) => {
-        return {
-          ...prev,
-          position,
-        };
-      });
+      setUser((prev) => ({
+        ...prev,
+        position,
+      }));
   }, [position, user.position]);
 
   return (

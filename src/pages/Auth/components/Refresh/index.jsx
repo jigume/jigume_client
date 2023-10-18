@@ -14,12 +14,10 @@ export default function Refresh() {
       if (res === 'valid') return;
 
       console.log('토큰이 만료되었습니다.');
-      setAuth((prev) => {
-        return {
-          ...prev,
-          accessToken: res.accessToken,
-        };
-      });
+      setAuth((prev) => ({
+        ...prev,
+        accessToken: res.accessToken,
+      }));
     },
   });
 

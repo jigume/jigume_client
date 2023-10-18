@@ -1,12 +1,10 @@
 import { useRef, useEffect, useState } from 'react';
 
-const getThreshold = () => {
-  return {
-    min: 68,
-    mid: window.innerHeight / 2,
-    max: window.innerHeight - 100,
-  };
-};
+const getThreshold = () => ({
+  min: 68,
+  mid: window.innerHeight / 2,
+  max: window.innerHeight - 100,
+});
 
 export default function useBottomSheet() {
   const [isOpen, setOpen] = useState(false);
