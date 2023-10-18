@@ -11,6 +11,9 @@ export default {
         success: '#1EBAD2',
       },
     },
+    screens: {
+      sm: '394px',
+    },
   },
   plugins: [],
 };
