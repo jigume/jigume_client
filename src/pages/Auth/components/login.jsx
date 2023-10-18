@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from '../../asset/images/login/login_logo.png';
-import kakaoLogin from '../../asset/images/login/kakao_login.png';
+import logo from '../../../asset/images/login/login_logo.png';
+import kakaoLogin from '../../../asset/images/login/kakao_login.png';
 
 export default function Login() {
   // kakao oauth

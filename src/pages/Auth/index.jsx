@@ -3,8 +3,8 @@ import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useRecoilState } from 'recoil';
-import Loading from '../../Map/components/Loading';
-import { authState } from '../../../recoil';
+import Loading from '../Map/components/Loading';
+import { authState } from '../../recoil';
 
 export default function Auth() {
   const [, setAuth] = useRecoilState(authState);

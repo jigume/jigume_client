@@ -15,11 +15,14 @@ import ProductLink from './pages/Register/components/productLink';
 import ProductAmount from './pages/Register/components/productAmount';
 import ProductDeadline from './pages/Register/components/productDeadline';
 import GetPlace from './pages/Register/components/getPlace';
-import Login from './pages/Login';
-import Auth from './pages/Login/components/auth';
+import Login from './pages/Auth/components/login';
+import Auth from './pages/Auth';
 import Refresh from './pages/Refresh';
 import { authState } from './recoil';
 import NotMatch from './pages/NotMatch';
+import InitUser from './pages/Auth/components/Init/components/initUser';
+import InitAddress from './pages/Auth/components/Init/components/initAddress';
+import Init from './pages/Auth/components/Init';
 
 export default function Router() {
   // recoil state로 access roles 관리
@@ -32,6 +35,14 @@ export default function Router() {
       children: [
         { index: true, element: <Auth /> },
         { path: 'login', element: <Login /> },
+        {
+          path: 'init',
+          element: <Init />,
+          children: [
+            { index: true, element: <InitUser /> },
+            { path: 'address', element: <InitAddress /> },
+          ],
+        },
       ],
       loader: () => auth.role !== 'GUEST' && redirect('/'),
     },

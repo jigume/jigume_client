@@ -6,8 +6,8 @@ export default function ItemList({ imgArr, filter }) {
   if (imgArr.length === 0)
     return (
       <div className="h-full w-full overflow-x-scroll absolute top-[96px] pt-[96px] pb-[192px]">
-        {[1, 2, 3].map(() => (
-          <ItemComponent />
+        {[1, 2, 3].map((item) => (
+          <ItemComponent key={item} />
         ))}
       </div>
     );
