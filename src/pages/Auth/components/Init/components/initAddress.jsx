@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import getCurrentLocation from '../../../../../utils';
-// import { useMutation } from 'react-query';
+import CircularProgress from './circularProgress';
 
 export default function InitAddress() {
+  const { initUser, setInitUser } = useOutletContext();
   const [position, setPosition] = useState(undefined);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCurrentLocation(setPosition);
   });
 
-  // const postUser = useMutation('postUser', )
+  useEffect(() => {
+    setInitUser((prev) => ({ ...prev, position }));
+  }, [position]);
+
+  useEffect(() => {
+    // 잘못된 요청 방지
+    if (!initUser.nickname) navigate('/auth/init');
+  }, []);
 
   return (
     <>
@@ -22,10 +32,10 @@ export default function InitAddress() {
       </p>
       <button
         disabled={!position}
-        className="bg-success text-white text-center w-full text-md p-3 rounded-lg active:scale-[99%] transition-all ease-in-out duration-300 disabled:bg-gray-300 active:disabled:scale-100"
-        // onClick={() => navigate('/auth/init/address')}
+        className="h-12 bg-success text-white text-center w-full text-md p-3 rounded-lg active:scale-[99%] transition-all ease-in-out duration-300 disabled:bg-gray-300 active:disabled:scale-100"
+        onClick={() => navigate('/auth/init/image')}
       >
-        완료하기
+        {!position ? <CircularProgress /> : '다음으로 넘어가기'}
       </button>
     </>
   );

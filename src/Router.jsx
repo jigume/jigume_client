@@ -23,6 +23,7 @@ import InitUser from './pages/Auth/components/Init/components/initUser';
 import InitAddress from './pages/Auth/components/Init/components/initAddress';
 import Init from './pages/Auth/components/Init';
 import Refresh from './pages/Auth/components/Refresh';
+import InitProfileImage from './pages/Auth/components/Init/components/initProfileImage';
 
 export default function Router() {
   // recoil state로 access roles 관리
@@ -62,6 +63,7 @@ export default function Router() {
           children: [
             { index: true, element: <InitUser /> },
             { path: 'address', element: <InitAddress /> },
+            { path: 'image', element: <InitProfileImage /> },
           ],
           loader: () => {
             if (!auth.accessToken) return redirect('/auth/login');

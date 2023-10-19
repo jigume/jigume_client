@@ -4,21 +4,35 @@ const recoilLocal = JSON.parse(localStorage.getItem('recoil-persist'));
 const { accessToken, refreshToken, expired } = recoilLocal?.jigumeAuth ?? {};
 
 /**
- *
- * @param {query} query
- * @returns
+ * 신규 유저의 닉네임 등의 정보를 입력하여 role을 USER로 변경한다
+ * @param {object} param
+ * @param {string} param.nickname 닉네임
+ * @param {object} param.position position
+ * @param {number} param.position.lat latitude
+ * @param {number} param.position.lng longitude
+ * @param {string} param.image Image URL
  */
-export const setNewUser = (data) => {
-  const result = axios.post('/api/member/new', data.query, {
+export const setNewUser = async (param) => {
+  const query = {
+    nickname: param.nickname,
+    mapX: param.position.lng,
+    mapY: param.position.lat,
+    profileImgUrl: param.image,
+  };
+  const result = await axios.post('/api/member/new', query, {
     headers: { Authorization: `Bearer ${accessToken}` },
     withCredentials: true,
     crossDomain: true,
     credentials: 'include',
   });
-
+  console.log(result);
   return result;
 };
 
+/**
+ * 토큰 만료일을 확인하여 리프레시 토큰을 재발급 받는다
+ * @returns void
+ */
 export const handleRefreshToken = async () => {
   // token valid
   if (new Date(expired) > new Date().getTime()) return 'valid';
@@ -47,18 +61,12 @@ export const handleRefreshToken = async () => {
  * }}
  */
 export const codeProvide = async (code) => {
-  return {
-    data: {
-      baseRole: 'GUEST',
-      tokenDto: { accessToken: '123', refreshToken: '123' },
-    },
-  };
-  // /** @type {string} */
-  // if (!code) {
-  //   throw Error('인가코드가 옳바르지 않습니다.');
-  // }
-  // const response = await axios.post(
-  //   `/api/member/login?login-provider=kakao&authorization-code=${code}`,
-  // );
-  // return response;
+  /** @type {string} */
+  if (!code) {
+    throw Error('인가코드가 옳바르지 않습니다.');
+  }
+  const response = await axios.post(
+    `/api/member/login?login-provider=kakao&authorization-code=${code}`,
+  );
+  return response;
 };
