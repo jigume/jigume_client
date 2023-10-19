@@ -24,6 +24,7 @@ import InitAddress from './pages/Auth/components/Init/components/initAddress';
 import Init from './pages/Auth/components/Init';
 import Refresh from './pages/Auth/components/Refresh';
 import InitProfileImage from './pages/Auth/components/Init/components/initProfileImage';
+import Mypage from './pages/mypage';
 
 export default function Router() {
   // recoil state로 access roles 관리
@@ -120,6 +121,8 @@ export default function Router() {
             },
           ],
         },
+        // 마이페이지
+        { path: 'mypage', element: <Mypage /> },
       ],
       loader: () => {
         if (auth.role !== 'USER') return redirect('/auth/login');

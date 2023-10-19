@@ -25,7 +25,7 @@ export const setNewUser = async (param) => {
     crossDomain: true,
     credentials: 'include',
   });
-  console.log(result);
+
   return result;
 };
 
@@ -36,6 +36,7 @@ export const setNewUser = async (param) => {
 export const handleRefreshToken = async () => {
   // token valid
   if (new Date(expired) > new Date().getTime()) return 'valid';
+  if (!accessToken || !refreshToken) return 'valid';
 
   const response = await axios.post(
     '/api/member/token',

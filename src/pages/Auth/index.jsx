@@ -16,7 +16,6 @@ export default function Auth() {
   useQuery('oauth', () => codeProvide(code), {
     retry: false,
     onSuccess: ({ data }) => {
-      console.log(data.baseRole);
       // 초기 유저의 정보 입력 폼
       if (data.baseRole === 'GUEST') {
         setAuth((prev) => ({
