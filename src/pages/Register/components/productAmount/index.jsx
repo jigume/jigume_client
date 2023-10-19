@@ -15,7 +15,7 @@ function ProductAmount() {
         <div className="text-sm mb-2 pt-10 font-thin">상품 구매가</div>
         <CurrencyInput
           suffix="원"
-          className="border rounded-md w-full p-3 text-sm font-medium"
+          className="border rounded-md w-full p-3 text-sm font-medium text-right"
           value={data.itemCost}
           defaultValue={0}
           decimalsLimit={2}
@@ -29,7 +29,7 @@ function ProductAmount() {
           </div>
           <CurrencyInput
             suffix="원"
-            className="border rounded-md w-full p-3 text-sm font-medium"
+            className="border rounded-md w-full p-3 text-sm font-medium text-right"
             value={data.deliveryCost}
             defaultValue={0}
             decimalsLimit={2}
