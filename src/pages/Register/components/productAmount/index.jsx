@@ -14,7 +14,7 @@ function ProductAmount() {
         추가 배송료가 포함된 배송비는 얼마인가요?
         <div className="text-sm mb-2 pt-10 font-thin">상품 구매가</div>
         <CurrencyInput
-          suffix="원"
+          suffix=" 원"
           className="border rounded-md w-full p-3 text-sm font-medium text-right"
           value={data.itemCost}
           defaultValue={0}
@@ -28,7 +28,7 @@ function ProductAmount() {
             배송비 (도서산간 비용 포함)
           </div>
           <CurrencyInput
-            suffix="원"
+            suffix=" 원"
             className="border rounded-md w-full p-3 text-sm font-medium text-right"
             value={data.deliveryCost}
             defaultValue={0}
