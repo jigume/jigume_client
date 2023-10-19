@@ -12,7 +12,7 @@ export default {
       },
     },
     screens: {
-      sm: '394px',
+      sm: '444px',
     },
   },
   plugins: [],
