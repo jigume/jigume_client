@@ -15,6 +15,7 @@ import ProductLink from './pages/Register/components/productLink';
 import ProductAmount from './pages/Register/components/productAmount';
 import ProductDeadline from './pages/Register/components/productDeadline';
 import GetPlace from './pages/Register/components/getPlace';
+import ProductNotice from './pages/Register/components/productNotice';
 import Login from './pages/Login';
 import Auth from './pages/Login/components/auth';
 import Refresh from './pages/Refresh';
@@ -77,6 +78,10 @@ export default function Router() {
             {
               path: 'GetPlace',
               element: <GetPlace />,
+            },
+            {
+              path: 'ProductNotice',
+              element: <ProductNotice />,
             },
           ],
         },
