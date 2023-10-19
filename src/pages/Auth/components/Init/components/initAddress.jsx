@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-import getCurrentLocation from '../../../../../utils';
+import { getCurrentLocation } from '../../../../../utils';
 import CircularProgress from './circularProgress';
 
 export default function InitAddress() {

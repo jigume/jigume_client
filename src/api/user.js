@@ -3,6 +3,13 @@ import axios from 'axios';
 const recoilLocal = JSON.parse(localStorage.getItem('recoil-persist'));
 const { accessToken, refreshToken, expired } = recoilLocal?.jigumeAuth ?? {};
 
+const axiosConfig = {
+  headers: { Authorization: `Bearer ${accessToken}` },
+  withCredentials: true,
+  crossDomain: true,
+  credentials: 'include',
+};
+
 /**
  * 신규 유저의 닉네임 등의 정보를 입력하여 role을 USER로 변경한다
  * @param {object} param
@@ -19,12 +26,7 @@ export const setNewUser = async (param) => {
     mapY: param.position.lat,
     profileImgUrl: param.image,
   };
-  const result = await axios.post('/api/member/new', query, {
-    headers: { Authorization: `Bearer ${accessToken}` },
-    withCredentials: true,
-    crossDomain: true,
-    credentials: 'include',
-  });
+  const result = await axios.post('/api/member/new', query, axiosConfig);
 
   return result;
 };
@@ -43,12 +45,7 @@ export const handleRefreshToken = async () => {
     {
       refreshToken,
     },
-    {
-      headers: { Authorization: `Bearer ${accessToken}` },
-      withCredentials: true,
-      crossDomain: true,
-      credentials: 'include',
-    },
+    axiosConfig,
   );
   return response.data;
 };
