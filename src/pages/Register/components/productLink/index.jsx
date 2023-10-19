@@ -6,9 +6,7 @@ import image from '../../../../asset/725ec573a6591587da4be2bb770449e8.png';
 
 function ProductLink() {
   const [filter, setFilter] = useState(
-    category.map((item) => {
-      return { ...item, checked: false };
-    }),
+    category.map((item) => ({ ...item, checked: false })),
   );
 
   return (

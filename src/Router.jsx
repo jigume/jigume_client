@@ -5,6 +5,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import { authState } from './recoil';
 import Register from './pages/Register';
 import Map from './pages/Map';
 import Introduce from './pages/Introduce';
@@ -16,14 +17,25 @@ import ProductAmount from './pages/Register/components/productAmount';
 import ProductDeadline from './pages/Register/components/productDeadline';
 import GetPlace from './pages/Register/components/getPlace';
 import ProductNotice from './pages/Register/components/productNotice';
-import Login from './pages/Login';
-import Auth from './pages/Login/components/auth';
-import Refresh from './pages/Refresh';
-import { authState } from './recoil';
+import Login from './pages/Auth/components/login';
 import NotMatch from './pages/NotMatch';
+import InitUser from './pages/Auth/components/Init/components/initUser';
+import InitAddress from './pages/Auth/components/Init/components/initAddress';
+import Init from './pages/Auth/components/Init';
+import Refresh from './pages/Auth/components/Refresh';
+import InitProfileImage from './pages/Auth/components/Init/components/initProfileImage';
+import Mypage from './pages/mypage';
+import Auth from './pages/Auth';
 
 export default function Router() {
   // recoil state로 access roles 관리
+  /** @type {[{
+   *  accessToken: string;
+   *  refreshToken: string;
+   *  role: "ADMIN" | "USER" | "GUEST";
+   *  expired: TimeStapm
+   * }]}
+   * */
   const [auth] = useRecoilState(authState);
 
   const router = createBrowserRouter([
@@ -31,14 +43,43 @@ export default function Router() {
     {
       path: '/auth/*',
       children: [
-        { index: true, element: <Auth /> },
-        { path: 'login', element: <Login /> },
+        {
+          index: true,
+          element: <Auth />,
+          loader: () => {
+            if (auth.accessToken) return redirect('/auth/init');
+            return null;
+          },
+        },
+        {
+          path: 'login',
+          element: <Login />,
+          loader: () => {
+            if (auth.accessToken) return redirect('/auth/init');
+            return null;
+          },
+        },
+        {
+          path: 'init',
+          element: <Init />,
+          children: [
+            { index: true, element: <InitUser /> },
+            { path: 'address', element: <InitAddress /> },
+            { path: 'image', element: <InitProfileImage /> },
+          ],
+          loader: () => {
+            if (!auth.accessToken) return redirect('/auth/login');
+            return null;
+          },
+        },
       ],
-      loader: () => auth.role !== 'GUEST' && redirect('/'),
+      loader: () => {
+        if (auth.role !== 'GUEST') return redirect('/');
+        return null;
+      },
     },
     {
       path: '/',
-      loader: () => auth.role !== 'USER' && redirect('/auth/login'),
       element: <Refresh />,
       children: [
         // 지도 (메인)
@@ -85,7 +126,13 @@ export default function Router() {
             },
           ],
         },
+        // 마이페이지
+        { path: 'mypage', element: <Mypage /> },
       ],
+      loader: () => {
+        if (auth.role !== 'USER') return redirect('/auth/login');
+        return null;
+      },
     },
     { path: '*', element: <NotMatch /> },
   ]);

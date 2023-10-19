@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../asset/images/login/login_logo.png';
+import logo from '../asset/images/login/login_logo.png';
 
 export default function NotMatch() {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ export default function NotMatch() {
           <p>옳바른 접근이 아닙니다.</p>
         </div>
         <div
-          className="max-w-[320px] w-full bg-primaryJade rounded mx-auto text-center py-4 active:scale-[99%] transition-all cursor-pointer"
+          className="max-w-[320px] w-full bg-success rounded mx-auto text-white text-center py-4 active:scale-[99%] transition-all cursor-pointer"
           onClick={() => navigate('/')}
         >
           홈으로 바로가기

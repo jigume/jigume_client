@@ -1,13 +1,11 @@
 import React from 'react';
-import { useRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 import LocationIcon from '../../../../../asset/icon/LocationIcon.svg';
 import UserOutlineIcon from '../../../../../asset/icon/UserOutlineIcon.svg';
 import Fab from './Fab';
-import { authState } from '../../../../../recoil';
 
 export default function SheetHeader({ address, handleToCenter, onClick }) {
-  const [, setAuth] = useRecoilState(authState);
-
+  const navigate = useNavigate();
   return (
     <>
       <div className="absolute top-[-50px] right-4 flex flex-row gap-2">
@@ -26,17 +24,7 @@ export default function SheetHeader({ address, handleToCenter, onClick }) {
           </div>
         )}
         {/* 임시 로그아웃 */}
-        <div
-          className="p-[12px]"
-          onClick={() =>
-            setAuth((prev) => {
-              return {
-                ...prev,
-                role: 'GUEST',
-              };
-            })
-          }
-        >
+        <div className="p-[12px]" onClick={() => navigate('/mypage')}>
           <img src={UserOutlineIcon} />
         </div>
       </div>

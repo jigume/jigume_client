@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { CustomOverlayMap, Map as KakaoMap } from 'react-kakao-maps-sdk';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import getCurrentLocation from '../../utils';
+import { getCurrentLocation, tempRandMarker } from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
 import ItemMarker from './components/ItemMarker';
@@ -15,7 +15,7 @@ export default function Map() {
   const mapRef = useRef();
   const [position, setPosition] = useState(undefined);
   const [address, setAddress] = useState('-');
-  const [marker] = useState([]);
+  const [marker, setMarker] = useState([]);
 
   // geocoder
   const getAddress = () => {
@@ -53,12 +53,15 @@ export default function Map() {
   useEffect(() => {
     if (user.position && position !== undefined) getAddress();
     else
-      setUser((prev) => {
-        return {
-          ...prev,
-          position,
-        };
-      });
+      setUser((prev) => ({
+        ...prev,
+        position,
+      }));
+
+    if (user.position) {
+      console.log(tempRandMarker(user.position));
+      setMarker(tempRandMarker(user.position));
+    }
   }, [position, user.position]);
 
   return (
@@ -83,18 +86,16 @@ export default function Map() {
           </CustomOverlayMap>
 
           {marker.map((item, idx) => {
-            const numX = Math.random() / 100;
-            const numY = (Math.random() / 100) * -1;
-
             return (
               <div
                 key={item.name}
                 onClick={() => navigate(`/introduce/${idx}`)}
               >
                 <ItemMarker
+                  imageUrl={item.imageUrl}
                   position={{
-                    lat: position.lat + numX,
-                    lng: position.lng + numY,
+                    lat: item.lat,
+                    lng: item.lng,
                   }}
                 />
               </div>
