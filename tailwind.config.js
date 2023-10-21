@@ -15,5 +15,5 @@ export default {
       sm: '444px',
     },
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar-hide')],
 };

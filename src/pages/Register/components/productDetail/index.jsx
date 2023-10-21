@@ -2,6 +2,25 @@ import React from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
 
 function ProductDetail() {
+  /** @type {{data:{
+   * boardContent: string
+   * image: any[]
+   *  goodsDto: {
+   *    goodsId: number
+   *    name: string
+   *    introduction: string
+   *    link: string
+   *    goodsPrice: number
+   *    deliveryFee: number
+   *    mapX: number | undefined
+   *    mapY: number | undefined
+   *    goodsLimitCount: number
+   *    goodsLimitTime: Date
+   *    category: number
+   *    realDeliveryFee: number
+   *    end: boolean
+   *  }
+   * }}} 등록할 상품 정보  */
   const { data, setData } = useOutletContext();
 
   return (
@@ -23,12 +42,15 @@ function ProductDetail() {
               placeholder="오늘의 집에 이거 같이 사실 분~!!"
               maxLength={30}
               onChange={(e) =>
-                setData((prev) => ({ ...prev, title: e.target.value }))
+                setData((prev) => ({
+                  ...prev,
+                  goodsDto: { ...prev.goodsDto, name: e.target.value },
+                }))
               }
-              value={data.title}
+              value={data.goodsDto.name}
             />
             <span className="text-sm text-gray-400 w-12">
-              {data.title.length}/30
+              {data.goodsDto.name.length}/30
             </span>
           </div>
         </div>
@@ -39,9 +61,12 @@ function ProductDetail() {
             className="border rounded-md w-full p-3 text-sm"
             placeholder="1명이라도 공동구매에 함께하면 추가배송비가 절반 넘게 절약될거에요!"
             onChange={(e) =>
-              setData((prev) => ({ ...prev, content: e.target.value }))
+              setData((prev) => ({
+                ...prev,
+                goodsDto: { ...prev.goodsDto, boardContent: e.target.value },
+              }))
             }
-            value={data.content}
+            value={data.goodsDto.boardContent}
           />
         </div>
       </div>

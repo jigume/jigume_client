@@ -3,6 +3,23 @@ import { Link, useOutletContext } from 'react-router-dom';
 import CurrencyInput from 'react-currency-input-field';
 
 function ProductAmount() {
+  /** @type {{data:{
+   * boardContent: string
+   *  goodsDto: {
+   *    goodsId: number
+   *    name: string
+   *    introduction: string
+   *    link: string
+   *    goodsPrice: number
+   *    deliveryFee: number
+   *    position: {lat: number, lng: number} | undefined
+   *    goodsLimitCount: number
+   *    goodsLimitTime: Date
+   *    category: number
+   *    realDeliveryFee: number
+   *    end: boolean
+   *  }
+   * }}} 등록할 상품 정보  */
   const { data, setData } = useOutletContext();
 
   return (
@@ -16,11 +33,11 @@ function ProductAmount() {
         <CurrencyInput
           suffix=" 원"
           className="border rounded-md w-full p-3 text-sm font-medium text-right"
-          value={data.itemCost}
+          value={data.goodsDto.goodsPrice}
           defaultValue={0}
           decimalsLimit={2}
           onValueChange={(value) =>
-            setData((prev) => ({ ...prev, itemCost: value }))
+            setData((prev) => ({ ...prev, goodsDto: 1 }))
           }
         />
         <div className="pt-10">
@@ -30,7 +47,7 @@ function ProductAmount() {
           <CurrencyInput
             suffix=" 원"
             className="border rounded-md w-full p-3 text-sm font-medium text-right"
-            value={data.deliveryCost}
+            value={data.goodsDto.deliveryFee}
             defaultValue={0}
             decimalsLimit={2}
             onValueChange={(value) =>

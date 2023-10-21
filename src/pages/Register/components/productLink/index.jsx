@@ -1,13 +1,40 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useOutletContext } from 'react-router-dom';
 import 'react-dropdown/style.css';
 import category from '../../../Map/components/BottomSheetComponent/data';
 import image from '../../../../asset/725ec573a6591587da4be2bb770449e8.png';
+import { getOgData } from '../../../../utils';
 
 function ProductLink() {
-  const [filter, setFilter] = useState(
-    category.map((item) => ({ ...item, checked: false })),
-  );
+  /** @type {{data:{
+   * boardContent: string
+   * image: any[]
+   *  goodsDto: {
+   *    goodsId: number
+   *    name: string
+   *    introduction: string
+   *    link: string
+   *    goodsPrice: number
+   *    deliveryFee: number
+   *    mapX: number | undefined
+   *    mapY: number | undefined
+   *    goodsLimitCount: number
+   *    goodsLimitTime: Date
+   *    category: number
+   *    realDeliveryFee: number
+   *    end: boolean
+   *  }
+   * }}} 등록할 상품 정보  */
+  const { data, setData } = useOutletContext();
+  const [filterIdx, setFilterIdx] = useState(-1);
+
+  useEffect(() => {
+    setData((prev) => ({
+      ...prev,
+      goodsDto: { ...prev.goodsDto, category: filterIdx },
+    }));
+    getOgData('https://ddorang-d.tistory.com/44');
+  }, []);
 
   return (
     <div className="w-full h-[calc(100svh-48px)] flex flex-col justify-between">
@@ -26,6 +53,13 @@ function ProductLink() {
             name="productLink"
             placeholder="ex) www.figma.com"
             className="border rounded-md w-full p-3 text-sm"
+            value={data.goodsDto.link}
+            onChange={(e) =>
+              setData((prev) => ({
+                ...prev,
+                goodsDto: { ...prev.goodsDto, link: e.target.value },
+              }))
+            }
           />
         </div>
         <div className="w-full flex flex-row items-center gap-2 border rounded-md pr-2 overflow-hidden cursor-pointer">
@@ -43,24 +77,13 @@ function ProductLink() {
         <div className="pt-4">
           <div className="text-sm mb-2 font-thin">카테고리</div>
           <div className="flex flex-wrap justify-center gap-2 ">
-            {filter.map((item, index) => (
+            {category.map((item, index) => (
               <div
                 key={item.name}
                 className={`py-[6px] px-[8px] border border-gray-100 rounded-lg ${
-                  !item.checked ? 'bg-white' : 'bg-gray-900 text-white'
+                  index === filterIdx ? 'bg-gray-900 text-white' : 'bg-white'
                 }`}
-                onClick={() => {
-                  const prevData = filter.map((prev) => {
-                    return { ...prev, checked: false };
-                  });
-
-                  prevData[index] = {
-                    ...prevData[index],
-                    checked: !item.checked,
-                  };
-
-                  setFilter(prevData);
-                }}
+                onClick={() => setFilterIdx(index)}
               >
                 <img
                   className="inline-block mr-2 w-[16px] h-[16px]"

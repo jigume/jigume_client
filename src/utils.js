@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 /**
  *
  * @param {* function()} setPosition
@@ -37,4 +39,35 @@ export const tempRandMarker = (position) => {
       name: idx,
     };
   });
+};
+
+/**
+ *
+ * @param {string} url OG data를 가져올 홈페이지 주소
+ * @return {{
+ * imageUrl: string, title: string
+ * }} return
+ */
+export const getOgData = async (url) => {
+  const response = await axios.get(url, {
+    withCredentials: true,
+    crossDomain: true,
+    credentials: 'include',
+  });
+  const html = await response.text();
+
+  const ogImageTag = document.querySelector("meta[property='og:image']");
+  const ogTitleTag = document.querySelector("meta[property='og:title']");
+
+  // `og:image` 태그의 `src` 속성을 사용하여 이미지 URL을 가져옵니다.
+  const ogImageUrl = ogImageTag.getAttribute('content');
+
+  // `og:title` 태그의 `content` 속성을 사용하여 타이틀을 가져옵니다.
+  const ogTitle = ogTitleTag.getAttribute('content');
+
+  console.log(ogImageUrl, ogTitle);
+  return {
+    imageUrl: ogImageUrl,
+    title: ogTitle,
+  };
 };

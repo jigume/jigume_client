@@ -4,18 +4,45 @@ import ChevronLeft from '../../asset/icon/chevron-left.svg';
 
 function Register() {
   const navigate = useNavigate();
+  /** @type {[
+   * {
+   * boardContent: string
+   * image: any[]
+   *  goodsDto: {
+   *    goodsId: number
+   *    name: string
+   *    introduction: string
+   *    link: string
+   *    goodsPrice: number
+   *    deliveryFee: number
+   *    mapX: number | undefined
+   *    mapY: number | undefined
+   *    goodsLimitCount: number
+   *    goodsLimitTime: Date
+   *    category: number
+   *    realDeliveryFee: number
+   *    end: boolean
+   *  }
+   * }
+   * ]} 등록할 상품 정보  */
   const [data, setData] = useState({
+    boardContent: '',
     image: [],
-    title: '',
-    content: '',
-    link: '',
-    category: '',
-    itemCost: 0,
-    deliveryCost: 0,
-    targetCost: 0,
-    targetDate: new Date(),
-    position: { lat: 0, lng: 0 },
-    announce: '',
+    goodsDto: {
+      goodsId: 0,
+      name: '',
+      introduction: '',
+      link: '',
+      goodsPrice: 0,
+      deliveryFee: 0,
+      mapX: undefined,
+      mapY: undefined,
+      goodsLimitCount: 0,
+      goodsLimitTime: new Date(),
+      category: 0,
+      realDeliveryFee: 0,
+      end: true,
+    },
   });
 
   return (
