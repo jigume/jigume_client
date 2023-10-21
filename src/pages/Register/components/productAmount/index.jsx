@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
-import CurrencyInput from 'react-currency-input-field';
+import StyledCurrencyInput from '../../../../components/StyledCurrencyInput';
+import NextButton from '../../../../components/NextButton';
 
 function ProductAmount() {
   /** @type {{data:{
@@ -22,6 +23,22 @@ function ProductAmount() {
    * }}} 등록할 상품 정보  */
   const { data, setData } = useOutletContext();
 
+  const handleProductCost = (value) => {
+    setData((prev) => ({
+      ...prev,
+      goodsDto: { ...prev.goodsDto, goodsPrice: value },
+    }));
+  };
+
+  const handleDeliveryCost = (value) => {
+    setData((prev) => ({
+      ...prev,
+      goodsDto: { ...prev.goodsDto, deliveryFee: value },
+    }));
+  };
+
+  const isMove = data.goodsDto.goodsPrice && data.goodsDto.deliveryFee;
+
   return (
     <div className="w-full h-[calc(100svh-48px)] flex flex-col justify-between">
       <div />
@@ -30,39 +47,24 @@ function ProductAmount() {
         <br />
         추가 배송료가 포함된 배송비는 얼마인가요?
         <div className="text-sm mb-2 pt-10 font-thin">상품 구매가</div>
-        <CurrencyInput
-          suffix=" 원"
-          className="border rounded-md w-full p-3 text-sm font-medium text-right"
+        <StyledCurrencyInput
           value={data.goodsDto.goodsPrice}
-          defaultValue={0}
-          decimalsLimit={2}
-          onValueChange={(value) =>
-            setData((prev) => ({ ...prev, goodsDto: 1 }))
-          }
+          onChange={handleProductCost}
         />
         <div className="pt-10">
           <div className="text-sm mb-2 font-thin">
             배송비 (도서산간 비용 포함)
           </div>
-          <CurrencyInput
-            suffix=" 원"
-            className="border rounded-md w-full p-3 text-sm font-medium text-right"
+          <StyledCurrencyInput
             value={data.goodsDto.deliveryFee}
-            defaultValue={0}
-            decimalsLimit={2}
-            onValueChange={(value) =>
-              setData((prev) => ({ ...prev, deliveryCost: value }))
-            }
+            onChange={handleDeliveryCost}
           />
         </div>
       </div>
 
-      <Link
-        to="/register/ProductDeadline"
-        className="w-full py-3 my-3 text-center bg-success text-white rounded-lg"
-      >
-        다음으로 넘어가기
-      </Link>
+      <div className="mb-6">
+        <NextButton isDisabled={!isMove} linkTo="/register/ProductDeadline" />
+      </div>
     </div>
   );
 }

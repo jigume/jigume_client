@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useOutletContext } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import 'react-dropdown/style.css';
 import category from '../../../Map/components/BottomSheetComponent/data';
 import image from '../../../../asset/725ec573a6591587da4be2bb770449e8.png';
-import { getOgData } from '../../../../utils';
+import StyledInputText from '../../../../components/StyledInputText';
+import NextButton from '../../../../components/NextButton';
 
 function ProductLink() {
   /** @type {{data:{
@@ -28,12 +29,21 @@ function ProductLink() {
   const { data, setData } = useOutletContext();
   const [filterIdx, setFilterIdx] = useState(-1);
 
+  const handleLink = (e) => {
+    setData((prev) => ({
+      ...prev,
+      goodsDto: { ...prev.goodsDto, link: e.target.value },
+    }));
+  };
+
+  const isMove = data.goodsDto.link.length !== 0;
+
   useEffect(() => {
     setData((prev) => ({
       ...prev,
       goodsDto: { ...prev.goodsDto, category: filterIdx },
     }));
-    getOgData('https://ddorang-d.tistory.com/44');
+    // getOgData('https://ddorang-d.tistory.com/44');
   }, []);
 
   return (
@@ -48,18 +58,10 @@ function ProductLink() {
 
         <div className="mb-1">
           <div className="text-sm mb-2 font-thin">상품 링크</div>
-          <input
-            type="text"
-            name="productLink"
+          <StyledInputText
             placeholder="ex) www.figma.com"
-            className="border rounded-md w-full p-3 text-sm"
             value={data.goodsDto.link}
-            onChange={(e) =>
-              setData((prev) => ({
-                ...prev,
-                goodsDto: { ...prev.goodsDto, link: e.target.value },
-              }))
-            }
+            onChange={handleLink}
           />
         </div>
         <div className="w-full flex flex-row items-center gap-2 border rounded-md pr-2 overflow-hidden cursor-pointer">
@@ -96,12 +98,9 @@ function ProductLink() {
         </div>
       </div>
 
-      <Link
-        to="/Register/ProductAmount"
-        className="w-full py-3 my-3 text-center bg-success text-white rounded-lg"
-      >
-        다음으로 넘어가기
-      </Link>
+      <div className="mb-6">
+        <NextButton isDisabled={!isMove} linkTo="/Register/ProductAmount" />
+      </div>
     </div>
   );
 }

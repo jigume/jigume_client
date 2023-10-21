@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link, useOutletContext } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import CameraIcon from '../../../../asset/icon/mdi_camera.svg';
 import ImageCard from './components/ImageCard';
+import NextButton from '../../../../components/NextButton';
 
 function ProductImage() {
   /** @type {{data:{
@@ -24,12 +25,14 @@ function ProductImage() {
    *  }
    * }}} 등록할 상품 정보  */
   const { data, setData } = useOutletContext();
-
   const encodeFileToBase64 = (fileBlob) => {
+    // 이미지 선택 취소 시 예외처리
+    if (fileBlob === undefined) return null;
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
 
     return new Promise((resolve) => {
+      // onLoad에서 실행하는
       reader.onload = () => {
         const prevImages = data.image;
         prevImages.push(reader.result);
@@ -38,6 +41,8 @@ function ProductImage() {
       };
     });
   };
+
+  const isImage = data.image.length === 0;
 
   return (
     <div className="w-full h-[calc(100svh-48px)] flex flex-col justify-between">
@@ -51,7 +56,7 @@ function ProductImage() {
           <label
             htmlFor="image"
             className={`cursor-pointer snap-center ${
-              data.image.length !== 0
+              !isImage
                 ? 'w-[calc(50vw-0.5rem)] h-[calc(50vw-0.5rem)] '
                 : 'w-[calc(100vw-2rem)] h-[calc((100vw-2rem)*0.5364)]'
             } mt-6`}
@@ -67,7 +72,7 @@ function ProductImage() {
             />
             <div
               className={`${
-                data.image.length !== 0
+                !isImage
                   ? 'w-[calc(50vw-0.5rem)] h-[calc(50vw-0.5rem)] '
                   : 'w-[calc(100vw-2rem)] h-[calc((100vw-2rem)*0.5364)]'
               }  bg-gray-200 flex items-center justify-center flex-col gap-3 rounded-lg`}
@@ -82,24 +87,20 @@ function ProductImage() {
               // eslint-disable-next-line react/no-array-index-key
               key={idx}
               image={item}
-              onClick={() => setData((prev) => ({ ...prev, image: [] }))}
+              onClick={() =>
+                setData((prev) => ({
+                  ...prev,
+                  image: prev.image.filter((_, i) => i !== idx),
+                }))
+              }
             />
           ))}
         </div>
       </div>
 
-      {data.image[0] ? (
-        <Link
-          to="/register/ProductDetail"
-          className="w-full py-3 mb-6 text-center bg-success text-white rounded-lg"
-        >
-          다음으로 넘어가기
-        </Link>
-      ) : (
-        <div className="w-full py-3 mb-6 text-center bg-gray-300 text-white rounded-lg">
-          다음으로 넘어가기
-        </div>
-      )}
+      <div className="mb-6">
+        <NextButton isDisabled={isImage} linkTo="/register/ProductDetail" />
+      </div>
     </div>
   );
 }

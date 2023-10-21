@@ -1,5 +1,8 @@
 import React from 'react';
-import { Link, useOutletContext } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
+import InputWithNum from '../../../../components/InputWithNum';
+import StyledTextarea from '../../../../components/StyledTextarea';
+import NextButton from '../../../../components/NextButton';
 
 function ProductDetail() {
   /** @type {{data:{
@@ -23,6 +26,22 @@ function ProductDetail() {
    * }}} 등록할 상품 정보  */
   const { data, setData } = useOutletContext();
 
+  const handleTitle = (e) => {
+    setData((prev) => ({
+      ...prev,
+      goodsDto: { ...prev.goodsDto, name: e.target.value },
+    }));
+  };
+
+  const handleContent = (e) => {
+    setData((prev) => ({
+      ...prev,
+      goodsDto: { ...prev.goodsDto, boardContent: e.target.value },
+    }));
+  };
+
+  const isMove = data.goodsDto.name !== '' && data.goodsDto.boardContent !== '';
+
   return (
     <div className="w-full h-[calc(100svh-48px)] flex flex-col justify-between">
       <div />
@@ -35,48 +54,24 @@ function ProductDetail() {
 
         <div className="pb-10">
           <div className="text-sm mb-2 font-thin">폼 제목</div>
-          <div className="border rounded-md w-full p-3 flex flex-row gap-2">
-            <input
-              className="w-full text-sm"
-              name="title"
-              placeholder="오늘의 집에 이거 같이 사실 분~!!"
-              maxLength={30}
-              onChange={(e) =>
-                setData((prev) => ({
-                  ...prev,
-                  goodsDto: { ...prev.goodsDto, name: e.target.value },
-                }))
-              }
-              value={data.goodsDto.name}
-            />
-            <span className="text-sm text-gray-400 w-12">
-              {data.goodsDto.name.length}/30
-            </span>
-          </div>
+          <InputWithNum
+            value={data.goodsDto.name}
+            maxLength={30}
+            onChange={handleTitle}
+          />
         </div>
         <div>
           <div className="text-sm mb-2 font-thin">폼 내용</div>
-          <textarea
-            name="introduce"
-            className="border rounded-md w-full p-3 text-sm"
-            placeholder="1명이라도 공동구매에 함께하면 추가배송비가 절반 넘게 절약될거에요!"
-            onChange={(e) =>
-              setData((prev) => ({
-                ...prev,
-                goodsDto: { ...prev.goodsDto, boardContent: e.target.value },
-              }))
-            }
+          <StyledTextarea
             value={data.goodsDto.boardContent}
+            onChange={handleContent}
           />
         </div>
       </div>
 
-      <Link
-        to="/register/ProductLink"
-        className="w-full py-3 my-3 text-center bg-success text-white rounded-lg"
-      >
-        다음으로 넘어가기
-      </Link>
+      <div className="mb-6">
+        <NextButton isDisabled={!isMove} linkTo="/register/ProductLink" />
+      </div>
     </div>
   );
 }
