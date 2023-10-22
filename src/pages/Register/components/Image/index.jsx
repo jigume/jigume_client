@@ -4,7 +4,7 @@ import CameraIcon from '../../../../asset/icon/mdi_camera.svg';
 import ImageCard from './components/ImageCard';
 import NextButton from '../../../../components/NextButton';
 
-function ProductImage() {
+function Image() {
   /** @type {{data:{
    * image: any[]
    * address: string
@@ -99,9 +99,9 @@ function ProductImage() {
         </div>
       </div>
 
-      <NextButton isDisabled={isMovable} linkTo="/register/ProductDetail" />
+      <NextButton isDisabled={isMovable} linkTo="/register/detail" />
     </div>
   );
 }
 
-export default ProductImage;
+export default Image;

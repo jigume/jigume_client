@@ -10,13 +10,13 @@ import Register from './pages/Register';
 import Map from './pages/Map';
 import Introduce from './pages/Introduce';
 import Announcement from './pages/Announcement';
-import ProductImage from './pages/Register/components/productImage';
-import ProductDetail from './pages/Register/components/productDetail';
-import ProductLink from './pages/Register/components/productLink';
-import ProductAmount from './pages/Register/components/productAmount';
-import ProductDeadline from './pages/Register/components/productDeadline';
-import GetPlace from './pages/Register/components/getPlace';
-import ProductNotice from './pages/Register/components/productNotice';
+import Image from './pages/Register/components/Image';
+import Detail from './pages/Register/components/Detail';
+import Links from './pages/Register/components/Links';
+import Cost from './pages/Register/components/Cost';
+import Deadline from './pages/Register/components/Deadline';
+import Place from './pages/Register/components/Place';
+import Notice from './pages/Register/components/Notice';
 import Login from './pages/Auth/components/login';
 import NotMatch from './pages/NotMatch';
 import InitUser from './pages/Auth/components/Init/components/initUser';
@@ -86,43 +86,43 @@ export default function Router() {
         { index: true, element: <Map /> },
         // 상품 상세
         {
-          path: '/Introduce/:idx',
+          path: '/introduce/:idx',
           element: <Introduce />,
         },
         // 상품 공지
         {
-          path: '/Announcement',
+          path: '/announcement',
           element: <Announcement />,
         },
         // 상품 등록
         {
-          path: '/Register/*',
+          path: '/register/*',
           element: <Register />,
           children: [
-            { index: true, element: <ProductImage /> },
+            { index: true, element: <Image /> },
             {
-              path: 'ProductDetail',
-              element: <ProductDetail />,
+              path: 'detail',
+              element: <Detail />,
             },
             {
-              path: 'ProductLink',
-              element: <ProductLink />,
+              path: 'link',
+              element: <Links />,
             },
             {
-              path: 'ProductAmount',
-              element: <ProductAmount />,
+              path: 'cost',
+              element: <Cost />,
             },
             {
-              path: 'ProductDeadline',
-              element: <ProductDeadline />,
+              path: 'deadline',
+              element: <Deadline />,
             },
             {
-              path: 'GetPlace',
-              element: <GetPlace />,
+              path: 'place',
+              element: <Place />,
             },
             {
-              path: 'ProductNotice',
-              element: <ProductNotice />,
+              path: 'notice',
+              element: <Notice />,
             },
           ],
         },

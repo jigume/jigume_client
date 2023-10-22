@@ -3,7 +3,7 @@ import { useOutletContext } from 'react-router-dom';
 import StyledCurrencyInput from '../../../../components/StyledCurrencyInput';
 import NextButton from '../../../../components/NextButton';
 
-function ProductAmount() {
+function Cost() {
   /** @type {{data:{
    * image: any[]
    * address: string
@@ -70,9 +70,9 @@ function ProductAmount() {
         </div>
       </div>
 
-      <NextButton isDisabled={!isMovable} linkTo="/register/ProductDeadline" />
+      <NextButton isDisabled={!isMovable} linkTo="/register/deadline" />
     </div>
   );
 }
 
-export default ProductAmount;
+export default Cost;

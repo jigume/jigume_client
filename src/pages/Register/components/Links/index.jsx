@@ -6,7 +6,7 @@ import image from '../../../../asset/725ec573a6591587da4be2bb770449e8.png';
 import StyledInputText from '../../../../components/StyledInputText';
 import NextButton from '../../../../components/NextButton';
 
-function ProductLink() {
+function Links() {
   /** @type {{data:{
    * image: any[]
    * address: string
@@ -104,9 +104,9 @@ function ProductLink() {
         </div>
       </div>
 
-      <NextButton isDisabled={!isMovable} linkTo="/Register/ProductAmount" />
+      <NextButton isDisabled={!isMovable} linkTo="/Register/cost" />
     </div>
   );
 }
 
-export default ProductLink;
+export default Links;

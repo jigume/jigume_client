@@ -11,7 +11,7 @@ const notice = `픽업 기간은 배송 완료 예정일인 9월 10일부터 13�
 보증금을 돌려받지 못하면 너무 아쉽겠죠?
 픽업시간 반드시 지켜주시기 바랍니다!`;
 
-function ProductNotice() {
+function Notice() {
   /** @type {{data:{
    * image: any[]
    * address: string
@@ -66,4 +66,4 @@ function ProductNotice() {
   );
 }
 
-export default ProductNotice;
+export default Notice;

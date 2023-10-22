@@ -1,10 +1,10 @@
 import React from 'react';
 import { useOutletContext } from 'react-router-dom';
-import InputWithNum from '../../../../components/InputWithNum';
-import StyledTextarea from '../../../../components/StyledTextarea';
+import CalendarDate from './components/calendarDate';
+import StyledCountInput from '../../../../components/StyledCountInput';
 import NextButton from '../../../../components/NextButton';
 
-function ProductDetail() {
+function Deadline() {
   /** @type {{data:{
    * image: any[]
    * address: string
@@ -27,53 +27,41 @@ function ProductDetail() {
    * }}} 등록할 상품 정보  */
   const { data, setData } = useOutletContext();
 
-  const handleTitle = (e) => {
+  const handleTargetCount = (value) => {
     setData((prev) => ({
       ...prev,
-      goodsDto: { ...prev.goodsDto, name: e.target.value },
+      goodsDto: { ...prev.goodsDto, goodsLimitCount: value },
     }));
   };
 
-  const handleContent = (e) => {
-    setData((prev) => ({
-      ...prev,
-      goodsDto: { ...prev.goodsDto, boardContent: e.target.value },
-    }));
-  };
-
-  const isMovable =
-    data.goodsDto.name === '' && data.goodsDto.boardContent === '';
+  const isMovable = data.goodsDto.goodsLimitCount !== '0';
 
   return (
     <div className="w-full h-[calc(100svh-48px)] flex flex-col justify-between">
       <div />
       <div className="pb-24">
         <div className="text-lg font-bold pb-12">
-          공동 구매 팔로워를 모으려면?
+          구매 수량과 종료 시점을 정해요.
           <br />
-          끌리는 제목과 내용으로 폼을 만들어요!
+          목표에 도달하면 공동 구매 폼이 마감돼요.
         </div>
 
         <div className="pb-10">
-          <div className="text-sm mb-2 font-thin">폼 제목</div>
-          <InputWithNum
-            value={data.goodsDto.name}
-            maxLength={30}
-            onChange={handleTitle}
+          <div className="text-sm mb-2 font-thin">폼 목표 공동 구매 수량</div>
+          <StyledCountInput
+            value={data.goodsDto.goodsLimitCount}
+            onChange={handleTargetCount}
           />
         </div>
         <div>
-          <div className="text-sm mb-2 font-thin">폼 내용</div>
-          <StyledTextarea
-            value={data.goodsDto.boardContent}
-            onChange={handleContent}
-          />
+          <div className="text-sm mb-2 font-thin">공동구매 종료 시간</div>
+          <CalendarDate />
         </div>
       </div>
 
-      <NextButton isDisabled={isMovable} linkTo="/register/ProductLink" />
+      <NextButton isDisabled={!isMovable} linkTo="/register/place" />
     </div>
   );
 }
 
-export default ProductDetail;
+export default Deadline;

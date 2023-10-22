@@ -3,7 +3,7 @@ import { useOutletContext } from 'react-router-dom';
 import Postcode from './components/postcode';
 import NextButton from '../../../../components/NextButton';
 
-function GetPlace() {
+function Place() {
   /** @type {{data:{
    * image: any[]
    * address: string
@@ -41,9 +41,9 @@ function GetPlace() {
         <Postcode />
       </div>
 
-      <NextButton isDisabled={!isMovable} linkTo="/register/ProductNotice" />
+      <NextButton isDisabled={!isMovable} linkTo="/register/notice" />
     </div>
   );
 }
 
-export default GetPlace;
+export default Place;
