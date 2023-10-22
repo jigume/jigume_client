@@ -17,7 +17,7 @@ export default function NextButton({
   return (
     <button
       disabled={isDisabled}
-      className="h-12 bg-success text-white text-center w-full text-md p-3 rounded-lg active:scale-[99%] transition-all ease-in-out duration-300 disabled:bg-gray-300 active:disabled:scale-100"
+      className="mb-6 h-12 bg-success text-white text-center w-full text-md p-3 rounded-lg active:scale-[99%] transition-all ease-in-out duration-300 disabled:bg-gray-300 active:disabled:scale-100"
       onClick={() => navigate(linkTo)}
     >
       {content}

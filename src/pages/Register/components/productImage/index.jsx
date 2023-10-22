@@ -6,11 +6,12 @@ import NextButton from '../../../../components/NextButton';
 
 function ProductImage() {
   /** @type {{data:{
-   * boardContent: string
    * image: any[]
+   * address: string
    *  goodsDto: {
    *    goodsId: number
    *    name: string
+   *    boardContent: string
    *    introduction: string
    *    link: string
    *    goodsPrice: number
@@ -42,7 +43,7 @@ function ProductImage() {
     });
   };
 
-  const isImage = data.image.length === 0;
+  const isMovable = data.image.length === 0;
 
   return (
     <div className="w-full h-[calc(100svh-48px)] flex flex-col justify-between">
@@ -56,7 +57,7 @@ function ProductImage() {
           <label
             htmlFor="image"
             className={`cursor-pointer snap-center ${
-              !isImage
+              !isMovable
                 ? 'w-[calc(50vw-0.5rem)] h-[calc(50vw-0.5rem)] '
                 : 'w-[calc(100vw-2rem)] h-[calc((100vw-2rem)*0.5364)]'
             } mt-6`}
@@ -72,7 +73,7 @@ function ProductImage() {
             />
             <div
               className={`${
-                !isImage
+                !isMovable
                   ? 'w-[calc(50vw-0.5rem)] h-[calc(50vw-0.5rem)] '
                   : 'w-[calc(100vw-2rem)] h-[calc((100vw-2rem)*0.5364)]'
               }  bg-gray-200 flex items-center justify-center flex-col gap-3 rounded-lg`}
@@ -98,9 +99,7 @@ function ProductImage() {
         </div>
       </div>
 
-      <div className="mb-6">
-        <NextButton isDisabled={isImage} linkTo="/register/ProductDetail" />
-      </div>
+      <NextButton isDisabled={isMovable} linkTo="/register/ProductDetail" />
     </div>
   );
 }

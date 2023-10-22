@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import ChevronLeft from '../../asset/icon/chevron-left.svg';
 
@@ -6,11 +6,12 @@ function Register() {
   const navigate = useNavigate();
   /** @type {[
    * {
-   * boardContent: string
    * image: any[]
+   * address: string
    *  goodsDto: {
    *    goodsId: number
    *    name: string
+   *    boardContent: string
    *    introduction: string
    *    link: string
    *    goodsPrice: number
@@ -26,11 +27,12 @@ function Register() {
    * }
    * ]} 등록할 상품 정보  */
   const [data, setData] = useState({
-    boardContent: '',
     image: [],
+    address: '',
     goodsDto: {
       goodsId: 0,
       name: '',
+      boardContent: '',
       introduction: '',
       link: '',
       goodsPrice: 0,
@@ -44,6 +46,9 @@ function Register() {
       end: true,
     },
   });
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <>

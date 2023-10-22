@@ -8,11 +8,12 @@ import NextButton from '../../../../components/NextButton';
 
 function ProductLink() {
   /** @type {{data:{
-   * boardContent: string
    * image: any[]
+   * address: string
    *  goodsDto: {
    *    goodsId: number
    *    name: string
+   *    boardContent: string
    *    introduction: string
    *    link: string
    *    goodsPrice: number
@@ -36,14 +37,19 @@ function ProductLink() {
     }));
   };
 
-  const isMove = data.goodsDto.link.length !== 0;
+  const isMovable = data.goodsDto.link.length !== 0 && filterIdx !== -1;
 
+  // init
   useEffect(() => {
     setData((prev) => ({
       ...prev,
       goodsDto: { ...prev.goodsDto, category: filterIdx },
     }));
-    // getOgData('https://ddorang-d.tistory.com/44');
+  }, [filterIdx]);
+
+  // observe filter
+  useEffect(() => {
+    setFilterIdx(data.goodsDto.category);
   }, []);
 
   return (
@@ -98,9 +104,7 @@ function ProductLink() {
         </div>
       </div>
 
-      <div className="mb-6">
-        <NextButton isDisabled={!isMove} linkTo="/Register/ProductAmount" />
-      </div>
+      <NextButton isDisabled={!isMovable} linkTo="/Register/ProductAmount" />
     </div>
   );
 }

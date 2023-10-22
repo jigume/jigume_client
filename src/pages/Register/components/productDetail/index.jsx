@@ -6,11 +6,12 @@ import NextButton from '../../../../components/NextButton';
 
 function ProductDetail() {
   /** @type {{data:{
-   * boardContent: string
    * image: any[]
+   * address: string
    *  goodsDto: {
    *    goodsId: number
    *    name: string
+   *    boardContent: string
    *    introduction: string
    *    link: string
    *    goodsPrice: number
@@ -40,7 +41,8 @@ function ProductDetail() {
     }));
   };
 
-  const isMove = data.goodsDto.name !== '' && data.goodsDto.boardContent !== '';
+  const isMovable =
+    data.goodsDto.name === '' && data.goodsDto.boardContent === '';
 
   return (
     <div className="w-full h-[calc(100svh-48px)] flex flex-col justify-between">
@@ -69,9 +71,7 @@ function ProductDetail() {
         </div>
       </div>
 
-      <div className="mb-6">
-        <NextButton isDisabled={!isMove} linkTo="/register/ProductLink" />
-      </div>
+      <NextButton isDisabled={isMovable} linkTo="/register/ProductLink" />
     </div>
   );
 }
