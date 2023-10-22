@@ -46,10 +46,10 @@ function Image() {
   const isMovable = data.image.length === 0;
 
   return (
-    <div className="w-full h-[calc(100svh-48px)] flex flex-col justify-between">
+    <div className="w-screen h-[calc(100svh-48px)] flex flex-col justify-between absolute left-0">
       <div />
       <div>
-        <div className="text-xl font-bold">
+        <div className="text-xl font-bold px-4">
           어떤 제품을 공동구매하실건가요? <br /> 소개 이미지를 등록해주세요!
         </div>
 
@@ -99,7 +99,9 @@ function Image() {
         </div>
       </div>
 
-      <NextButton isDisabled={isMovable} linkTo="/register/detail" />
+      <div className="px-4">
+        <NextButton isDisabled={isMovable} linkTo="/register/detail" />
+      </div>
     </div>
   );
 }

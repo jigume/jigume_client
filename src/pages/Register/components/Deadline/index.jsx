@@ -34,7 +34,7 @@ function Deadline() {
     }));
   };
 
-  const isMovable = data.goodsDto.goodsLimitCount !== '0';
+  const isMovable = Number(data.goodsDto.goodsLimitCount) !== 0;
 
   return (
     <div className="w-full h-[calc(100svh-48px)] flex flex-col justify-between">

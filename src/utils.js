@@ -73,7 +73,7 @@ export const getOgData = async (url) => {
 };
 
 /**
- * 등록폼의 데이터 유효성을 검사합니다
+ * 등록폼의 데이터 유효성을 검사합니다. 잘못된 데이터가 있다면 이전 단계의 프로세스 주소를 반환합니다.
  * @param {string} link
  * @param {object} data
  * @param {array} data.image

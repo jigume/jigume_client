@@ -67,6 +67,7 @@ function Detail() {
           <StyledTextarea
             value={data.goodsDto.boardContent}
             onChange={handleContent}
+            placeholder="1명이라도 공동구매에 함께하면 추가배송비가 절반 넘게 절약될거에요!"
           />
         </div>
       </div>
