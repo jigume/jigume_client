@@ -3,7 +3,7 @@ import CloseIcon from '../../../../../asset/icon/CloseIcon.svg';
 
 export default function ImageCard({ image, onClick }) {
   return (
-    <div className="relative inline-flex flex-shrink-0 justify-center h-[calc(50vw-0.5rem)] aspect-square bg-white snap-center rounded-lg mt-6">
+    <div className="relative inline-flex flex-shrink-0 justify-center w-full aspect-square bg-white rounded-lg mt-6">
       <img
         src={image}
         className="w-full h-full object-cover rounded-lg bg-gray-300 border border-gray-100 box-content"

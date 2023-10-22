@@ -55,7 +55,7 @@ function Register() {
     <>
       <div className="mx-auto max-w-screen-sm w-full h-[48px] px-4 flex flex-row items-center">
         <div onClick={() => navigate(-1)} className="pr-2">
-          <img className="w-[32px] h-[32px]" src={ChevronLeft} />
+          <img className="w-12 h-12 p-2 cursor-pointer" src={ChevronLeft} />
         </div>
       </div>
 

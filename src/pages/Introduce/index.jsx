@@ -1,13 +1,16 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import CarouselBox from './components/CarouselBox';
 import HeaderProfile from './components/HeaderProfile';
 import ProductInfo from './components/ProductInfo';
 import ProductContent from './components/ProductContent';
+import ChevronLeft from '../../asset/icon/chevron-left.svg';
 
 export default function Introduce() {
   const { idx } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isSubmitted = location.pathname.includes('submitted');
 
@@ -32,6 +35,12 @@ export default function Introduce() {
         isSubmitted ? 'h-[100svh] overflow-hidden touch-none' : ''
       }`}
     >
+      <div
+        onClick={() => navigate(-1)}
+        className="pr-2 absolute top-0 z-50 pt-2"
+      >
+        <img className="w-12 h-12 p-2 cursor-pointer" src={ChevronLeft} />
+      </div>
       <CarouselBox />
 
       <div className="px-4">

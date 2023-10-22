@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import CameraIcon from '../../../../asset/icon/mdi_camera.svg';
 import ImageCard from './components/ImageCard';
 import NextButton from '../../../../components/NextButton';
+
+// Import Swiper styles
+import 'swiper/css';
 
 function Image() {
   /** @type {{data:{
@@ -23,6 +27,8 @@ function Image() {
    *  }
    * }}} 등록할 상품 정보  */
   const { data, setData } = useOutletContext();
+  const [slidesPerView, setSlidePerView] = useState(1);
+
   const encodeFileToBase64 = (fileBlob) => {
     // 이미지 선택 취소 시 예외처리
     if (fileBlob === undefined) return null;
@@ -49,50 +55,56 @@ function Image() {
         <div className="text-xl font-bold px-4">
           어떤 제품을 공동구매하실건가요? <br /> 소개 이미지를 등록해주세요!
         </div>
-
-        <div className="flex snap-x overflow-x-scroll whitespace-nowrap items-start gap-4 overflow-y-hidden scrollbar-hide">
-          <label
-            htmlFor="image"
-            className={`cursor-pointer snap-center ${
-              !isMovable
-                ? 'w-[calc(50vw-0.5rem)] h-[calc(50vw-0.5rem)] ml-4'
-                : 'w-[calc(100%-2rem)] h-[calc((100%-2rem)*0.5364)] mx-auto'
+        <Swiper
+          slidesPerView={slidesPerView}
+          centeredSlides={true}
+          spaceBetween={16}
+          onSlideChange={() => setSlidePerView('auto')}
+          className="flex justify-center items-center gap-4 w-full"
+        >
+          {/* add button */}
+          <SwiperSlide
+            className={`flex-shrink-0 cursor-pointer ${
+              !isMovable ? '!w-1/2 aspect-square ml-4' : '!w-full px-4'
             } mt-6`}
           >
-            <input
-              type="file"
-              accept="image/jpg,image/png,image/jpeg,image/gif"
-              className="hidden"
-              id="image"
-              onChange={(e) => {
-                encodeFileToBase64(e.target.files[0]);
-              }}
-            />
-            <div
-              className={`${
-                !isMovable
-                  ? 'w-[calc(50vw-0.5rem)] h-[calc(50vw-0.5rem)] '
-                  : 'w-[calc(100%-2rem)] h-[calc((100%-2rem)*0.5364)]'
-              }  bg-gray-200 flex items-center justify-center flex-col gap-3 rounded-lg`}
-            >
-              <img src={CameraIcon} />
-              <div className="font-thin">앨범으로 등록</div>
-            </div>
-          </label>
+            <label htmlFor="image">
+              <input
+                type="file"
+                accept="image/jpg,image/png,image/jpeg,image/gif"
+                className="hidden"
+                id="image"
+                onChange={(e) => {
+                  encodeFileToBase64(e.target.files[0]);
+                }}
+              />
+              <div
+                className={`${
+                  !isMovable
+                    ? 'w-full aspect-square shrink-0 '
+                    : 'w-full aspect-[1.8641]'
+                }  bg-gray-200 flex items-center justify-center flex-col gap-3 rounded-lg`}
+              >
+                <img src={CameraIcon} />
+                <div className="font-thin">앨범으로 등록</div>
+              </div>
+            </label>
+          </SwiperSlide>
 
           {data.image.map((item, idx) => (
-            <ImageCard
-              key={idx}
-              image={item}
-              onClick={() =>
-                setData((prev) => ({
-                  ...prev,
-                  image: prev.image.filter((_, i) => i !== idx),
-                }))
-              }
-            />
+            <SwiperSlide key={idx} className={`${!isMovable ? '!w-1/2' : ''}`}>
+              <ImageCard
+                image={item}
+                onClick={() =>
+                  setData((prev) => ({
+                    ...prev,
+                    image: prev.image.filter((_, i) => i !== idx),
+                  }))
+                }
+              />
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
       </div>
 
       <div className="px-4">

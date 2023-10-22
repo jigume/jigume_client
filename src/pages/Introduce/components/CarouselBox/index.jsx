@@ -19,7 +19,6 @@ export default function CarouselBox() {
     <Swiper
       pagination
       modules={[Pagination]}
-      autoplay={{ delay: 3000, disableOnInteraction: false }}
       loop
       className="flex justify-center items-center w-full aspect-square"
     >
