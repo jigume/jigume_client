@@ -36,7 +36,7 @@ export default function Introduce() {
     getGoods(idx).then((res) => {
       console.log(res);
       setGoods({
-        name: res.goodsDto.name,
+        name: res.goodsDto.goodsName,
         link: res.goodsDto.link,
         goodsPrice: res.goodsDto.goodsPrice,
         deliveryFee: res.goodsDto.deliveryFee,
@@ -52,7 +52,7 @@ export default function Introduce() {
     console.log(goods);
   }, [goods]);
 
-  // console.log(goods.goodsDto.name);
+  // console.log(goods.goodsDto.goodsName);
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
       {/* <ProductImage /> */}

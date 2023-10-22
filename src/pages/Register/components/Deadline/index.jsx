@@ -9,8 +9,7 @@ function Deadline() {
    * image: any[]
    * address: string
    *  goodsDto: {
-   *    goodsId: number
-   *    name: string
+   *    goodsName: string
    *    boardContent: string
    *    introduction: string
    *    link: string
@@ -21,8 +20,6 @@ function Deadline() {
    *    goodsLimitCount: number
    *    goodsLimitTime: Date
    *    category: number
-   *    realDeliveryFee: number
-   *    end: boolean
    *  }
    * }}} 등록할 상품 정보  */
   const { data, setData } = useOutletContext();

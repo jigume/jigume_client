@@ -9,8 +9,7 @@ function Detail() {
    * image: any[]
    * address: string
    *  goodsDto: {
-   *    goodsId: number
-   *    name: string
+   *    goodsName: string
    *    boardContent: string
    *    introduction: string
    *    link: string
@@ -21,8 +20,6 @@ function Detail() {
    *    goodsLimitCount: number
    *    goodsLimitTime: Date
    *    category: number
-   *    realDeliveryFee: number
-   *    end: boolean
    *  }
    * }}} 등록할 상품 정보  */
   const { data, setData } = useOutletContext();
@@ -30,7 +27,7 @@ function Detail() {
   const handleTitle = (e) => {
     setData((prev) => ({
       ...prev,
-      goodsDto: { ...prev.goodsDto, name: e.target.value },
+      goodsDto: { ...prev.goodsDto, goodsName: e.target.value },
     }));
   };
 
@@ -42,7 +39,7 @@ function Detail() {
   };
 
   const isMovable =
-    data.goodsDto.name === '' && data.goodsDto.boardContent === '';
+    data.goodsDto.goodsName === '' && data.goodsDto.boardContent === '';
 
   return (
     <div className="w-full h-[calc(100svh-48px)] flex flex-col justify-between">
@@ -57,7 +54,7 @@ function Detail() {
         <div className="pb-10">
           <div className="text-sm mb-2 font-thin">폼 제목</div>
           <InputWithNum
-            value={data.goodsDto.name}
+            value={data.goodsDto.goodsName}
             maxLength={30}
             onChange={handleTitle}
           />

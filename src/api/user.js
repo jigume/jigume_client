@@ -4,10 +4,12 @@ const recoilLocal = JSON.parse(localStorage.getItem('recoil-persist'));
 const { accessToken, refreshToken, expired } = recoilLocal?.jigumeAuth ?? {};
 
 const TokenedAxios = axios.create({
-  headers: { Authorization: `Bearer ${accessToken}` },
-  withCredentials: true,
-  crossDomain: true,
-  credentials: 'include',
+  headers: {
+    Authorization: `Bearer ${accessToken}`,
+    withCredentials: true,
+    crossDomain: true,
+    credentials: 'include',
+  },
 });
 
 /**

@@ -79,8 +79,7 @@ export const getOgData = async (url) => {
  * @param {array} data.image
  * @param {string} data.address
  * @param {object} data.goodsDto
- * @param {number} data.goodsDto.goodId
- * @param {number} data.goodsDto.name
+ * @param {number} data.goodsDto.goodsName
  * @param {string} data.goodsDto.boardContent
  * @param {string} data.goodsDto.introduction
  * @param {string} data.goodsDto.link
@@ -91,8 +90,6 @@ export const getOgData = async (url) => {
  * @param {number | string} data.goodsDto.goodsLimitCount
  * @param {Date} data.goodsDto.goodsLimitTime
  * @param {number} data.goodsDto.category
- * @param {number | string} data.goodsDto.realDeliveryFee
- * @param {boolean} data.goodsDto.end
  * @returns {'/register' | '/register/detail' | '/register/link' | '/register/cost' | '/register/deadline' | '/register/place' | undefined}
  */
 export const vaildRegister = (link, data) => {

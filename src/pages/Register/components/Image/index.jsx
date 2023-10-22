@@ -9,8 +9,7 @@ function Image() {
    * image: any[]
    * address: string
    *  goodsDto: {
-   *    goodsId: number
-   *    name: string
+   *    goodsName: string
    *    boardContent: string
    *    introduction: string
    *    link: string
@@ -21,8 +20,6 @@ function Image() {
    *    goodsLimitCount: number
    *    goodsLimitTime: Date
    *    category: number
-   *    realDeliveryFee: number
-   *    end: boolean
    *  }
    * }}} 등록할 상품 정보  */
   const { data, setData } = useOutletContext();
@@ -58,8 +55,8 @@ function Image() {
             htmlFor="image"
             className={`cursor-pointer snap-center ${
               !isMovable
-                ? 'w-[calc(50vw-0.5rem)] h-[calc(50vw-0.5rem)] '
-                : 'w-[calc(100vw-2rem)] h-[calc((100vw-2rem)*0.5364)]'
+                ? 'w-[calc(50vw-0.5rem)] h-[calc(50vw-0.5rem)] ml-4'
+                : 'w-[calc(100vw-2rem)] h-[calc((100vw-2rem)*0.5364)] mx-auto'
             } mt-6`}
           >
             <input

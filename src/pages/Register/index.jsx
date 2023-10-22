@@ -7,8 +7,7 @@ const initData = {
   image: [],
   address: '',
   goodsDto: {
-    goodsId: 0,
-    name: '',
+    goodsName: '',
     boardContent: '',
     introduction: '',
     link: '',
@@ -19,8 +18,6 @@ const initData = {
     goodsLimitCount: 0,
     goodsLimitTime: new Date(),
     category: -1,
-    realDeliveryFee: 0,
-    end: true,
   },
 };
 
@@ -30,8 +27,7 @@ function Register() {
    * image: any[]
    * address: string
    *  goodsDto: {
-   *    goodsId: number
-   *    name: string
+   *    goodsName: string
    *    boardContent: string
    *    introduction: string
    *    link: string
@@ -42,8 +38,6 @@ function Register() {
    *    goodsLimitCount: number
    *    goodsLimitTime: Date
    *    category: number
-   *    realDeliveryFee: number
-   *    end: boolean
    *  }
    * }
    * ]} 등록할 상품 정보  */
