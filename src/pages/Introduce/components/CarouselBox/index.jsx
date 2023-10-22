@@ -21,7 +21,7 @@ export default function CarouselBox() {
       modules={[Pagination]}
       autoplay={{ delay: 3000, disableOnInteraction: false }}
       loop
-      className="flex justify-center items-center"
+      className="flex justify-center items-center w-full aspect-square"
     >
       {tempImages.map((item, i) => (
         <SwiperSlide key={i}>

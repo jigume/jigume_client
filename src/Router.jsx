@@ -26,6 +26,7 @@ import Refresh from './pages/Auth/components/Refresh';
 import InitProfileImage from './pages/Auth/components/Init/components/initProfileImage';
 import Mypage from './pages/mypage';
 import Auth from './pages/Auth';
+import Submitted from './pages/Introduce/components/Submitted';
 
 export default function Router() {
   // recoil state로 access roles 관리
@@ -86,8 +87,9 @@ export default function Router() {
         { index: true, element: <Map /> },
         // 상품 상세
         {
-          path: '/introduce/:idx',
+          path: '/introduce/:idx/*',
           element: <Introduce />,
+          children: [{ path: 'submitted', element: <Submitted /> }],
         },
         // 상품 공지
         {
