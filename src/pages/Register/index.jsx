@@ -17,7 +17,7 @@ const initData = {
     mapY: undefined,
     goodsLimitCount: 0,
     goodsLimitTime: new Date(),
-    category: -1,
+    categoryName: -1,
   },
 };
 
@@ -37,7 +37,7 @@ function Register() {
    *    mapY: number | undefined
    *    goodsLimitCount: number
    *    goodsLimitTime: Date
-   *    category: number
+   *    categoryName: number
    *  }
    * }
    * ]} 등록할 상품 정보  */
@@ -53,7 +53,7 @@ function Register() {
 
   return (
     <>
-      <div className="w-full h-[48px] px-4 flex flex-row items-center">
+      <div className="mx-auto max-w-screen-sm w-full h-[48px] px-4 flex flex-row items-center">
         <div onClick={() => navigate(-1)} className="pr-2">
           <img className="w-[32px] h-[32px]" src={ChevronLeft} />
         </div>

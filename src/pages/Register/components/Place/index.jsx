@@ -18,7 +18,7 @@ function Place() {
    *    mapY: number | undefined
    *    goodsLimitCount: number
    *    goodsLimitTime: Date
-   *    category: number
+   *    categoryName: number
    *  }
    * }}} 등록할 상품 정보  */
   const { data } = useOutletContext();

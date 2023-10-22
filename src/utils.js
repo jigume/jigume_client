@@ -89,7 +89,7 @@ export const getOgData = async (url) => {
  * @param {number | undefined} data.goodsDto.mapY
  * @param {number | string} data.goodsDto.goodsLimitCount
  * @param {Date} data.goodsDto.goodsLimitTime
- * @param {number} data.goodsDto.category
+ * @param {number} data.goodsDto.categoryName
  * @returns {'/register' | '/register/detail' | '/register/link' | '/register/cost' | '/register/deadline' | '/register/place' | undefined}
  */
 export const vaildRegister = (link, data) => {
@@ -104,7 +104,7 @@ export const vaildRegister = (link, data) => {
       break;
 
     case '/register/cost':
-      if (data.goodsDto.link === '' || data.goodsDto.category === -1)
+      if (data.goodsDto.link === '' || data.goodsDto.categoryName === -1)
         return '/register/link';
       break;
 

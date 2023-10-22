@@ -21,7 +21,7 @@ function Links() {
    *    mapY: number | undefined
    *    goodsLimitCount: number
    *    goodsLimitTime: Date
-   *    category: number
+   *    categoryName: number
    *  }
    * }}} 등록할 상품 정보  */
   const { data, setData } = useOutletContext();
@@ -40,13 +40,13 @@ function Links() {
   useEffect(() => {
     setData((prev) => ({
       ...prev,
-      goodsDto: { ...prev.goodsDto, category: filterIdx },
+      goodsDto: { ...prev.goodsDto, categoryName: filterIdx },
     }));
   }, [filterIdx]);
 
   // observe filter
   useEffect(() => {
-    setFilterIdx(data.goodsDto.category);
+    setFilterIdx(data.goodsDto.categoryName);
   }, []);
 
   return (

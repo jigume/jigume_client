@@ -19,7 +19,7 @@ function Image() {
    *    mapY: number | undefined
    *    goodsLimitCount: number
    *    goodsLimitTime: Date
-   *    category: number
+   *    categoryName: number
    *  }
    * }}} 등록할 상품 정보  */
   const { data, setData } = useOutletContext();
@@ -43,7 +43,7 @@ function Image() {
   const isMovable = data.image.length === 0;
 
   return (
-    <div className="w-screen h-[calc(100svh-48px)] flex flex-col justify-between absolute left-0">
+    <div className="w-screen max-w-screen-sm h-[calc(100svh-48px)] flex flex-col justify-between absolute left-1/2 -translate-x-1/2">
       <div />
       <div>
         <div className="text-xl font-bold px-4">
@@ -56,7 +56,7 @@ function Image() {
             className={`cursor-pointer snap-center ${
               !isMovable
                 ? 'w-[calc(50vw-0.5rem)] h-[calc(50vw-0.5rem)] ml-4'
-                : 'w-[calc(100vw-2rem)] h-[calc((100vw-2rem)*0.5364)] mx-auto'
+                : 'w-[calc(100%-2rem)] h-[calc((100%-2rem)*0.5364)] mx-auto'
             } mt-6`}
           >
             <input
@@ -72,7 +72,7 @@ function Image() {
               className={`${
                 !isMovable
                   ? 'w-[calc(50vw-0.5rem)] h-[calc(50vw-0.5rem)] '
-                  : 'w-[calc(100vw-2rem)] h-[calc((100vw-2rem)*0.5364)]'
+                  : 'w-[calc(100%-2rem)] h-[calc((100%-2rem)*0.5364)]'
               }  bg-gray-200 flex items-center justify-center flex-col gap-3 rounded-lg`}
             >
               <img src={CameraIcon} />

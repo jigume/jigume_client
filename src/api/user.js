@@ -3,7 +3,7 @@ import axios from 'axios';
 const recoilLocal = JSON.parse(localStorage.getItem('recoil-persist'));
 const { accessToken, refreshToken, expired } = recoilLocal?.jigumeAuth ?? {};
 
-const TokenedAxios = axios.create({
+const tokenedAxios = axios.create({
   headers: {
     Authorization: `Bearer ${accessToken}`,
     withCredentials: true,
@@ -28,7 +28,7 @@ export const setNewUser = async (param) => {
     mapY: param.position.lat,
     profileImgUrl: param.image,
   };
-  const result = await TokenedAxios.post('/api/member/new', { query });
+  const result = await tokenedAxios.post('/api/member/new', { query });
 
   return result;
 };
@@ -42,7 +42,7 @@ export const handleRefreshToken = async () => {
   if (new Date(expired) > new Date().getTime()) return 'valid';
   if (!accessToken || !refreshToken) return 'valid';
 
-  const response = await TokenedAxios.post('/api/member/token', {
+  const response = await tokenedAxios.post('/api/member/token', {
     refreshToken,
   });
   return response.data;

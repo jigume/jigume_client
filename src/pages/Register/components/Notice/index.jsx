@@ -4,6 +4,7 @@ import { useMutation } from 'react-query';
 import NextButton from '../../../../components/NextButton';
 import StyledTextarea from '../../../../components/StyledTextarea';
 import postGoods from '../../../../api/register';
+import LoadingButton from '../../../../components/LoadingButton';
 
 const notice = `픽업 기간은 배송 완료 예정일인 9월 10일부터 13일 까지 입니다. 댓글로 픽업 시간을 알려주세요!
 
@@ -28,7 +29,7 @@ function Notice() {
    *    mapY: number | undefined
    *    goodsLimitCount: number
    *    goodsLimitTime: Date
-   *    category: number
+   *    categoryName: number
    *  }
    * }}} 등록할 상품 정보  */
   const { data, setData } = useOutletContext();
@@ -40,8 +41,12 @@ function Notice() {
     }));
   };
 
-  const mutate = useMutation('post_goods', () =>
-    postGoods(data.image, data.goodsDto),
+  const mutate = useMutation(
+    'post_goods',
+    () => postGoods(data.image, data.goodsDto),
+    {
+      retry: false,
+    },
   );
 
   return (
@@ -63,11 +68,14 @@ function Notice() {
           />
         </div>
       </div>
-
-      <NextButton
-        content="공동 구매 폼 게시하기"
-        onClick={() => mutate.mutate()}
-      />
+      {mutate.isLoading ? (
+        <LoadingButton />
+      ) : (
+        <NextButton
+          content="공동 구매 폼 게시하기"
+          onClick={() => mutate.mutate()}
+        />
+      )}
     </div>
   );
 }

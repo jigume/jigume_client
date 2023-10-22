@@ -3,7 +3,7 @@ import axios from 'axios';
 const recoilLocal = JSON.parse(localStorage.getItem('recoil-persist'));
 const { accessToken } = recoilLocal?.jigumeAuth ?? {};
 
-const TokenedAxios = axios.create({
+const tokenedAxios = axios.create({
   headers: {
     Authorization: `Bearer ${accessToken}`,
     withCredentials: true,
@@ -26,35 +26,43 @@ const TokenedAxios = axios.create({
  * @param {number | undefined} goodsDto.mapY
  * @param {number | string} goodsDto.goodsLimitCount
  * @param {Date} goodsDto.goodsLimitTime
- * @param {number} goodsDto.category
+ * @param {number} goodsDto.categoryName
  */
 const postGoods = async (images, goodsDto_) => {
-  const formData = new FormData();
-  images.forEach((item) => formData.append(item, images[item]));
+  if (!accessToken) throw Error('accessToken is not exist');
 
-  const goodsDto = { ...goodsDto_, category: '생활용품' };
-  console.log(accessToken);
+  // image fime
+  const formData = new FormData();
+  images.forEach((item) => formData.append('multipartFile', item));
+
+  // 임시 category id
+  const goodsDto = { ...goodsDto_, categoryName: 'temp' };
+
   // 이미지를 제외한 상품 먼저
-  const preResponse = await TokenedAxios.post('/api/goods', goodsDto);
-  console.log(preResponse);
-  // const response = await axios({
-  //   method: 'POST',
-  //   url: '/api/goods',
-  //   data: {
-  //     request: formData,
-  //     repImg: true,
-  //     goodsId: 0,
-  //   },
-  //   headers: {
-  //     'Authorization': `Bearer ${accessToken}`,
-  //     'Content-Type': 'multipart/form-data',
-  //     'withCredentials': true,
-  //     'crossDomain': true,
-  //     'credentials': 'include',
-  //   },
-  // });
-  // console.log(response);
-  // return response;
+  const response = await tokenedAxios
+    .post('/api/goods', goodsDto)
+    .then(async (res) => {
+      // await tokenedAxios.post(`/api/${res.data}/image`, {
+      //   request: formData,
+      //   repImg: true,
+      //   goodsId: res.data,
+      // });
+      axios({
+        method: 'post',
+        url: `/api/${res.data}/image?repImg=true`,
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${accessToken}`,
+          'withCredentials': true,
+          'crossDomain': true,
+          'credentials': 'include',
+        },
+      });
+    });
+
+  console.log(response);
+  return response;
 };
 
 export default postGoods;
