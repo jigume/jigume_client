@@ -1,5 +1,5 @@
 {
-  "name": "earth-client",
+  "name": "jigume-client",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -30,6 +30,7 @@
     "recoil": "^0.7.7",
     "recoil-persist": "^5.1.0",
     "sort-by": "^0.0.2",
+    "swiper": "10.3.1",
     "tailwind-scrollbar-hide": "^1.1.7"
   },
   "devDependencies": {

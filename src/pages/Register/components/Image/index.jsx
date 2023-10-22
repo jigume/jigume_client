@@ -82,7 +82,6 @@ function Image() {
 
           {data.image.map((item, idx) => (
             <ImageCard
-              // eslint-disable-next-line react/no-array-index-key
               key={idx}
               image={item}
               onClick={() =>

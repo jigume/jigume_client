@@ -1,6 +1,4 @@
 import React from 'react';
-import UserName from '../../Introduce/components/titleBox/components/userName';
-import UserImage from '../../Introduce/components/titleBox/components/userImage';
 import CommentsContent from './CommentsContent';
 import SendIcon from '../../../asset/icon/SendIcon.svg';
 // import SendIcon from '../../../../../asset/icon/SendIcon.svg';
@@ -9,10 +7,10 @@ export default function Comments() {
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
       <div className="flex flex-row pb-[20px] mb-[12px] place-content-center">
-        <UserImage />
+        {/* <UserImage /> */}
         <div className="flex flex-col justify-center">
           <div className="flex flex-row w-[297px] h-[36px]">
-            <UserName />
+            {/* <UserName /> */}
           </div>
           <div className="flex flex-row w-[297px]">
             <CommentsContent />
