@@ -26,21 +26,25 @@ export default function Submitted() {
           style={{ backgroundImage: `url(${submintted})` }}
           className="w-full h-full apsolute z-0 bg-no-repeat bg-center bg-cover"
         />
-        <div className="w-full h-full absolute z-50 top-0 flex flex-col justify-center items-center gap-5">
-          <img src={jigumeLogo} className="w-20 h-[90px]" />
-          <p className="text-lg font-bold">
-            축하드려요! 공동 구매 폼이
-            <br /> 성공적으로 게시되었어요.
-          </p>
-          <div className="flex gap-4 font-normal">
+        <div className="w-full h-full absolute z-50 top-0 flex flex-col justify-between items-center gap-5 py-4">
+          <div />
+          <div className="flex flex-col justify-center gap-4">
+            <img src={jigumeLogo} className="mx-auto w-20 h-[90px]" />
+            <p className="text-lg font-bold">
+              축하드려요! 공동 구매 폼이
+              <br /> 성공적으로 게시되었어요.
+            </p>
+          </div>
+
+          <div className="w-full flex gap-4 font-normal px-4">
             <button
-              className="px-4 py-2 bg-gray-200 rounded-lg cursor-pointer active:scale-[95%] transition-all ease-in-out duration-300 "
+              className="w-full px-4 py-2 bg-gray-200 rounded-lg cursor-pointer active:scale-[95%] transition-all ease-in-out duration-300 "
               onClick={() => navigate('/')}
             >
               홈으로 가기
             </button>
             <button
-              className="px-4 py-2 bg-success text-white rounded-lg cursor-pointer active:scale-[95%] transition-all ease-in-out duration-300 "
+              className="w-full px-4 py-2 bg-success text-white rounded-lg cursor-pointer active:scale-[95%] transition-all ease-in-out duration-300 "
               onClick={() => navigate(url)}
             >
               게시물 확인하기

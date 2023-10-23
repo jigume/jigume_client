@@ -48,6 +48,20 @@ export default function Introduce() {
         <ProductContent />
       </div>
 
+      <div className="px-4 pt-12">
+        <div className="font-bold text-xl pb-5">
+          잠깐! 이것만은 꼭 확인하고 가세요
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <div className="p-4 bg-gray-50 rounded-xl flex flex-col gap-4">
+            <div className="bg-gray-300 w-full aspect-[1.9197] rounded-xl animate-pulse" />
+            <div className="w-3/4 h-3 mx-auto bg-gray-300 rounded-lg animate-pulse" />
+          </div>
+          <div className="p-4 bg-gray-300" />
+        </div>
+      </div>
+
       {/* 등록완료 이벤트 */}
       <Outlet />
     </div>
