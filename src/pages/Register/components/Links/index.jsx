@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import 'react-dropdown/style.css';
+import { useMutation } from 'react-query';
 import category from '../../../Map/components/BottomSheetComponent/data';
 import image from '../../../../asset/725ec573a6591587da4be2bb770449e8.png';
 import StyledInputText from '../../../../components/StyledInputText';
 import NextButton from '../../../../components/NextButton';
+import getOpenGraph from '../../../../api/og';
 
 function Links() {
   /** @type {{data:{
@@ -27,14 +29,25 @@ function Links() {
   const { data, setData } = useOutletContext();
   const [filterIdx, setFilterIdx] = useState(-1);
 
+  const isMovable = data.goodsDto.link.length !== 0 && filterIdx !== -1;
+
+  const openGraph = useMutation(
+    'getOpenGraph',
+    (value) => getOpenGraph(value),
+    {
+      onSuccess: (res) => {
+        console.log(res);
+      },
+    },
+  );
+
   const handleLink = (e) => {
     setData((prev) => ({
       ...prev,
       goodsDto: { ...prev.goodsDto, link: e.target.value },
     }));
+    openGraph.mutate(e.target.value);
   };
-
-  const isMovable = data.goodsDto.link.length !== 0 && filterIdx !== -1;
 
   // init
   useEffect(() => {
