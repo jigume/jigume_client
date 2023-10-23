@@ -1,6 +1,5 @@
-import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import { Outlet, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, Outlet, useLocation, useParams } from 'react-router-dom';
 import CarouselBox from './components/CarouselBox';
 import HeaderProfile from './components/HeaderProfile';
 import ProductInfo from './components/ProductInfo';

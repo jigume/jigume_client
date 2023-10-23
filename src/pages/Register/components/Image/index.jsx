@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import CameraIcon from '../../../../asset/icon/mdi_camera.svg';
@@ -57,7 +57,7 @@ function Image() {
         </div>
         <Swiper
           slidesPerView={slidesPerView}
-          centeredSlides={true}
+          centeredSlides
           spaceBetween={16}
           onSlideChange={() => setSlidePerView('auto')}
           className="flex justify-center items-center gap-4 w-full"

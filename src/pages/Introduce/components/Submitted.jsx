@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import submintted from '../../../asset/images/introduce/submitted.png';
-import jigume_logo from '../../../asset/images/introduce/jigume_logo.png';
 import { useLocation, useNavigate } from 'react-router-dom';
+import submintted from '../../../asset/images/introduce/submitted.png';
+import jigumeLogo from '../../../asset/images/introduce/jigume_logo.png';
 
 export default function Submitted() {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export default function Submitted() {
           className="w-full h-full apsolute z-0 bg-no-repeat bg-center bg-cover"
         />
         <div className="w-full h-full absolute z-50 top-0 flex flex-col justify-center items-center gap-5">
-          <img src={jigume_logo} className="w-20 h-[90px]" />
+          <img src={jigumeLogo} className="w-20 h-[90px]" />
           <p className="text-lg font-bold">
             축하드려요! 공동 구매 폼이
             <br /> 성공적으로 게시되었어요.

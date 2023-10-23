@@ -61,7 +61,7 @@ function Notice() {
         <div>
           <div className="text-sm mb-2 font-thin">폼 내용</div>
           <StyledTextarea
-            height={52}
+            height="210px"
             placeholder={notice}
             onChange={handleNotice}
             value={data.goodsDto.introduction}
