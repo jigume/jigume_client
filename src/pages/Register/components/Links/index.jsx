@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import 'react-dropdown/style.css';
 import { useMutation } from 'react-query';
 import category from '../../../Map/components/BottomSheetComponent/data';
-import image from '../../../../asset/725ec573a6591587da4be2bb770449e8.png';
 import StyledInputText from '../../../../components/StyledInputText';
 import NextButton from '../../../../components/NextButton';
 import getOpenGraph from '../../../../api/og';
+import 'react-dropdown/style.css';
+import OpenGraphView from './components/OpenGraphViewer';
 
 function Links() {
   /** @type {{data:{
@@ -27,27 +27,37 @@ function Links() {
    *  }
    * }}} 등록할 상품 정보  */
   const { data, setData } = useOutletContext();
+  const [tmpLink, setTmpLink] = useState(data.goodsDto.link);
   const [filterIdx, setFilterIdx] = useState(-1);
 
   const isMovable = data.goodsDto.link.length !== 0 && filterIdx !== -1;
 
-  const openGraph = useMutation(
-    'getOpenGraph',
-    (value) => getOpenGraph(value),
-    {
-      onSuccess: (res) => {
-        console.log(res);
-      },
+  const {
+    data: openGraph,
+    mutate,
+    isSuccess,
+  } = useMutation('getOpenGraph', (value) => getOpenGraph(value), {
+    onSuccess: (res) => {
+      console.log([res]);
     },
-  );
+  });
 
-  const handleLink = (e) => {
-    setData((prev) => ({
-      ...prev,
-      goodsDto: { ...prev.goodsDto, link: e.target.value },
-    }));
-    openGraph.mutate(e.target.value);
-  };
+  const handleLink = (e) => setTmpLink(e.target.value);
+
+  useEffect(() => {
+    mutate(data.goodsDto.link);
+  }, [data.goodsDto.link]);
+
+  // debound 적용
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      return setData((prev) => ({
+        ...prev,
+        goodsDto: { ...prev.goodsDto, link: tmpLink },
+      }));
+    }, 500); // ->setTimeout 설정 (0.5초 후)
+    return () => clearTimeout(debounce); // ->clearTimeout 바로 타이머 제거
+  }, [tmpLink]); // ->결국 마지막 이벤트에만 setTimeout이 실행됨
 
   // init
   useEffect(() => {
@@ -76,22 +86,16 @@ function Links() {
           <div className="text-sm mb-2 font-thin">상품 링크</div>
           <StyledInputText
             placeholder="ex) www.figma.com"
-            value={data.goodsDto.link}
+            value={tmpLink}
             onChange={handleLink}
           />
         </div>
-        <div className="w-full flex flex-row items-center gap-2 border rounded-md pr-2 overflow-hidden cursor-pointer">
-          <img className="h-20" src={image} />
-          <div className="py-2 pr-2 flex flex-col w-full grow-0">
-            <div className="inline-block line-clamp-2 text-xs w-100%">
-              [오늘의딜/15%쿠폰] 논슬립 방수 가죽 데스크매트 마우스패드
-              모니터받침대
-            </div>
-            <div className="text-xs text-gray-500 truncate">
-              https://ohou.se/productions/1811972
-            </div>
-          </div>
-        </div>
+
+        <OpenGraphView
+          openGraph={isSuccess && openGraph}
+          link={data.goodsDto.link}
+        />
+
         <div className="pt-4">
           <div className="text-sm mb-2 font-thin">카테고리</div>
           <div className="flex flex-wrap justify-center gap-2 ">
