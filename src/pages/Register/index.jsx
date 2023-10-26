@@ -5,6 +5,7 @@ import { vaildRegister } from '../../utils';
 
 const initData = {
   image: [],
+  imageInput: [],
   address: '',
   goodsDto: {
     goodsName: '',
@@ -25,6 +26,7 @@ function Register() {
   /** @type {[
    * {
    * image: any[]
+   * imageInput: File[]
    * address: string
    *  goodsDto: {
    *    goodsName: string

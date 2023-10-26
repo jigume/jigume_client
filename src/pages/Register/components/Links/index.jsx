@@ -11,6 +11,7 @@ import OpenGraphView from './components/OpenGraphViewer';
 function Links() {
   /** @type {{data:{
    * image: any[]
+   * imageInput: File[]
    * address: string
    *  goodsDto: {
    *    goodsName: string

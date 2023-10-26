@@ -1,17 +1,5 @@
 import axios from 'axios';
 
-const recoilLocal = JSON.parse(localStorage.getItem('recoil-persist'));
-const { accessToken, refreshToken, expired } = recoilLocal?.jigumeAuth ?? {};
-
-const tokenedAxios = axios.create({
-  headers: {
-    Authorization: `Bearer ${accessToken}`,
-    withCredentials: true,
-    crossDomain: true,
-    credentials: 'include',
-  },
-});
-
 /**
  * 신규 유저의 닉네임 등의 정보를 입력하여 role을 USER로 변경한다
  * @param {object} param
@@ -28,7 +16,7 @@ export const setNewUser = async (param) => {
     mapY: param.position.lat,
     profileImgUrl: param.image,
   };
-  const result = await tokenedAxios.post('/api/member/new', { query });
+  const result = await axios.post('/api/member/new', { query });
 
   return result;
 };
@@ -38,12 +26,13 @@ export const setNewUser = async (param) => {
  * @returns void
  */
 export const handleRefreshToken = async () => {
+  const token = JSON.parse(localStorage.getItem('recoil-persist'));
   // token valid
-  if (new Date(expired) > new Date().getTime()) return 'valid';
-  if (!accessToken || !refreshToken) return 'valid';
+  if (new Date(token.expired) > new Date().getTime()) return 'valid';
+  if (!token.accessToken || !token.refreshToken) return 'valid';
 
-  const response = await tokenedAxios.post('/api/member/token', {
-    refreshToken,
+  const response = await axios.post('/api/member/token', {
+    refreshToken: token.refreshToken,
   });
   return response.data;
 };
@@ -64,5 +53,12 @@ export const codeProvide = async (code) => {
   const response = await axios.post(
     `/api/member/login?login-provider=kakao&authorization-code=${code}`,
   );
+  return response;
+};
+
+export const kakaoLogout = async (accessToken) => {
+  if (!accessToken) throw Error('accessToken is not exist');
+  // kakao 서버에 요청
+  const response = await axios.post('https://kapi.kakao.com/v1/user/logout');
   return response;
 };

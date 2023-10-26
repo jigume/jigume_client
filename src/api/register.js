@@ -1,20 +1,7 @@
 import axios from 'axios';
-
-const recoilLocal = JSON.parse(localStorage.getItem('recoil-persist'));
-const { accessToken } = recoilLocal?.jigumeAuth ?? {};
-
-const tokenedAxios = axios.create({
-  headers: {
-    Authorization: `Bearer ${accessToken}`,
-    withCredentials: true,
-    crossDomain: true,
-    credentials: 'include',
-  },
-});
-
 /**
  * 상품 등록을 위한 fetch 함수
- * @param {array} images
+ * @param {File[]} images
  * @param {object} goodsDto
  * @param {number} goodsDto.goodsName
  * @param {string} goodsDto.boardContent
@@ -29,7 +16,8 @@ const tokenedAxios = axios.create({
  * @param {number} goodsDto.categoryName
  */
 const postGoods = async (images, goodsDto_) => {
-  if (!accessToken) throw Error('accessToken is not exist');
+  const token = JSON.parse(localStorage.getItem('recoil-persist')).jigumeAuth;
+  if (!token.accessToken) throw Error('accessToken is not exist');
 
   // image fime
   const formData = new FormData();
@@ -39,29 +27,36 @@ const postGoods = async (images, goodsDto_) => {
   const goodsDto = { ...goodsDto_, categoryName: 'temp' };
 
   // 이미지를 제외한 상품 먼저
-  const response = await tokenedAxios
-    .post('/api/goods', goodsDto)
-    .then(async (res) => {
-      // await tokenedAxios.post(`/api/${res.data}/image`, {
-      //   request: formData,
-      //   repImg: true,
-      //   goodsId: res.data,
-      // });
-      axios({
-        method: 'post',
-        url: `/api/${res.data}/image?repImg=true`,
-        data: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${accessToken}`,
-          'withCredentials': true,
-          'crossDomain': true,
-          'credentials': 'include',
-        },
-      });
+  const response = await axios({
+    method: 'post',
+    url: '/api/goods',
+    data: goodsDto,
+    headers: {
+      Authorization: `Bearer ${token.accessToken}`,
+      withCredentials: true,
+      crossDomain: true,
+      credentials: 'include',
+    },
+  }).then(async (res) => {
+    // 두 번째 요청 (이미지)
+    const response2 = await axios({
+      method: 'post',
+      url: `/api/${res.data}/image?repImg=true`,
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token.accessToken}`,
+        'withCredentials': true,
+        'crossDomain': true,
+        'credentials': 'include',
+      },
     });
 
-  console.log(response);
+    // res1의 data인 게시물 번호를 반환
+    if (response2.status === 200) return res.data;
+    return response2;
+  });
+
   return response;
 };
 

@@ -6,6 +6,7 @@ import CloseIcon from '../../../../../asset/icon/CloseIcon.svg';
 function Postcode() {
   /** @type {{data:{
    * image: any[]
+   * imageInput: File[]
    * address: string
    *  goodsDto: {
    *    goodsName: string

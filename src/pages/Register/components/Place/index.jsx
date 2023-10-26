@@ -6,6 +6,7 @@ import NextButton from '../../../../components/NextButton';
 function Place() {
   /** @type {{data:{
    * image: any[]
+   * imageInput: File[]
    * address: string
    *  goodsDto: {
    *    goodsName: string

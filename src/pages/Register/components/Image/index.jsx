@@ -11,6 +11,7 @@ import 'swiper/css';
 function Image() {
   /** @type {{data:{
    * image: any[]
+   * imageInput: File[]
    * address: string
    *  goodsDto: {
    *    goodsName: string
@@ -39,8 +40,14 @@ function Image() {
       // onLoad에서 실행하는
       reader.onload = () => {
         const prevImages = data.image;
+        const prevImageInput = data.imageInput;
         prevImages.push(reader.result);
-        setData((prev) => ({ ...prev, image: prevImages }));
+        prevImageInput.push(fileBlob);
+        setData((prev) => ({
+          ...prev,
+          image: prevImages,
+          imageInput: prevImageInput,
+        }));
         resolve();
       };
     });

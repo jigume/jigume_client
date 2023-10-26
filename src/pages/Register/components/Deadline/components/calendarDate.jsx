@@ -9,6 +9,7 @@ import { primaryBlue } from '../../../../../common';
 function CalendarDate() {
   /** @type {{data:{
    * image: any[]
+   * imageInput: File[]
    * address: string
    *  goodsDto: {
    *    goodsName: string

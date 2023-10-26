@@ -1,5 +1,5 @@
 import React from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import NextButton from '../../../../components/NextButton';
 import StyledTextarea from '../../../../components/StyledTextarea';
@@ -17,6 +17,7 @@ const notice = `픽업 기간은 배송 완료 예정일인 9월 10일부터 13�
 function Notice() {
   /** @type {{data:{
    * image: any[]
+   * imageInput: File[]
    * address: string
    *  goodsDto: {
    *    goodsName: string
@@ -33,6 +34,7 @@ function Notice() {
    *  }
    * }}} 등록할 상품 정보  */
   const { data, setData } = useOutletContext();
+  const navigate = useNavigate();
 
   const handleNotice = (e) => {
     setData((prev) => ({
@@ -43,9 +45,12 @@ function Notice() {
 
   const mutate = useMutation(
     'post_goods',
-    () => postGoods(data.image, data.goodsDto),
+    () => postGoods(data.imageInput, data.goodsDto),
     {
       retry: false,
+      onSuccess: (res) => {
+        navigate(`/introduce/${res}/submitted`);
+      },
     },
   );
 
