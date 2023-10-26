@@ -5,6 +5,7 @@ import NextButton from '../../../../components/NextButton';
 import StyledTextarea from '../../../../components/StyledTextarea';
 import postGoods from '../../../../api/register';
 import LoadingButton from '../../../../components/LoadingButton';
+import { initData } from '../..';
 
 const notice = `픽업 기간은 배송 완료 예정일인 9월 10일부터 13일 까지 입니다. 댓글로 픽업 시간을 알려주세요!
 
@@ -50,6 +51,7 @@ function Notice() {
       retry: false,
       onSuccess: (res) => {
         navigate(`/introduce/${res}/submitted`);
+        setData(initData);
       },
     },
   );

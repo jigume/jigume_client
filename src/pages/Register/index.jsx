@@ -3,7 +3,7 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import ChevronLeft from '../../asset/icon/chevron-left.svg';
 import { vaildRegister } from '../../utils';
 
-const initData = {
+export const initData = {
   image: [],
   imageInput: [],
   address: '',
@@ -53,10 +53,22 @@ function Register() {
     if (url !== undefined) navigate(url);
   }, [location]);
 
+  // 마운트 해제 시 폼 초기화
+  useEffect(() => {
+    return () => {
+      setData(initData);
+    };
+  }, []);
+
   return (
     <>
       <div className="mx-auto max-w-screen-sm w-full h-[48px] px-4 flex flex-row items-center">
-        <div onClick={() => navigate(-1)} className="pr-2">
+        <div
+          onClick={() =>
+            location.pathname === '/register' ? navigate('/') : navigate(-1)
+          }
+          className="pr-2"
+        >
           <img className="w-12 h-12 p-2 cursor-pointer" src={ChevronLeft} />
         </div>
       </div>

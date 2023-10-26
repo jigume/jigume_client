@@ -37,11 +37,7 @@ function Links() {
     data: openGraph,
     mutate,
     isSuccess,
-  } = useMutation('getOpenGraph', (value) => getOpenGraph(value), {
-    onSuccess: (res) => {
-      console.log([res]);
-    },
-  });
+  } = useMutation('getOpenGraph', (value) => getOpenGraph(value));
 
   const handleLink = (e) => setTmpLink(e.target.value);
 
@@ -99,7 +95,7 @@ function Links() {
 
         <div className="pt-4">
           <div className="text-sm mb-2 font-thin">카테고리</div>
-          <div className="flex flex-wrap justify-center gap-2 ">
+          <div className="flex flex-wrap justify-center gap-2">
             {category.map((item, index) => (
               <div
                 key={item.name}
@@ -112,7 +108,7 @@ function Links() {
                   className="inline-block mr-2 w-[16px] h-[16px]"
                   src={item.icon}
                 />
-                <span className="text-xs">{item.name}</span>
+                <span className="text-[0.7rem] xs:text-xs">{item.name}</span>
               </div>
             ))}
           </div>
