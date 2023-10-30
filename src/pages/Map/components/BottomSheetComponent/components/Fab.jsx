@@ -8,17 +8,17 @@ export default function Fab({ handleToCenter }) {
   return (
     <>
       <div
-        className="p-2 bg-white rounded-full cursor-pointer drop-shadow active:scale-90 transition-all ease-in-out duration-300"
+        className="cursor-pointer rounded-full bg-white p-2 drop-shadow transition-all duration-300 ease-in-out active:scale-90"
         onClick={() => handleToCenter()}
       >
-        <img className="w-6 h-6" src={NavigationIcon} />
+        <img className="h-6 w-6" src={NavigationIcon} />
       </div>
       <div
-        className="flex flex-row gap-1 bg-gray-900 items-center px-[20px] rounded-full cursor-pointer drop-shadow active:scale-95 transition-all ease-in-out duration-300"
+        className="flex cursor-pointer flex-row items-center gap-1 rounded-full bg-gray-900 px-[20px] drop-shadow transition-all duration-300 ease-in-out active:scale-95"
         onClick={() => navigate('/register')}
       >
-        <img className="w-4 h-4" src={EditIcon} />
-        <span className="h6 mb-0 text-white min-w-fit">공구 열기</span>
+        <img className="h-4 w-4" src={EditIcon} />
+        <span className="h6 mb-0 min-w-fit text-white">공구 열기</span>
       </div>
     </>
   );

@@ -38,29 +38,29 @@ export default function ItemComponent({
   const num = Math.floor(Math.random() * 10);
   return (
     <div
-      className={`flex flex-row py-[20px] px-4 w-[calc(100vw-32px)] gap-4 cursor-pointer ${
+      className={`flex w-[calc(100vw-32px)] cursor-pointer flex-row gap-4 px-4 py-[20px] ${
         !title ? 'animate-pulse' : ''
       }`}
       onClick={() => navigate(`/introduce/${index}`)}
     >
       {!image ? (
-        <div className="border border-gray50 w-32 h-32 rounded-lg bg-gray-100 flex-none" />
+        <div className="border-gray50 h-32 w-32 flex-none rounded-lg border bg-gray-100" />
       ) : (
         <img
           src={image}
-          className="border border-gray50 w-32 h-32 rounded-lg bg-gray-100 flex-none"
+          className="border-gray50 h-32 w-32 flex-none rounded-lg border bg-gray-100"
         />
       )}
       <div className="flex flex-col truncate pt-1">
         {!title ? (
-          <div className="w-48 h-[12px] mb-[12px] bg-gray-100 rounded-sm" />
+          <div className="mb-[12px] h-[12px] w-48 rounded-sm bg-gray-100" />
         ) : (
-          <div className="text-lg truncate">{title}</div>
+          <div className="truncate text-lg">{title}</div>
         )}
 
         <div className="flex flex-row items-center gap-2 pb-2">
           {!username ? (
-            <div className="w-[18px] h-[18px] rounded-full bg-gray-100" />
+            <div className="h-[18px] w-[18px] rounded-full bg-gray-100" />
           ) : (
             <Avatar
               size={18}
@@ -76,15 +76,15 @@ export default function ItemComponent({
             />
           )}
           {/* <div className="w-[18px] h-[18px] rounded-full bg-gray-100" /> */}
-          <div className="flex flex-row caption gap-1 items-center">
+          <div className="caption flex flex-row items-center gap-1">
             {!username ? (
-              <div className="w-16 h-[12px] bg-gray-100 rounded-sm" />
+              <div className="h-[12px] w-16 rounded-sm bg-gray-100" />
             ) : (
               <div>{nickname[num]}</div>
             )}
-            <div className="bg-gray-500 w-[1px] h-3" />
+            <div className="h-3 w-[1px] bg-gray-500" />
             {!count ? (
-              <div className="w-20 h-[12px] bg-gray-100 rounded-sm" />
+              <div className="h-[12px] w-20 rounded-sm bg-gray-100" />
             ) : (
               <div className="text-gray-500">{count} 번째 구매 리드</div>
             )}
@@ -93,22 +93,22 @@ export default function ItemComponent({
 
         <div className="paragraph-sm text-gray-500">
           {!itemCost ? (
-            <div className="w-12 h-[12px] mb-[6px] bg-gray-100 rounded-sm" />
+            <div className="mb-[6px] h-[12px] w-12 rounded-sm bg-gray-100" />
           ) : (
             <div>구매가: {itemCost}</div>
           )}
-          <div className="flex flex-row gap-1 font-light items-center">
+          <div className="flex flex-row items-center gap-1 font-light">
             {!deliveryCost ? (
-              <div className="w-12 h-[12px] bg-gray-100 rounded-sm" />
+              <div className="h-[12px] w-12 rounded-sm bg-gray-100" />
             ) : (
               <span>배송비: {deliveryCost}</span>
             )}
             <span>/</span>
             {!people ? (
-              <div className="w-20 h-[12px] bg-gray-100 rounded-sm" />
+              <div className="h-[12px] w-20 rounded-sm bg-gray-100" />
             ) : (
               <span>
-                <span className="text-[#FFAE39] font-bold">{people}</span> 명
+                <span className="font-bold text-[#FFAE39]">{people}</span> 명
                 분할 중
               </span>
             )}

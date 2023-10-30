@@ -1,12 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { CustomOverlayMap, Map as KakaoMap } from 'react-kakao-maps-sdk';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  CustomOverlayMap,
+  Map as KakaoMap,
+  MarkerClusterer,
+} from 'react-kakao-maps-sdk';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import { useQuery } from 'react-query';
+import { throttle } from 'lodash';
 import { getCurrentLocation, tempRandMarker } from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
 import ItemMarker from './components/ItemMarker';
 import { userState } from '../../recoil';
+import getGoodsList from '../../api/goods';
 
 export default function Map() {
   const navigate = useNavigate();
@@ -20,49 +27,53 @@ export default function Map() {
   // geocoder
   const getAddress = () => {
     if (!position) return;
-    const callback = (result, status) => {
-      if (status === kakao.maps.services.Status.OK)
-        setAddress(result[0].address.address_name);
-    };
     new kakao.maps.services.Geocoder().coord2Address(
       position.lng,
       position.lat,
-      callback,
+      (result, status) => {
+        if (status === kakao.maps.services.Status.OK)
+          setAddress(result[0].address.address_name);
+      },
     );
   };
 
-  const handleToCenter = () => {
+  // 쓰롤틀링으로 요청 제한
+  const handleAddress = useMemo(
+    () => throttle(getAddress, 5000),
+    // 특정 범위 이동 내에선 요청 막음
+    [position?.lat.toFixed(2), position?.lng.toFixed(2)],
+  );
+
+  const handleToCenter = () =>
     getCurrentLocation(setPosition).then(() => {
       if (user.position) setPosition(user.position);
     });
-  };
 
   // 맵 조작이 종료 되었을 때 실행하는 callback fn
-  const handleDragEndMap = (map) => {
+  const handleDragEndMap = (map) =>
     setPosition({
       lat: map.getCenter().getLat(),
       lng: map.getCenter().getLng(),
     });
-  };
 
   useEffect(() => {
     getCurrentLocation(setPosition);
-    // getGoods().then((res) => setMarker(res));
   }, []);
 
   useEffect(() => {
-    if (user.position && position !== undefined) getAddress();
+    if (user.position && position !== undefined) handleAddress();
     else
       setUser((prev) => ({
         ...prev,
         position,
       }));
 
-    if (user.position) {
-      console.log(tempRandMarker(user.position));
-      setMarker(tempRandMarker(user.position));
-    }
+    if (user.position) setMarker(tempRandMarker(user.position));
   }, [position, user.position]);
+
+  // const goods = useQuery('getGoods', () => getGoodsList(), {
+  //   onSuccess: (res) => console.log(res),
+  // });
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
@@ -79,28 +90,29 @@ export default function Map() {
           onDragEnd={handleDragEndMap}
         >
           <CustomOverlayMap position={user.position}>
-            <div className="w-[32px] h-[32px] rounded-full bg-primaryBlue flex items-center justify-center">
-              <div className="w-[16px] h-[16px] rounded-full bg-white relative z-30" />
-              <div className="bg-primaryBlue w-[30px] h-[30px] absolute rounded-full z-10 animate-ping" />
+            <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-primaryBlue">
+              <div className="relative z-30 h-[16px] w-[16px] rounded-full bg-white" />
+              <div className="absolute z-10 h-[30px] w-[30px] animate-ping rounded-full bg-primaryBlue" />
             </div>
           </CustomOverlayMap>
 
-          {marker.map((item, idx) => {
-            return (
-              <div
+          <MarkerClusterer
+            averageCenter
+            minLevel={2}
+            styles={{ backgroundColor: '#fff' }}
+          >
+            {marker.map((item, idx) => (
+              <ItemMarker
                 key={item.name}
+                imageUrl={item.imageUrl}
+                position={{
+                  lat: item.lat,
+                  lng: item.lng,
+                }}
                 onClick={() => navigate(`/introduce/${idx}`)}
-              >
-                <ItemMarker
-                  imageUrl={item.imageUrl}
-                  position={{
-                    lat: item.lat,
-                    lng: item.lng,
-                  }}
-                />
-              </div>
-            );
-          })}
+              />
+            ))}
+          </MarkerClusterer>
         </KakaoMap>
       ) : (
         <Loading />

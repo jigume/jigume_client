@@ -17,7 +17,7 @@ export default function StyledTextarea({
   return (
     <textarea
       style={{ height: height || 'auto' }}
-      className="border border-slate-300 rounded-md w-full p-3 text-sm placeholder-slate-400 focus:outline-none focus:border-success focus:ring-1 focus:ring-success disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
+      className="w-full rounded-md border border-slate-300 p-3 text-sm placeholder:text-slate-400 focus:border-success focus:outline-none focus:ring-1 focus:ring-success disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none"
       placeholder={placeholder}
       onChange={onChange}
       value={value}

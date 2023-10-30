@@ -1,16 +1,19 @@
-import axios from 'axios';
-
 /**
  *
  * @param {* function()} setPosition
  */
 export const getCurrentLocation = async (setPosition) => {
-  await navigator.geolocation.getCurrentPosition((position) => {
-    setPosition({
-      lat: position.coords.latitude,
-      lng: position.coords.longitude,
-    });
-  });
+  const response = await navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      const current = await position;
+      setPosition({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+      return current;
+    },
+  );
+  return response;
 };
 
 /**

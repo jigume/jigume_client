@@ -16,7 +16,7 @@ export default function Login() {
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
-      <div className="h-[100svh] flex flex-col justify-evenly px-4">
+      <div className="flex h-[100svh] flex-col justify-evenly px-4">
         <div className="flex flex-col gap-5">
           <img src={logo} className="mx-auto max-w-[210px]" />
           <p className="text-center font-light">
@@ -27,7 +27,7 @@ export default function Login() {
 
         {/* login button */}
         <div role="button" onClick={handleLogin}>
-          <img src={kakaoLogin} className="active:opacity-80 w-full mx-auto" />
+          <img src={kakaoLogin} className="mx-auto w-full active:opacity-80" />
         </div>
       </div>
     </div>

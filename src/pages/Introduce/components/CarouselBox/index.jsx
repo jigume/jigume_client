@@ -20,13 +20,13 @@ export default function CarouselBox() {
       pagination
       modules={[Pagination]}
       loop
-      className="flex justify-center items-center w-full aspect-square"
+      className="flex aspect-square w-full items-center justify-center"
     >
       {tempImages.map((item, i) => (
         <SwiperSlide key={i}>
           <img src={item} className="" />
         </SwiperSlide>
-      )) || <div className="w-full bg-gray-300 aspect-square animate-pulse" />}
+      )) || <div className="aspect-square w-full animate-pulse bg-gray-300" />}
     </Swiper>
   );
 }

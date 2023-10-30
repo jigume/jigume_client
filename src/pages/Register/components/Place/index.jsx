@@ -26,16 +26,16 @@ function Place() {
 
   const isMovable = data.address !== '';
   return (
-    <div className="w-full h-[calc(100svh-48px)] flex flex-col justify-between">
+    <div className="flex h-[calc(100svh-48px)] w-full flex-col justify-between">
       <div />
       <div className="pb-24">
-        <div className="text-lg font-bold pb-10">
+        <div className="pb-10 text-lg font-bold">
           어디서 공구 물품을 전달할까요?
           <br />
           팔로워들과 만날 픽업 장소를 알려주세요.
         </div>
 
-        <div className="align-top text-sm mb-2 font-thin">픽업 위치 지정</div>
+        <div className="mb-2 align-top text-sm font-thin">픽업 위치 지정</div>
         <Postcode />
       </div>
 

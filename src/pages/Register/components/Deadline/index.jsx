@@ -35,24 +35,24 @@ function Deadline() {
   const isMovable = Number(data.goodsDto.goodsLimitCount) !== 0;
 
   return (
-    <div className="w-full h-[calc(100svh-48px)] flex flex-col justify-between">
+    <div className="flex h-[calc(100svh-48px)] w-full flex-col justify-between">
       <div />
       <div className="pb-24">
-        <div className="text-lg font-bold pb-12">
+        <div className="pb-12 text-lg font-bold">
           구매 수량과 종료 시점을 정해요.
           <br />
           목표에 도달하면 공동 구매 폼이 마감돼요.
         </div>
 
         <div className="pb-10">
-          <div className="text-sm mb-2 font-thin">폼 목표 공동 구매 수량</div>
+          <div className="mb-2 text-sm font-thin">폼 목표 공동 구매 수량</div>
           <StyledCountInput
             value={data.goodsDto.goodsLimitCount}
             onChange={handleTargetCount}
           />
         </div>
         <div>
-          <div className="text-sm mb-2 font-thin">공동구매 종료 시간</div>
+          <div className="mb-2 text-sm font-thin">공동구매 종료 시간</div>
           <CalendarDate />
         </div>
       </div>

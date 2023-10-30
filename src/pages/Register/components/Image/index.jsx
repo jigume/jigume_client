@@ -56,10 +56,10 @@ function Image() {
   const isMovable = data.image.length === 0;
 
   return (
-    <div className="w-screen max-w-screen-sm h-[calc(100svh-48px)] flex flex-col justify-between absolute left-1/2 -translate-x-1/2">
+    <div className="absolute left-1/2 flex h-[calc(100svh-48px)] w-screen max-w-screen-sm -translate-x-1/2 flex-col justify-between">
       <div />
       <div>
-        <div className="text-xl font-bold px-4">
+        <div className="px-4 text-xl font-bold">
           어떤 제품을 공동구매하실건가요? <br /> 소개 이미지를 등록해주세요!
         </div>
         <Swiper
@@ -67,12 +67,12 @@ function Image() {
           centeredSlides
           spaceBetween={16}
           onSlideChange={() => setSlidePerView('auto')}
-          className="flex justify-center items-center gap-4 w-full"
+          className="flex w-full items-center justify-center gap-4"
         >
           {/* add button */}
           <SwiperSlide
-            className={`flex-shrink-0 cursor-pointer ${
-              !isMovable ? '!w-1/2 aspect-square ml-4' : '!w-full px-4'
+            className={`shrink-0 cursor-pointer ${
+              !isMovable ? 'ml-4 aspect-square !w-1/2' : '!w-full px-4'
             } mt-6`}
           >
             <label htmlFor="image">
@@ -88,9 +88,9 @@ function Image() {
               <div
                 className={`${
                   !isMovable
-                    ? 'w-full aspect-square shrink-0 '
-                    : 'w-full aspect-[1.8641]'
-                }  bg-gray-200 flex items-center justify-center flex-col gap-3 rounded-lg`}
+                    ? 'aspect-square w-full shrink-0 '
+                    : 'aspect-[1.8641] w-full'
+                }  flex flex-col items-center justify-center gap-3 rounded-lg bg-gray-200`}
               >
                 <img src={CameraIcon} />
                 <div className="font-thin">앨범으로 등록</div>

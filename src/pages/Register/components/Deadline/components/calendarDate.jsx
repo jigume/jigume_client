@@ -41,16 +41,16 @@ function CalendarDate() {
       <button
         data-modal-target="defaultModal"
         data-modal-toggle="defaultModal"
-        className="border rounded-md w-full p-3 text-sm w-full font-medium rounded-lg  text-right border border-slate-300 focus:outline-none focus:border-success focus:ring-1 focus:ring-success disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
+        className="w-full rounded-md border border-slate-300 p-3  text-right text-sm font-medium focus:border-success focus:outline-none focus:ring-1 focus:ring-success disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none"
         type="button"
         onClick={() => setOpen((prev) => !prev)}
       >
         {date.getFullYear()}년 {date.getMonth()}월 {date.getDate()}일
       </button>
       {open && (
-        <div className="w-full h-full justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 outline-none focus:outline-none ">
+        <div className="fixed inset-0 flex h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none ">
           <div
-            className="w-screen h-[100svh] bg-black/10 fixed top-0 left-0 z-30"
+            className="fixed left-0 top-0 z-30 h-[100svh] w-screen bg-black/10"
             onClick={() => setOpen(false)}
           />
           <Calendar
@@ -58,7 +58,7 @@ function CalendarDate() {
             date={date}
             locale={locale}
             color={primaryBlue}
-            className="rounded-md z-50"
+            className="z-50 rounded-md"
           />
         </div>
       )}

@@ -4,10 +4,10 @@ export default function LoadingButton() {
   return (
     <button
       disabled
-      className="mb-6 h-12 bg-success text-white text-center w-full p-3 rounded-lg"
+      className="mb-6 h-12 w-full rounded-lg bg-success p-3 text-center text-white"
     >
       <svg
-        className="mx-auto w-6 h-6 animate-spin dark:text-white/50 fill-white"
+        className="mx-auto h-6 w-6 animate-spin fill-white dark:text-white/50"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

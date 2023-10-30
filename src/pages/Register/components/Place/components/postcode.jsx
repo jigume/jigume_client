@@ -60,7 +60,7 @@ function Postcode() {
       <button
         data-modal-target="defaultModal"
         data-modal-toggle="defaultModal"
-        className="border rounded-md w-full p-3 text-sm w-full font-medium rounded-lg  text-right border border-slate-300 focus:outline-none focus:border-success focus:ring-1 focus:ring-success disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
+        className="w-full rounded-md border border-slate-300 p-3  text-right text-sm font-medium focus:border-success focus:outline-none focus:ring-1 focus:ring-success disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none"
         type="button"
         onClick={() => setOpen((prev) => !prev)}
         placeholder="서울 성동구 왕십리로2길 20"
@@ -71,10 +71,10 @@ function Postcode() {
         )}
       </button>
       {open && (
-        <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 outline-none focus:outline-none ">
-          <div className="w-screen h-[100svh] bg-white fixed top-0 left-0 z-30">
+        <div className="fixed inset-0 flex items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none ">
+          <div className="fixed left-0 top-0 z-30 h-[100svh] w-screen bg-white">
             <div onClick={() => setOpen(false)}>
-              <img src={CloseIcon} className="mt-2 ml-auto mr-2 w-10 p-2" />
+              <img src={CloseIcon} className="ml-auto mr-2 mt-2 w-10 p-2" />
             </div>
           </div>
           <DaumPostcodeEmbed

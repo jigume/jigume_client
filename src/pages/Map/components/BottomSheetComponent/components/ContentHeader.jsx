@@ -8,20 +8,20 @@ export default function ContentHeader({ filter, setFilter }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="absolute top-[76px] bg-white z-50 w-full">
+    <div className="absolute top-[76px] z-50 w-full bg-white">
       <AnimatePresence>
         <div className="border-b border-gray-100">
           <div className="px-[16px] py-[12px] ">
-            <div className="font-bold text-lg mb-0">공동 구매 폼 내역 보기</div>
+            <div className="mb-0 text-lg font-bold">공동 구매 폼 내역 보기</div>
           </div>
-          <div className="px-[16px] py-[12px] grid grid-cols-8">
+          <div className="grid grid-cols-8 px-[16px] py-[12px]">
             <div className="col-span-7 h-[1.5rem] overflow-x-scroll whitespace-nowrap text-gray-600">
               {filter.find(({ checked }) => checked) ? (
                 filter.map(
                   (item, index) =>
                     item.checked && (
                       <motion.span
-                        className="px-1 cursor-pointer"
+                        className="cursor-pointer px-1"
                         key={item.name}
                         onClick={() => {
                           const prevData = [...filter];
@@ -54,13 +54,13 @@ export default function ContentHeader({ filter, setFilter }) {
             </div>
 
             <div
-              className="col-span-1 h-[1.5rem] flex justify-center cursor-pointer active:scale-95 transition-all duration-300 ease-in-out"
+              className="col-span-1 flex h-[1.5rem] cursor-pointer justify-center transition-all duration-300 ease-in-out active:scale-95"
               onClick={() => setOpen((prev) => !prev)}
             >
               {open ? (
                 '완료'
               ) : (
-                <img src={Filter} className="w-[24px] h-[24px]" />
+                <img src={Filter} className="h-[24px] w-[24px]" />
               )}
             </div>
           </div>
@@ -73,7 +73,7 @@ export default function ContentHeader({ filter, setFilter }) {
             animate={{ y: 10, opacity: 1 }}
             exit={{ y: -10, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="flex flex-wrap justify-center px-4 py-7 gap-2 rounded-b-[20px] bg-white drop-shadow-xl"
+            className="flex flex-wrap justify-center gap-2 rounded-b-[20px] bg-white px-4 py-7 drop-shadow-xl"
           >
             {filter.map((item, index) => (
               <CategoryTag

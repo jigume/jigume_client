@@ -5,7 +5,7 @@ export default function ItemList({ imgArr, filter }) {
   // loading state
   if (imgArr.length === 0)
     return (
-      <div className="h-full w-full overflow-x-scroll absolute top-[96px] pt-[96px] pb-[192px]">
+      <div className="absolute top-[96px] h-full w-full overflow-x-scroll pb-[192px] pt-[96px]">
         {[1, 2, 3].map((item) => (
           <ItemComponent key={item} />
         ))}
@@ -13,7 +13,7 @@ export default function ItemList({ imgArr, filter }) {
     );
 
   return (
-    <div className="h-full overflow-x-scroll absolute top-[96px] pt-[96px] pb-[192px]">
+    <div className="absolute top-[96px] h-full overflow-x-scroll pb-[192px] pt-[96px]">
       {imgArr.map((item, index) => {
         const trueArr = filter.filter(({ checked }) => checked);
 

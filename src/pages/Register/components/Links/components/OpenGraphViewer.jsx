@@ -2,29 +2,29 @@ import React from 'react';
 
 export default function OpenGraphViewer({ openGraph, link }) {
   return (
-    <div className="w-full flex flex-row items-center gap-2 border rounded-md overflow-hidden">
-      <div className="h-20 aspect-square">
+    <div className="flex w-full flex-row items-center gap-2 overflow-hidden rounded-md border">
+      <div className="aspect-square h-20">
         {openGraph?.image ? (
           <img
-            className="w-full h-full object-cover"
+            className="h-full w-full object-cover"
             src={openGraph?.image?.url}
           />
         ) : (
-          <div className="w-full h-full object-cover bg-gray-300 animate-pulse" />
+          <div className="h-full w-full animate-pulse bg-gray-300 object-cover" />
         )}
       </div>
 
-      <div className="h-20 w-full flex flex-col justify-evenly grow-0 gap-2 py-2 pr-4 overflow-hidden">
-        <div className="w-full line-clamp-2 text-xs overflow-hidden">
+      <div className="flex h-20 w-full grow-0 flex-col justify-evenly gap-2 overflow-hidden py-2 pr-4">
+        <div className="line-clamp-2 w-full overflow-hidden text-xs">
           {!openGraph?.title ? (
-            <div className="w-4/5 h-4 bg-gray-300 animate-pulse rounded" />
+            <div className="h-4 w-4/5 animate-pulse rounded bg-gray-300" />
           ) : (
             openGraph?.title
           )}
         </div>
-        <div className="text-xs text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap">
+        <div className="truncate text-xs text-gray-500">
           {!link ? (
-            <div className="w-3/4 h-3 bg-gray-200 animate-pulse rounded" />
+            <div className="h-3 w-3/4 animate-pulse rounded bg-gray-200" />
           ) : (
             link
           )}

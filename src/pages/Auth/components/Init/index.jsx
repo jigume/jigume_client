@@ -10,10 +10,10 @@ export default function Init() {
     image: undefined,
   });
   return (
-    <div className="h-[calc(100svh-48px)] container mx-auto max-w-screen-sm px-4 mt-[48px] py-6 flex flex-col justify-between">
-      <div className="w-full h-[48px] px-[1rem] flex flex-row items-center fixed top-0 left-0 bg-white">
+    <div className="container mx-auto mt-[48px] flex h-[calc(100svh-48px)] max-w-screen-sm flex-col justify-between px-4 py-6">
+      <div className="fixed left-0 top-0 flex h-[48px] w-full flex-row items-center bg-white px-[1rem]">
         <div onClick={() => navigate(-1)} className="pr-2">
-          <img className="w-[32px] h-[32px]" src={ChevronLeft} />
+          <img className="h-[32px] w-[32px]" src={ChevronLeft} />
         </div>
       </div>
       <Outlet context={{ initUser, setInitUser }} />

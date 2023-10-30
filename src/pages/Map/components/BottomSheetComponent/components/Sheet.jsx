@@ -7,16 +7,16 @@ function Sheet({ children, header, onClick }, ref) {
   return (
     <motion.div
       ref={sheet}
-      className="noSelect flex flex-col fixed z-50 top-[calc(100%-68px)] left-0 right-0 h-[calc(100svh-24px)] rounded-t-[20px] bg-white ease-out duration-300 drop-shadow-xl max-w-screen-sm mx-auto"
+      className="noSelect fixed inset-x-0 top-[calc(100%-68px)] z-50 mx-auto flex h-[calc(100svh-24px)] max-w-screen-sm flex-col rounded-t-[20px] bg-white drop-shadow-xl duration-300 ease-out"
       onClick={onClick}
     >
       {/* header */}
       <div
         ref={handle}
-        className="w-full flex items-center flex-col cursor-pointer"
+        className="flex w-full cursor-pointer flex-col items-center"
       >
-        <div className="h-5 flex items-center ">
-          <div className="bg-[#ddd] w-16 h-1 rounded-full mx-auto" />
+        <div className="flex h-5 items-center ">
+          <div className="mx-auto h-1 w-16 rounded-full bg-[#ddd]" />
         </div>
         {header}
       </div>

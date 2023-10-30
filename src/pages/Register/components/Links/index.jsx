@@ -70,17 +70,17 @@ function Links() {
   }, []);
 
   return (
-    <div className="w-full h-[calc(100svh-48px)] flex flex-col justify-between">
+    <div className="flex h-[calc(100svh-48px)] w-full flex-col justify-between">
       <div />
       <div>
-        <div className="text-lg font-bold pb-10">
+        <div className="pb-10 text-lg font-bold">
           상품의 구매처가 어디인가요?
           <br />
           상품의 카테고리도 알려주세요.
         </div>
 
         <div className="mb-1">
-          <div className="text-sm mb-2 font-thin">상품 링크</div>
+          <div className="mb-2 text-sm font-thin">상품 링크</div>
           <StyledInputText
             placeholder="ex) www.figma.com"
             value={tmpLink}
@@ -94,21 +94,21 @@ function Links() {
         />
 
         <div className="pt-4">
-          <div className="text-sm mb-2 font-thin">카테고리</div>
+          <div className="mb-2 text-sm font-thin">카테고리</div>
           <div className="flex flex-wrap justify-center gap-2">
             {category.map((item, index) => (
               <div
                 key={item.name}
-                className={`py-[6px] px-[8px] border border-gray-100 rounded-lg ${
+                className={`rounded-lg border border-gray-100 px-[8px] py-[6px] ${
                   index === filterIdx ? 'bg-gray-900 text-white' : 'bg-white'
                 }`}
                 onClick={() => setFilterIdx(index)}
               >
                 <img
-                  className="inline-block mr-2 w-[16px] h-[16px]"
+                  className="mr-2 inline-block h-[16px] w-[16px]"
                   src={item.icon}
                 />
-                <span className="text-[0.7rem] xs:text-xs">{item.name}</span>
+                <span className="xs:text-xs text-[0.7rem]">{item.name}</span>
               </div>
             ))}
           </div>

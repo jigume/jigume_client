@@ -12,39 +12,39 @@ export default function Submitted() {
   const url = location.pathname.slice(0, idx - 1);
 
   return (
-    <div className="w-full h-[100svh] max-w-screen-sm absolute top-0 bg-black/60 z-20 p-4">
+    <div className="absolute top-0 z-20 h-[100svh] w-full max-w-screen-sm bg-black/60 p-4">
       <div
-        className="w-full h-full absolute z-10 top-0 left-0"
+        className="absolute left-0 top-0 z-10 h-full w-full"
         onClick={() => navigate(url)}
       />
 
-      <div className="w-full bg-white absolute z-20 top-1/2 -translate-y-1/2 relative aspect-[1.2761] rounded-xl">
+      <div className="relative top-1/2 z-20 aspect-[1.2761] w-full -translate-y-1/2 rounded-xl bg-white">
         <motion.div
           initial={{ scale: 0.9 }}
           animate={{ scale: 1 }}
           transition={{ duration: 1, else: 'easeInOut' }}
           style={{ backgroundImage: `url(${submintted})` }}
-          className="w-full h-full apsolute z-0 bg-no-repeat bg-center bg-cover"
+          className="apsolute z-0 h-full w-full bg-cover bg-center bg-no-repeat"
         />
-        <div className="w-full h-full absolute z-50 top-0 flex flex-col justify-between items-center gap-5 py-4">
+        <div className="absolute top-0 z-50 flex h-full w-full flex-col items-center justify-between gap-5 py-4">
           <div />
           <div className="flex flex-col justify-center gap-4">
-            <img src={jigumeLogo} className="mx-auto w-20 h-[90px]" />
+            <img src={jigumeLogo} className="mx-auto h-[90px] w-20" />
             <p className="text-lg font-bold">
               축하드려요! 공동 구매 폼이
               <br /> 성공적으로 게시되었어요.
             </p>
           </div>
 
-          <div className="w-full flex gap-4 font-normal px-4">
+          <div className="flex w-full gap-4 px-4 font-normal">
             <button
-              className="w-full px-4 py-2 bg-gray-200 rounded-lg cursor-pointer active:scale-[95%] transition-all ease-in-out duration-300 "
+              className="w-full cursor-pointer rounded-lg bg-gray-200 px-4 py-2 transition-all duration-300 ease-in-out active:scale-[95%] "
               onClick={() => navigate('/')}
             >
               홈으로 가기
             </button>
             <button
-              className="w-full px-4 py-2 bg-success text-white rounded-lg cursor-pointer active:scale-[95%] transition-all ease-in-out duration-300 "
+              className="w-full cursor-pointer rounded-lg bg-success px-4 py-2 text-white transition-all duration-300 ease-in-out active:scale-[95%] "
               onClick={() => navigate(url)}
             >
               게시물 확인하기

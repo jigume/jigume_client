@@ -28,7 +28,7 @@ export default function InitProfileImage() {
       <div className="pb-3">profile 이미지 설정</div>
       <button
         disabled={!initUser.nickname.length}
-        className="h-12 bg-success text-white text-center w-full text-md p-3 rounded-lg active:scale-[99%] transition-all ease-in-out duration-300 disabled:bg-gray-300 active:disabled:scale-100"
+        className="text-md h-12 w-full rounded-lg bg-success p-3 text-center text-white transition-all duration-300 ease-in-out active:scale-[99%] disabled:bg-gray-300 active:disabled:scale-100"
         onClick={setNewUserProfile.mutate}
       >
         완료하기

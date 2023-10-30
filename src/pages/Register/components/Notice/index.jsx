@@ -57,16 +57,16 @@ function Notice() {
   );
 
   return (
-    <div className="w-full h-[calc(100svh-48px)] flex flex-col justify-between">
+    <div className="flex h-[calc(100svh-48px)] w-full flex-col justify-between">
       <div />
       <div className="pb-24">
-        <div className="text-lg font-bold pb-10">
+        <div className="pb-10 text-lg font-bold">
           댓글을 통해 팔로워들과 소통해요.
           <br />
           팔로워만 볼 수 있는 공지를 올려보세요.
         </div>
         <div>
-          <div className="text-sm mb-2 font-thin">폼 내용</div>
+          <div className="mb-2 text-sm font-thin">폼 내용</div>
           <StyledTextarea
             height="210px"
             placeholder={notice}

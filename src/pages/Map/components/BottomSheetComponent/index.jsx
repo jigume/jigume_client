@@ -17,7 +17,7 @@ export default function BottomSheetComponent({ address, handleToCenter }) {
     <>
       {isOpen && (
         <div
-          className="w-screen h-screen fixed top-0 left-0 z-[30] touch-pan-y cursor-pointer ease-out duration-300"
+          className="fixed left-0 top-0 z-[30] h-screen w-screen cursor-pointer touch-pan-y duration-300 ease-out"
           onClick={() => handleSheet('min')}
         />
       )}

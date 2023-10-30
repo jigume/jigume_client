@@ -62,14 +62,14 @@ function Register() {
 
   return (
     <>
-      <div className="mx-auto max-w-screen-sm w-full h-[48px] px-4 flex flex-row items-center">
+      <div className="mx-auto flex h-[48px] w-full max-w-screen-sm flex-row items-center px-4">
         <div
           onClick={() =>
             location.pathname === '/register' ? navigate('/') : navigate(-1)
           }
           className="pr-2"
         >
-          <img className="w-12 h-12 p-2 cursor-pointer" src={ChevronLeft} />
+          <img className="h-12 w-12 cursor-pointer p-2" src={ChevronLeft} />
         </div>
       </div>
 

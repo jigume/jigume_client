@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Outlet, useLocation, useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import CarouselBox from './components/CarouselBox';
 import HeaderProfile from './components/HeaderProfile';
 import ProductInfo from './components/ProductInfo';
 import ProductContent from './components/ProductContent';
 import ChevronLeft from '../../asset/icon/chevron-left.svg';
+import getIntroduce from '../../api/introduce';
 
 export default function Introduce() {
   const { idx } = useParams();
@@ -28,17 +30,24 @@ export default function Introduce() {
     console.log(goods, idx);
   }, [goods]);
 
+  const data = useQuery('itemDetail', () => getIntroduce(idx), {
+    onSuccess: (res) => {
+      console.log(res);
+    },
+    onError: () => navigate('/err'),
+  });
+
   return (
     <div
-      className={`w-full container mx-auto max-w-screen-sm px-0 ${
-        isSubmitted ? 'h-[100svh] overflow-hidden touch-none' : ''
+      className={`container mx-auto h-[100svh] w-full max-w-screen-sm overflow-y-scroll px-0 pb-20 ${
+        isSubmitted ? 'touch-none overflow-hidden' : ''
       }`}
     >
       <div
         onClick={() => navigate(-1)}
-        className="pr-2 absolute top-0 z-50 pt-2"
+        className="absolute top-0 z-50 pr-2 pt-2"
       >
-        <img className="w-12 h-12 p-2 cursor-pointer" src={ChevronLeft} />
+        <img className="h-12 w-12 cursor-pointer p-2" src={ChevronLeft} />
       </div>
       <CarouselBox />
 
@@ -49,20 +58,34 @@ export default function Introduce() {
       </div>
 
       <div className="px-4 pt-12">
-        <div className="font-bold text-xl pb-5">
+        <div className="pb-5 text-xl font-bold">
           잠깐! 이것만은 꼭 확인하고 가세요
         </div>
 
         <div className="flex flex-col gap-2">
-          <div className="p-4 bg-gray-50 rounded-xl flex flex-col gap-4">
-            <div className="bg-gray-300 w-full aspect-[1.9197] rounded-xl animate-pulse" />
-            <div className="w-3/4 h-3 mx-auto bg-gray-300 rounded-lg animate-pulse" />
+          <div className="flex flex-col gap-4 rounded-xl bg-gray-50 p-4">
+            <div className="aspect-[1.9197] w-full animate-pulse rounded-xl bg-gray-300" />
+            <div className="mx-auto h-3 w-4/5 animate-pulse rounded-lg bg-gray-300" />
           </div>
-          <div className="p-4 bg-gray-300" />
+
+          <div className="rounded-xl bg-gray-50 p-6">
+            <div className="mx-auto h-3 w-3/4 animate-pulse rounded-lg bg-gray-300" />
+          </div>
+
+          <div className="rounded-xl bg-gray-50 p-6">
+            <div className="mx-auto h-3 w-full animate-pulse rounded-lg bg-gray-300" />
+          </div>
+
+          <div className="rounded-xl bg-gray-50 p-6 text-center leading-7">
+            <p>
+              3자 에스크로 방식 결제로 안전하게 거래할 수 있어요.
+              <br />
+              환불 및 취소가 어려우니, 신중하게 참여해주세요.
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* 등록완료 이벤트 */}
       <Outlet />
     </div>
   );

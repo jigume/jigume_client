@@ -3,7 +3,7 @@ import React from 'react';
 export default function CircularProgress() {
   return (
     <svg
-      className="w-5 h-5 text-white/50 animate-spin  fill-white mx-auto"
+      className="mx-auto h-5 w-5 animate-spin  fill-white text-white/50"
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

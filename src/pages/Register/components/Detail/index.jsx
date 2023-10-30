@@ -43,17 +43,17 @@ function Detail() {
     data.goodsDto.goodsName === '' && data.goodsDto.boardContent === '';
 
   return (
-    <div className="w-full h-[calc(100svh-48px)] flex flex-col justify-between">
+    <div className="flex h-[calc(100svh-48px)] w-full flex-col justify-between">
       <div />
       <div className="pb-24">
-        <div className="text-lg font-bold pb-12">
+        <div className="pb-12 text-lg font-bold">
           공동 구매 팔로워를 모으려면?
           <br />
           끌리는 제목과 내용으로 폼을 만들어요!
         </div>
 
         <div className="pb-10">
-          <div className="text-sm mb-2 font-thin">폼 제목</div>
+          <div className="mb-2 text-sm font-thin">폼 제목</div>
           <InputWithNum
             value={data.goodsDto.goodsName}
             maxLength={30}
@@ -61,7 +61,7 @@ function Detail() {
           />
         </div>
         <div>
-          <div className="text-sm mb-2 font-thin">폼 내용</div>
+          <div className="mb-2 text-sm font-thin">폼 내용</div>
           <StyledTextarea
             value={data.goodsDto.boardContent}
             onChange={handleContent}
