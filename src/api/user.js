@@ -40,18 +40,18 @@ export const handleRefreshToken = async () => {
 /**
  * 인가코드를 통해 로그인 처리
  * @param {string} code
+ * @param {'kakao' | 'naver'} domain
  * @return {{
  *  tokenDto:{accessToken: string; refreshToken:string}
  *  baseRole: "ADMIN" | "USER" | "GUEST"
  * }}
  */
-export const codeProvide = async (code) => {
+export const codeProvide = async (code, domain) => {
   /** @type {string} */
-  if (!code) {
-    throw Error('인가코드가 옳바르지 않습니다.');
-  }
+  if (!code) throw Error('인가코드가 옳바르지 않습니다.');
+
   const response = await axios.post(
-    `/api/member/login?login-provider=kakao&authorization-code=${code}`,
+    `/api/member/login?login-provider=${domain}&authorization-code=${code}`,
   );
   return response;
 };

@@ -19,5 +19,7 @@ export const userState = atom({
   default: {
     position: undefined,
     filter: [],
+    auth: undefined,
   },
+  effects_UNSTABLE: [persistAtom],
 });

@@ -1,18 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import logo from '../../../asset/images/login/login_logo.png';
-import kakaoLogin from '../../../asset/images/login/kakao_login.png';
+import kakaoImg from '../../../asset/images/login/kakao_login.png';
+import naverImg from '../../../asset/images/login/naver_login.png';
+import { userState } from '../../../recoil';
+
+const KAKAO_KEY = import.meta.env.VITE_KAKAO_JS_KEY;
+const NAVER_KEY = import.meta.env.VITE_NAVER_CLIENT_ID;
+const NAVER_SECRET = import.meta.env.VITE_NAVER_SECRET;
 
 export default function Login() {
-  // kakao oauth
-  const handleLogin = async () => {
-    const REST_API_KEY = import.meta.env.VITE_KAKAO_JS_KEY;
-    const REDIRECT_URI = import.meta.env.DEV
-      ? 'http://localhost:5173/auth'
-      : 'https://www.jigume.site/auth';
-    const url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
+  const REDIRECT_URI = import.meta.env.DEV
+    ? 'http://localhost:5173/auth'
+    : 'https://www.jigume.site/auth';
 
-    window.location.href = url;
+  const [user, setUser] = useRecoilState(userState);
+
+  const handleKakaoLogin = async () => {
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_KEY}&redirect_uri=${REDIRECT_URI}`;
+    setUser((prev) => ({
+      ...prev,
+      auth: 'kakao',
+    }));
   };
+
+  const handleNaverLogin = async () => {
+    window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_KEY}&state=${NAVER_SECRET}&redirect_uri=${REDIRECT_URI}`;
+    setUser((prev) => ({
+      ...prev,
+      auth: 'naver',
+    }));
+  };
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
@@ -25,9 +47,13 @@ export default function Login() {
           </p>
         </div>
 
-        {/* login button */}
-        <div role="button" onClick={handleLogin}>
-          <img src={kakaoLogin} className="mx-auto w-full active:opacity-80" />
+        <div className="flex flex-col gap-3">
+          <div role="button" onClick={handleNaverLogin}>
+            <img src={naverImg} className="mx-auto w-full active:opacity-80" />
+          </div>
+          <div role="button" onClick={handleKakaoLogin}>
+            <img src={kakaoImg} className="mx-auto w-full active:opacity-80" />
+          </div>
         </div>
       </div>
     </div>
