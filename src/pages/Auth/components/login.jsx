@@ -5,7 +5,7 @@ import kakaoImg from '../../../asset/images/login/kakao_login.png';
 import naverImg from '../../../asset/images/login/naver_login.png';
 import { userState } from '../../../recoil';
 
-const KAKAO_KEY = import.meta.env.VITE_KAKAO_JS_KEY;
+const KAKAO_KEY = import.meta.env.VITE_KAKAO_REST_KEY;
 const NAVER_KEY = import.meta.env.VITE_NAVER_CLIENT_ID;
 const NAVER_SECRET = import.meta.env.VITE_NAVER_SECRET;
 

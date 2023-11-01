@@ -7,7 +7,7 @@ export const authState = atom({
   key: 'jigumeAuth',
   default: {
     role: 'GUEST',
-    token: '',
+    accessToken: '',
     refreshToken: '',
     expired: undefined,
   },

@@ -99,7 +99,18 @@ export default function Map() {
           <MarkerClusterer
             averageCenter
             minLevel={2}
-            styles={{ backgroundColor: '#fff' }}
+            styles={[
+              {
+                width: '2rem',
+                height: '2rem',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: '50%',
+                backgroundColor: '#F5535E',
+                color: '#fff',
+              },
+            ]}
           >
             {marker.map((item, idx) => (
               <ItemMarker

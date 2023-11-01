@@ -10,13 +10,24 @@ import axios from 'axios';
  * @param {string} param.image Image URL
  */
 export const setNewUser = async (param) => {
-  const query = {
-    nickname: param.nickname,
-    mapX: param.position.lng,
-    mapY: param.position.lat,
-    profileImgUrl: param.image,
-  };
-  const result = await axios.post('/api/member/new', { query });
+  const token = JSON.parse(localStorage.getItem('recoil-persist'));
+  if (!token.accessToken) return undefined;
+
+  const result = await axios({
+    method: 'post',
+    url: '/api/member/new',
+    data: {
+      nickname: param.nickname,
+      mapX: param.position.lng,
+      mapY: param.position.lat,
+    },
+    headers: {
+      Authorization: `Bearer ${token.accessToken}`,
+      withCredentials: true,
+      crossDomain: true,
+      credentials: 'include',
+    },
+  });
 
   return result;
 };
@@ -28,8 +39,12 @@ export const setNewUser = async (param) => {
 export const handleRefreshToken = async () => {
   const token = JSON.parse(localStorage.getItem('recoil-persist'));
   // token valid
-  if (new Date(token.expired) > new Date().getTime()) return 'valid';
-  if (!token.accessToken || !token.refreshToken) return 'valid';
+  if (
+    new Date(token?.expired) > new Date().getTime() ||
+    !token.accessToken ||
+    !token.refreshToken
+  )
+    return 'valid';
 
   const response = await axios.post('/api/member/token', {
     refreshToken: token.refreshToken,

@@ -31,7 +31,7 @@ export default function Auth() {
 
       setAuth((prev) => ({
         ...prev,
-        role: 'USER',
+        // role: 'USER',
         accessToken: data.tokenDto.accessToken,
         refreshToken: data.tokenDto.refreshToken,
         expired: add(new Date(), { days: 1 }).getTime(),
