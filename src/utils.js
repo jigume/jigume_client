@@ -37,7 +37,12 @@ export const tempRandMarker = (position) => {
       ...{
         lat: position.lat + y,
         lng: position.lng + x,
-        imageUrl: 'https://via.placeholder.com/64',
+        goodsName: `임시 게시물 ${idx}`,
+        goodsPrice: 5000,
+        deliveryFee: 7500,
+        realDeliveryFee: 15000,
+        goodsLimitCount: 5,
+        imageUrl: 'https://via.placeholder.com/256',
       },
       name: idx,
     };

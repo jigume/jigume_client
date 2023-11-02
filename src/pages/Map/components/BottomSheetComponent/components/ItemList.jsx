@@ -2,8 +2,28 @@ import React from 'react';
 import ItemComponent from './ItemComponent';
 import { thresholds } from '../../../../../utils';
 
-export default function ItemList({ imgArr, filter, sheetLevel }) {
-  // loading state
+export default function ItemList({ imgArr, filter, sheetLevel, preViewer }) {
+  // preViewer
+  if (preViewer)
+    return (
+      <div
+        className="absolute top-[96px] h-full w-full overflow-x-scroll py-[96px]"
+        style={{ height: thresholds[sheetLevel] }}
+      >
+        <ItemComponent
+          index={1}
+          image={preViewer.imageUrl}
+          title={preViewer.goodsName}
+          username="임시사용자"
+          count={preViewer.goodsLimitCount}
+          itemCost={preViewer.goodsPrice}
+          deliveryCost={preViewer.deliveryFee}
+          people={preViewer.realDeliveryFee / preViewer.deliveryFee}
+        />
+      </div>
+    );
+
+  // loading
   if (imgArr.length === 0)
     return (
       <div
@@ -27,7 +47,6 @@ export default function ItemList({ imgArr, filter, sheetLevel }) {
         return (
           <ItemComponent
             key={index}
-            index={index}
             image={item.image}
             title={item.data.name}
             username={item.data.name}

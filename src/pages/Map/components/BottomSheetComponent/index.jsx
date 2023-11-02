@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SheetHeader from './components/SheetHeader';
 import ItemList from './components/ItemList';
 import ContentHeader from './components/ContentHeader';
@@ -9,6 +9,7 @@ export default function BottomSheetComponent({
   address,
   handleToCenter,
   sheetProvider,
+  preViewer,
 }) {
   const [imgArr] = useState([]);
   const [filter, setFilter] = useState(
@@ -16,6 +17,10 @@ export default function BottomSheetComponent({
   );
   const { isOpen, sheet, content, handle, sheetLevel, handleSheet } =
     sheetProvider;
+
+  useEffect(() => {
+    console.log(preViewer);
+  }, [preViewer]);
 
   return (
     <>
@@ -36,7 +41,12 @@ export default function BottomSheetComponent({
         }
       >
         <ContentHeader filter={filter} setFilter={setFilter} />
-        <ItemList imgArr={imgArr} filter={filter} sheetLevel={sheetLevel} />
+        <ItemList
+          imgArr={imgArr}
+          filter={filter}
+          sheetLevel={sheetLevel}
+          preViewer={preViewer}
+        />
       </Sheet>
     </>
   );

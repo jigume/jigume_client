@@ -4,7 +4,6 @@ import {
   Map as KakaoMap,
   MarkerClusterer,
 } from 'react-kakao-maps-sdk';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { useQuery } from 'react-query';
 import { throttle } from 'lodash';
@@ -19,12 +18,13 @@ import useBottomSheet from '../../hooks/useBottomSheet';
 export default function Map() {
   const { kakao } = window;
   const mapRef = useRef(null);
-  const navigate = useNavigate();
+  const sheetProvider = useBottomSheet();
+
   const [user, setUser] = useRecoilState(userState);
   const [position, setPosition] = useState(undefined);
   const [address, setAddress] = useState('-');
   const [marker, setMarker] = useState([]);
-  const sheetProvider = useBottomSheet();
+  const [preViewer, setPreViewer] = useState(undefined);
 
   // geocoder
   const getAddress = () => {
@@ -47,6 +47,7 @@ export default function Map() {
     [position?.lat.toFixed(2), position?.lng.toFixed(2)],
   );
 
+  // 지도 중앙으로 이동
   const handleToCenter = () =>
     getCurrentLocation(setPosition).then(() => {
       if (user.position) setPosition(user.position);
@@ -59,10 +60,12 @@ export default function Map() {
       lng: map.getCenter().getLng(),
     });
 
+  // 사용자 현재 위치 가져오기
   useEffect(() => {
     getCurrentLocation(setPosition);
   }, []);
 
+  // 주소 변환 및 마커 등록
   useEffect(() => {
     if (user.position && position !== undefined) handleAddress();
     else
@@ -73,6 +76,11 @@ export default function Map() {
 
     if (user.position) setMarker(tempRandMarker(user.position));
   }, [position, user.position]);
+
+  // 미리보기 상태가 아닐 시 미리보기 콘텐츠 초기화
+  useEffect(() => {
+    if (sheetProvider.sheetLevel !== 'mid') setPreViewer(undefined);
+  }, [sheetProvider.sheetLevel]);
 
   // const goods = useQuery('getGoods', () => getGoodsList(), {
   //   onSuccess: (res) => console.log(res),
@@ -88,6 +96,7 @@ export default function Map() {
           style={{
             width: '100%',
             height: '100svh',
+            top: sheetProvider.sheetLevel === 'mid' ? '-100px' : '0',
           }}
           level={3}
           onDragEnd={handleDragEndMap}
@@ -124,7 +133,10 @@ export default function Map() {
                   lat: item.lat,
                   lng: item.lng,
                 }}
-                onClick={() => sheetProvider.handleSheet('mid')}
+                onClick={() => {
+                  sheetProvider.handleSheet('mid');
+                  setPreViewer(item);
+                }}
               />
             ))}
           </MarkerClusterer>
@@ -137,6 +149,7 @@ export default function Map() {
         address={address}
         handleToCenter={handleToCenter}
         sheetProvider={sheetProvider}
+        preViewer={preViewer}
       />
     </div>
   );
