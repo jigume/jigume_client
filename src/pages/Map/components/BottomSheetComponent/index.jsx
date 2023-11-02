@@ -14,14 +14,15 @@ export default function BottomSheetComponent({
   const [filter, setFilter] = useState(
     category.map((item) => ({ ...item, checked: true })),
   );
-  const { isOpen, sheet, content, handle, handleSheet } = sheetProvider;
+  const { isOpen, sheet, content, handle, sheetLevel, handleSheet } =
+    sheetProvider;
 
   return (
     <>
       {isOpen && (
         <div
           className="fixed left-0 top-0 z-[30] h-screen w-screen cursor-pointer touch-pan-y duration-300 ease-out"
-          onClick={() => sheetProvider.handleSheet('min')}
+          onClick={() => handleSheet('min')}
         />
       )}
       <Sheet
@@ -35,7 +36,7 @@ export default function BottomSheetComponent({
         }
       >
         <ContentHeader filter={filter} setFilter={setFilter} />
-        <ItemList imgArr={imgArr} filter={filter} />
+        <ItemList imgArr={imgArr} filter={filter} sheetLevel={sheetLevel} />
       </Sheet>
     </>
   );

@@ -103,3 +103,12 @@ export const vaildRegister = (link, data) => {
   }
   return undefined;
 };
+
+/**
+ * bottomSheet thresholds
+ */
+export const thresholds = {
+  min: 68,
+  mid: window.innerHeight / 2,
+  max: window.innerHeight - 100,
+};

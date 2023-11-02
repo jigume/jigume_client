@@ -14,9 +14,7 @@ export default function ContentHeader({ filter, setFilter }) {
       <AnimatePresence>
         <div className="border-b border-gray-100">
           <div className="px-[16px] py-[12px] ">
-            <div className="mb-0 text-lg font-bold">
-              공동 구매 폼 내역 보기 {chekedItem.length}
-            </div>
+            <div className="mb-0 text-lg font-bold">공동 구매 폼 내역 보기</div>
           </div>
           <div className="grid grid-cols-8 px-[16px] py-[12px]">
             <div className="col-span-7 h-[1.5rem] overflow-x-scroll whitespace-nowrap text-gray-600">

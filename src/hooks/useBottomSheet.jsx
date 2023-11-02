@@ -1,13 +1,9 @@
 import { useRef, useEffect, useState } from 'react';
-
-const getThreshold = () => ({
-  min: 68,
-  mid: window.innerHeight / 2,
-  max: window.innerHeight - 100,
-});
+import { thresholds } from '../utils';
 
 export default function useBottomSheet() {
   const [isOpen, setOpen] = useState(false);
+  const [sheetLevel, setSheetLevel] = useState('min');
   const sheet = useRef(null);
   const handle = useRef(null);
   const content = useRef(null);
@@ -30,19 +26,24 @@ export default function useBottomSheet() {
   const handleSheet = (level = 'min') => {
     if (level === 'min') {
       sheet.current.style.setProperty('transform', 'translateY(0)');
+      setSheetLevel('min');
       setOpen(false);
       return;
     }
-    if (level === 'mid')
+    if (level === 'mid') {
       sheet.current.style.setProperty(
         'transform',
-        `translateY(${getThreshold().min - getThreshold().mid}px)`,
+        `translateY(${thresholds.min - thresholds.mid}px)`,
       );
-    if (level === 'max')
+      setSheetLevel('mid');
+    }
+    if (level === 'max') {
       sheet.current.style.setProperty(
         'transform',
-        `translateY(${getThreshold().min - getThreshold().max}px)`,
+        `translateY(${thresholds.min - thresholds.max}px)`,
       );
+      setSheetLevel('max');
+    }
     setOpen(true);
   };
 
@@ -54,7 +55,7 @@ export default function useBottomSheet() {
 
       if (
         !isContentAreaTouched ||
-        sheet.current.getBoundingClientRect().y !== getThreshold().min
+        sheet.current.getBoundingClientRect().y !== thresholds.min
       )
         return true;
 
@@ -93,22 +94,24 @@ export default function useBottomSheet() {
         const touchOffset = currentTouch.clientY - touchStart.touchY;
         let nextSheetY = touchStart.sheetY + touchOffset;
         // 상황에 따라 바닥 높이만큼 조절하는 변수
-        let x = getThreshold().min;
+        let x = thresholds.min;
 
-        if (nextSheetY <= getThreshold().min) {
-          nextSheetY = getThreshold().min;
-          x = getThreshold().min;
+        if (nextSheetY <= thresholds.min) {
+          nextSheetY = thresholds.min;
+          x = thresholds.min;
         }
-        if (nextSheetY >= getThreshold().max) {
-          nextSheetY = getThreshold().max;
+        if (nextSheetY >= thresholds.max) {
+          nextSheetY = thresholds.max;
           x = 0;
         }
 
-        if (sheet.current)
+        if (sheet.current) {
           sheet.current.style.setProperty(
             'transform',
-            `translateY(${nextSheetY - getThreshold().max - x}px)`,
+            `translateY(${nextSheetY - thresholds.max - x}px)`,
           ); // 바닥 만큼은 빼야쥬...
+          setSheetLevel('max');
+        }
       } else {
         document.body.style.overflowY = 'hidden';
       }
@@ -120,33 +123,38 @@ export default function useBottomSheet() {
       if (!sheet.current) return;
       // Snap Animation
       const currentSheetY = sheet.current.getBoundingClientRect().y;
-      const boundary = getThreshold().mid * 0.4;
+      const boundary = thresholds.mid * 0.4;
 
-      // 중간 사이즈
-      if (currentSheetY !== getThreshold().min) {
+      if (currentSheetY !== thresholds.min) {
+        // max size
+        if (touchMove.movingDirection === 'up') {
+          sheet.current.style.setProperty(
+            'transform',
+            `translateY(${thresholds.min - thresholds.max}px)`,
+          );
+          setSheetLevel('max');
+          setOpen(true);
+        }
+
+        // mid size
         if (
-          currentSheetY < getThreshold().mid + boundary &&
-          currentSheetY > getThreshold().mid - boundary
+          currentSheetY < thresholds.mid + boundary &&
+          currentSheetY > thresholds.mid - boundary
         ) {
           sheet.current.style.setProperty(
             'transform',
-            `translateY(${getThreshold().min - getThreshold().mid}px)`,
+            `translateY(${thresholds.min - thresholds.mid}px)`,
           );
+          setSheetLevel('mid');
           setOpen(true);
           return;
         }
 
+        // min size
         if (touchMove.movingDirection === 'down') {
           sheet.current.style.setProperty('transform', 'translateY(0)');
+          setSheetLevel('min');
           setOpen(false);
-        }
-
-        if (touchMove.movingDirection === 'up') {
-          sheet.current.style.setProperty(
-            'transform',
-            `translateY(${getThreshold().min - getThreshold().max}px)`,
-          );
-          setOpen(true);
         }
       }
 
@@ -184,7 +192,7 @@ export default function useBottomSheet() {
     });
   }, []);
 
-  return { handle, sheet, content, isOpen, handleSheet };
+  return { handle, sheet, content, isOpen, sheetLevel, handleSheet };
 }
 
 // ref: https://velog.io/@boris0716/%EB%A6%AC%EC%95%A1%ED%8A%B8%EC%97%90%EC%84%9C-Bottom-Sheet-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EC%9E%91%EC%84%B1%EC%A4%91

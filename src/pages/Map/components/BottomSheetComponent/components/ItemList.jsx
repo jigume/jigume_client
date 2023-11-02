@@ -1,11 +1,15 @@
 import React from 'react';
 import ItemComponent from './ItemComponent';
+import { thresholds } from '../../../../../utils';
 
-export default function ItemList({ imgArr, filter }) {
+export default function ItemList({ imgArr, filter, sheetLevel }) {
   // loading state
   if (imgArr.length === 0)
     return (
-      <div className="absolute top-[96px] h-full w-full overflow-x-scroll pb-[192px] pt-[96px]">
+      <div
+        className="absolute top-[96px] h-full w-full overflow-x-scroll pb-[192px] pt-[96px]"
+        style={{ height: thresholds[sheetLevel] }}
+      >
         {[1, 2, 3].map((item) => (
           <ItemComponent key={item} />
         ))}
