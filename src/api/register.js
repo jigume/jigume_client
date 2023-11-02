@@ -21,7 +21,7 @@ const postGoods = async (images, goodsDto_) => {
 
   // image fime
   const formData = new FormData();
-  images.forEach((item) => formData.append('multipartFile', item));
+  images.forEach((item, idx) => formData.append(`multipartFile[${idx}]`, item));
 
   // 임시 category id
   const goodsDto = { ...goodsDto_, categoryName: 'temp' };
@@ -41,8 +41,8 @@ const postGoods = async (images, goodsDto_) => {
     // 두 번째 요청 (이미지)
     const response2 = await axios({
       method: 'post',
-      url: `/api/${res.data}/image?repImg=true`,
-      data: formData,
+      url: `/api/${res.data}/image2?repImg=true`,
+      data: images,
       headers: {
         'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${token.accessToken}`,

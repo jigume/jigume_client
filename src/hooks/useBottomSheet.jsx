@@ -25,7 +25,7 @@ export default function useBottomSheet() {
 
   /**
    * sheet를 컨트롤할 수 있음
-   * @param {*} level string: min | mid | max
+   * @param {'min'|'mid'|'max'} level string: min | mid | max
    */
   const handleSheet = (level = 'min') => {
     if (level === 'min') {

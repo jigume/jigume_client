@@ -7,16 +7,24 @@ import CloseIcon from '../../../../../asset/icon/CloseIcon.svg';
 export default function ContentHeader({ filter, setFilter }) {
   const [open, setOpen] = useState(false);
 
+  const chekedItem = filter.filter(({ checked }) => checked);
+
   return (
     <div className="absolute top-[76px] z-50 w-full bg-white">
       <AnimatePresence>
         <div className="border-b border-gray-100">
           <div className="px-[16px] py-[12px] ">
-            <div className="mb-0 text-lg font-bold">공동 구매 폼 내역 보기</div>
+            <div className="mb-0 text-lg font-bold">
+              공동 구매 폼 내역 보기 {chekedItem.length}
+            </div>
           </div>
           <div className="grid grid-cols-8 px-[16px] py-[12px]">
             <div className="col-span-7 h-[1.5rem] overflow-x-scroll whitespace-nowrap text-gray-600">
-              {filter.find(({ checked }) => checked) ? (
+              {chekedItem.length === filter.length || !chekedItem.length ? (
+                <div className="text-sm text-gray-600">
+                  제품군 카테고리 필터를 켜보세요
+                </div>
+              ) : (
                 filter.map(
                   (item, index) =>
                     item.checked && (
@@ -46,10 +54,6 @@ export default function ContentHeader({ filter, setFilter }) {
                       </motion.span>
                     ),
                 )
-              ) : (
-                <div className="text-sm text-gray-600">
-                  제품군 카테고리 필터를 켜보세요
-                </div>
               )}
             </div>
 

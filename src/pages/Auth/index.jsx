@@ -13,7 +13,7 @@ export default function Auth() {
   const [user] = useRecoilState(userState);
   const [searchParams] = useSearchParams();
   const code = searchParams.get('code');
-  console.log(user);
+
   useQuery('oauth', () => codeProvide(code, user.auth), {
     retry: false,
     onSuccess: ({ data }) => {
@@ -31,7 +31,7 @@ export default function Auth() {
 
       setAuth((prev) => ({
         ...prev,
-        // role: 'USER',
+        role: 'USER',
         accessToken: data.tokenDto.accessToken,
         refreshToken: data.tokenDto.refreshToken,
         expired: add(new Date(), { days: 1 }).getTime(),

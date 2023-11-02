@@ -21,7 +21,7 @@ export default function Mypage() {
       <button
         className='
         className="h-12 text-md active:disabled:scale-100" w-full rounded-lg p-3 text-center text-red-600 transition-all duration-300 ease-in-out active:scale-[99%] disabled:bg-gray-300'
-        onClick={logout.mutate}
+        onClick={() => resetAuth()}
       >
         로그아웃
       </button>

@@ -14,19 +14,22 @@ import Loading from './components/Loading';
 import ItemMarker from './components/ItemMarker';
 import { userState } from '../../recoil';
 import getGoodsList from '../../api/goods';
+import useBottomSheet from '../../hooks/useBottomSheet';
 
 export default function Map() {
+  const { kakao } = window;
+  const mapRef = useRef(null);
   const navigate = useNavigate();
   const [user, setUser] = useRecoilState(userState);
-  const { kakao } = window;
-  const mapRef = useRef();
   const [position, setPosition] = useState(undefined);
   const [address, setAddress] = useState('-');
   const [marker, setMarker] = useState([]);
+  const sheetProvider = useBottomSheet();
 
   // geocoder
   const getAddress = () => {
-    if (!position) return;
+    if (!position && !kakao.maps) return;
+    if (!kakao?.maps.services.Geocoder) return;
     new kakao.maps.services.Geocoder().coord2Address(
       position.lng,
       position.lat,
@@ -109,6 +112,7 @@ export default function Map() {
                 borderRadius: '50%',
                 backgroundColor: '#F5535E',
                 color: '#fff',
+                zIndex: 2,
               },
             ]}
           >
@@ -120,7 +124,7 @@ export default function Map() {
                   lat: item.lat,
                   lng: item.lng,
                 }}
-                onClick={() => navigate(`/introduce/${idx}`)}
+                onClick={() => sheetProvider.handleSheet('mid')}
               />
             ))}
           </MarkerClusterer>
@@ -129,7 +133,11 @@ export default function Map() {
         <Loading />
       )}
 
-      <BottomSheetComponent address={address} handleToCenter={handleToCenter} />
+      <BottomSheetComponent
+        address={address}
+        handleToCenter={handleToCenter}
+        sheetProvider={sheetProvider}
+      />
     </div>
   );
 }
