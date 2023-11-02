@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Outlet, useLocation, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import { StaticMap } from 'react-kakao-maps-sdk';
 import CarouselBox from './components/CarouselBox';
 import HeaderProfile from './components/HeaderProfile';
 import ProductInfo from './components/ProductInfo';
 import ProductContent from './components/ProductContent';
+import IntroStaticMap from './components/IntroStaticMap';
 import ChevronLeft from '../../asset/icon/chevron-left.svg';
 import getIntroduce from '../../api/introduce';
 
@@ -30,12 +32,12 @@ export default function Introduce() {
     console.log(goods, idx);
   }, [goods]);
 
-  const data = useQuery('itemDetail', () => getIntroduce(idx), {
-    onSuccess: (res) => {
-      console.log(res);
-    },
-    onError: () => navigate('/err'),
-  });
+  // const data = useQuery('itemDetail', () => getIntroduce(idx), {
+  //   onSuccess: (res) => {
+  //     console.log(res);
+  //   },
+  //   onError: () => navigate('/err'),
+  // });
 
   return (
     <div
@@ -64,7 +66,10 @@ export default function Introduce() {
 
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-4 rounded-xl bg-gray-50 p-4">
-            <div className="aspect-[1.9197] w-full animate-pulse rounded-xl bg-gray-300" />
+            {/* <div className="aspect-[1.9197] w-full animate-pulse rounded-xl bg-gray-300" /> */}
+            <div className="relative aspect-[1.9197] w-full rounded-xl bg-gray-300">
+              <IntroStaticMap />
+            </div>
             <div className="mx-auto h-3 w-4/5 animate-pulse rounded-lg bg-gray-300" />
           </div>
 
