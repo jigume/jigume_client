@@ -32,10 +32,6 @@ export default function Login() {
     }));
   };
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
       <div className="flex h-[100svh] flex-col justify-evenly px-4">

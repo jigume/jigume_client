@@ -6,15 +6,10 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import './index.css';
 
-const tempImages = [
-  'https://via.placeholder.com/512',
-  'https://via.placeholder.com/512',
-  'https://via.placeholder.com/512',
-  'https://via.placeholder.com/512',
-  'https://via.placeholder.com/512',
-];
+export default function CarouselBox({ data }) {
+  if (!data || !data.goodsImagesList)
+    return <div className="aspect-square w-full animate-pulse bg-gray-300" />;
 
-export default function CarouselBox() {
   return (
     <Swiper
       pagination
@@ -22,11 +17,14 @@ export default function CarouselBox() {
       loop
       className="flex aspect-square w-full items-center justify-center"
     >
-      {tempImages.map((item, i) => (
+      {data.goodsImagesList.map((item, i) => (
         <SwiperSlide key={i}>
-          <img src={item} className="" />
+          <img
+            src={item.goodsImgUrl}
+            className="aspect-square w-full object-cover"
+          />
         </SwiperSlide>
-      )) || <div className="aspect-square w-full animate-pulse bg-gray-300" />}
+      ))}
     </Swiper>
   );
 }

@@ -1,20 +1,51 @@
 import React from 'react';
+import { useQuery } from 'react-query';
+import getOpenGraph from '../../../api/og';
+import OpenGraphViewer from '../../Register/components/Links/components/OpenGraphViewer';
 
-export default function ProductInfo() {
+export default function ProductInfo({ data }) {
+  const openGraph = useQuery(
+    'introOpenGraph',
+    () => getOpenGraph(data && data.link),
+    {
+      retryDelay: 500,
+    },
+  );
+
+  let people = 0;
+  if (data) people = data.deliveryFee / data.realDeliveryFee;
+
   return (
-    <div className="flex animate-pulse flex-col gap-4 py-3">
+    <div
+      className={`flex flex-col gap-4 py-3 ${
+        !data && !openGraph.isSuccess ? 'animate-pulse' : ''
+      }`}
+    >
       <div>상품정보</div>
-      <div className="flex gap-8 overflow-hidden rounded-lg border border-gray-300">
-        <div className="aspect-square w-20 shrink-0 bg-gray-200" />
-        <div className="flex w-full flex-col justify-center gap-4">
-          <div className="h-4 w-3/4 rounded bg-gray-300" />
-          <div className="h-3 w-1/2 rounded bg-gray-100" />
-        </div>
-      </div>
+
+      <OpenGraphViewer
+        openGraph={openGraph.isSuccess && openGraph.data}
+        link={data && data.link}
+      />
       <div className="flex flex-col gap-2">
-        <div className="h-3 w-1/2 rounded bg-gray-300" />
-        <div className="h-3 w-3/4 rounded bg-gray-300" />
-        <div className="h-3 w-1/2 rounded bg-gray-300" />
+        {data ? (
+          <>
+            <div>구매가: {data.goodsPrice.toLocaleString()} 원</div>
+            <div>
+              <span>{`배송비:
+              ${data.deliveryFee.toLocaleString()} / `}</span>
+              <span className="text-yellow-400">{people}</span>
+              <span>명 분할 중</span>
+            </div>
+            <div>보증금: 0원</div>
+          </>
+        ) : (
+          <>
+            <div className="h-3 w-1/2 rounded bg-gray-300" />
+            <div className="h-3 w-3/4 rounded bg-gray-300" />
+            <div className="h-3 w-1/2 rounded bg-gray-300" />
+          </>
+        )}
       </div>
     </div>
   );

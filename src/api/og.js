@@ -21,13 +21,11 @@ const ogClient = new OpenGraphIO(options);
  * }}
  */
 const getOpenGraph = async (url) => {
-  if (url === '') return null;
+  if (url === '' || !url) return null;
   const response = await ogClient
     .getSiteInfo(url)
-    .then((data) => data.openGraph)
-    .catch((error) => {
-      console.error(error);
-    });
+    .then((data) => data.openGraph);
+
   return response;
 };
 
