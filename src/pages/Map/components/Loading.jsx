@@ -2,17 +2,10 @@ import React from 'react';
 
 export default function Loading() {
   return (
-    <div
-      className="flex items-center justify-center bg-white"
-      style={{
-        width: '100%',
-        height: '100svh',
-        paddingBottom: '5rem',
-      }}
-    >
+    <div className="flex h-[100svh] w-full items-center justify-center bg-white pb-24">
       <div role="status">
         <svg
-          className="mr-2 h-8 w-8 animate-spin fill-gray-900 text-gray-200 dark:text-gray-600"
+          className="h-8 w-8 animate-spin fill-gray-900 text-gray-200 dark:text-gray-600"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

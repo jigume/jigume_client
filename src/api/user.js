@@ -37,17 +37,23 @@ export const setNewUser = async (param) => {
  * @returns void
  */
 export const handleRefreshToken = async () => {
-  const token = JSON.parse(localStorage.getItem('recoil-persist'));
+  const token = JSON.parse(localStorage.getItem('recoil-persist')).jigumeAuth;
   // token valid
-  if (
-    new Date(token?.expired) > new Date().getTime() ||
-    !token.accessToken ||
-    !token.refreshToken
-  )
-    return 'valid';
+  // new Date(token?.expired) > new Date().getTime() ||
+  if (!token.accessToken || !token.refreshToken) return 'valid';
 
-  const response = await axios.post('/api/member/token', {
-    refreshToken: token.refreshToken,
+  const response = await axios({
+    method: 'post',
+    url: '/api/member/token',
+    data: {
+      refreshToken: token.refreshToken,
+    },
+    headers: {
+      Authorization: `Bearer ${token.accessToken}`,
+      withCredentials: true,
+      crossDomain: true,
+      credentials: 'include',
+    },
   });
   return response.data;
 };
