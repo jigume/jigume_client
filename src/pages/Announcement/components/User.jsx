@@ -26,7 +26,7 @@ const nickname = [
 export default function User({ title, username, count }) {
   const num = Math.floor(Math.random() * 10);
   return (
-    <div className="flex flex-row items-center gap-2 pt-7 px-5">
+    <div className="flex flex-row items-center gap-2 pt-4 px-5">
       {!username ? (
         <div className="w-[36px] h-[36px] rounded-full bg-gray-100" />
       ) : (
