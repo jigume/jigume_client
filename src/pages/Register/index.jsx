@@ -53,8 +53,9 @@ function Register() {
     if (url !== undefined) navigate(url);
   }, [location]);
 
-  // 마운트 해제 시 폼 초기화
+  // 마운트 이벤트 시 폼 초기화
   useEffect(() => {
+    setData(initData);
     return () => {
       setData(initData);
     };

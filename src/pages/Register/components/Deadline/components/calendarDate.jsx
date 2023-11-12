@@ -45,7 +45,7 @@ function CalendarDate() {
         type="button"
         onClick={() => setOpen((prev) => !prev)}
       >
-        {date.getFullYear()}년 {date.getMonth()}월 {date.getDate()}일
+        {date.getFullYear()}년 {date.getMonth() + 1}월 {date.getDate()}일
       </button>
       {open && (
         <div className="fixed inset-0 flex h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none ">

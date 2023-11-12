@@ -37,12 +37,12 @@ export default function Introduce() {
         isSubmitted ? 'touch-none overflow-hidden' : ''
       }`}
     >
-      <head
+      <div
         onClick={() => navigate(-1)}
         className="absolute top-0 z-50 pr-2 pt-2"
       >
         <img className="h-12 w-12 cursor-pointer p-2" src={ChevronLeft} />
-      </head>
+      </div>
 
       {/* 상품 사진 */}
       {query.isSuccess ? (
@@ -58,7 +58,7 @@ export default function Introduce() {
         <ProductContent data={query.data && query.data.goodsPageDto} />
       </section>
 
-      <section className="px-4 pt-12">
+      <section className="px-4 pt-12 text-sm">
         <div className="pb-5 text-xl font-bold">
           잠깐! 이것만은 꼭 확인하고 가세요
         </div>
@@ -94,7 +94,7 @@ export default function Introduce() {
             )}
           </div>
 
-          <div className="rounded-xl bg-gray-50 p-6 text-center leading-7">
+          <div className="rounded-xl bg-gray-50 p-6 text-center  leading-7">
             <p>
               3자 에스크로 방식 결제로 안전하게 거래할 수 있어요.
               <br />

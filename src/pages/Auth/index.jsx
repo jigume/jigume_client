@@ -28,6 +28,7 @@ export default function Auth() {
         navigate('/auth/init');
         return;
       }
+      console.log(data);
 
       setAuth((prev) => ({
         ...prev,

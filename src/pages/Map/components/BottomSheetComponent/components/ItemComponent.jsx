@@ -38,7 +38,7 @@ export default function ItemComponent({
   const num = Math.floor(Math.random() * 10);
   return (
     <div
-      className={`flex w-[calc(100vw-32px)] cursor-pointer flex-row gap-4 px-4 py-[20px] ${
+      className={`flex w-full cursor-pointer flex-row gap-4 px-4 pb-4 ${
         !title ? 'animate-pulse' : ''
       }`}
       onClick={() => navigate(`/introduce/${index}`)}

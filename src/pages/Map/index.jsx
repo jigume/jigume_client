@@ -48,10 +48,11 @@ export default function Map() {
   );
 
   // 지도 중앙으로 이동
-  const handleToCenter = () =>
+  const handleToCenter = () => {
     getCurrentLocation(setPosition).then(() => {
       if (user.position) setPosition(user.position);
     });
+  };
 
   // 맵 조작이 종료 되었을 때 실행하는 callback fn
   const handleDragEndMap = (map) =>
@@ -82,9 +83,9 @@ export default function Map() {
     if (sheetProvider.sheetLevel !== 'mid') setPreViewer(undefined);
   }, [sheetProvider.sheetLevel]);
 
-  // const goods = useQuery('getGoods', () => getGoodsList(), {
-  //   onSuccess: (res) => console.log(res),
-  // });
+  const goods = useQuery('getGoods', () => getGoodsList(), {
+    onSuccess: (res) => console.log(res),
+  });
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">

@@ -74,6 +74,7 @@ export const codeProvide = async (code, domain) => {
   const response = await axios.post(
     `/api/member/login?login-provider=${domain}&authorization-code=${code}`,
   );
+
   return response;
 };
 

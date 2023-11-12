@@ -20,7 +20,7 @@ export default function PlaceInfo({ data }) {
   useQuery(
     'revGeoCoder',
     () => getAddress({ lat: data && data.mapY, lng: data && data.mapX }),
-    { retryDelay: 500, retry: 3, refetchInterval: 300 },
+    { retryDelay: 500, retry: 3 },
   );
 
   return (

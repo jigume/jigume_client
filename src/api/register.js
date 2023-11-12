@@ -56,7 +56,7 @@ const postGoods = async (images, goodsDto_) => {
     method: 'post',
     url: '/api/goods',
     params: {
-      repImg: '1',
+      repImg: '0',
     },
     data: formData,
     headers: {
