@@ -151,7 +151,7 @@ export default function Map() {
       {position ? (
         <MapContainer
           position={position}
-          makers={marker}
+          markers={marker}
           sheetProvider={sheetProvider}
           setPreViewer={setPreViewer}
         />

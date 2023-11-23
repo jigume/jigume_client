@@ -4,64 +4,104 @@ import MarkerPin from '../../../asset/icon/markerPin.svg';
 
 export default function MapContainer({
   position,
-  makers,
+  markers,
   sheetProvider,
   setPreViewer,
 }) {
   const { kakao } = window;
   const mapRef = useRef(null);
+  const mapContainer = useRef(null);
+  const clusterRef = useRef(null);
 
-  useEffect(() => {
-    if (!kakao && !position && !mapRef) return;
+  const setMarkerDom = (item) => {
+    const markerElement = document.createElement('div');
+    markerElement.className = 'relative z-30 w-[40px] h-[57px]';
+    const markerPin = document.createElement('img');
+    markerPin.src = MarkerPin;
+    const markerImage = document.createElement('div');
+    markerImage.className =
+      'absolute left-[5px] top-[5px] z-50 h-[30px] w-[30px] rounded-full bg-gray-300';
+    markerImage.style.backgroundImage = `url(${item.imageUrl})`;
+    markerElement.appendChild(markerPin);
+    markerElement.appendChild(markerImage);
+    markerElement.onclick = () => {
+      sheetProvider.handleSheet('mid');
+      setPreViewer(item);
+    };
 
-    const container = mapRef.current;
-    const options = {
+    return markerElement;
+  };
+
+  const initMap = () => {
+    // create map
+    mapRef.current = new kakao.maps.Map(mapContainer.current, {
       center: new kakao.maps.LatLng(position.lat, position.lng),
       level: 3,
-    };
-    // create map
-    const map = new kakao.maps.Map(container, options);
+      disableDoubleClick: false,
+      disableDoubleClickZoom: false,
+    });
+  };
 
-    // draw user position
+  const drawCurrentPosition = () => {
     const currentPosition = new kakao.maps.CustomOverlay({
       position: new kakao.maps.LatLng(position.lat, position.lng),
       content: userPosition,
     });
-    currentPosition.setMap(map);
+    currentPosition.setMap(mapRef.current);
+  };
 
-    // draw marker
-    makers.forEach((item) => {
-      // create marker obeject
-      const markerElement = document.createElement('div');
-      markerElement.className = 'relative z-30 w-[40px] h-[57px]';
-      const markerPin = document.createElement('img');
-      markerPin.src = MarkerPin;
-      const markerImage = document.createElement('div');
-      markerImage.className =
-        'absolute left-[5px] top-[5px] z-50 h-[30px] w-[30px] rounded-full bg-gray-300';
-      markerImage.style.backgroundImage = `url(${item.imageUrl})`;
-      markerElement.appendChild(markerPin);
-      markerElement.appendChild(markerImage);
-      markerElement.onclick = () => {
-        sheetProvider.handleSheet('mid');
-        setPreViewer(item);
-      };
-
-      // dom object
-      const imagedMarkers = new kakao.maps.CustomOverlay({
-        position: new kakao.maps.LatLng(item.lat, item.lng),
-        content: markerElement,
-        yAnchor: 1,
-      });
-      imagedMarkers.setMap(map);
-
-      kakao.maps.event.addListener(imagedMarkers, 'click', () => {});
+  const drawMarkers = (markers_) => {
+    // cluter object
+    clusterRef.current = new kakao.maps.MarkerClusterer({
+      map: mapRef.current,
+      averageCenter: true,
+      minLevel: 3,
+      minClusterSize: 2,
+      styles: [
+        {
+          width: '2rem',
+          height: '2rem',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: '50%',
+          backgroundColor: '#F5535E',
+          color: '#fff',
+          zIndex: 2,
+        },
+      ],
     });
+    // marker to array
+    const markersArray = markers_.map(
+      (item) =>
+        new kakao.maps.CustomOverlay({
+          position: new kakao.maps.LatLng(item.lat, item.lng),
+          content: setMarkerDom(item),
+        }),
+    );
+
+    // draw
+    if (clusterRef.current !== undefined && clusterRef !== undefined) {
+      clusterRef.current.clear();
+      clusterRef.current.addMarkers(markersArray);
+    }
+  };
+
+  // init map
+  useEffect(() => {
+    if (!kakao && !position && !mapContainer) return;
+    initMap();
+    drawCurrentPosition();
   }, []);
+
+  // update markers
+  useEffect(() => {
+    drawMarkers(markers);
+  }, [markers]);
 
   return (
     <div>
-      <div ref={mapRef} className="h-[100svh] w-full" />
+      <div ref={mapContainer} className="h-[100svh] w-full" />
     </div>
   );
 }
