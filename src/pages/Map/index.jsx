@@ -10,16 +10,15 @@ import { throttle } from 'lodash';
 import { getCurrentLocation, tempRandMarker } from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
-import ItemMarker from './components/ItemMarker';
 import { userState } from '../../recoil';
 import getGoodsList from '../../api/goods';
 import useBottomSheet from '../../hooks/useBottomSheet';
-import useKakaoMap from '../../hooks/useKakaoMap';
-import MapContainer from './components/mapContainer';
+import { setClusterDom, setMarkerDom } from './urils';
 
 export default function Map() {
   const { kakao } = window;
-  const mapRef2 = useRef(null);
+  const mapRef = useRef(null);
+  const clusterRef = useRef(undefined);
   const sheetProvider = useBottomSheet();
 
   const [user, setUser] = useRecoilState(userState);
@@ -27,7 +26,42 @@ export default function Map() {
   const [address, setAddress] = useState('-');
   const [marker, setMarker] = useState([]);
   const [preViewer, setPreViewer] = useState(undefined);
-  //
+
+  const drawMarkers = (markers_) => {
+    // marker to array
+    const markersArray = markers_.map(
+      (item) =>
+        new kakao.maps.CustomOverlay({
+          position: new kakao.maps.LatLng(item.lat, item.lng),
+          content: setMarkerDom(item, sheetProvider, setPreViewer),
+        }),
+    );
+    if (clusterRef.current && clusterRef) {
+      clusterRef.current.clear();
+      clusterRef.current.addMarkers(markersArray);
+    }
+  };
+
+  const initMap = () => {
+    if (position) {
+      drawMarkers(marker);
+    }
+  };
+
+  const drawCluster = () => {
+    kakao.maps.event.addListener(clusterRef.current, 'clustered', (c) => {
+      c.forEach((item) => {
+        // eslint-disable-next-line no-underscore-dangle
+        const imageUrl = item._markers[0].cc
+          .querySelector('div')
+          .style.backgroundImage.split('"')[1];
+        item
+          .getClusterMarker()
+          // eslint-disable-next-line no-underscore-dangle
+          .setContent(setClusterDom(imageUrl, item._markers.length));
+      });
+    });
+  };
 
   // geocoder
   const getAddress = () => {
@@ -78,7 +112,9 @@ export default function Map() {
         position,
       }));
 
-    if (user.position) setMarker(tempRandMarker(user.position));
+    if (user.position) {
+      setMarker(tempRandMarker(user.position));
+    }
   }, [position, user.position]);
 
   // 미리보기 상태가 아닐 시 미리보기 콘텐츠 초기화
@@ -92,9 +128,9 @@ export default function Map() {
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
-      {/* {position ? (
+      {position ? (
         <KakaoMap
-          ref={mapRef2}
+          ref={mapRef}
           center={position}
           isPanto
           style={{
@@ -104,6 +140,7 @@ export default function Map() {
           }}
           level={3}
           onDragEnd={handleDragEndMap}
+          onCreate={initMap}
         >
           <CustomOverlayMap position={user.position}>
             <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-primaryBlue">
@@ -111,7 +148,13 @@ export default function Map() {
               <div className="absolute z-10 h-[30px] w-[30px] animate-ping rounded-full bg-primaryBlue" />
             </div>
           </CustomOverlayMap>
-
+          <MarkerClusterer
+            ref={clusterRef}
+            averageCenter
+            minLevel={2}
+            onClustered={drawCluster}
+          />
+          {/*
           <MarkerClusterer
             averageCenter
             minLevel={2}
@@ -128,6 +171,9 @@ export default function Map() {
                 zIndex: 2,
               },
             ]}
+            onClustered={(c) => {
+              console.log(c);
+            }}
           >
             {marker.map((item, idx) => (
               <ItemMarker
@@ -143,12 +189,12 @@ export default function Map() {
                 }}
               />
             ))}
-          </MarkerClusterer>
+          </MarkerClusterer> */}
         </KakaoMap>
       ) : (
         <Loading />
-      )} */}
-      {position ? (
+      )}
+      {/* {position ? (
         <MapContainer
           position={position}
           markers={marker}
@@ -157,7 +203,7 @@ export default function Map() {
         />
       ) : (
         <Loading />
-      )}
+      )} */}
       <BottomSheetComponent
         address={address}
         handleToCenter={handleToCenter}
