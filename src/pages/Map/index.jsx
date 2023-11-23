@@ -14,10 +14,12 @@ import ItemMarker from './components/ItemMarker';
 import { userState } from '../../recoil';
 import getGoodsList from '../../api/goods';
 import useBottomSheet from '../../hooks/useBottomSheet';
+import useKakaoMap from '../../hooks/useKakaoMap';
+import MapContainer from './components/mapContainer';
 
 export default function Map() {
   const { kakao } = window;
-  const mapRef = useRef(null);
+  const mapRef2 = useRef(null);
   const sheetProvider = useBottomSheet();
 
   const [user, setUser] = useRecoilState(userState);
@@ -25,6 +27,7 @@ export default function Map() {
   const [address, setAddress] = useState('-');
   const [marker, setMarker] = useState([]);
   const [preViewer, setPreViewer] = useState(undefined);
+  //
 
   // geocoder
   const getAddress = () => {
@@ -83,15 +86,15 @@ export default function Map() {
     if (sheetProvider.sheetLevel !== 'mid') setPreViewer(undefined);
   }, [sheetProvider.sheetLevel]);
 
-  const goods = useQuery('getGoods', () => getGoodsList(), {
-    onSuccess: (res) => console.log(res),
-  });
+  // const goods = useQuery('getGoods', () => getGoodsList(), {
+  //   onSuccess: (res) => console.log(res),
+  // });
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
-      {position ? (
+      {/* {position ? (
         <KakaoMap
-          ref={mapRef}
+          ref={mapRef2}
           center={position}
           isPanto
           style={{
@@ -144,8 +147,17 @@ export default function Map() {
         </KakaoMap>
       ) : (
         <Loading />
+      )} */}
+      {position ? (
+        <MapContainer
+          position={position}
+          makers={marker}
+          sheetProvider={sheetProvider}
+          setPreViewer={setPreViewer}
+        />
+      ) : (
+        <Loading />
       )}
-
       <BottomSheetComponent
         address={address}
         handleToCenter={handleToCenter}

@@ -47,18 +47,18 @@ export default function Router() {
         {
           index: true,
           element: <Auth />,
-          loader: () => {
-            if (auth.accessToken) return redirect('/auth/init');
-            return null;
-          },
+          // loader: () => {
+          //   if (auth.accessToken) return redirect('/auth/init');
+          //   return null;
+          // },
         },
         {
           path: 'login',
           element: <Login />,
-          loader: () => {
-            if (auth.accessToken) return redirect('/auth/init');
-            return null;
-          },
+          // loader: () => {
+          //   if (auth.accessToken) return redirect('/auth/init');
+          //   return null;
+          // },
         },
         {
           path: 'init',
@@ -68,16 +68,16 @@ export default function Router() {
             { path: 'address', element: <InitAddress /> },
             { path: 'image', element: <InitProfileImage /> },
           ],
-          loader: () => {
-            if (!auth.accessToken) return redirect('/auth/login');
-            return null;
-          },
+          // loader: () => {
+          //   if (!auth.accessToken) return redirect('/auth/login');
+          //   return null;
+          // },
         },
       ],
-      loader: () => {
-        if (auth.role !== 'GUEST') return redirect('/');
-        return null;
-      },
+      // loader: () => {
+      //   if (auth.role !== 'GUEST') return redirect('/');
+      //   return null;
+      // },
     },
     {
       path: '/',
@@ -131,10 +131,10 @@ export default function Router() {
         // 마이페이지
         { path: 'mypage', element: <Mypage /> },
       ],
-      loader: () => {
-        if (auth.role !== 'USER') return redirect('/auth/login');
-        return null;
-      },
+      // loader: () => {
+      //   if (auth.role !== 'USER') return redirect('/auth/login');
+      //   return null;
+      // },
     },
     { path: '*', element: <NotMatch /> },
   ]);
