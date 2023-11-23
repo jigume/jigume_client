@@ -21,3 +21,15 @@ markerElement.className = 'relative z-30 w-[40px] h-[57px]';
 const markerPin = document.createElement('img');
 markerPin.src = MarkerPin;
 markerElement.appendChild(markerPin);
+
+export const clusterStyles = {
+  width: '2rem',
+  height: '2rem',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: '50%',
+  backgroundColor: '#F5535E',
+  color: '#fff',
+  zIndex: 2,
+};
