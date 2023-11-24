@@ -2,7 +2,7 @@ import MarkerPin from '../../asset/icon/markerPin.svg';
 
 export const setMarkerDom = (item, sheetProvider, setPreViewer) => {
   const markerElement = document.createElement('div');
-  markerElement.className = 'relative z-30 w-[40px] h-[57px]';
+  markerElement.className = 'relative z-10 w-[40px] h-[57px]';
   const markerPin = document.createElement('img');
   markerPin.src = MarkerPin;
   const markerImage = document.createElement('div');

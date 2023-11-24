@@ -7,11 +7,11 @@ import {
 import { useRecoilState } from 'recoil';
 import { useQuery } from 'react-query';
 import { throttle } from 'lodash';
-import { getCurrentLocation, tempRandMarker } from '../../utils';
+import { getCurrentLocation } from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
 import { userState } from '../../recoil';
-import getGoodsList from '../../api/goods';
+import { getGoodsList } from '../../api/goods';
 import useBottomSheet from '../../hooks/useBottomSheet';
 import { setClusterDom, setMarkerDom } from './urils';
 
@@ -24,29 +24,36 @@ export default function Map() {
   const [user, setUser] = useRecoilState(userState);
   const [position, setPosition] = useState(undefined);
   const [address, setAddress] = useState('-');
-  const [marker, setMarker] = useState([]);
   const [preViewer, setPreViewer] = useState(undefined);
 
-  const drawMarkers = (markers_) => {
+  const initMap = (list) => {
+    if (!position && !list) return;
+    if (list?.length === 0) return;
+
     // marker to array
-    const markersArray = markers_.map(
+    const markersArray = list?.map(
       (item) =>
         new kakao.maps.CustomOverlay({
-          position: new kakao.maps.LatLng(item.lat, item.lng),
+          position: new kakao.maps.LatLng(item.point.y, item.point.x),
           content: setMarkerDom(item, sheetProvider, setPreViewer),
         }),
     );
-    if (clusterRef.current && clusterRef) {
+    if (clusterRef.current && clusterRef && markersArray) {
       clusterRef.current.clear();
       clusterRef.current.addMarkers(markersArray);
     }
   };
 
-  const initMap = () => {
-    if (position) {
-      drawMarkers(marker);
-    }
-  };
+  const { data: goods, refetch } = useQuery(
+    'getGoods',
+    () => getGoodsList(mapRef.current && mapRef.current.getBounds()),
+    {
+      onSuccess: (res) => {
+        if (res.data === 'retry') refetch();
+        else initMap(res.data?.markerList);
+      },
+    },
+  );
 
   const drawCluster = () => {
     kakao.maps.event.addListener(clusterRef.current, 'clustered', (c) => {
@@ -55,18 +62,20 @@ export default function Map() {
         const imageUrl = item._markers[0].cc
           .querySelector('div')
           .style.backgroundImage.split('"')[1];
-        item
-          .getClusterMarker()
+        const clusterDom = setClusterDom(
+          imageUrl,
           // eslint-disable-next-line no-underscore-dangle
-          .setContent(setClusterDom(imageUrl, item._markers.length));
+          item._markers.length,
+        );
+        const clusterOberlay = item.getClusterMarker();
+        clusterOberlay.setContent(clusterDom);
       });
     });
   };
 
   // geocoder
   const getAddress = () => {
-    if (!position && !kakao.maps) return;
-    if (!kakao?.maps.services.Geocoder) return;
+    if (!position && !kakao.maps && !kakao.maps.services.Geocoder) return;
     new kakao.maps.services.Geocoder().coord2Address(
       position.lng,
       position.lat,
@@ -92,11 +101,19 @@ export default function Map() {
   };
 
   // 맵 조작이 종료 되었을 때 실행하는 callback fn
-  const handleDragEndMap = (map) =>
+  const handleDragEndMap = (map) => {
     setPosition({
       lat: map.getCenter().getLat(),
       lng: map.getCenter().getLng(),
     });
+    refetch();
+  };
+
+  const onClusterclick = (_, cluster) => {
+    mapRef.current.setLevel(mapRef.current.getLevel() - 1, {
+      anchor: cluster.getCenter(),
+    });
+  };
 
   // 사용자 현재 위치 가져오기
   useEffect(() => {
@@ -112,19 +129,13 @@ export default function Map() {
         position,
       }));
 
-    if (user.position) {
-      setMarker(tempRandMarker(user.position));
-    }
+    refetch();
   }, [position, user.position]);
 
   // 미리보기 상태가 아닐 시 미리보기 콘텐츠 초기화
   useEffect(() => {
     if (sheetProvider.sheetLevel !== 'mid') setPreViewer(undefined);
   }, [sheetProvider.sheetLevel]);
-
-  // const goods = useQuery('getGoods', () => getGoodsList(), {
-  //   onSuccess: (res) => console.log(res),
-  // });
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
@@ -136,79 +147,38 @@ export default function Map() {
           style={{
             width: '100%',
             height: '100svh',
-            top: sheetProvider.sheetLevel === 'mid' ? '-100px' : '0',
+            // top: sheetProvider.sheetLevel === 'mid' ? '-100px' : '0',
           }}
           level={3}
           onDragEnd={handleDragEndMap}
-          onCreate={initMap}
+          onZoomChanged={handleDragEndMap}
         >
-          <CustomOverlayMap position={user.position}>
-            <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-primaryBlue">
+          <CustomOverlayMap position={user.position} zIndex={50}>
+            <div className="z-[999] flex h-[32px] w-[32px] items-center justify-center rounded-full bg-primaryBlue">
               <div className="relative z-30 h-[16px] w-[16px] rounded-full bg-white" />
               <div className="absolute z-10 h-[30px] w-[30px] animate-ping rounded-full bg-primaryBlue" />
             </div>
           </CustomOverlayMap>
           <MarkerClusterer
             ref={clusterRef}
+            disableClickZoom
             averageCenter
+            clickable
             minLevel={2}
             onClustered={drawCluster}
+            onClusterclick={onClusterclick}
           />
-          {/*
-          <MarkerClusterer
-            averageCenter
-            minLevel={2}
-            styles={[
-              {
-                width: '2rem',
-                height: '2rem',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '50%',
-                backgroundColor: '#F5535E',
-                color: '#fff',
-                zIndex: 2,
-              },
-            ]}
-            onClustered={(c) => {
-              console.log(c);
-            }}
-          >
-            {marker.map((item, idx) => (
-              <ItemMarker
-                key={item.name}
-                imageUrl={item.imageUrl}
-                position={{
-                  lat: item.lat,
-                  lng: item.lng,
-                }}
-                onClick={() => {
-                  sheetProvider.handleSheet('mid');
-                  setPreViewer(item);
-                }}
-              />
-            ))}
-          </MarkerClusterer> */}
         </KakaoMap>
       ) : (
         <Loading />
       )}
-      {/* {position ? (
-        <MapContainer
-          position={position}
-          markers={marker}
-          sheetProvider={sheetProvider}
-          setPreViewer={setPreViewer}
-        />
-      ) : (
-        <Loading />
-      )} */}
+
       <BottomSheetComponent
         address={address}
         handleToCenter={handleToCenter}
         sheetProvider={sheetProvider}
         preViewer={preViewer}
+        bounds={mapRef.current?.getBounds()}
       />
     </div>
   );
