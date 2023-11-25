@@ -75,15 +75,13 @@ export default function Map() {
 
   // geocoder
   const getAddress = () => {
-    if (!position && !kakao.maps && !kakao.maps.services.Geocoder) return;
-    new kakao.maps.services.Geocoder().coord2Address(
-      position.lng,
-      position.lat,
-      (result, status) => {
-        if (status === kakao.maps.services.Status.OK)
-          setAddress(result[0].address.address_name);
-      },
-    );
+    if (!position && !kakao.maps) return;
+    const geocoder = new kakao.maps.services.Geocoder();
+    if (!geocoder) return;
+    geocoder.coord2Address(position.lng, position.lat, (result, status) => {
+      if (status === kakao.maps.services.Status.OK)
+        setAddress(result[0].address.address_name);
+    });
   };
 
   // 쓰롤틀링으로 요청 제한

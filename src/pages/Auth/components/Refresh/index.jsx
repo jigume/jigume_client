@@ -2,11 +2,12 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import { useQuery } from 'react-query';
 import { Outlet } from 'react-router-dom';
-import { authState } from '../../../../recoil';
+import { authState, initAuth, initUser, userState } from '../../../../recoil';
 import { handleRefreshToken } from '../../../../api/user';
 
 export default function Refresh() {
   const [, setAuth] = useRecoilState(authState);
+  const [, setUser] = useRecoilState(userState);
 
   useQuery('refresh', handleRefreshToken, {
     retry: false,
@@ -18,6 +19,10 @@ export default function Refresh() {
         ...prev,
         accessToken: res.accessToken,
       }));
+    },
+    onError: () => {
+      setAuth(initAuth);
+      setUser(initUser);
     },
   });
 

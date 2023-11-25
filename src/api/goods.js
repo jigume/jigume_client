@@ -54,7 +54,7 @@ export const getSheetList = (preViewer, bounds) => {
       maxY: bounds.pa,
       pageable: {
         page: 0,
-        size: 10,
+        size: 1,
       },
     },
     headers: {
