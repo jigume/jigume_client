@@ -10,16 +10,17 @@ import axios from 'axios';
  * @param {string} param.image Image URL
  */
 export const setNewUser = async (param) => {
-  const token = JSON.parse(localStorage.getItem('recoil-persist'));
-  if (!token.accessToken) return undefined;
+  const token = JSON.parse(localStorage.getItem('recoil-persist')).jigumeAuth;
+  if (!token.accessToken) throw Error('accessToken is not exist');
 
-  const result = await axios({
+  const response = await axios({
     method: 'post',
-    url: '/api/member/new',
+    url: '/api/member/info',
     data: {
       nickname: param.nickname,
       mapX: param.position.lng,
       mapY: param.position.lat,
+      image: param.image,
     },
     headers: {
       Authorization: `Bearer ${token.accessToken}`,
@@ -29,7 +30,7 @@ export const setNewUser = async (param) => {
     },
   });
 
-  return result;
+  return response;
 };
 
 /**

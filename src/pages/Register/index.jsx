@@ -57,6 +57,7 @@ function Register() {
   useEffect(() => {
     setData(initData);
     return () => {
+      console.log('unmount');
       setData(initData);
     };
   }, []);

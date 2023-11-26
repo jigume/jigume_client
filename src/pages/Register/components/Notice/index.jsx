@@ -50,6 +50,7 @@ function Notice() {
     {
       retry: false,
       onSuccess: (res) => {
+        console.log(res);
         setData(initData);
         navigate(`/introduce/${res.data}/submitted`);
       },

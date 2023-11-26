@@ -43,21 +43,15 @@ const postGoods = async (images, goodsDto_) => {
   const blobData = new Blob([JSON.stringify(data)], {
     type: 'application/json',
   });
-  const blobRep = new Blob([JSON.stringify(1)], {
-    type: 'application/json',
-  });
 
-  const formData = new FormData();
+  let formData = new FormData();
   formData.append('goodsSaveDto', blobData);
-  formData.append('repImg', blobRep);
+  formData.append('repImg', 0);
   images.forEach((item) => formData.append(`images`, item));
 
   const response = await axios({
     method: 'post',
-    url: '/api/goods',
-    params: {
-      repImg: '0',
-    },
+    url: '/api/goods/new',
     data: formData,
     headers: {
       'Authorization': `Bearer ${token.accessToken}`,
@@ -66,6 +60,10 @@ const postGoods = async (images, goodsDto_) => {
       'credentials': 'include',
       'Content-Type': 'multipart/form-data',
     },
+  }).then((res) => {
+    // 성공 시 form 초기화
+    if (res.status === 200) formData = null;
+    return res;
   });
 
   return response;

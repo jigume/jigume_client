@@ -75,6 +75,7 @@ export default function Map() {
 
   // geocoder
   const getAddress = () => {
+    if (!kakao) return;
     if (!position && !kakao.maps) return;
     const geocoder = new kakao.maps.services.Geocoder();
     if (!geocoder) return;
@@ -116,6 +117,7 @@ export default function Map() {
   // 사용자 현재 위치 가져오기
   useEffect(() => {
     getCurrentLocation(setPosition);
+    refetch();
   }, []);
 
   // 주소 변환 및 마커 등록
@@ -150,6 +152,7 @@ export default function Map() {
           level={3}
           onDragEnd={handleDragEndMap}
           onZoomChanged={handleDragEndMap}
+          onCreate={refetch}
         >
           <CustomOverlayMap position={user.position} zIndex={50}>
             <div className="z-[999] flex h-[32px] w-[32px] items-center justify-center rounded-full bg-primaryBlue">
