@@ -45,12 +45,8 @@ export default function InitProfileImage() {
     if (!initUser.nickname || !initUser.position) navigate('/auth/init');
   }, []);
 
-  useEffect(() => {
-    console.log(initUser.image);
-  }, [initUser.image]);
-
   return (
-    <>
+    <div className="flex h-full flex-col justify-between px-4 py-6">
       <div className="pb-3">프로필 이미지 설정</div>
       <label htmlFor="image">
         <input
@@ -92,6 +88,6 @@ export default function InitProfileImage() {
       >
         완료하기
       </button>
-    </>
+    </div>
   );
 }

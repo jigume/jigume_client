@@ -6,10 +6,11 @@ export const getCurrentLocation = async (setPosition) => {
   const response = await navigator.geolocation.getCurrentPosition(
     async (position) => {
       const current = await position;
-      setPosition({
+      setPosition((prev) => ({
+        ...prev,
         lat: position.coords.latitude,
         lng: position.coords.longitude,
-      });
+      }));
       return current;
     },
   );

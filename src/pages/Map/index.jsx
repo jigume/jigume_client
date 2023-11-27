@@ -144,11 +144,7 @@ export default function Map() {
           ref={mapRef}
           center={position}
           isPanto
-          style={{
-            width: '100%',
-            height: '100svh',
-            // top: sheetProvider.sheetLevel === 'mid' ? '-100px' : '0',
-          }}
+          className="h-[100svh] w-full"
           level={3}
           onDragEnd={handleDragEndMap}
           onZoomChanged={handleDragEndMap}

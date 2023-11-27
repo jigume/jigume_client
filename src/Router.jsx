@@ -68,16 +68,16 @@ export default function Router() {
             { path: 'address', element: <InitAddress /> },
             { path: 'image', element: <InitProfileImage /> },
           ],
-          loader: () => {
-            if (!auth.accessToken) return redirect('/auth/login');
-            return null;
-          },
+          // loader: () => {
+          //   if (!auth.accessToken) return redirect('/auth/login');
+          //   return null;
+          // },
         },
       ],
-      loader: () => {
-        if (auth.role !== 'GUEST') return redirect('/');
-        return null;
-      },
+      // loader: () => {
+      //   if (auth.role !== 'GUEST') return redirect('/');
+      //   return null;
+      // },
     },
     {
       path: '/',
