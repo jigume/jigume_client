@@ -62,6 +62,10 @@ function Register() {
     };
   }, []);
 
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   return (
     <>
       <div className="mx-auto flex h-[48px] w-full max-w-screen-sm flex-row items-center px-4">

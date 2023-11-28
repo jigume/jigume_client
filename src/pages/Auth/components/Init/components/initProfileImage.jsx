@@ -5,7 +5,6 @@ import { useRecoilState } from 'recoil';
 import { setNewUser } from '../../../../../api/user';
 import { authState } from '../../../../../recoil';
 import CameraIcon from '../../../../../asset/icon/mdi_camera.svg';
-import CloseIcon from '../../../../../asset/icon/CloseIcon.svg';
 
 export default function InitProfileImage() {
   const navigate = useNavigate();
@@ -15,7 +14,10 @@ export default function InitProfileImage() {
   const newUser = useMutation('newUser', () => setNewUser(initUser), {
     retry: false,
     onSuccess: (res) => {
-      if (res.status === 200) setAuth((prev) => ({ ...prev, role: 'USER' }));
+      if (res.status === 200) {
+        setAuth((prev) => ({ ...prev, role: 'USER' }));
+        navigate('/');
+      }
     },
   });
   // const handleImageReset = () => {
@@ -82,11 +84,10 @@ export default function InitProfileImage() {
         )}
       </label>
       <button
-        // disabled={!initUser.nickname.length}
         className="text-md h-12 w-full rounded-lg bg-success p-3 text-center text-white transition-all duration-300 ease-in-out active:scale-[99%] disabled:bg-gray-300 active:disabled:scale-100"
         onClick={newUser.mutate}
       >
-        완료하기
+        가입 완료하기
       </button>
     </div>
   );

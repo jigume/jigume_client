@@ -27,7 +27,7 @@ export default function InitUser() {
     return 'border-red-600 ring-red-600 focus:border-red-600 focus:ring-red-600';
   };
 
-  const { data, mutate, isLoading } = useMutation(
+  const { mutate, isLoading, isError } = useMutation(
     'checkNickname',
     () => checkNickname(initUser.nickname),
     {
@@ -67,9 +67,19 @@ export default function InitUser() {
               : 'text-red-600'
           }`}
         >
-          최소 2글자, 최대 10글자까지 한글,영어, 숫자만 입력가능해요.
+          {valid && (
+            <div className="mr-2 inline-block h-2 w-2 rounded-full bg-green-500 leading-4" />
+          )}
+          <span>
+            최소 2글자, 최대 10글자까지 한글,영어, 숫자만 입력가능해요.
+          </span>
         </div>
-        <div className="text-xs text-gray-600">{data}</div>
+        {isError && (
+          <div className="text-xs text-red-600">
+            <div className="mr-2 inline-block h-2 w-2 rounded-full bg-red-600 leading-4" />
+            <span>중복된 닉네임 입니다.</span>
+          </div>
+        )}
       </div>
 
       <NextButton isDisabled={!valid} linkTo="/auth/init/address" />

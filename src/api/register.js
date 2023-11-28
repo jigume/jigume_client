@@ -28,7 +28,7 @@ const postGoods = async (images, goodsDto_) => {
   const data = {
     borderContent: goodsDto_.boardContent,
     goodsId: goodsDto_.goodsId,
-    categoryId: 1,
+    categoryId: goodsDto_.categoryName,
     deliveryFee: goodsDto_.deliveryFee,
     goodsPrice: goodsDto_.goodsPrice,
     goodsLimitCount: goodsDto_.goodsLimitCount,
@@ -49,9 +49,12 @@ const postGoods = async (images, goodsDto_) => {
   formData.append('repImg', 0);
   images.forEach((item) => formData.append(`images`, item));
 
+  console.log(images);
+
   const response = await axios({
     method: 'post',
     url: '/api/goods/new',
+    params: { repImg: 0 },
     data: formData,
     headers: {
       'Authorization': `Bearer ${token.accessToken}`,
@@ -60,13 +63,9 @@ const postGoods = async (images, goodsDto_) => {
       'credentials': 'include',
       'Content-Type': 'multipart/form-data',
     },
-  }).then((res) => {
-    // 성공 시 form 초기화
-    if (res.status === 200) formData = null;
-    return res;
+  }).finally(() => {
+    formData = null;
   });
-
-  return response;
 };
 
 export default postGoods;

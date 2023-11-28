@@ -114,8 +114,6 @@ export const checkNickname = async (nickname) => {
       crossDomain: true,
       credentials: 'include',
     },
-  })
-    .then((res) => res.data)
-    .catch((err) => err.response.data);
+  });
   return response;
 };

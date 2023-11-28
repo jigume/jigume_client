@@ -5,8 +5,8 @@ import category from '../../../Map/components/BottomSheetComponent/data';
 import StyledInputText from '../../../../components/StyledInputText';
 import NextButton from '../../../../components/NextButton';
 import getOpenGraph from '../../../../api/og';
-import 'react-dropdown/style.css';
 import OpenGraphView from './components/OpenGraphViewer';
+import 'react-dropdown/style.css';
 
 function Links() {
   /** @type {{data:{
