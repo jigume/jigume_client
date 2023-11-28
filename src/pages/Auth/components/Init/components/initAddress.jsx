@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-import { Map } from 'react-kakao-maps-sdk';
+import { CustomOverlayMap, Map } from 'react-kakao-maps-sdk';
 import { useRecoilState } from 'recoil';
 import { throttle } from 'lodash';
 import { getCurrentLocation } from '../../../../../utils';
@@ -32,14 +32,10 @@ export default function InitAddress() {
   };
 
   // 쓰롤틀링으로 요청 제한
-  const handleAddress = useMemo(
-    () => throttle(setUserPosition, 500),
-    // 특정 범위 이동 내에선 요청 막음
-    [],
-  );
+  const handleAddress = useMemo(() => throttle(setUserPosition, 500), []);
 
   useEffect(() => {
-    handleAddress();
+    setUserPosition();
   }, [position]);
 
   useEffect(() => {
@@ -55,7 +51,16 @@ export default function InitAddress() {
           isPanto
           className="h-[calc(100svh-48px)] w-full"
           center={position}
-        />
+          onCreate={handleAddress}
+          onDragEnd={setUserPosition}
+        >
+          <CustomOverlayMap position={user.position} zIndex={50}>
+            <div className="z-[999] flex h-[32px] w-[32px] items-center justify-center rounded-full bg-primaryBlue">
+              <div className="relative z-30 h-[16px] w-[16px] rounded-full bg-white" />
+              <div className="absolute z-10 h-[30px] w-[30px] animate-ping rounded-full bg-primaryBlue" />
+            </div>
+          </CustomOverlayMap>
+        </Map>
       ) : (
         <Loading />
       )}
@@ -65,9 +70,11 @@ export default function InitAddress() {
       </div>
 
       <div className="absolute bottom-0 z-50 w-full max-w-screen-sm px-4">
-        <div className="absolute bottom-28 right-4 flex flex-row gap-2">
-          <Fab onlyCurr handleToCenter={handleToCenter} />
-        </div>
+        {position && (
+          <div className="absolute bottom-28 right-4 flex flex-row gap-2">
+            <Fab onlyCurr handleToCenter={handleToCenter} />
+          </div>
+        )}
 
         <NextButton isDisabled={!position} linkTo="/auth/init/image" />
       </div>

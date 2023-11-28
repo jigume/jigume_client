@@ -18,9 +18,9 @@ export default function InitProfileImage() {
       if (res.status === 200) setAuth((prev) => ({ ...prev, role: 'USER' }));
     },
   });
-  const handleImageReset = () => {
-    setInitUser((prev) => ({ ...prev, image: undefined }));
-  };
+  // const handleImageReset = () => {
+  //   setInitUser((prev) => ({ ...prev, image: undefined }));
+  // };
 
   const encodeFileToBase64 = (fileBlob) => {
     // 이미지 선택 취소 시 예외처리
@@ -59,30 +59,30 @@ export default function InitProfileImage() {
           }}
         />
         {!initUser.image ? (
-          <div className="flex aspect-[1.8641] w-full flex-col items-center justify-center gap-3 rounded-lg bg-gray-200">
+          <div className="mx-auto flex aspect-square w-3/4 flex-col items-center justify-center gap-2 rounded-full bg-gray-100 active:opacity-60">
             <img src={CameraIcon} />
             <div className="font-thin">앨범으로 등록</div>
           </div>
         ) : (
-          <div className="relative mx-auto aspect-square w-3/4">
-            <span
-              className="absolute right-[2px] top-[2px] inline-flex -translate-y-1/2 translate-x-1/2 cursor-pointer items-center rounded-full bg-white p-1.5 text-white shadow-[0px_1px_3px_#0003]"
-              onClick={handleImageReset}
-            >
+          <div
+            className="relative mx-auto aspect-square w-3/4"
+            // onClick={handleImageReset}
+          >
+            <span className="absolute bottom-4 right-8 inline-flex aspect-square w-12 -translate-y-1/2 translate-x-1/2 cursor-pointer items-center rounded-[20px] bg-white p-1.5 text-white shadow-[0px_1px_3px_#0003]">
               <img
-                src={CloseIcon}
-                className="relative top-[1px] inline-block leading-7"
+                src={CameraIcon}
+                className="relative top-[1px] mx-auto inline-block leading-7"
               />
             </span>
             <img
-              className="h-full rounded-lg border-gray-100 bg-gray-300 object-cover"
+              className="aspect-square w-full rounded-full border-gray-100 bg-gray-300 object-cover"
               src={initUser.image}
             />
           </div>
         )}
       </label>
       <button
-        disabled={!initUser.nickname.length}
+        // disabled={!initUser.nickname.length}
         className="text-md h-12 w-full rounded-lg bg-success p-3 text-center text-white transition-all duration-300 ease-in-out active:scale-[99%] disabled:bg-gray-300 active:disabled:scale-100"
         onClick={newUser.mutate}
       >

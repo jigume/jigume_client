@@ -80,7 +80,7 @@ function Links() {
         </div>
 
         <div className="mb-1">
-          <div className="mb-2 text-sm font-thin">상품 링크</div>
+          <div className="mb-3 text-sm font-thin">상품 링크</div>
           <StyledInputText
             placeholder="ex) www.figma.com"
             value={tmpLink}
