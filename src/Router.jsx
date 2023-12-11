@@ -74,10 +74,10 @@ export default function Router() {
           },
         },
       ],
-      // loader: () => {
-      //   if (auth.role !== 'GUEST') return redirect('/');
-      //   return null;
-      // },
+      loader: () => {
+        if (auth.role !== 'GUEST') return redirect('/');
+        return null;
+      },
     },
     {
       path: '/',

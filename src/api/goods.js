@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const getGoodsList = (map) => {
+  console.log(map);
   const token = JSON.parse(localStorage.getItem('recoil-persist')).jigumeAuth;
   if (!token.accessToken) throw Error('accessToken is not exist');
   if (!map) return 'retry';

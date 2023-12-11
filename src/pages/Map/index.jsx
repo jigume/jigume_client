@@ -13,7 +13,7 @@ import Loading from './components/Loading';
 import { userState } from '../../recoil';
 import { getGoodsList } from '../../api/goods';
 import useBottomSheet from '../../hooks/useBottomSheet';
-import { setClusterDom, setMarkerDom } from './urils';
+import { setClusterDom, setMarkerDom } from './utils';
 
 export default function Map() {
   const { kakao } = window;
@@ -25,32 +25,33 @@ export default function Map() {
   const [position, setPosition] = useState(undefined);
   const [address, setAddress] = useState('-');
   const [preViewer, setPreViewer] = useState(undefined);
+  const [markerList, setMarkerList] = useState(undefined);
 
   const initMap = (list) => {
-    if (!position && !list) return;
-    if (list?.length === 0) return;
-
+    if (!list) return;
+    console.log(markerList);
     // marker to array
-    const markersArray = list?.map(
-      (item) =>
-        new kakao.maps.CustomOverlay({
-          position: new kakao.maps.LatLng(item.point.y, item.point.x),
-          content: setMarkerDom(item, sheetProvider, setPreViewer),
-        }),
-    );
+    const markersArray = list?.map((item) => {
+      // markerList.findIndex((obj) => obj.goodsId === item.goodsId)
+      return new kakao.maps.CustomOverlay({
+        position: new kakao.maps.LatLng(item.point.y, item.point.x),
+        content: setMarkerDom(item, sheetProvider, setPreViewer),
+      });
+    });
+
     if (clusterRef.current && clusterRef && markersArray) {
       clusterRef.current.clear();
       clusterRef.current.addMarkers(markersArray);
     }
   };
 
-  const { data: goods, refetch } = useQuery(
+  const { refetch } = useQuery(
     'getGoods',
     () => getGoodsList(mapRef.current && mapRef.current.getBounds()),
     {
       onSuccess: (res) => {
-        if (res.data === 'retry') refetch();
-        else initMap(res.data?.markerList);
+        initMap(res.data?.markerList);
+        if (!markerList && res !== 'retry') setMarkerList(res.data.markerList);
       },
     },
   );
@@ -59,9 +60,7 @@ export default function Map() {
     kakao.maps.event.addListener(clusterRef.current, 'clustered', (c) => {
       c.forEach((item) => {
         // eslint-disable-next-line no-underscore-dangle
-        const imageUrl = item._markers[0].cc
-          .querySelector('div')
-          .style.backgroundImage.split('"')[1];
+        const imageUrl = item._markers[0].cc.querySelector('.prodImg').src;
         const clusterDom = setClusterDom(
           imageUrl,
           // eslint-disable-next-line no-underscore-dangle
@@ -89,7 +88,7 @@ export default function Map() {
   const handleAddress = useMemo(
     () => throttle(getAddress, 5000),
     // 특정 범위 이동 내에선 요청 막음
-    [position?.lat.toFixed(2), position?.lng.toFixed(2)],
+    [position?.lat.toFixed(1), position?.lng.toFixed(1)],
   );
 
   // 지도 중앙으로 이동
@@ -107,6 +106,13 @@ export default function Map() {
     });
     refetch();
   };
+
+  // 쓰롤틀링으로 요청 제한
+  const handleDragMap = useMemo(
+    () => throttle(handleDragEndMap, 5000),
+    // 특정 범위 이동 내에선 요청 막음
+    [position?.lat.toFixed(1), position?.lng.toFixed(1)],
+  );
 
   const onClusterclick = (_, cluster) => {
     mapRef.current.setLevel(mapRef.current.getLevel() - 1, {
@@ -146,7 +152,7 @@ export default function Map() {
           isPanto
           className="h-[100svh] w-full"
           level={3}
-          onDragEnd={handleDragEndMap}
+          onDragEnd={handleDragMap}
           onZoomChanged={handleDragEndMap}
           onCreate={refetch}
         >
