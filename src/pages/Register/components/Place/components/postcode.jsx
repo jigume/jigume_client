@@ -25,9 +25,9 @@ function Postcode() {
   const { data, setData } = useOutletContext();
   const [open, setOpen] = useState(false);
   const { kakao } = window;
-  const geocoder = new kakao.maps.services.Geocoder();
 
   const handleComplete = (param) => {
+    const geocoder = new kakao.maps.services.Geocoder();
     let fullAddress = param.address;
     let extraAddress = '';
 
