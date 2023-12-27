@@ -6,7 +6,7 @@ import CarouselBox from './components/CarouselBox';
 import HeaderProfile from './components/HeaderProfile';
 import ProductInfo from './components/ProductInfo';
 import ProductContent from './components/ProductContent';
-import ChevronLeft from '../../asset/icon/chevron-left.svg';
+import ChevronLeft from '../../asset/icon/chevronLeft.svg';
 import getIntroduce from '../../api/introduce';
 import PlaceInfo from './components/PlaceInfo';
 import IntroCategory from './components/IntroCategory';

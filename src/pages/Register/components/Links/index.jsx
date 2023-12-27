@@ -29,9 +29,9 @@ function Links() {
    * }}} 등록할 상품 정보  */
   const { data, setData } = useOutletContext();
   const [tmpLink, setTmpLink] = useState(data.goodsDto.link);
-  const [filterIdx, setFilterIdx] = useState(-1);
+  const [categoryIdx, setCategoryIdx] = useState(-1);
 
-  const isMovable = data.goodsDto.link.length !== 0 && filterIdx !== -1;
+  const isMovable = data.goodsDto.link.length !== 0 && categoryIdx !== -1;
 
   const {
     data: openGraph,
@@ -60,13 +60,13 @@ function Links() {
   useEffect(() => {
     setData((prev) => ({
       ...prev,
-      goodsDto: { ...prev.goodsDto, categoryName: filterIdx },
+      goodsDto: { ...prev.goodsDto, categoryName: categoryIdx },
     }));
-  }, [filterIdx]);
+  }, [categoryIdx]);
 
   // observe filter
   useEffect(() => {
-    setFilterIdx(data.goodsDto.categoryName);
+    setCategoryIdx(data.goodsDto.categoryName);
   }, []);
 
   return (
@@ -100,9 +100,9 @@ function Links() {
               <div
                 key={item.name}
                 className={`rounded-lg border border-gray-100 px-[8px] py-[6px] ${
-                  index === filterIdx ? 'bg-gray-900 text-white' : 'bg-white'
+                  index === categoryIdx ? 'bg-gray-900 text-white' : 'bg-white'
                 }`}
-                onClick={() => setFilterIdx(index)}
+                onClick={() => setCategoryIdx(item.idx)}
               >
                 <img
                   className="mr-2 inline-block h-[16px] w-[16px]"

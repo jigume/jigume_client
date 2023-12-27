@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import ChevronLeft from '../../../../asset/icon/chevron-left.svg';
+import ChevronLeft from '../../../../asset/icon/chevronLeft.svg';
 
 export default function Init() {
   const navigate = useNavigate();

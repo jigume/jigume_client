@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import ChevronLeft from '../../../asset/icon/chevron-left.svg';
+import ChevronLeft from '../../../asset/icon/chevronLeft.svg';
 
 export default function MyPageHeader() {
   const navigate = useNavigate();
