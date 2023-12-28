@@ -29,7 +29,6 @@ export default function Map() {
 
   const initMap = (list) => {
     if (!list) return;
-    console.log(markerList);
     // marker to array
     const markersArray = list?.map((item) => {
       // markerList.findIndex((obj) => obj.goodsId === item.goodsId)

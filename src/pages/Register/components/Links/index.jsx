@@ -62,6 +62,7 @@ function Links() {
       ...prev,
       goodsDto: { ...prev.goodsDto, categoryName: categoryIdx },
     }));
+    console.log(categoryIdx);
   }, [categoryIdx]);
 
   // observe filter
@@ -96,11 +97,13 @@ function Links() {
         <div className="pt-4">
           <div className="mb-2 text-sm font-thin">카테고리</div>
           <div className="flex flex-wrap justify-center gap-2">
-            {category.map((item, index) => (
+            {category.map((item) => (
               <div
                 key={item.name}
                 className={`rounded-lg border border-gray-100 px-[8px] py-[6px] ${
-                  index === categoryIdx ? 'bg-gray-900 text-white' : 'bg-white'
+                  item.idx === categoryIdx
+                    ? 'bg-gray-900 text-white'
+                    : 'bg-white'
                 }`}
                 onClick={() => setCategoryIdx(item.idx)}
               >

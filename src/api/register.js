@@ -24,7 +24,7 @@ const postGoods = async (images, goodsDto_) => {
   // image fime
   const imageFormData = new FormData();
   images.forEach((item, idx) => imageFormData.append(`images[${idx}]`, item));
-
+  console.log(goodsDto_.categoryName);
   const data = {
     borderContent: goodsDto_.boardContent,
     goodsId: goodsDto_.goodsId,
