@@ -117,3 +117,34 @@ export const checkNickname = async (nickname) => {
   });
   return response;
 };
+
+export const updateProfile = async (param) => {
+  const token = JSON.parse(localStorage.getItem('recoil-persist')).jigumeAuth;
+  if (!token.accessToken) throw Error('accessToken is not exist');
+
+  const blobData = new Blob(
+    [JSON.stringify({ nickname: param.nickname, profileImgUrl: param.image })],
+    {
+      type: 'application/json',
+    },
+  );
+
+  const formData = new FormData();
+  formData.append('memberInfoDto', blobData);
+
+  const response = await axios({
+    method: 'post',
+    url: '/api/member/info',
+    data: formData,
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${token.accessToken}`,
+      withCredentials: true,
+      crossDomain: true,
+      credentials: 'include',
+    },
+  });
+  console.log(response);
+
+  return response;
+};

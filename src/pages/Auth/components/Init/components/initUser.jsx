@@ -4,27 +4,15 @@ import { useMutation } from 'react-query';
 import NextButton from '../../../../../components/NextButton';
 import CircularProgress from './circularProgress';
 import { checkNickname } from '../../../../../api/user';
+import { handleTextFieldColor, validNickname } from '../../../../../utils';
 
 export default function InitUser() {
   const [valid, setValid] = useState(false);
   const { initUser, setInitUser } = useOutletContext();
 
-  const validNickname = (text) => {
-    const regex = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣a-zA-Z0-9]{2,10}$/;
-    return regex.test(text);
-  };
-
   const handleNickname = (text) => {
     setValid(validNickname(text));
     setInitUser((prev) => ({ ...prev, nickname: text }));
-  };
-
-  const handleColor = () => {
-    if (initUser.nickname.length === 0)
-      return 'focus:border-slate-300 focus:ring-slate-300 border-slate-300 ring-slate-300';
-    if (valid)
-      return 'focus:border-success focus:ring-success border-success ring-success';
-    return 'border-red-600 ring-red-600 focus:border-red-600 focus:ring-red-600';
   };
 
   const { mutate, isLoading, isError } = useMutation(
@@ -51,7 +39,10 @@ export default function InitUser() {
             value={initUser.nickname}
             onChange={(e) => handleNickname(e.target.value)}
             maxLength={20}
-            className={`block h-12 w-full rounded-md border bg-white p-3 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1 ${handleColor()}}`}
+            className={`block h-12 w-full rounded-md border bg-white p-3 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1 ${handleTextFieldColor(
+              initUser.nickname,
+              valid,
+            )}}`}
           />
           <button
             className="flex min-w-[6rem] items-center justify-center rounded-lg bg-success p-3 text-center text-white transition-all duration-300 ease-in-out active:scale-[99%] disabled:bg-gray-300 active:disabled:scale-100"
