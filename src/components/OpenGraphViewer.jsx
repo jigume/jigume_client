@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function OpenGraphViewer({ openGraph, link }) {
+export default function OpenGraphViewer({ openGraph, link, imgSize = 'h-20' }) {
   return (
     <div className="flex w-full flex-row items-center gap-2 overflow-hidden rounded-md border">
-      <div className="aspect-square h-20">
+      <div className={`aspect-square ${imgSize}`}>
         {openGraph?.image ? (
           <img
             className="h-full w-full object-cover"

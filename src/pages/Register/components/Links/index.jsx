@@ -5,7 +5,7 @@ import category from '../../../Map/components/BottomSheetComponent/data';
 import StyledInputText from '../../../../components/StyledInputText';
 import NextButton from '../../../../components/NextButton';
 import getOpenGraph from '../../../../api/og';
-import OpenGraphView from './components/OpenGraphViewer';
+import OpenGraphViewer from '../../../../components/OpenGraphViewer';
 import 'react-dropdown/style.css';
 
 function Links() {
@@ -89,7 +89,7 @@ function Links() {
           />
         </div>
 
-        <OpenGraphView
+        <OpenGraphViewer
           openGraph={isSuccess && openGraph}
           link={data.goodsDto.link}
         />
