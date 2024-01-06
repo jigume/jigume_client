@@ -14,6 +14,7 @@ import { userState } from '../../recoil';
 import { getGoodsList } from '../../api/goods';
 import useBottomSheet from '../../hooks/useBottomSheet';
 import { setClusterDom, setMarkerDom } from './utils';
+import CurrentPoint from './components/CurrentPoint';
 
 export default function Map() {
   const { kakao } = window;
@@ -33,7 +34,7 @@ export default function Map() {
     const markersArray = list?.map((item) => {
       // markerList.findIndex((obj) => obj.goodsId === item.goodsId)
       return new kakao.maps.CustomOverlay({
-        position: new kakao.maps.LatLng(item.point.y, item.point.x),
+        position: new kakao.maps.LatLng(item.address.mapY, item.address.mapX),
         content: setMarkerDom(item, sheetProvider, setPreViewer),
       });
     });
@@ -127,13 +128,14 @@ export default function Map() {
 
   // 주소 변환 및 마커 등록
   useEffect(() => {
-    if (user.position && position !== undefined) handleAddress();
-    else
+    if (user.position && position !== undefined) {
+      handleAddress();
+    } else {
       setUser((prev) => ({
         ...prev,
         position,
       }));
-
+    }
     refetch();
   }, [position, user.position]);
 
@@ -155,12 +157,11 @@ export default function Map() {
           onZoomChanged={handleDragEndMap}
           onCreate={refetch}
         >
+          {/* user current position */}
           <CustomOverlayMap position={user.position} zIndex={50}>
-            <div className="z-[999] flex h-[32px] w-[32px] items-center justify-center rounded-full bg-primaryBlue">
-              <div className="relative z-30 h-[16px] w-[16px] rounded-full bg-white" />
-              <div className="absolute z-10 h-[30px] w-[30px] animate-ping rounded-full bg-primaryBlue" />
-            </div>
+            <CurrentPoint />
           </CustomOverlayMap>
+
           <MarkerClusterer
             ref={clusterRef}
             disableClickZoom

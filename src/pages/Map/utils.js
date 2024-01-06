@@ -8,7 +8,7 @@ export const setMarkerDom = (item, sheetProvider, setPreViewer) => {
   const markerImage = document.createElement('img');
   markerImage.className =
     'absolute left-[5px] top-[5px] z-50 h-[30px] w-[30px] rounded-full bg-gray-300 prodImg';
-  markerImage.src = item.goodsImageUrl;
+  markerImage.src = item.goodsRepImgUrl;
   markerElement.appendChild(markerPin);
   markerElement.appendChild(markerImage);
   markerElement.onclick = () => {

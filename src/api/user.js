@@ -130,7 +130,7 @@ export const updateProfile = async (param) => {
   );
 
   const formData = new FormData();
-  formData.append('memberInfoDto', blobData);
+  formData.append('UpdateMemberInfoDto', blobData);
 
   const response = await axios({
     method: 'post',
