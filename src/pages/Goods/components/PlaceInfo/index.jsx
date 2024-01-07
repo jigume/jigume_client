@@ -30,8 +30,8 @@ export default function PlaceInfo({ data }) {
           img={data && data.goodsImagesList[0].goodsImgUrl}
           position={
             data && {
-              lat: data.mapY,
-              lng: data.mapX,
+              lat: data.address.mapY,
+              lng: data.address.mapX,
             }
           }
         />

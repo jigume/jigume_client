@@ -24,7 +24,7 @@ const postGoods = async (images, goodsDto_) => {
   // image fime
   const imageFormData = new FormData();
   images.forEach((item, idx) => imageFormData.append(`images[${idx}]`, item));
-  console.log(goodsDto_.categoryName);
+
   const data = {
     borderContent: goodsDto_.boardContent,
     goodsId: goodsDto_.goodsId,
@@ -49,8 +49,6 @@ const postGoods = async (images, goodsDto_) => {
   formData.append('repImg', 0);
   images.forEach((item) => formData.append(`images`, item));
 
-  console.log(images);
-
   const response = await axios({
     method: 'post',
     url: '/api/goods/new',
@@ -66,6 +64,7 @@ const postGoods = async (images, goodsDto_) => {
   }).finally(() => {
     formData = null;
   });
+  return response;
 };
 
 export default postGoods;

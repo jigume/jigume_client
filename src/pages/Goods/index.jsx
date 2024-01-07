@@ -11,7 +11,7 @@ import getIntroduce from '../../api/introduce';
 import PlaceInfo from './components/PlaceInfo';
 import IntroCategory from './components/IntroCategory';
 
-export default function Introduce() {
+export default function Goods() {
   const { idx } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,11 +25,16 @@ export default function Introduce() {
     return `${date.getMonth() + 1}월 ${date.getDate()}일 23시 59분`;
   };
 
-  const query = useQuery('itemDetail', () => getIntroduce(idx), {
-    onSuccess: (res) =>
-      setLimitDate(dateFormetter(res.goodsPageDto.goodsLimitTime)),
-    onError: () => navigate('/err'),
-  });
+  const { data: goods, isSuccess } = useQuery(
+    'itemDetail',
+    () => getIntroduce(idx),
+    {
+      onSuccess: (res) => {
+        setLimitDate(dateFormetter(res.goodsPageDto.goodsLimitTime));
+      },
+      onError: () => navigate('/err'),
+    },
+  );
 
   return (
     <div
@@ -45,17 +50,17 @@ export default function Introduce() {
       </div>
 
       {/* 상품 사진 */}
-      {query.isSuccess ? (
-        <CarouselBox data={query.data.goodsPageDto} />
+      {isSuccess ? (
+        <CarouselBox data={goods.goodsPageDto} />
       ) : (
         <div className="aspect-square w-full animate-pulse bg-gray-300" />
       )}
 
       {/* 상품 정보 */}
       <section className="px-4">
-        <HeaderProfile data={query.data && query.data.goodsPageDto} />
-        <ProductInfo data={query.data && query.data.goodsPageDto} />
-        <ProductContent data={query.data && query.data.goodsPageDto} />
+        <HeaderProfile data={goods && goods.goodsPageDto} />
+        <ProductInfo data={goods && goods.goodsPageDto} />
+        <ProductContent data={goods && goods.goodsPageDto} />
       </section>
 
       <section className="px-4 pt-12 text-sm">
@@ -65,11 +70,11 @@ export default function Introduce() {
 
         <section className="flex flex-col gap-2">
           {/* 상품 위치 정보 */}
-          <PlaceInfo data={query.data && query.data.goodsPageDto} />
+          <PlaceInfo data={goods && goods.goodsPageDto} />
 
           {/* 상품 마감일 */}
           <div className="rounded-xl bg-gray-50 p-6">
-            {query.isSuccess ? (
+            {isSuccess ? (
               <div className="text-center">
                 <span className="mr-2 text-sm font-light text-gray-600">
                   구매종료일 :
@@ -83,10 +88,10 @@ export default function Introduce() {
 
           {/* 상품 카테고리 */}
           <div className="rounded-xl bg-gray-50 p-4">
-            {query.isSuccess ? (
+            {isSuccess ? (
               <div className="flex items-center justify-center gap-2">
                 <span>해당 폼은</span>
-                <IntroCategory idx={query.data.goodsPageDto.category} />
+                <IntroCategory idx={goods && goods.goodsPageDto.categoryId} />
                 <span>제품을 공동구매해요.</span>
               </div>
             ) : (

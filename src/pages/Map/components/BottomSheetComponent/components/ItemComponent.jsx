@@ -56,7 +56,7 @@ export default function ItemComponent({
       className={`flex w-full cursor-pointer flex-row gap-4 px-4 pb-4 ${
         !item.goodsName ? 'animate-pulse' : ''
       }`}
-      onClick={() => navigate(`/introduce/${index}`)}
+      onClick={() => navigate(`/goods/${index}`)}
     >
       {!item.goodsImagesList ? (
         <div className="border-gray50 h-32 w-32 flex-none rounded-lg border bg-gray-100" />
