@@ -10,7 +10,7 @@ import { throttle } from 'lodash';
 import { getCurrentLocation } from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
-import { userState } from '../../recoil';
+import { userState } from '../../data';
 import { getGoodsList } from '../../api/goods';
 import useBottomSheet from '../../hooks/useBottomSheet';
 import { setClusterDom, setMarkerDom } from './utils';
@@ -53,7 +53,7 @@ export default function Map() {
         initMap(res.data?.markerList);
         if (!markerList && res !== 'retry') setMarkerList(res.data.markerList);
       },
-    },
+    }
   );
 
   const drawCluster = () => {
@@ -64,7 +64,7 @@ export default function Map() {
         const clusterDom = setClusterDom(
           imageUrl,
           // eslint-disable-next-line no-underscore-dangle
-          item._markers.length,
+          item._markers.length
         );
         const clusterOberlay = item.getClusterMarker();
         clusterOberlay.setContent(clusterDom);
@@ -88,7 +88,7 @@ export default function Map() {
   const handleAddress = useMemo(
     () => throttle(getAddress, 5000),
     // 특정 범위 이동 내에선 요청 막음
-    [position?.lat.toFixed(1), position?.lng.toFixed(1)],
+    [position?.lat.toFixed(1), position?.lng.toFixed(1)]
   );
 
   // 지도 중앙으로 이동
@@ -111,7 +111,7 @@ export default function Map() {
   const handleDragMap = useMemo(
     () => throttle(handleDragEndMap, 5000),
     // 특정 범위 이동 내에선 요청 막음
-    [position?.lat.toFixed(1), position?.lng.toFixed(1)],
+    [position?.lat.toFixed(1), position?.lng.toFixed(1)]
   );
 
   const onClusterclick = (_, cluster) => {

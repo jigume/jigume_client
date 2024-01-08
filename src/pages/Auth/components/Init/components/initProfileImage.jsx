@@ -3,7 +3,7 @@ import { useMutation } from 'react-query';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { setNewUser } from '../../../../../api/user';
-import { authState } from '../../../../../recoil';
+import { authState } from '../../../../../data';
 import CameraIcon from '../../../../../asset/icon/mdi_camera.svg';
 
 export default function InitProfileImage() {

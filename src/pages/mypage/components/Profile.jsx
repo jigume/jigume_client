@@ -2,7 +2,7 @@ import { useNavigate, useOutletContext } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { useResetRecoilState } from 'recoil';
 import { useMutation, useQuery } from 'react-query';
-import { authState } from '../../../recoil';
+import { authState } from '../../../data';
 import { kakaoLogout } from '../../../api/user';
 import getProfile from '../../../api/mypage';
 import EditIcon from '../../../asset/icon/EditIconBlack.svg';

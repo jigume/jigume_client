@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import logo from '../../../asset/images/login/login_logo.png';
 import kakaoImg from '../../../asset/images/login/kakao_login.png';
 import naverImg from '../../../asset/images/login/naver_login.png';
-import { userState } from '../../../recoil';
+import { userState } from '../../../data';
 
 const KAKAO_KEY = import.meta.env.VITE_KAKAO_REST_KEY;
 const NAVER_KEY = import.meta.env.VITE_NAVER_CLIENT_ID;

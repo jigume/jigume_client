@@ -5,7 +5,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { authState } from './recoil';
+import { authState } from './data';
 import Register from './pages/Register';
 import Map from './pages/Map';
 import Goods from './pages/Goods';

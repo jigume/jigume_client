@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { useRecoilState } from 'recoil';
 import { add } from 'date-fns';
 import Loading from '../Map/components/Loading';
-import { authState, userState } from '../../recoil';
+import { authState, userState } from '../../data';
 import { codeProvide } from '../../api/user';
 
 export default function Auth() {

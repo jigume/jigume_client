@@ -1,26 +1,17 @@
 import axios from 'axios';
+import jigumeAxios from './axios';
 
 export const getGoodsList = (map) => {
-  const token = JSON.parse(localStorage.getItem('recoil-persist')).jigumeAuth;
-  if (!token.accessToken) throw Error('accessToken is not exist');
   if (!map) return 'retry';
 
-  const response = axios({
-    url: `/api/goods/marker/list`,
+  return jigumeAxios().get('/api/goods/list', {
     params: {
       minX: map.ha,
       maxX: map.oa,
       minY: map.qa,
       maxY: map.pa,
     },
-    headers: {
-      Authorization: `Bearer ${token.accessToken}`,
-      withCredentials: true,
-      crossDomain: true,
-      credentials: 'include',
-    },
   });
-  return response;
 };
 
 export const getSheetGoods = (preViewer) => {

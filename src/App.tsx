@@ -1,8 +1,7 @@
-import React from 'react';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import Router from './Router';
 import useKakaoLoader from './hooks/useKakaoLoader';
+import Router from './Router';
 
 const queryClient = new QueryClient();
 

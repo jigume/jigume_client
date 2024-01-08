@@ -1,6 +1,7 @@
-/** @type {import('tailwindcss').Config} */
+import type { Config } from 'tailwindcss';
+
 export default {
-  content: ['./index.html', './src/**/*.{js,jsx}'],
+  content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -15,5 +16,6 @@ export default {
       sm: '444px',
     },
   },
+  // eslint-disable-next-line global-require
   plugins: [require('tailwind-scrollbar-hide')],
-};
+} satisfies Config;
