@@ -63,6 +63,7 @@ export const getSheetList = (preViewer, bounds) => {
       crossDomain: true,
       credentials: 'include',
     },
-  });
+  }).then((res) => console.log(res));
+
   return response;
 };

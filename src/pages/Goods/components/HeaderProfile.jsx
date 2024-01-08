@@ -37,7 +37,13 @@ export default function HeaderProfile({ data }) {
           <div className="h-10 w-10 shrink-0 rounded-full bg-gray-200" />
         )}
         {data ? (
-          <div>{data.sellerInfoDto.sellerNickname} | </div>
+          <div>
+            {data.sellerInfoDto.sellerNickname}{' '}
+            <span className="text-zinc-400">
+              | {data.sellerInfoDto.sellCount}
+              번째 구매 리드
+            </span>
+          </div>
         ) : (
           <div className="h-4 w-1/2 rounded bg-gray-200" />
         )}

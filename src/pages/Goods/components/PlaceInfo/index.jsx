@@ -8,7 +8,7 @@ export default function PlaceInfo({ data }) {
 
   const getAddress = (position) => {
     if (kakao === undefined) return;
-    if (!kakao?.maps.services.Geocoder) return;
+    if (!kakao.maps.services.Geocoder) return;
 
     const geoCoder = new kakao.maps.services.Geocoder();
     geoCoder.coord2Address(position.lng, position.lat, (result, status) => {

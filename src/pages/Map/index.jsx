@@ -76,8 +76,8 @@ export default function Map() {
   const getAddress = () => {
     if (!kakao) return;
     if (!position && !kakao.maps) return;
+    if (!kakao.maps.services) return;
     const geocoder = new kakao.maps.services.Geocoder();
-    if (!geocoder) return;
     geocoder.coord2Address(position.lng, position.lat, (result, status) => {
       if (status === kakao.maps.services.Status.OK)
         setAddress(result[0].address.address_name);
