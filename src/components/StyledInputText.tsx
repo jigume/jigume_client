@@ -1,19 +1,12 @@
 import React from 'react';
+import { StyledInputTextType } from './index.d';
 
-/**
- * Styled Input과 maxLength
- * @param {object} param
- * @param {string} param.value
- * @param {function} param.onChange
- * @param {string} param.placeholder
- * @returns
- */
 export default function StyledInputText({
   value,
   onChange,
   placeholder,
   height = 12,
-}) {
+}: StyledInputTextType) {
   return (
     <input
       type="text"

@@ -1,20 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-/**
- * Styled Next Button
- * @param {object} param
- * @param {string | undefined} param.content
- * @param {boolean} param.isDisabled
- * @param {function} param.onClick
- * @param {string} param.linkTo
- * @returns
- */
+import { NestButtnType } from '.';
+
 export default function NextButton({
   content = '다음으로 넘어가기',
   isDisabled,
   onClick,
   linkTo,
-}) {
+}: NestButtnType) {
   const navigate = useNavigate();
   return (
     <button

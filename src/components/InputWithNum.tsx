@@ -1,13 +1,11 @@
 import React from 'react';
-/**
- * Styled Input과 maxLength
- * @param {object} param
- * @param {string} param.value
- * @param {function} param.onChange
- * @param {number} param.maxLength
- * @returns
- */
-export default function InputWithNum({ value, onChange, maxLength }) {
+import { InputWithNumType } from '.';
+
+export default function InputWithNum({
+  value,
+  onChange,
+  maxLength,
+}: InputWithNumType) {
   return (
     <div className="relative block h-12 w-full">
       <input

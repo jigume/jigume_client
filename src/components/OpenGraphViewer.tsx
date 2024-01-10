@@ -1,6 +1,11 @@
 import React from 'react';
+import { OpenGraphViewerType } from '.';
 
-export default function OpenGraphViewer({ openGraph, link, imgSize = 'h-20' }) {
+export default function OpenGraphViewer({
+  openGraph,
+  link,
+  imgSize = 'h-20',
+}: OpenGraphViewerType) {
   return (
     <div className="flex w-full flex-row items-center gap-2 overflow-hidden rounded-md border">
       <div className={`aspect-square ${imgSize}`}>

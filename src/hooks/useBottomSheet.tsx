@@ -1,29 +1,44 @@
 import { useRef, useEffect, useState } from 'react';
 import { thresholds } from '../utils';
 
+interface MetricsInterface {
+  touchStart: {
+    sheetY: number;
+    touchY: number;
+  };
+  touchMove: {
+    prevTouchY: number;
+    movingDirection: 'none' | 'up' | 'down';
+  };
+  isContentAreaTouched: boolean;
+}
+
+const initMetrics: MetricsInterface = {
+  touchStart: {
+    sheetY: 0,
+    touchY: 0,
+  },
+  touchMove: {
+    prevTouchY: 0,
+    movingDirection: 'none',
+  },
+  isContentAreaTouched: false,
+};
+
 export default function useBottomSheet() {
   const [isOpen, setOpen] = useState(false);
   const [sheetLevel, setSheetLevel] = useState('min');
-  const sheet = useRef(null);
-  const handle = useRef(null);
-  const content = useRef(null);
-  const metrics = useRef({
-    touchStart: {
-      sheetY: 0,
-      touchY: 0,
-    },
-    touchMove: {
-      prevTouchY: 0,
-      movingDirection: 'none',
-    },
-    isContentAreaTouched: false,
-  });
+  const sheet = useRef<HTMLDivElement | null>(null);
+  const handle = useRef<HTMLDivElement | null>(null);
+  const content = useRef<HTMLDivElement | null>(null);
+  const metrics = useRef<MetricsInterface>(initMetrics);
 
   /**
    * sheet를 컨트롤할 수 있음
    * @param {'min'|'mid'|'max'} level string: min | mid | max
    */
   const handleSheet = (level = 'min') => {
+    if (!sheet.current) return;
     if (level === 'min') {
       sheet.current.style.setProperty('transform', 'translateY(0)');
       setSheetLevel('min');
@@ -33,14 +48,14 @@ export default function useBottomSheet() {
     if (level === 'mid') {
       sheet.current.style.setProperty(
         'transform',
-        `translateY(${thresholds.min - thresholds.mid}px)`,
+        `translateY(${thresholds.min - thresholds.mid}px)`
       );
       setSheetLevel('mid');
     }
     if (level === 'max') {
       sheet.current.style.setProperty(
         'transform',
-        `translateY(${thresholds.min - thresholds.max}px)`,
+        `translateY(${thresholds.min - thresholds.max}px)`
       );
       setSheetLevel('max');
     }
@@ -65,14 +80,14 @@ export default function useBottomSheet() {
       return false;
     };
 
-    const handleTouchStart = (e) => {
+    const handleTouchStart = (e: TouchEvent) => {
       const { touchStart } = metrics.current;
       if (!sheet.current) return;
       touchStart.sheetY = sheet.current.getBoundingClientRect().y;
       touchStart.touchY = e.touches[0].clientY;
     };
 
-    const handleTouchMove = (e) => {
+    const handleTouchMove = (e: TouchEvent) => {
       const { touchStart, touchMove } = metrics.current;
       const currentTouch = e.touches[0];
 
@@ -108,7 +123,7 @@ export default function useBottomSheet() {
         if (sheet.current) {
           sheet.current.style.setProperty(
             'transform',
-            `translateY(${nextSheetY - thresholds.max - x}px)`,
+            `translateY(${nextSheetY - thresholds.max - x}px)`
           ); // 바닥 만큼은 빼야쥬...
           setSheetLevel('max');
         }
@@ -121,6 +136,7 @@ export default function useBottomSheet() {
       document.body.style.overflowY = 'auto';
       const { touchMove } = metrics.current;
       if (!sheet.current) return;
+
       // Snap Animation
       const currentSheetY = sheet.current.getBoundingClientRect().y;
       const boundary = thresholds.mid * 0.4;
@@ -130,7 +146,7 @@ export default function useBottomSheet() {
         if (touchMove.movingDirection === 'up') {
           sheet.current.style.setProperty(
             'transform',
-            `translateY(${thresholds.min - thresholds.max}px)`,
+            `translateY(${thresholds.min - thresholds.max}px)`
           );
           setSheetLevel('max');
           setOpen(true);
@@ -143,7 +159,7 @@ export default function useBottomSheet() {
         ) {
           sheet.current.style.setProperty(
             'transform',
-            `translateY(${thresholds.min - thresholds.mid}px)`,
+            `translateY(${thresholds.min - thresholds.mid}px)`
           );
           setSheetLevel('mid');
           setOpen(true);
@@ -159,18 +175,10 @@ export default function useBottomSheet() {
       }
 
       // metrics 초기화.
-      metrics.current = {
-        touchStart: {
-          sheetY: 0,
-          touchY: 0,
-        },
-        touchMove: {
-          prevTouchY: 0,
-          movingDirection: 'none',
-        },
-        isContentAreaTouched: false,
-      };
+      metrics.current = initMetrics;
     };
+
+    if (!handle.current) return;
     handle.current.addEventListener('touchstart', handleTouchStart);
     handle.current.addEventListener('touchmove', handleTouchMove);
     handle.current.addEventListener('touchend', handleTouchEnd);
@@ -178,11 +186,10 @@ export default function useBottomSheet() {
 
   useEffect(() => {
     // content 영역을 터치하는 것을 기록합니다.
-    const handleTouchStart = () => {
-      if (!metrics.current) metrics.current.isContentAreaTouched = true;
-    };
-
-    content.current.addEventListener('touchstart', handleTouchStart);
+    if (!content.current || !metrics.current) return;
+    content.current.addEventListener('touchstart', () => {
+      metrics.current.isContentAreaTouched = true;
+    });
   }, []);
 
   useEffect(() => {

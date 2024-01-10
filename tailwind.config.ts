@@ -16,6 +16,5 @@ export default {
       sm: '444px',
     },
   },
-  // eslint-disable-next-line global-require
   plugins: [require('tailwind-scrollbar-hide')],
 } satisfies Config;

@@ -1,19 +1,15 @@
 import React from 'react';
+import { StyledTextareaType } from '.';
+
 /**
  * Styled Input과 maxLength
- * @param {object} param
- * @param {string} param.value
- * @param {function} param.onChange
- * @param {number} param.height
- * @param {string} param.placeholder
- * @returns
  */
 export default function StyledTextarea({
   value,
   onChange,
   height = undefined,
   placeholder,
-}) {
+}: StyledTextareaType) {
   return (
     <textarea
       style={{ height: height || 'auto' }}
