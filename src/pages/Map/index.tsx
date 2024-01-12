@@ -7,6 +7,9 @@ import {
 import { useRecoilState } from 'recoil';
 import { useQuery } from 'react-query';
 import { throttle } from 'lodash';
+import { Marker } from '@src/types/goods';
+import { UserType } from '@src/types/data';
+import { PositionType } from '@src/types/map';
 import { getCurrentLocation } from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
@@ -15,24 +18,26 @@ import { getGoodsList } from '../../api/goods';
 import useBottomSheet from '../../hooks/useBottomSheet';
 import { setClusterDom, setMarkerDom } from './utils';
 import CurrentPoint from './components/CurrentPoint';
+import { PreViewerMarker } from './index.d';
 
 export default function Map() {
   const { kakao } = window;
-  const mapRef = useRef(null);
-  const clusterRef = useRef(undefined);
+  const mapRef = useRef<kakao.maps.Map | null>(null);
+  const clusterRef = useRef<kakao.maps.MarkerClusterer | undefined>(undefined);
   const sheetProvider = useBottomSheet();
 
-  const [user, setUser] = useRecoilState(userState);
-  const [position, setPosition] = useState(undefined);
+  const [user, setUser] = useRecoilState<UserType>(userState);
+  const [position, setPosition] = useState<PositionType | undefined>(undefined);
   const [address, setAddress] = useState('-');
-  const [preViewer, setPreViewer] = useState(undefined);
-  const [markerList, setMarkerList] = useState(undefined);
+  const [preViewer, setPreViewer] = useState<PreViewerMarker | undefined>(
+    undefined
+  );
+  const [markerList, setMarkerList] = useState<Marker[] | undefined>(undefined);
 
-  const initMap = (list) => {
+  const initMap = (list: Marker[]) => {
     if (!list) return;
     // marker to array
     const markersArray = list?.map((item) => {
-      // markerList.findIndex((obj) => obj.goodsId === item.goodsId)
       return new kakao.maps.CustomOverlay({
         position: new kakao.maps.LatLng(item.address.mapY, item.address.mapX),
         content: setMarkerDom(item, sheetProvider, setPreViewer),
@@ -50,33 +55,43 @@ export default function Map() {
     () => getGoodsList(mapRef.current && mapRef.current.getBounds()),
     {
       onSuccess: (res) => {
-        initMap(res.data?.markerList);
-        if (!markerList && res !== 'retry') setMarkerList(res.data.markerList);
+        // init map list
+        if (res !== 'retry') {
+          initMap(res.markerList);
+          // 중복 방지
+          if (!markerList) setMarkerList(res.markerList);
+        }
       },
     }
   );
 
   const drawCluster = () => {
-    kakao.maps.event.addListener(clusterRef.current, 'clustered', (c) => {
-      c.forEach((item) => {
-        // eslint-disable-next-line no-underscore-dangle
-        const imageUrl = item._markers[0].cc.querySelector('.prodImg').src;
-        const clusterDom = setClusterDom(
-          imageUrl,
+    kakao.maps.event.addListener(
+      clusterRef.current as kakao.maps.event.EventTarget,
+      'clustered',
+      (c) => {
+        c.forEach((item) => {
           // eslint-disable-next-line no-underscore-dangle
-          item._markers.length
-        );
-        const clusterOberlay = item.getClusterMarker();
-        clusterOberlay.setContent(clusterDom);
-      });
-    });
+          const imageUrl = item._markers[0].cc.querySelector('.prodImg').src;
+          const clusterDom = setClusterDom(
+            imageUrl,
+            // eslint-disable-next-line no-underscore-dangle
+            item._markers.length
+          );
+          const clusterOberlay = item.getClusterMarker();
+          clusterOberlay.setContent(clusterDom);
+        });
+      }
+    );
   };
 
   // geocoder
   const getAddress = () => {
     if (!kakao) return;
-    if (!position && !kakao.maps) return;
+    if (!kakao.maps) return;
     if (!kakao.maps.services) return;
+    if (!position) return;
+
     const geocoder = new kakao.maps.services.Geocoder();
     geocoder.coord2Address(position.lng, position.lat, (result, status) => {
       if (status === kakao.maps.services.Status.OK)
@@ -99,7 +114,7 @@ export default function Map() {
   };
 
   // 맵 조작이 종료 되었을 때 실행하는 callback fn
-  const handleDragEndMap = (map) => {
+  const handleDragEndMap = (map: kakao.maps.Map) => {
     setPosition({
       lat: map.getCenter().getLat(),
       lng: map.getCenter().getLng(),
@@ -155,10 +170,13 @@ export default function Map() {
           level={3}
           onDragEnd={handleDragMap}
           onZoomChanged={handleDragEndMap}
-          onCreate={refetch}
+          onCreate={refetch as () => void}
         >
           {/* user current position */}
-          <CustomOverlayMap position={user.position} zIndex={50}>
+          <CustomOverlayMap
+            position={user.position as PositionType}
+            zIndex={50}
+          >
             <CurrentPoint />
           </CustomOverlayMap>
 

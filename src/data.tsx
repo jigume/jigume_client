@@ -1,17 +1,17 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { InitAuth, InitUser } from './types/data';
+import { AuthType, UserType } from './types/data';
 
 const { persistAtom } = recoilPersist();
 
-export const initAuth: InitAuth = {
+export const initAuth: AuthType = {
   role: 'GUEST',
   accessToken: '',
   refreshToken: '',
   expired: undefined,
 };
 
-export const initUser: InitUser = {
+export const initUser: UserType = {
   position: undefined,
   filter: [],
 };

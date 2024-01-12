@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["node", "vite/client"],
+    "types": ["node", "vite/client", "kakao.maps.d.ts"],
     "target": "ESNext", // es버젼을 사용하겠다.
     "useDefineForClassFields": true, // class field를 사용하겠다.
     "lib": ["DOM", "DOM.Iterable", "ESNext"], // 사용할 라이브러리를 설정한다.

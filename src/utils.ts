@@ -2,7 +2,7 @@ import { PositionType } from './types/map';
 import { RegisterDataType } from './types/register';
 
 export const getCurrentLocation = async (
-  setPosition: React.Dispatch<React.SetStateAction<PositionType>>
+  setPosition: React.Dispatch<React.SetStateAction<PositionType | undefined>>
 ) => {
   const response = navigator.geolocation.getCurrentPosition(
     async (position) => {
@@ -116,4 +116,21 @@ export const handleTextFieldColor = (
   if (valid)
     return 'focus:border-success focus:ring-success border-success ring-success';
   return 'border-red-600 ring-red-600 focus:border-red-600 focus:ring-red-600';
+};
+
+/**
+ * ((128.123, 36,123)) => [128.123, 36.123]
+ * +정렬값을 반환하기 때문에 index 순서로 값 사용 권장
+ */
+export const stringLatLng2Arr = (bound: kakao.maps.LatLngBounds) => {
+  const x = 100000000;
+
+  const srtBound = bound.toString().replaceAll('(', '').replaceAll(')', '');
+  const boundArr = srtBound
+    .split(',')
+    .map((item) => Math.round(Number(item) * x))
+    .map((item) => item / x)
+    .sort((pre, item) => pre - item);
+
+  return boundArr;
 };

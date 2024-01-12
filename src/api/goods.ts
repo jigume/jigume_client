@@ -1,60 +1,59 @@
 import axios from 'axios';
+import { PreViewerMarker } from '@src/pages/Map/index.d';
+import { stringLatLng2Arr } from '@src/utils';
+import { GoodsMarkerListType } from '@src/types/goods';
 import jigumeAxios from './axios';
 
-export const getGoodsList = (map) => {
-  if (!map) return 'retry';
+export const getGoodsList = async (
+  bound: kakao.maps.LatLngBounds | null
+): Promise<GoodsMarkerListType | 'retry'> => {
+  if (!bound) return 'retry';
 
-  return jigumeAxios().get('/api/goods/list', {
-    params: {
-      minX: map.ha,
-      maxX: map.oa,
-      minY: map.qa,
-      maxY: map.pa,
-    },
-  });
-};
+  const boundArr = stringLatLng2Arr(bound);
 
-export const getSheetGoods = (preViewer) => {
-  const token = JSON.parse(localStorage.getItem('recoil-persist')).jigumeAuth;
-  if (!token.accessToken) throw Error('accessToken is not exist');
-  if (!preViewer) return 'retry';
-
-  const response = axios({
-    url: `/api/goods/${preViewer.goodsId}/page`,
-    headers: {
-      Authorization: `Bearer ${token.accessToken}`,
-      withCredentials: true,
-      crossDomain: true,
-      credentials: 'include',
-    },
-  });
+  const response = await jigumeAxios()
+    .get('/api/goods/marker/list', {
+      params: {
+        maxX: boundArr[3],
+        minX: boundArr[2],
+        maxY: boundArr[1],
+        minY: boundArr[0],
+      },
+    })
+    .then((res) => res.data);
   return response;
 };
 
-export const getSheetList = (preViewer, bounds) => {
-  const token = JSON.parse(localStorage.getItem('recoil-persist')).jigumeAuth;
-  if (!token.accessToken) throw Error('accessToken is not exist');
-  if (!preViewer && !bounds) return 'retry';
+export const getSheetGoods = async (preViewer: PreViewerMarker) => {
+  if (!preViewer) return 'retry';
 
-  const response = axios({
-    url: `/api/goods/list`,
-    params: {
-      minX: bounds.ha,
-      maxX: bounds.oa,
-      minY: bounds.qa,
-      maxY: bounds.pa,
-      pageable: {
-        page: 0,
-        size: 1,
+  const response = await jigumeAxios().get(`/api/goods/${preViewer.goodsId}`);
+
+  return response;
+};
+
+export const getSheetList = (
+  preViewer: PreViewerMarker,
+  bound: kakao.maps.LatLngBounds
+) => {
+  if (!preViewer && !bound) return 'retry';
+
+  const boundArr = stringLatLng2Arr(bound);
+
+  const response = jigumeAxios()
+    .get('/api/goods/list', {
+      params: {
+        maxX: boundArr[3],
+        minX: boundArr[2],
+        maxY: boundArr[1],
+        minY: boundArr[0],
+        pageable: {
+          page: 0,
+          size: 1,
+        },
       },
-    },
-    headers: {
-      Authorization: `Bearer ${token.accessToken}`,
-      withCredentials: true,
-      crossDomain: true,
-      credentials: 'include',
-    },
-  }).then((res) => console.log(res));
+    })
+    .then((res) => console.log(res));
 
   return response;
 };

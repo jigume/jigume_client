@@ -2,6 +2,7 @@ import axios from 'axios';
 import img0 from '../asset/images/profiles/initProfile0.png';
 import img1 from '../asset/images/profiles/initProfile1.png';
 import img2 from '../asset/images/profiles/initProfile2.png';
+import jigumeAxios from './axios';
 
 const initProfiles = [img0, img1, img2];
 
@@ -15,14 +16,10 @@ const initProfiles = [img0, img1, img2];
  * @param {string} param.image Image URL
  */
 export const setNewUser = async (param) => {
-  const token = JSON.parse(localStorage.getItem('recoil-persist')).jigumeAuth;
-  if (!token.accessToken) throw Error('accessToken is not exist');
-
   const randomIdx = Math.round(Math.random() * 2);
 
-  const response = await axios({
+  const response = await jigumeAxios().post('/api/member/info', {
     method: 'post',
-    url: '/api/member/info',
     data: {
       nickname: param.nickname,
       mapX: param.position.lng,
@@ -85,7 +82,7 @@ export const codeProvide = async (code, domain) => {
   if (!code) throw Error('인가코드가 옳바르지 않습니다.');
 
   const response = await axios.post(
-    `/api/member/login?login-provider=${domain}&authorization-code=${code}`,
+    `/api/member/login?login-provider=${domain}&authorization-code=${code}`
   );
 
   return response;
@@ -126,7 +123,7 @@ export const updateProfile = async (param) => {
     [JSON.stringify({ nickname: param.nickname, profileImgUrl: param.image })],
     {
       type: 'application/json',
-    },
+    }
   );
 
   const formData = new FormData();

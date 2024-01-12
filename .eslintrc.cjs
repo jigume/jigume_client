@@ -24,6 +24,7 @@ module.exports = {
     'tailwind.config.ts',
     'postcss.config.js',
     '.eslintrc.cjs',
+    '*d.ts',
   ],
   plugins: ['prettier', '@typescript-eslint', 'import'],
   rules: {
