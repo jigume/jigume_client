@@ -53,10 +53,6 @@ export const getSheetList = async ({
         minX: boundArr[2],
         maxY: boundArr[1],
         minY: boundArr[0],
-        pageable: {
-          page: 0,
-          size: 1,
-        },
       },
     })
     .then((res) => res.data);

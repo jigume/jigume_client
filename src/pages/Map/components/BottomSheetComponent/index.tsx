@@ -36,11 +36,10 @@ export default function BottomSheetComponent({
   const { mutate: allMutate } = useMutation({
     mutationKey: 'getAllList',
     mutationFn: getSheetList,
-    onMutate: () => {
-      console.log(preViewer);
-    },
     onSuccess: (res) => {
+      console.log(res);
       if (res === 'retry') allMutate({ bounds });
+      // else setGoodsArr(res)
     },
   });
 
