@@ -8,7 +8,11 @@ export default function NotMatch() {
     <div className="container mx-auto max-w-screen-sm px-0">
       <div className="flex h-[100svh] flex-col justify-evenly px-4">
         <div className="text-center text-sm">
-          <img src={logo} className="mx-auto w-full max-w-[210px] py-4" />
+          <img
+            src={logo}
+            className="mx-auto w-full max-w-[210px] py-4"
+            alt="지구미"
+          />
           <p>옳바른 접근이 아닙니다.</p>
         </div>
         <div

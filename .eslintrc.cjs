@@ -29,7 +29,6 @@ module.exports = {
   plugins: ['prettier', '@typescript-eslint', 'import'],
   rules: {
     'comma-dangle': 0,
-    'no-unused-vars': 1,
     'tailwindcss/no-custom-classname': 0,
     'tailwindcss/enforces-negative-arbitrary-values': 0,
     'prettier/prettier': [
@@ -41,12 +40,11 @@ module.exports = {
     'no-new': 0,
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
-    'jsx-a11y/alt-text': 0,
     'react/button-has-type': 0,
     'jsx-a11y/click-events-have-key-events': 0,
     'jsx-a11y/no-static-element-interactions': 0,
     'jsx-a11y/interactive-supports-focus': 0,
-    'react/no-array-index-key': 0,
+    'no-underscore-dangle': 0,
     'no-unused-vars': 1,
   },
 };

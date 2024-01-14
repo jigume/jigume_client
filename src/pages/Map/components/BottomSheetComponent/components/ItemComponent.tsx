@@ -1,6 +1,7 @@
 import React from 'react';
 import Avatar from 'boring-avatars';
 import { useNavigate } from 'react-router-dom';
+import { GoodsPageDTO } from '@src/types/goods';
 import {
   primaryBlue,
   primaryJade,
@@ -8,7 +9,13 @@ import {
   primaryYello,
 } from '../../../../../common';
 
-export default function ItemComponent({ item, index }) {
+export default function ItemComponent({
+  item,
+  index,
+}: {
+  item?: GoodsPageDTO;
+  index?: number | undefined;
+}) {
   const navigate = useNavigate();
 
   return (
@@ -24,6 +31,7 @@ export default function ItemComponent({ item, index }) {
         <img
           src={item.goodsImagesList[0].goodsImgUrl}
           className="border-gray50 h-32 w-32 flex-none rounded-lg border bg-gray-100"
+          alt="상품 이미지"
         />
       )}
       <div className="flex flex-col truncate pt-1">
@@ -99,3 +107,9 @@ export default function ItemComponent({ item, index }) {
     </div>
   );
 }
+
+// 기본 값 정의
+ItemComponent.defaultProps = {
+  item: undefined,
+  index: undefined,
+};

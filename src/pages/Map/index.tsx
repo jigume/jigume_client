@@ -22,8 +22,8 @@ import { PreViewerMarker } from './index.d';
 
 export default function Map() {
   const { kakao } = window;
-  const mapRef = useRef<kakao.maps.Map | null>(null);
-  const clusterRef = useRef<kakao.maps.MarkerClusterer | undefined>(undefined);
+  const mapRef = useRef<kakao.maps.Map>(null);
+  const clusterRef = useRef<kakao.maps.MarkerClusterer>(null);
   const sheetProvider = useBottomSheet();
 
   const [user, setUser] = useRecoilState<UserType>(userState);
@@ -65,24 +65,29 @@ export default function Map() {
     }
   );
 
-  const drawCluster = () => {
-    kakao.maps.event.addListener(
-      clusterRef.current as kakao.maps.event.EventTarget,
-      'clustered',
-      (c) => {
-        c.forEach((item) => {
-          // eslint-disable-next-line no-underscore-dangle
-          const imageUrl = item._markers[0].cc.querySelector('.prodImg').src;
-          const clusterDom = setClusterDom(
-            imageUrl,
+  // 클러스터 완료되었을 때 데이터를 읽어 DOM으로 변환
+  const drawCluster = (
+    target: kakao.maps.MarkerClusterer,
+    clusters: kakao.maps.Cluster[]
+  ) => {
+    if (clusterRef.current)
+      kakao.maps.event.addListener(
+        clusterRef.current,
+        'clustered',
+        (cluster: kakao.maps.Cluster[]) => {
+          cluster.forEach((item: any) => {
             // eslint-disable-next-line no-underscore-dangle
-            item._markers.length
-          );
-          const clusterOberlay = item.getClusterMarker();
-          clusterOberlay.setContent(clusterDom);
-        });
-      }
-    );
+            const imageUrl = item._markers[0].cc.querySelector('.prodImg').src;
+            const clusterDom = setClusterDom(
+              imageUrl,
+              // eslint-disable-next-line no-underscore-dangle
+              item._markers.length
+            );
+            const clusterOberlay = item.getClusterMarker();
+            clusterOberlay.setContent(clusterDom);
+          });
+        }
+      );
   };
 
   // geocoder
@@ -129,10 +134,14 @@ export default function Map() {
     [position?.lat.toFixed(1), position?.lng.toFixed(1)]
   );
 
-  const onClusterclick = (_, cluster) => {
-    mapRef.current.setLevel(mapRef.current.getLevel() - 1, {
-      anchor: cluster.getCenter(),
-    });
+  const onClusterclick = (
+    _: kakao.maps.MarkerClusterer,
+    cluster: kakao.maps.Cluster
+  ) => {
+    if (mapRef.current)
+      mapRef.current.setLevel(mapRef.current.getLevel() - 1, {
+        anchor: cluster.getCenter(),
+      });
   };
 
   // 사용자 현재 위치 가져오기

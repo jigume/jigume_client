@@ -1,3 +1,4 @@
+import { CategoryType } from './index.d';
 import Beauty from '../../../../asset/icon/category/cat_beauty.svg';
 import Child from '../../../../asset/icon/category/cat_child.svg';
 import Cloth from '../../../../asset/icon/category/cat_cloth.svg';
@@ -9,7 +10,7 @@ import Health from '../../../../asset/icon/category/cat_health.svg';
 import Kitchen from '../../../../asset/icon/category/cat_kitchen.svg';
 import Trip from '../../../../asset/icon/category/cat_trip.svg';
 
-const category = [
+const category: CategoryType[] = [
   { idx: 4, icon: Cloth, name: '패션의류/잡화' },
   { idx: 2, icon: Beauty, name: '뷰티' },
   { idx: 3, icon: Child, name: '출산/유아동' },

@@ -1,16 +1,18 @@
-import axios from 'axios';
 import { PreViewerMarker } from '@src/pages/Map/index.d';
 import { stringLatLng2Arr } from '@src/utils';
-import { GoodsMarkerListType } from '@src/types/goods';
+import {
+  GoodsDetailDTO,
+  GoodsListDTO,
+  GoodsMarkerListType,
+} from '@src/types/goods';
 import jigumeAxios from './axios';
 
 export const getGoodsList = async (
-  bound: kakao.maps.LatLngBounds | null
+  bounds: kakao.maps.LatLngBounds | null
 ): Promise<GoodsMarkerListType | 'retry'> => {
-  if (!bound) return 'retry';
+  if (!bounds) return 'retry';
 
-  const boundArr = stringLatLng2Arr(bound);
-
+  const boundArr = stringLatLng2Arr(bounds);
   const response = await jigumeAxios()
     .get('/api/goods/marker/list', {
       params: {
@@ -24,23 +26,27 @@ export const getGoodsList = async (
   return response;
 };
 
-export const getSheetGoods = async (preViewer: PreViewerMarker) => {
+export const getSheetGoods = async (
+  preViewer: PreViewerMarker
+): Promise<GoodsDetailDTO | 'retry'> => {
   if (!preViewer) return 'retry';
 
-  const response = await jigumeAxios().get(`/api/goods/${preViewer.goodsId}`);
+  const response = await jigumeAxios()
+    .get(`/api/goods/${preViewer.goodsId}/page`)
+    .then((res) => res.data);
 
   return response;
 };
 
-export const getSheetList = (
-  preViewer: PreViewerMarker,
-  bound: kakao.maps.LatLngBounds
-) => {
-  if (!preViewer && !bound) return 'retry';
+export const getSheetList = async ({
+  bounds,
+}: {
+  bounds: kakao.maps.LatLngBounds | undefined;
+}): Promise<GoodsListDTO | 'retry'> => {
+  if (!bounds) return 'retry';
 
-  const boundArr = stringLatLng2Arr(bound);
-
-  const response = jigumeAxios()
+  const boundArr = stringLatLng2Arr(bounds);
+  const response = await jigumeAxios()
     .get('/api/goods/list', {
       params: {
         maxX: boundArr[3],
@@ -53,7 +59,7 @@ export const getSheetList = (
         },
       },
     })
-    .then((res) => console.log(res));
+    .then((res) => res.data);
 
   return response;
 };

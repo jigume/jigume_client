@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
+import { SheetLevelType } from '@src/pages/Map/components/BottomSheetComponent/index.d';
 import { thresholds } from '../utils';
 
 interface MetricsInterface {
@@ -7,7 +8,7 @@ interface MetricsInterface {
     touchY: number;
   };
   touchMove: {
-    prevTouchY: number;
+    prevTouchY?: number;
     movingDirection: 'none' | 'up' | 'down';
   };
   isContentAreaTouched: boolean;
@@ -27,17 +28,16 @@ const initMetrics: MetricsInterface = {
 
 export default function useBottomSheet() {
   const [isOpen, setOpen] = useState(false);
-  const [sheetLevel, setSheetLevel] = useState('min');
-  const sheet = useRef<HTMLDivElement | null>(null);
-  const handle = useRef<HTMLDivElement | null>(null);
-  const content = useRef<HTMLDivElement | null>(null);
+  const [sheetLevel, setSheetLevel] = useState<SheetLevelType>('min');
+  const sheet = useRef<HTMLDivElement>(null);
+  const handle = useRef<HTMLDivElement>(null);
+  const content = useRef<HTMLDivElement>(null);
   const metrics = useRef<MetricsInterface>(initMetrics);
 
   /**
    * sheet를 컨트롤할 수 있음
-   * @param {'min'|'mid'|'max'} level string: min | mid | max
    */
-  const handleSheet = (level = 'min') => {
+  const handleSheet = (level: SheetLevelType = 'min') => {
     if (!sheet.current) return;
     if (level === 'min') {
       sheet.current.style.setProperty('transform', 'translateY(0)');
@@ -81,8 +81,8 @@ export default function useBottomSheet() {
     };
 
     const handleTouchStart = (e: TouchEvent) => {
-      const { touchStart } = metrics.current;
       if (!sheet.current) return;
+      const { touchStart } = metrics.current;
       touchStart.sheetY = sheet.current.getBoundingClientRect().y;
       touchStart.touchY = e.touches[0].clientY;
     };
@@ -119,23 +119,21 @@ export default function useBottomSheet() {
           nextSheetY = thresholds.max;
           x = 0;
         }
-
-        if (sheet.current) {
+        if (sheet.current)
           sheet.current.style.setProperty(
             'transform',
             `translateY(${nextSheetY - thresholds.max - x}px)`
-          ); // 바닥 만큼은 빼야쥬...
-          setSheetLevel('max');
-        }
+          ); // -바닥높이
+        setSheetLevel('max');
       } else {
         document.body.style.overflowY = 'hidden';
       }
     };
 
     const handleTouchEnd = () => {
+      if (!sheet.current) return;
       document.body.style.overflowY = 'auto';
       const { touchMove } = metrics.current;
-      if (!sheet.current) return;
 
       // Snap Animation
       const currentSheetY = sheet.current.getBoundingClientRect().y;
@@ -163,6 +161,8 @@ export default function useBottomSheet() {
           );
           setSheetLevel('mid');
           setOpen(true);
+
+          // mid 높이 감지 시 return
           return;
         }
 
@@ -177,19 +177,19 @@ export default function useBottomSheet() {
       // metrics 초기화.
       metrics.current = initMetrics;
     };
-
-    if (!handle.current) return;
-    handle.current.addEventListener('touchstart', handleTouchStart);
-    handle.current.addEventListener('touchmove', handleTouchMove);
-    handle.current.addEventListener('touchend', handleTouchEnd);
+    if (handle.current) {
+      handle.current.addEventListener('touchstart', handleTouchStart);
+      handle.current.addEventListener('touchmove', handleTouchMove);
+      handle.current.addEventListener('touchend', handleTouchEnd);
+    }
   }, []);
 
   useEffect(() => {
     // content 영역을 터치하는 것을 기록합니다.
-    if (!content.current || !metrics.current) return;
-    content.current.addEventListener('touchstart', () => {
-      metrics.current.isContentAreaTouched = true;
-    });
+    if (content.current)
+      content.current.addEventListener('touchstart', () => {
+        metrics.current.isContentAreaTouched = true;
+      });
   }, []);
 
   useEffect(() => {
@@ -198,6 +198,8 @@ export default function useBottomSheet() {
       handleSheet('min');
     });
   }, []);
+
+  useEffect(() => {}, [metrics.current]);
 
   return { handle, sheet, content, isOpen, sheetLevel, handleSheet };
 }
