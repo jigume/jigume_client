@@ -1,3 +1,6 @@
+import { OpenGraph } from '@src/components';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { OpenGraphIO } from 'opengraph-io';
 
 const options = {
@@ -9,22 +12,11 @@ const options = {
 
 const ogClient = new OpenGraphIO(options);
 
-/**
- *
- * @param {string} url
- * @returns {{
- *   description: string
- *   title: string
- *   image: {url: string, }
- *   type: string
- *   url: string
- * }}
- */
-const getOpenGraph = async (url) => {
-  if (url === '' || !url) return null;
+const getOpenGraph = async (url: string): Promise<OpenGraph | undefined> => {
+  if (url === '' || !url) return undefined;
   const response = await ogClient
     .getSiteInfo(url)
-    .then((data) => data.openGraph);
+    .then((res: any) => res.openGraph);
 
   return response;
 };

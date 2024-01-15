@@ -3,17 +3,23 @@ type GoodsData = {
   boardContent: string;
   introduction: string;
   link: string;
-  goodPrice: number | string;
+  goodsPrice: number | string;
   deliveryFee: number | string;
   mapX?: number;
   mapY?: number;
   goodsLimitCount: number;
   goodsLimitTime: Date;
-  categoryName: number;
+  categoryId: number;
 };
 
 export type RegisterDataType = {
-  image: { name: string };
+  image: string[];
+  imageInput: File[];
   address: string;
   goodsDto: GoodsData;
+};
+
+export type RegisterContextType = {
+  data: RegisterDataType;
+  setData: React.Dispatch<React.SetStateAction<RegisterDataType>>;
 };

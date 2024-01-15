@@ -1,9 +1,6 @@
 import React from 'react';
 import { StyledTextareaType } from '.';
 
-/**
- * Styled Input과 maxLength
- */
 export default function StyledTextarea({
   value,
   onChange,

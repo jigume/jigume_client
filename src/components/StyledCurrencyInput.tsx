@@ -4,7 +4,7 @@ import { StyledCurrencyInputType } from '.';
 
 export default function StyledCurrencyInput({
   value,
-  onChange,
+  onValueChange,
 }: StyledCurrencyInputType) {
   return (
     <CurrencyInput
@@ -13,7 +13,7 @@ export default function StyledCurrencyInput({
       value={value}
       defaultValue={0}
       decimalsLimit={2}
-      onValueChange={onChange}
+      onValueChange={onValueChange}
     />
   );
 }

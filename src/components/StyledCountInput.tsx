@@ -2,16 +2,9 @@ import React from 'react';
 import CurrencyInput from 'react-currency-input-field';
 import { StyledCurrencyInputType } from '.';
 
-/**
- * Styled Currency Input
- * @param {object} param
- * @param {string} param.value
- * @param {function} param.onChange
- * @returns
- */
 export default function StyledCountInput({
   value,
-  onChange,
+  onValueChange,
 }: StyledCurrencyInputType) {
   return (
     <CurrencyInput
@@ -20,7 +13,7 @@ export default function StyledCountInput({
       value={value}
       defaultValue={0}
       decimalsLimit={2}
-      onValueChange={onChange}
+      onValueChange={onValueChange}
     />
   );
 }

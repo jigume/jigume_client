@@ -13,6 +13,7 @@ export default function OpenGraphViewer({
           <img
             className="h-full w-full object-cover"
             src={openGraph?.image?.url}
+            alt="meta 이미지"
           />
         ) : (
           <div className="h-full w-full animate-pulse bg-gray-300 object-cover" />

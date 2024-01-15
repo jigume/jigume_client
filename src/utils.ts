@@ -53,18 +53,18 @@ export const vaildRegister = (link: string, data: RegisterDataType) => {
       break;
 
     case '/register/link':
-      if (data.image.name === '' || data.goodsDto.boardContent === '')
+      if (data.image.length === 0 || data.goodsDto.boardContent === '')
         return '/register/detail';
       break;
 
     case '/register/cost':
-      if (data.goodsDto.link === '' || data.goodsDto.categoryName === -1)
+      if (data.goodsDto.link === '' || data.goodsDto.categoryId === -1)
         return '/register/link';
       break;
 
     case '/register/deadline':
       if (
-        Number(data.goodsDto.goodPrice) === 0 ||
+        Number(data.goodsDto.goodsPrice) === 0 ||
         Number(data.goodsDto.deliveryFee === 0)
       )
         return '/register/cost';

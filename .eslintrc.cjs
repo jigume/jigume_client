@@ -25,6 +25,7 @@ module.exports = {
     'postcss.config.js',
     '.eslintrc.cjs',
     '*d.ts',
+    'server.js',
   ],
   plugins: ['prettier', '@typescript-eslint', 'import'],
   rules: {
@@ -46,5 +47,12 @@ module.exports = {
     'jsx-a11y/interactive-supports-focus': 0,
     'no-underscore-dangle': 0,
     'no-unused-vars': 1,
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
   },
 };

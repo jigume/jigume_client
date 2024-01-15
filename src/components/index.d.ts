@@ -11,19 +11,19 @@ export type StyledInputTextType = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
-  height: numger;
+  height?: numger;
 };
 
 export type StyledCurrencyInputType = {
-  value: string;
-  onChange: (
+  value: string | number;
+  onValueChange?: (
     value: string | undefined,
-    name?: string,
-    values?: CurrencyInputOnChangeValues
+    name?: string | undefined,
+    values?: CurrencyInputOnChangeValues | undefined
   ) => void;
 };
 
-type OpenGraph = {
+export type OpenGraph = {
   description: string;
   title: string;
   image: { url: string };
@@ -32,16 +32,16 @@ type OpenGraph = {
 };
 
 export type OpenGraphViewerType = {
-  openGraph: OpenGraph;
+  openGraph?: OpenGraph;
   link: string;
-  imgSize: string;
+  imgSize?: string;
 };
 
-export type NestButtnType = {
-  content: string;
-  isDisabled: boolean;
-  onClick: () => void;
-  linkTo: string;
+export type NextButtnType = {
+  content?: string;
+  isDisabled?: boolean;
+  onClick?: () => void;
+  linkTo?: string;
 };
 
 export type InputWithNumType = {
