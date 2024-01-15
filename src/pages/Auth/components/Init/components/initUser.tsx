@@ -5,12 +5,13 @@ import NextButton from '../../../../../components/NextButton';
 import CircularProgress from './circularProgress';
 import { checkNickname } from '../../../../../api/user';
 import { handleTextFieldColor, validNickname } from '../../../../../utils';
+import { InitContextType } from '.';
 
 export default function InitUser() {
   const [valid, setValid] = useState(false);
-  const { initUser, setInitUser } = useOutletContext();
+  const { initUser, setInitUser } = useOutletContext<InitContextType>();
 
-  const handleNickname = (text) => {
+  const handleNickname = (text: string) => {
     setValid(validNickname(text));
     setInitUser((prev) => ({ ...prev, nickname: text }));
   };
@@ -22,7 +23,7 @@ export default function InitUser() {
       onSuccess: (res) => {
         console.log(res);
       },
-    },
+    }
   );
 
   useEffect(() => {
@@ -41,12 +42,12 @@ export default function InitUser() {
             maxLength={20}
             className={`block h-12 w-full rounded-md border bg-white p-3 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1 ${handleTextFieldColor(
               initUser.nickname,
-              valid,
+              valid
             )}}`}
           />
           <button
             className="flex min-w-[6rem] items-center justify-center rounded-lg bg-success p-3 text-center text-white transition-all duration-300 ease-in-out active:scale-[99%] disabled:bg-gray-300 active:disabled:scale-100"
-            onClick={mutate}
+            onClick={mutate as () => void}
           >
             {isLoading ? <CircularProgress /> : '중복 확인'}
           </button>

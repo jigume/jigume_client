@@ -109,7 +109,7 @@ export const validNickname = (text: string) => {
 
 export const handleTextFieldColor = (
   nickname: string,
-  valid: string
+  valid: boolean
 ): string => {
   if (nickname.length === 0)
     return 'focus:border-slate-300 focus:ring-slate-300 border-slate-300 ring-slate-300';

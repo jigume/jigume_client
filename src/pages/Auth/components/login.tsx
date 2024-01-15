@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRecoilState } from 'recoil';
 import logo from '../../../asset/images/login/login_logo.png';
 import kakaoImg from '../../../asset/images/login/kakao_login.png';
@@ -36,7 +36,7 @@ export default function Login() {
     <div className="container mx-auto max-w-screen-sm px-0">
       <div className="flex h-[100svh] flex-col justify-evenly px-4">
         <div className="flex flex-col gap-5">
-          <img src={logo} className="mx-auto max-w-[210px]" />
+          <img src={logo} className="mx-auto max-w-[210px]" alt="JIGUME" />
           <p className="text-center font-light">
             한 명만 모여도 추가 배송비가 내려가는,
             <br /> 제주도만의 지도 공동구매 플랫폼
@@ -45,10 +45,18 @@ export default function Login() {
 
         <div className="flex flex-col gap-3">
           <div role="button" onClick={handleNaverLogin}>
-            <img src={naverImg} className="mx-auto w-full active:opacity-80" />
+            <img
+              src={naverImg}
+              className="mx-auto w-full active:opacity-80"
+              alt="네이버 로그인"
+            />
           </div>
           <div role="button" onClick={handleKakaoLogin}>
-            <img src={kakaoImg} className="mx-auto w-full active:opacity-80" />
+            <img
+              src={kakaoImg}
+              className="mx-auto w-full active:opacity-80"
+              alt="카카오 로그인"
+            />
           </div>
         </div>
       </div>

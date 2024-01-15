@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-import DaumPostcodeEmbed from 'react-daum-postcode';
+import DaumPostcodeEmbed, { Address } from 'react-daum-postcode';
 import NextButton from '../../../../../components/NextButton';
 import CloseIcon from '../../../../../asset/icon/CloseIcon.svg';
+import { InitContextType } from '.';
 
 export default function InitAddress() {
-  const { initUser, setInitUser } = useOutletContext();
+  const { initUser, setInitUser } = useOutletContext<InitContextType>();
   const [address, setAddress] = useState('');
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const { kakao } = window;
 
-  const handleComplete = (param) => {
+  const handleComplete = (param: Address) => {
     const geocoder = new kakao.maps.services.Geocoder();
     let fullAddress = param.address;
     let extraAddress = '';
@@ -32,7 +33,7 @@ export default function InitAddress() {
       if (status === kakao.maps.services.Status.OK) {
         setInitUser((prev) => ({
           ...prev,
-          position: { lat: result[0].x, lng: result[0].y },
+          position: { lat: Number(result[0].x), lng: Number(result[0].y) },
         }));
         setAddress(fullAddress);
       }
@@ -57,7 +58,6 @@ export default function InitAddress() {
           className="w-full rounded-md border border-slate-300 p-3  text-right text-sm font-medium focus:border-success focus:outline-none focus:ring-1 focus:ring-success disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none"
           type="button"
           onClick={() => setOpen((prev) => !prev)}
-          placeholder="서울 성동구 왕십리로2길 20"
           value={address}
         >
           {address || (
@@ -68,7 +68,11 @@ export default function InitAddress() {
           <div className="fixed inset-0 z-50 flex h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none ">
             <div className="fixed left-0 top-0 z-50 h-[100svh] w-screen bg-white">
               <div onClick={() => setOpen(false)}>
-                <img src={CloseIcon} className="ml-auto mr-2 mt-2 w-10 p-2" />
+                <img
+                  src={CloseIcon}
+                  className="ml-auto mr-2 mt-2 w-10 p-2"
+                  alt="닫기"
+                />
               </div>
             </div>
             <DaumPostcodeEmbed

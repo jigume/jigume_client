@@ -3,13 +3,14 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useRecoilState } from 'recoil';
 import { add } from 'date-fns';
+import { UserType } from '@src/types/data';
 import Loading from '../Map/components/Loading';
 import { authState, userState } from '../../data';
 import { codeProvide } from '../../api/user';
 
 export default function Auth() {
   const navigate = useNavigate();
-  const [, setAuth] = useRecoilState(authState);
+  const [, setAuth] = useRecoilState<UserType>(authState);
   const [user] = useRecoilState(userState);
   const [searchParams] = useSearchParams();
   const code = searchParams.get('code');
@@ -28,7 +29,6 @@ export default function Auth() {
         navigate('/auth/init');
         return;
       }
-      console.log(data);
 
       setAuth((prev) => ({
         ...prev,
@@ -39,7 +39,7 @@ export default function Auth() {
       }));
       navigate('/');
     },
-    onError: (err) => Error(err),
+    onError: (err: string) => Error(err),
     // onSettled: () => navigate('/'),
   });
 

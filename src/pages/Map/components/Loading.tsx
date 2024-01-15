@@ -1,8 +1,15 @@
 import React from 'react';
 
-export default function Loading() {
+export default function Loading({
+  onClick,
+}: {
+  onClick?: React.MouseEventHandler<HTMLDivElement> | undefined;
+}) {
   return (
-    <div className="flex h-[100svh] w-full items-center justify-center bg-white pb-24">
+    <div
+      className="flex h-[100svh] w-full items-center justify-center bg-white pb-24"
+      onClick={onClick}
+    >
       <div role="status">
         <svg
           className="h-8 w-8 animate-spin fill-gray-900 text-gray-200"
@@ -24,3 +31,8 @@ export default function Loading() {
     </div>
   );
 }
+
+// 기본 값 정의
+Loading.defaultProps = {
+  onClick: undefined,
+};
