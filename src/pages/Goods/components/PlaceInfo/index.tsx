@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
+import { GoodsPageDTO } from '@src/types/goods';
+import { PositionType } from '@src/types/map';
 import IntroStaticMap from './components/IntroStaticMap';
 
-export default function PlaceInfo({ data }) {
+export default function PlaceInfo({
+  data,
+}: {
+  data: GoodsPageDTO | undefined;
+}) {
   const { kakao } = window;
   const [address, setAddress] = useState('-');
 
-  const getAddress = (position) => {
+  const getAddress = (position: PositionType) => {
     if (kakao === undefined) return;
     if (!kakao.maps.services.Geocoder) return;
 
@@ -19,8 +25,12 @@ export default function PlaceInfo({ data }) {
 
   useQuery(
     'revGeoCoder',
-    () => getAddress({ lat: data && data.mapY, lng: data && data.mapX }),
-    { retryDelay: 500, retry: 3 },
+    () =>
+      getAddress({
+        lat: data && data.address.mapY,
+        lng: data && data.address.mapX,
+      }),
+    { retryDelay: 500, retry: 3 }
   );
 
   return (

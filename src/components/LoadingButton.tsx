@@ -5,6 +5,7 @@ export default function LoadingButton() {
     <button
       disabled
       className="mb-6 h-12 w-full rounded-lg bg-success p-3 text-center text-white"
+      aria-label="Loading"
     >
       <svg
         className="mx-auto h-6 w-6 animate-spin fill-white dark:text-white/50"

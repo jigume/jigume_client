@@ -76,11 +76,10 @@ export default function Map() {
         'clustered',
         (cluster: kakao.maps.Cluster[]) => {
           cluster.forEach((item: any) => {
-            // eslint-disable-next-line no-underscore-dangle
             const imageUrl = item._markers[0].cc.querySelector('.prodImg').src;
             const clusterDom = setClusterDom(
               imageUrl,
-              // eslint-disable-next-line no-underscore-dangle
+
               item._markers.length
             );
             const clusterOberlay = item.getClusterMarker();

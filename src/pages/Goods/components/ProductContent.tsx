@@ -1,6 +1,11 @@
+import { GoodsPageDTO } from '@src/types/goods';
 import React from 'react';
 
-export default function ProductContent({ data }) {
+export default function ProductContent({
+  data,
+}: {
+  data: GoodsPageDTO | undefined;
+}) {
   return (
     <div
       className={`flex flex-col gap-2 border-b border-gray-300 py-8 ${

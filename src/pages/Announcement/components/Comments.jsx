@@ -27,8 +27,9 @@ export default function Comments() {
             <button
               className="flex h-[36px] w-[37px] items-center justify-center rounded-[8px] bg-gray-100"
               type="submit"
+              aria-label="제출"
             >
-              <img src={SendIcon} />
+              <img src={SendIcon} alt="전송" />
             </button>
           </div>
         </form>

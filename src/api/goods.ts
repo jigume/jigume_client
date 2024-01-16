@@ -13,7 +13,7 @@ export const getGoodsList = async (
   if (!bounds) return 'retry';
 
   const boundArr = stringLatLng2Arr(bounds);
-  const response = await jigumeAxios()
+  const response = await jigumeAxios
     .get('/api/goods/marker/list', {
       params: {
         maxX: boundArr[3],
@@ -31,7 +31,7 @@ export const getSheetGoods = async (
 ): Promise<GoodsDetailDTO | 'retry'> => {
   if (!preViewer) return 'retry';
 
-  const response = await jigumeAxios()
+  const response = await jigumeAxios
     .get(`/api/goods/${preViewer.goodsId}/page`)
     .then((res) => res.data);
 
@@ -46,7 +46,7 @@ export const getSheetList = async ({
   if (!bounds) return 'retry';
 
   const boundArr = stringLatLng2Arr(bounds);
-  const response = await jigumeAxios()
+  const response = await jigumeAxios
     .get('/api/goods/list', {
       params: {
         maxX: boundArr[3],

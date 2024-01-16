@@ -15,7 +15,7 @@ const initProfiles = [img0, img1, img2];
 export const setNewUser = async (param: InitUserType) => {
   const randomIdx = Math.round(Math.random() * 2);
   if (!param.position) return undefined;
-  const response = await jigumeAxios().post('/api/member/info', {
+  const response = await jigumeAxios.post('/api/member/info', {
     method: 'post',
     data: {
       nickname: param.nickname,
@@ -90,7 +90,7 @@ export const kakaoLogout = async () => {
 };
 
 export const checkNickname = async (nickname: string) => {
-  const response = await jigumeAxios().get('/api/member/nickname', {
+  const response = await jigumeAxios.get('/api/member/nickname', {
     params: {
       nickname,
     },
@@ -109,7 +109,7 @@ export const updateProfile = async (param: NewProfileType) => {
   const formData = new FormData();
   formData.append('UpdateMemberInfoDto', blobData);
 
-  const response = await jigumeAxios().post('/api/member/info', {
+  const response = await jigumeAxios.post('/api/member/info', {
     data: formData,
   });
   console.log(response);

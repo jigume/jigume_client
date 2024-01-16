@@ -1,16 +1,17 @@
 import React from 'react';
 import { useQuery } from 'react-query';
+import { GoodsPageDTO } from '@src/types/goods';
 import getOpenGraph from '../../../api/og';
 import OpenGraphViewer from '../../../components/OpenGraphViewer';
 
-export default function ProductInfo({ data }) {
-  const openGraph = useQuery(
-    'introOpenGraph',
-    () => getOpenGraph(data && data.link),
-    {
-      retryDelay: 500,
-    },
-  );
+export default function ProductInfo({
+  data,
+}: {
+  data: GoodsPageDTO | undefined;
+}) {
+  const openGraph = useQuery('introOpenGraph', () => getOpenGraph(data?.link), {
+    retryDelay: 500,
+  });
 
   let people = 0;
   if (data) people = data.deliveryFee / data.realDeliveryFee;
@@ -23,10 +24,7 @@ export default function ProductInfo({ data }) {
     >
       <div>상품정보</div>
 
-      <OpenGraphViewer
-        openGraph={openGraph.isSuccess && openGraph.data}
-        link={data && data.link}
-      />
+      <OpenGraphViewer openGraph={openGraph.data} link={data!.link} />
       <div className="flex flex-col gap-2">
         {data ? (
           <>

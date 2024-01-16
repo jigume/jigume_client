@@ -1,12 +1,16 @@
+import { GoodsPageDTO } from '@src/types/goods';
 import Avatar from 'boring-avatars';
 import { differenceInDays } from 'date-fns';
-import React from 'react';
 
-export default function HeaderProfile({ data }) {
+export default function HeaderProfile({
+  data,
+}: {
+  data: GoodsPageDTO | undefined;
+}) {
   const today = new Date();
 
-  const getdDay = () => {
-    const dDay = differenceInDays(today, new Date(data.goodsLimitTime));
+  const getdDay = (date: string) => {
+    const dDay = differenceInDays(today, new Date(date));
     if (dDay > 99) return '99+';
     return dDay;
   };
@@ -20,7 +24,7 @@ export default function HeaderProfile({ data }) {
       {/* 상품 제목 등 */}
       <div className="flex items-center gap-2">
         <div className="w16 rounded-2xl bg-gray-100 px-2 py-1 text-center text-sm text-gray-700">
-          {`D-${data ? getdDay() : ''}`}
+          {`D-${data ? getdDay(data.goodsLimitTime) : ''}`}
         </div>
         {data ? (
           <div className="font-bold">{data.goodsName}</div>

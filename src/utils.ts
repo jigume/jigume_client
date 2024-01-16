@@ -134,3 +134,10 @@ export const stringLatLng2Arr = (bound: kakao.maps.LatLngBounds) => {
 
   return boundArr;
 };
+
+export const getToken = (): { accessToken: string; refreshToken: string } => {
+  const local = localStorage.getItem('recoil-persist');
+  const token = JSON.parse(local as string).jigumeAuth;
+  if (!token.accessToken) throw Error('accessToken is not exist');
+  return token;
+};

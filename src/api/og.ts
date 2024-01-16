@@ -12,7 +12,7 @@ const options = {
 
 const ogClient = new OpenGraphIO(options);
 
-const getOpenGraph = async (url: string): Promise<OpenGraph | undefined> => {
+const getOpenGraph = async (url?: string): Promise<OpenGraph | undefined> => {
   if (url === '' || !url) return undefined;
   const response = await ogClient
     .getSiteInfo(url)
