@@ -6,7 +6,7 @@ import { AuthType } from '@src/types/data';
 import { setNewUser } from '../../../../../api/user';
 import { authState } from '../../../../../data';
 import CameraIcon from '../../../../../asset/icon/mdi_camera.svg';
-import { InitContextType } from '.';
+import { InitContextType } from '../index.d';
 
 export default function InitProfileImage() {
   const navigate = useNavigate();
@@ -15,11 +15,10 @@ export default function InitProfileImage() {
 
   const newUser = useMutation('newUser', () => setNewUser(initUser), {
     retry: false,
-    onSuccess: (res) => {
-      if (res.status === 200) {
-        setAuth((prev) => ({ ...prev, role: 'USER' }));
-        navigate('/');
-      }
+
+    onSuccess: () => {
+      setAuth((prev) => ({ ...prev, role: 'USER' }));
+      navigate('/');
     },
   });
   // const handleImageReset = () => {

@@ -15,7 +15,7 @@ export default function ProgressJoin() {
       <div className="text-zinc-500">공동 구매 완료까지 D-5</div>
 
       <OpenGraphViewer
-        openGraph={openGraph.isSuccess && openGraph.data}
+        openGraph={openGraph.data}
         link={tempUrl}
         imgSize="h-24"
       />

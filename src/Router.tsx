@@ -24,11 +24,11 @@ import InitAddress from './pages/Auth/components/Init/components/initAddress';
 import Init from './pages/Auth/components/Init';
 import Refresh from './pages/Auth/components/Refresh';
 import InitProfileImage from './pages/Auth/components/Init/components/initProfileImage';
-import Mypage from './pages/mypage';
+import Mypage from './pages/Mypage';
 import Auth from './pages/Auth';
 import Submitted from './pages/Goods/components/Submitted';
-import Profile from './pages/mypage/components/Profile';
-import Edit from './pages/mypage/components/Edit';
+import Profile from './pages/Mypage/components/Profile';
+import Edit from './pages/Mypage/components/Edit';
 
 export default function Router() {
   // recoil state로 access roles 관리

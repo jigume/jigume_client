@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import ChevronLeft from '../../../../asset/icon/chevronLeft.svg';
-import { InitUserType } from './components';
+import { InitUserType } from './index.d';
 
 export default function Init() {
   const navigate = useNavigate();

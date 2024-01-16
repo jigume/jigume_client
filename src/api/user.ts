@@ -1,4 +1,7 @@
 import axios from 'axios';
+import { TokenProviderType } from '@src/types/user';
+import { InitUserType } from '@src/pages/Auth/components/Init/components';
+import { NewProfileType } from '@src/pages/Mypage';
 import img0 from '../asset/images/profiles/initProfile0.png';
 import img1 from '../asset/images/profiles/initProfile1.png';
 import img2 from '../asset/images/profiles/initProfile2.png';
@@ -8,16 +11,10 @@ const initProfiles = [img0, img1, img2];
 
 /**
  * 신규 유저의 닉네임 등의 정보를 입력하여 role을 USER로 변경한다
- * @param {object} param
- * @param {string} param.nickname 닉네임
- * @param {object} param.position position
- * @param {number} param.position.lat latitude
- * @param {number} param.position.lng longitude
- * @param {string} param.image Image URL
  */
-export const setNewUser = async (param) => {
+export const setNewUser = async (param: InitUserType) => {
   const randomIdx = Math.round(Math.random() * 2);
-
+  if (!param.position) return undefined;
   const response = await jigumeAxios().post('/api/member/info', {
     method: 'post',
     data: {
@@ -25,12 +22,6 @@ export const setNewUser = async (param) => {
       mapX: param.position.lng,
       mapY: param.position.lat,
       profileImgUrl: param.image || initProfiles[randomIdx],
-    },
-    headers: {
-      Authorization: `Bearer ${token.accessToken}`,
-      withCredentials: true,
-      crossDomain: true,
-      credentials: 'include',
     },
   });
 
@@ -70,55 +61,44 @@ export const handleRefreshToken = async () => {
 
 /**
  * 인가코드를 통해 로그인 처리
- * @param {string} code
- * @param {'kakao' | 'naver'} domain
- * @return {{
- *  tokenDto:{accessToken: string; refreshToken:string}
- *  baseRole: "ADMIN" | "USER" | "GUEST"
- * }}
  */
-export const codeProvide = async (code, domain) => {
+export const codeProvide = async (
+  code: string | null,
+  domain: string
+): Promise<TokenProviderType> => {
   /** @type {string} */
   if (!code) throw Error('인가코드가 옳바르지 않습니다.');
 
-  const response = await axios.post(
-    `/api/member/login?login-provider=${domain}&authorization-code=${code}`
-  );
+  console.log('hello', code, domain);
+
+  const response: TokenProviderType = await axios
+    .post(
+      `/api/member/login?login-provider=${domain}&authorization-code=${code}`
+    )
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    });
 
   return response;
 };
 
-export const kakaoLogout = async (accessToken) => {
-  if (!accessToken) throw Error('accessToken is not exist');
+export const kakaoLogout = async () => {
   // kakao 서버에 요청
   const response = await axios.post('https://kapi.kakao.com/v1/user/logout');
   return response;
 };
 
-export const checkNickname = async (nickname) => {
-  const token = JSON.parse(localStorage.getItem('recoil-persist')).jigumeAuth;
-  if (!token.accessToken) throw Error('accessToken is not exist');
-
-  const response = await axios({
-    url: `/api/member/nickname`,
-    method: 'get',
+export const checkNickname = async (nickname: string) => {
+  const response = await jigumeAxios().get('/api/member/nickname', {
     params: {
       nickname,
-    },
-    headers: {
-      Authorization: `Bearer ${token.accessToken}`,
-      withCredentials: true,
-      crossDomain: true,
-      credentials: 'include',
     },
   });
   return response;
 };
 
-export const updateProfile = async (param) => {
-  const token = JSON.parse(localStorage.getItem('recoil-persist')).jigumeAuth;
-  if (!token.accessToken) throw Error('accessToken is not exist');
-
+export const updateProfile = async (param: NewProfileType) => {
   const blobData = new Blob(
     [JSON.stringify({ nickname: param.nickname, profileImgUrl: param.image })],
     {
@@ -129,17 +109,8 @@ export const updateProfile = async (param) => {
   const formData = new FormData();
   formData.append('UpdateMemberInfoDto', blobData);
 
-  const response = await axios({
-    method: 'post',
-    url: '/api/member/info',
+  const response = await jigumeAxios().post('/api/member/info', {
     data: formData,
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${token.accessToken}`,
-      withCredentials: true,
-      crossDomain: true,
-      credentials: 'include',
-    },
   });
   console.log(response);
 

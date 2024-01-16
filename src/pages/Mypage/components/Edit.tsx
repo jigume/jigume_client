@@ -6,34 +6,34 @@ import cameraIcon from '../../../asset/icon/mdi_camera.svg';
 import { checkNickname, updateProfile } from '../../../api/user';
 import { handleTextFieldColor, validNickname } from '../../../utils';
 import CircularProgress from '../../Auth/components/Init/components/circularProgress';
+import { MyPageContextType, NewProfileType } from '../index.d';
 
 export default function Edit() {
-  const { setTitle } = useOutletContext();
+  const { setTitle } = useOutletContext<MyPageContextType>();
   const [valid, setValid] = useState(false);
-  const [newProfile, setNewProfile] = useState({
+  const [newProfile, setNewProfile] = useState<NewProfileType>({
     nickname: '',
     image: undefined,
   });
 
-  const handleNickname = (text) => {
+  const handleNickname = (text: string) => {
     setValid(validNickname(text));
     setNewProfile((prev) => ({ ...prev, nickname: text }));
   };
 
-  const encodeFileToBase64 = (fileBlob) => {
+  const encodeFileToBase64 = (fileBlob: File) => {
     // 이미지 선택 취소 시 예외처리
     if (fileBlob === undefined) return null;
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
 
-    return new Promise((resolve) => {
+    return new Promise(() => {
       // onLoad에서 실행하는
       reader.onload = () => {
         setNewProfile((prev) => ({
           ...prev,
-          image: reader.result,
+          image: reader.result as string,
         }));
-        resolve();
       };
     });
   };
@@ -55,7 +55,7 @@ export default function Edit() {
       onSuccess: (res) => {
         console.log(res);
       },
-    },
+    }
   );
 
   return (
@@ -69,17 +69,19 @@ export default function Edit() {
               className="hidden"
               id="image"
               onChange={(e) => {
-                encodeFileToBase64(e.target.files[0]);
+                if (e.target.files) encodeFileToBase64(e.target.files[0]);
               }}
             />
             <div className="relative aspect-square h-32 w-32">
               <img
                 className="h-full w-full rounded-full object-cover"
                 src={newProfile.image}
+                alt="프로필 이미지"
               />
               <img
                 src={cameraIcon}
                 className="absolute bottom-0 right-0 h-11 w-11 rounded-[20px] bg-white p-2.5 pt-3 shadow-md"
+                alt="엘범에서 불러오기"
               />
             </div>
           </label>
@@ -92,12 +94,12 @@ export default function Edit() {
             maxLength={20}
             className={`block h-14 w-full rounded-md border bg-white p-3 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1 ${handleTextFieldColor(
               newProfile.nickname,
-              valid,
+              valid
             )}}`}
           />
           <button
             className="flex min-w-[6rem] items-center justify-center rounded-lg bg-success px-3 py-4 text-center text-white transition-all duration-300 ease-in-out active:scale-[99%] disabled:bg-gray-300 active:disabled:scale-100"
-            onClick={checkName}
+            onClick={checkName as () => void}
           >
             {isLoading ? <CircularProgress /> : '중복 확인'}
           </button>

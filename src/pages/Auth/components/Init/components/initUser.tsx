@@ -5,7 +5,7 @@ import NextButton from '../../../../../components/NextButton';
 import CircularProgress from './circularProgress';
 import { checkNickname } from '../../../../../api/user';
 import { handleTextFieldColor, validNickname } from '../../../../../utils';
-import { InitContextType } from '.';
+import { InitContextType } from '../index.d';
 
 export default function InitUser() {
   const [valid, setValid] = useState(false);
@@ -73,7 +73,7 @@ export default function InitUser() {
           </div>
         )}
       </div>
-
+      {valid ? 'oo' : 'ss'}
       <NextButton isDisabled={!valid} linkTo="/auth/init/address" />
     </div>
   );

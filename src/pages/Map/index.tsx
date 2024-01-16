@@ -124,6 +124,7 @@ export default function Map() {
       lat: map.getCenter().getLat(),
       lng: map.getCenter().getLng(),
     });
+    console.log(map.getCenter());
     refetch();
   };
 
