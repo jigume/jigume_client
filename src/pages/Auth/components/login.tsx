@@ -1,35 +1,35 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
+import { AuthType } from '@src/types/data';
 import logo from '../../../asset/images/login/login_logo.png';
 import kakaoImg from '../../../asset/images/login/kakao_login.png';
 import naverImg from '../../../asset/images/login/naver_login.png';
-import { userState } from '../../../data';
-
-const KAKAO_KEY = import.meta.env.VITE_KAKAO_REST_KEY;
-const NAVER_KEY = import.meta.env.VITE_NAVER_CLIENT_ID;
-const NAVER_SECRET = import.meta.env.VITE_NAVER_SECRET;
+import { authState } from '../../../data';
 
 export default function Login() {
+  const KAKAO_KEY = import.meta.env.VITE_KAKAO_REST_KEY;
+  const NAVER_KEY = import.meta.env.VITE_NAVER_CLIENT_ID;
+  const NAVER_SECRET = import.meta.env.VITE_NAVER_SECRET;
   const REDIRECT_URI = import.meta.env.DEV
     ? 'http://localhost:5173/auth'
     : 'https://www.jigume.site/auth';
 
-  const [user, setUser] = useRecoilState(userState);
+  const [, setAuth] = useRecoilState<AuthType>(authState);
 
   const handleKakaoLogin = async () => {
-    window.location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_KEY}&redirect_uri=${REDIRECT_URI}`;
-    setUser((prev) => ({
+    setAuth((prev) => ({
       ...prev,
-      auth: 'kakao',
+      domain: 'kakao',
     }));
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_KEY}&redirect_uri=${REDIRECT_URI}`;
   };
 
   const handleNaverLogin = async () => {
-    window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_KEY}&state=${NAVER_SECRET}&redirect_uri=${REDIRECT_URI}`;
-    setUser((prev) => ({
+    setAuth((prev) => ({
       ...prev,
-      auth: 'naver',
+      domain: 'naver',
     }));
+    window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_KEY}&state=${NAVER_SECRET}&redirect_uri=${REDIRECT_URI}`;
   };
 
   return (

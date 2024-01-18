@@ -2,7 +2,8 @@ export type AuthType = {
   role: 'GUEST' | 'USER' | 'ADMIN';
   accessToken?: string;
   refreshToken?: string;
-  expired?: Date;
+  expired?: Date | number;
+  domain: 'kakao' | 'naver';
 };
 
 export type UserType = {
