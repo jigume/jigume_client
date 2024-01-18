@@ -29,7 +29,11 @@ export default function Submitted() {
         <div className="absolute top-0 z-50 flex h-full w-full flex-col items-center justify-between gap-5 py-4">
           <div />
           <div className="flex flex-col justify-center gap-4">
-            <img src={jigumeLogo} className="mx-auto h-[90px] w-20" />
+            <img
+              src={jigumeLogo}
+              className="mx-auto h-[90px] w-20"
+              alt="등록 성공"
+            />
             <p className="text-lg font-bold">
               축하드려요! 공동 구매 폼이
               <br /> 성공적으로 게시되었어요.
