@@ -7,10 +7,10 @@ import { authState, initAuth, initUser, userState } from '../../../../data';
 import { handleRefreshToken } from '../../../../api/user';
 
 export default function Refresh() {
-  const [, setAuth] = useRecoilState<AuthType>(authState);
+  const [auth, setAuth] = useRecoilState<AuthType>(authState);
   const [, setUser] = useRecoilState<UserType>(userState);
 
-  useQuery('refresh', handleRefreshToken, {
+  useQuery('refresh', () => handleRefreshToken(auth), {
     retry: false,
     onSuccess: (res) => {
       if (res === 'valid') return;

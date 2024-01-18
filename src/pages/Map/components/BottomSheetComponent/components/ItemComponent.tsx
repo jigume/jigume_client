@@ -30,7 +30,7 @@ export default function ItemComponent({
       ) : (
         <img
           src={item.goodsImagesList[0].goodsImgUrl}
-          className="border-gray50 h-32 w-32 flex-none rounded-lg border bg-gray-100"
+          className="border-gray50 h-32 w-32 flex-none rounded-lg border bg-gray-100 object-cover"
           alt="상품 이미지"
         />
       )}
@@ -45,18 +45,7 @@ export default function ItemComponent({
           {!item ? (
             <div className="h-[18px] w-[18px] rounded-full bg-gray-100" />
           ) : (
-            <Avatar
-              size={18}
-              name={item.sellerInfoDto.sellerNickname}
-              variant="beam"
-              colors={[
-                primaryYello,
-                primaryJade,
-                primaryPurple,
-                '#C271B4',
-                primaryBlue,
-              ]}
-            />
+            <div />
           )}
           {/* <div className="w-[18px] h-[18px] rounded-full bg-gray-100" /> */}
           <div className="caption flex flex-row items-center gap-1">

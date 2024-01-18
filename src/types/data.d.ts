@@ -3,7 +3,7 @@ export type AuthType = {
   accessToken?: string;
   refreshToken?: string;
   expired?: Date | number;
-  domain: 'kakao' | 'naver';
+  domain?: 'kakao' | 'naver';
 };
 
 export type UserType = {

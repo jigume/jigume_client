@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { TokenProviderType } from '@src/types/user';
-import { InitUserType } from '@src/pages/Auth/components/Init/components';
-import { NewProfileType } from '@src/pages/Mypage';
+import { InitUserType } from '@src/pages/Auth/components/Init/index.d';
+import { NewProfileType } from '@src/pages/Mypage/index.d';
+import { AuthType } from '@src/types/data';
 import img0 from '../asset/images/profiles/initProfile0.png';
 import img1 from '../asset/images/profiles/initProfile1.png';
 import img2 from '../asset/images/profiles/initProfile2.png';
@@ -32,28 +33,19 @@ export const setNewUser = async (param: InitUserType) => {
  * 토큰 만료일을 확인하여 리프레시 토큰을 재발급 받는다
  * @returns void
  */
-export const handleRefreshToken = async () => {
-  const token = JSON.parse(localStorage.getItem('recoil-persist')).jigumeAuth;
-  // token valid
-
+export const handleRefreshToken = async (auth: AuthType) => {
   if (
-    new Date(token?.expired) > new Date().getTime() ||
-    !token.accessToken ||
-    !token.refreshToken
+    (auth?.expired as Date).getTime() > new Date().getTime() ||
+    !auth.accessToken ||
+    !auth.refreshToken
   )
     return 'valid';
 
-  const response = await axios({
+  const response = await jigumeAxios({
     method: 'post',
     url: '/api/member/token',
     data: {
-      refreshToken: token.refreshToken,
-    },
-    headers: {
-      Authorization: `Bearer ${token.accessToken}`,
-      withCredentials: true,
-      crossDomain: true,
-      credentials: 'include',
+      refreshToken: auth.refreshToken,
     },
   });
   return response.data;
@@ -69,16 +61,11 @@ export const codeProvide = async (
   /** @type {string} */
   if (!code) throw Error('인가코드가 옳바르지 않습니다.');
 
-  console.log('hello', code, domain);
-
   const response: TokenProviderType = await axios
     .post(
       `/api/member/login?login-provider=${domain}&authorization-code=${code}`
     )
-    .then((res) => {
-      console.log(res);
-      return res.data;
-    });
+    .then((res) => res.data);
 
   return response;
 };
