@@ -5,10 +5,10 @@ export const setMarkerDom = (item, sheetProvider, setPreViewer) => {
   markerElement.className = 'relative z-10 w-[40px] h-[57px]';
   const markerPin = document.createElement('img');
   markerPin.src = MarkerPin;
-  const markerImage = document.createElement('div');
+  const markerImage = document.createElement('img');
   markerImage.className =
-    'absolute left-[5px] top-[5px] z-50 h-[30px] w-[30px] rounded-full bg-gray-300';
-  markerImage.style.backgroundImage = `url(${item.imageUrl})`;
+    'absolute left-[5px] top-[5px] z-50 h-[30px] w-[30px] rounded-full bg-gray-300 prodImg';
+  markerImage.src = item.goodsRepImgUrl;
   markerElement.appendChild(markerPin);
   markerElement.appendChild(markerImage);
   markerElement.onclick = () => {
@@ -24,10 +24,10 @@ export const setClusterDom = (imageUrl, count) => {
   markerElement.className = 'relative z-30 w-[40px] h-[57px]';
   const markerPin = document.createElement('img');
   markerPin.src = MarkerPin;
-  const markerImage = document.createElement('div');
+  const markerImage = document.createElement('img');
   markerImage.className =
     'absolute left-[5px] top-[5px] z-50 h-[30px] w-[30px] rounded-full bg-gray-300';
-  markerImage.style.backgroundImage = `url(${imageUrl})`;
+  markerImage.src = imageUrl;
   const markerCount = document.createElement('div');
   markerCount.className =
     'absolute w-7 h-7 rounded-full flex items-center justify-center text-sm z-50 -top-3 -right-4 text-white bg-[#F5535E]';

@@ -36,7 +36,6 @@ export default function BottomSheetComponent({
     mutationFn: () => getSheetList(preViewer, bounds),
     onSuccess: (res) => {
       if (res.data === 'retry') allMutate(preViewer, bounds);
-      console.log(res);
     },
   });
 

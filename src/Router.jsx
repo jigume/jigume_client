@@ -8,7 +8,7 @@ import { useRecoilState } from 'recoil';
 import { authState } from './recoil';
 import Register from './pages/Register';
 import Map from './pages/Map';
-import Introduce from './pages/Introduce';
+import Goods from './pages/Goods';
 import Announcement from './pages/Announcement';
 import Image from './pages/Register/components/Image';
 import Detail from './pages/Register/components/Detail';
@@ -26,8 +26,10 @@ import Refresh from './pages/Auth/components/Refresh';
 import InitProfileImage from './pages/Auth/components/Init/components/initProfileImage';
 import Mypage from './pages/mypage';
 import Auth from './pages/Auth';
-import Submitted from './pages/Introduce/components/Submitted';
 import InitAccessRights from './pages/Auth/components/Init/components/initAccessRights';
+import Submitted from './pages/Goods/components/Submitted';
+import Profile from './pages/mypage/components/Profile';
+import Edit from './pages/mypage/components/Edit';
 
 export default function Router() {
   // recoil state로 access roles 관리
@@ -89,8 +91,8 @@ export default function Router() {
         { index: true, element: <Map /> },
         // 상품 상세
         {
-          path: '/introduce/:idx/*',
-          element: <Introduce />,
+          path: '/goods/:idx/*',
+          element: <Goods />,
           children: [{ path: 'submitted', element: <Submitted /> }],
         },
         // 상품 공지
@@ -131,7 +133,14 @@ export default function Router() {
           ],
         },
         // 마이페이지
-        { path: 'mypage', element: <Mypage /> },
+        {
+          path: 'mypage',
+          element: <Mypage />,
+          children: [
+            { index: true, element: <Profile /> },
+            { path: 'edit', element: <Edit /> },
+          ],
+        },
       ],
       loader: () => {
         if (auth.role !== 'USER') return redirect('/auth/login');

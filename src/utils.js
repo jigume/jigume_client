@@ -6,10 +6,11 @@ export const getCurrentLocation = async (setPosition) => {
   const response = await navigator.geolocation.getCurrentPosition(
     async (position) => {
       const current = await position;
-      setPosition({
+      setPosition((prev) => ({
+        ...prev,
         lat: position.coords.latitude,
         lng: position.coords.longitude,
-      });
+      }));
       return current;
     },
   );
@@ -116,4 +117,17 @@ export const thresholds = {
   min: 68,
   mid: window.innerHeight / 2,
   max: window.innerHeight - 100,
+};
+
+export const validNickname = (text) => {
+  const regex = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣a-zA-Z0-9]{2,10}$/;
+  return regex.test(text);
+};
+
+export const handleTextFieldColor = (nickname, valid) => {
+  if (nickname.length === 0)
+    return 'focus:border-slate-300 focus:ring-slate-300 border-slate-300 ring-slate-300';
+  if (valid)
+    return 'focus:border-success focus:ring-success border-success ring-success';
+  return 'border-red-600 ring-red-600 focus:border-red-600 focus:ring-red-600';
 };

@@ -1,4 +1,9 @@
 import axios from 'axios';
+import img0 from '../asset/images/profiles/initProfile0.png';
+import img1 from '../asset/images/profiles/initProfile1.png';
+import img2 from '../asset/images/profiles/initProfile2.png';
+
+const initProfiles = [img0, img1, img2];
 
 /**
  * 신규 유저의 닉네임 등의 정보를 입력하여 role을 USER로 변경한다
@@ -13,6 +18,8 @@ export const setNewUser = async (param) => {
   const token = JSON.parse(localStorage.getItem('recoil-persist')).jigumeAuth;
   if (!token.accessToken) throw Error('accessToken is not exist');
 
+  const randomIdx = Math.round(Math.random() * 2);
+
   const response = await axios({
     method: 'post',
     url: '/api/member/info',
@@ -20,7 +27,7 @@ export const setNewUser = async (param) => {
       nickname: param.nickname,
       mapX: param.position.lng,
       mapY: param.position.lat,
-      image: param.image,
+      profileImgUrl: param.image || initProfiles[randomIdx],
     },
     headers: {
       Authorization: `Bearer ${token.accessToken}`,
@@ -88,5 +95,56 @@ export const kakaoLogout = async (accessToken) => {
   if (!accessToken) throw Error('accessToken is not exist');
   // kakao 서버에 요청
   const response = await axios.post('https://kapi.kakao.com/v1/user/logout');
+  return response;
+};
+
+export const checkNickname = async (nickname) => {
+  const token = JSON.parse(localStorage.getItem('recoil-persist')).jigumeAuth;
+  if (!token.accessToken) throw Error('accessToken is not exist');
+
+  const response = await axios({
+    url: `/api/member/nickname`,
+    method: 'get',
+    params: {
+      nickname,
+    },
+    headers: {
+      Authorization: `Bearer ${token.accessToken}`,
+      withCredentials: true,
+      crossDomain: true,
+      credentials: 'include',
+    },
+  });
+  return response;
+};
+
+export const updateProfile = async (param) => {
+  const token = JSON.parse(localStorage.getItem('recoil-persist')).jigumeAuth;
+  if (!token.accessToken) throw Error('accessToken is not exist');
+
+  const blobData = new Blob(
+    [JSON.stringify({ nickname: param.nickname, profileImgUrl: param.image })],
+    {
+      type: 'application/json',
+    },
+  );
+
+  const formData = new FormData();
+  formData.append('UpdateMemberInfoDto', blobData);
+
+  const response = await axios({
+    method: 'post',
+    url: '/api/member/info',
+    data: formData,
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${token.accessToken}`,
+      withCredentials: true,
+      crossDomain: true,
+      credentials: 'include',
+    },
+  });
+  console.log(response);
+
   return response;
 };

@@ -5,8 +5,8 @@ import category from '../../../Map/components/BottomSheetComponent/data';
 import StyledInputText from '../../../../components/StyledInputText';
 import NextButton from '../../../../components/NextButton';
 import getOpenGraph from '../../../../api/og';
+import OpenGraphViewer from '../../../../components/OpenGraphViewer';
 import 'react-dropdown/style.css';
-import OpenGraphView from './components/OpenGraphViewer';
 
 function Links() {
   /** @type {{data:{
@@ -29,9 +29,9 @@ function Links() {
    * }}} 등록할 상품 정보  */
   const { data, setData } = useOutletContext();
   const [tmpLink, setTmpLink] = useState(data.goodsDto.link);
-  const [filterIdx, setFilterIdx] = useState(-1);
+  const [categoryIdx, setCategoryIdx] = useState(-1);
 
-  const isMovable = data.goodsDto.link.length !== 0 && filterIdx !== -1;
+  const isMovable = data.goodsDto.link.length !== 0 && categoryIdx !== -1;
 
   const {
     data: openGraph,
@@ -60,13 +60,14 @@ function Links() {
   useEffect(() => {
     setData((prev) => ({
       ...prev,
-      goodsDto: { ...prev.goodsDto, categoryName: filterIdx },
+      goodsDto: { ...prev.goodsDto, categoryName: categoryIdx },
     }));
-  }, [filterIdx]);
+    console.log(categoryIdx);
+  }, [categoryIdx]);
 
   // observe filter
   useEffect(() => {
-    setFilterIdx(data.goodsDto.categoryName);
+    setCategoryIdx(data.goodsDto.categoryName);
   }, []);
 
   return (
@@ -80,7 +81,7 @@ function Links() {
         </div>
 
         <div className="mb-1">
-          <div className="mb-2 text-sm font-thin">상품 링크</div>
+          <div className="mb-3 text-sm font-thin">상품 링크</div>
           <StyledInputText
             placeholder="ex) www.figma.com"
             value={tmpLink}
@@ -88,7 +89,7 @@ function Links() {
           />
         </div>
 
-        <OpenGraphView
+        <OpenGraphViewer
           openGraph={isSuccess && openGraph}
           link={data.goodsDto.link}
         />
@@ -96,13 +97,15 @@ function Links() {
         <div className="pt-4">
           <div className="mb-2 text-sm font-thin">카테고리</div>
           <div className="flex flex-wrap justify-center gap-2">
-            {category.map((item, index) => (
+            {category.map((item) => (
               <div
                 key={item.name}
                 className={`rounded-lg border border-gray-100 px-[8px] py-[6px] ${
-                  index === filterIdx ? 'bg-gray-900 text-white' : 'bg-white'
+                  item.idx === categoryIdx
+                    ? 'bg-gray-900 text-white'
+                    : 'bg-white'
                 }`}
-                onClick={() => setFilterIdx(index)}
+                onClick={() => setCategoryIdx(item.idx)}
               >
                 <img
                   className="mr-2 inline-block h-[16px] w-[16px]"

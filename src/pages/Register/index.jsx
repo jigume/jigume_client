@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import ChevronLeft from '../../asset/icon/chevron-left.svg';
+import ChevronLeft from '../../asset/icon/chevronLeft.svg';
 import { vaildRegister } from '../../utils';
 
 export const initData = {
@@ -61,6 +61,10 @@ function Register() {
       setData(initData);
     };
   }, []);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <>

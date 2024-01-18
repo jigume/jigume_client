@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { clusterStyles, userPosition } from './marker';
-import { setClusterDom, setMarkerDom } from '../urils';
+import { setClusterDom, setMarkerDom } from '../utils';
 
 export default function MapContainer({
   position,

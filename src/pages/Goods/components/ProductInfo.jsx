@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import getOpenGraph from '../../../api/og';
-import OpenGraphViewer from '../../Register/components/Links/components/OpenGraphViewer';
+import OpenGraphViewer from '../../../components/OpenGraphViewer';
 
 export default function ProductInfo({ data }) {
   const openGraph = useQuery(

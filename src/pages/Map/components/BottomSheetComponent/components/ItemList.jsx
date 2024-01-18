@@ -38,22 +38,13 @@ export default function ItemList({ goodsArr, filter, sheetLevel, preViewer }) {
   return (
     <div className="absolute top-[96px] h-full overflow-x-scroll pb-[192px] pt-[96px]">
       {goodsArr.map((item, index) => {
+        console.log(item);
         const trueArr = filter.filter(({ checked }) => checked);
 
         if (!trueArr.find(({ idx }) => idx === item.category))
           return <div key={index} />;
-
         return (
-          <ItemComponent
-            key={index}
-            index={item.boardId}
-            goodsName={item.goodsName}
-            goodsImagesList={item.goodsImagesList}
-            hostNickname={item.hostNickname}
-            goodsOrderCount={item.goodsOrderCount}
-            goodsPrice={item.goodsPrice}
-            realDeliveryFee={item.realDeliveryFee}
-          />
+          item && <ItemComponent key={index} index={item.boardId} item={item} />
         );
       })}
     </div>

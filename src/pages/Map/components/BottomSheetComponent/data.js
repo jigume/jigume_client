@@ -10,15 +10,15 @@ import Kitchen from '../../../../asset/icon/category/cat_kitchen.svg';
 import Trip from '../../../../asset/icon/category/cat_trip.svg';
 
 const category = [
-  { idx: 0, icon: Cloth, name: '패션의류/잡화' },
-  { idx: 1, icon: Beauty, name: '뷰티' },
-  { idx: 2, icon: Child, name: '출산/유아동' },
-  { idx: 3, icon: Food, name: '식품' },
-  { idx: 4, icon: Kitchen, name: '주방용품' },
+  { idx: 4, icon: Cloth, name: '패션의류/잡화' },
+  { idx: 2, icon: Beauty, name: '뷰티' },
+  { idx: 3, icon: Child, name: '출산/유아동' },
+  { idx: 7, icon: Food, name: '식품' },
+  { idx: 10, icon: Kitchen, name: '주방용품' },
   { idx: 5, icon: Daily, name: '생활용품' },
-  { idx: 6, icon: Furniture, name: '홈 인테리어' },
-  { idx: 7, icon: Digital, name: '가전디지털' },
-  { idx: 8, icon: Health, name: '헬스/건강시품' },
-  { idx: 9, icon: Trip, name: '여행/티켓' },
+  { idx: 8, icon: Furniture, name: '홈 인테리어' },
+  { idx: 6, icon: Digital, name: '가전디지털' },
+  { idx: 9, icon: Health, name: '헬스/건강시품' },
+  { idx: 11, icon: Trip, name: '여행/티켓' },
 ];
 export default category;

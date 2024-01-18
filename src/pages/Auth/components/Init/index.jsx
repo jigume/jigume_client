@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import ChevronLeft from '../../../../asset/icon/chevron-left.svg';
+import ChevronLeft from '../../../../asset/icon/chevronLeft.svg';
 
 export default function Init() {
   const navigate = useNavigate();
@@ -9,9 +9,10 @@ export default function Init() {
     position: undefined,
     image: undefined,
   });
+
   return (
-    <div className="container mx-auto mt-[48px] flex h-[calc(100svh-48px)] max-w-screen-sm flex-col justify-between px-4 py-6">
-      <div className="fixed left-0 top-0 flex h-[48px] w-full flex-row items-center bg-white px-[1rem]">
+    <div className="container mx-auto mt-12 h-[calc(100svh-48px)] max-w-screen-sm">
+      <div className="absolute left-1/2 top-0 mx-auto flex h-[48px] w-full max-w-screen-sm -translate-x-1/2 flex-row items-center bg-white px-4">
         <div onClick={() => navigate(-1)} className="pr-2">
           <img className="h-[32px] w-[32px]" src={ChevronLeft} />
         </div>
