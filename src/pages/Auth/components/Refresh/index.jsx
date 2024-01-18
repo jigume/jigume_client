@@ -2,7 +2,7 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import { useQuery } from 'react-query';
 import { Outlet } from 'react-router-dom';
-import { authState, initAuth, initUser, userState } from '../../../../recoil';
+import { authState, initAuth, userState } from '../../../../recoil';
 import { handleRefreshToken } from '../../../../api/user';
 
 export default function Refresh() {
