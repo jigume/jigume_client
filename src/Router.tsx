@@ -26,6 +26,7 @@ import Refresh from './pages/Auth/components/Refresh';
 import InitProfileImage from './pages/Auth/components/Init/components/initProfileImage';
 import Mypage from './pages/Mypage';
 import Auth from './pages/Auth';
+import InitAccessRights from './pages/Auth/components/Init/components/initAccessRights';
 import Submitted from './pages/Goods/components/Submitted';
 import Profile from './pages/Mypage/components/Profile';
 import Edit from './pages/Mypage/components/Edit';
@@ -66,7 +67,8 @@ export default function Router() {
           path: 'init',
           element: <Init />,
           children: [
-            { index: true, element: <InitUser /> },
+            { index: true, element: <InitAccessRights /> },
+            { path: 'user', element: <InitUser /> },
             { path: 'address', element: <InitAddress /> },
             { path: 'image', element: <InitProfileImage /> },
           ],
