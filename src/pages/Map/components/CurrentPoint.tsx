@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function CurrentPoint() {
   return (
     <div className="flex size-[32px] items-center justify-center rounded-full bg-primaryBlue">

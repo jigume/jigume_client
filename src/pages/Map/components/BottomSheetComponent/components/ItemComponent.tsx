@@ -1,4 +1,3 @@
-import React from 'react';
 import Avatar from 'boring-avatars';
 import { useNavigate } from 'react-router-dom';
 import { GoodsPageDTO } from '@src/types/goods';

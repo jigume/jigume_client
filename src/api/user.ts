@@ -3,9 +3,9 @@ import { TokenProviderType } from '@src/types/user';
 import { InitUserType } from '@src/pages/Auth/components/Init/index.d';
 import { NewProfileType } from '@src/pages/Mypage/index.d';
 import { AuthType } from '@src/types/data';
-import img0 from '../asset/images/profiles/initProfile0.png';
-import img1 from '../asset/images/profiles/initProfile1.png';
-import img2 from '../asset/images/profiles/initProfile2.png';
+import img0 from '@src/asset/images/profiles/initProfile0.png';
+import img1 from '@src/asset/images/profiles/initProfile1.png';
+import img2 from '@src/asset/images/profiles/initProfile2.png';
 import jigumeAxios from './axios';
 
 const initProfiles = [img0, img1, img2];
@@ -56,7 +56,7 @@ export const handleRefreshToken = async (auth: AuthType) => {
  */
 export const codeProvide = async (
   code: string | null,
-  domain: string
+  domain?: string
 ): Promise<TokenProviderType> => {
   /** @type {string} */
   if (!code) throw Error('인가코드가 옳바르지 않습니다.');

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { GoodsPageDTO } from '@src/types/goods';
 import { PositionType } from '@src/types/map';
-import IntroStaticMap from './components/IntroStaticMap';
+import IntroStaticMap from '@src/components/StaticMapOnMarker';
 
 export default function PlaceInfo({
   data,
@@ -12,9 +12,10 @@ export default function PlaceInfo({
   const { kakao } = window;
   const [address, setAddress] = useState('-');
 
-  const getAddress = (position: PositionType) => {
+  const getAddress = (position?: PositionType) => {
     if (kakao === undefined) return;
     if (!kakao.maps.services.Geocoder) return;
+    if (!position) return;
 
     const geoCoder = new kakao.maps.services.Geocoder();
     geoCoder.coord2Address(position.lng, position.lat, (result, status) => {
@@ -26,10 +27,12 @@ export default function PlaceInfo({
   useQuery(
     'revGeoCoder',
     () =>
-      getAddress({
-        lat: data && data.address.mapY,
-        lng: data && data.address.mapX,
-      }),
+      getAddress(
+        data && {
+          lat: data.address.mapY,
+          lng: data.address.mapX,
+        }
+      ),
     { retryDelay: 500, retry: 3 }
   );
 
@@ -37,7 +40,7 @@ export default function PlaceInfo({
     <div className="flex flex-col gap-4 rounded-xl bg-gray-50 p-4">
       <div className="relative aspect-[1.9197] w-full rounded-xl bg-gray-300">
         <IntroStaticMap
-          img={data && data.goodsImagesList[0].goodsImgUrl}
+          img={data?.goodsImagesList[0].goodsImgUrl}
           position={
             data && {
               lat: data.address.mapY,

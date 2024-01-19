@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ChevronLeft from '../../../asset/icon/chevronLeft.svg';
 import Notification from '../../../asset/icon/Notification.svg';

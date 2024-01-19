@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import LocationIcon from '../../../../../asset/icon/LocationIcon.svg';
 import UserOutlineIcon from '../../../../../asset/icon/UserOutlineIcon.svg';

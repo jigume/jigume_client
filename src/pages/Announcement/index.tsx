@@ -1,4 +1,3 @@
-import React from 'react';
 import ProductAbout from './components/ProductAbout';
 import CommentsContent from './components/CommentsContent';
 import CommentsInput from './components/CommentsInput';

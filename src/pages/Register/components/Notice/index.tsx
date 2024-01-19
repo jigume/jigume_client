@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { RegisterContextType } from '@src/types/register';

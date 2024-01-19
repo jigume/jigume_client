@@ -1,4 +1,3 @@
-import React from 'react';
 import { RegisterContextType } from '@src/types/register.d';
 import { useOutletContext } from 'react-router-dom';
 import InputWithNum from '../../../../components/InputWithNum';

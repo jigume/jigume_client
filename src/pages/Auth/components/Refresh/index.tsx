@@ -1,10 +1,9 @@
-import React from 'react';
 import { useRecoilState } from 'recoil';
 import { useQuery } from 'react-query';
 import { Outlet } from 'react-router-dom';
 import { AuthType, UserType } from '@src/types/data';
-import { authState, initAuth, initUser, userState } from '../../../../data';
-import { handleRefreshToken } from '../../../../api/user';
+import { authState, initAuth, initUser, userState } from '@src/data';
+import { handleRefreshToken } from '@src/api/user';
 
 export default function Refresh() {
   const [auth, setAuth] = useRecoilState<AuthType>(authState);

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavigationIcon from '../../../../../asset/icon/NavigationIcon.svg';
 import EditIcon from '../../../../../asset/icon/EditIcon.svg';

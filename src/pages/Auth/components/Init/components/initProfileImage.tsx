@@ -3,9 +3,9 @@ import { useMutation } from 'react-query';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { AuthType } from '@src/types/data';
-import { setNewUser } from '../../../../../api/user';
-import { authState } from '../../../../../data';
-import CameraIcon from '../../../../../asset/icon/mdi_camera.svg';
+import { authState } from '@src/data';
+import CameraIcon from '@src/asset/icon/mdi_camera.svg';
+import { setNewUser } from '@src/api/user';
 import { InitContextType } from '../index.d';
 
 export default function InitProfileImage() {

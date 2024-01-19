@@ -1,4 +1,3 @@
-import React from 'react';
 import { useQuery } from 'react-query';
 import OpenGraphViewer from '../../../components/OpenGraphViewer';
 import getOpenGraph from '../../../api/og';

@@ -1,4 +1,3 @@
-import React from 'react';
 import category from '../../Map/components/BottomSheetComponent/data';
 
 export default function IntroCategory({ idx }: { idx: number }) {

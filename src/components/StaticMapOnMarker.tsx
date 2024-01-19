@@ -1,14 +1,13 @@
-import React from 'react';
 import { StaticMap } from 'react-kakao-maps-sdk';
 import { PositionType } from '@src/types/map';
-import markerPin from '../../../../../asset/icon/markerPin.svg';
+import markerPin from '@src/asset/icon/markerPin.svg';
 
-export default function IntroStaticMap({
+export default function StaticMapOnMarker({
   img,
   position,
 }: {
-  img: string;
-  position: PositionType;
+  img?: string;
+  position?: PositionType;
 }) {
   return (
     <div className="relative aspect-[1.9197] w-full rounded-xl bg-gray-300">
@@ -37,3 +36,8 @@ export default function IntroStaticMap({
     </div>
   );
 }
+
+StaticMapOnMarker.defaultProps = {
+  img: undefined,
+  position: undefined,
+};

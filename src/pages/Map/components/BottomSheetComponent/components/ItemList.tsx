@@ -1,4 +1,3 @@
-import React from 'react';
 import { GoodsPageDTO } from '@src/types/goods';
 import { PreViewerMarker } from '@src/pages/Map/index.d';
 import ItemComponent from './ItemComponent';

@@ -1,5 +1,4 @@
 import { GoodsPageDTO } from '@src/types/goods';
-import React from 'react';
 
 export default function ProductContent({
   data,

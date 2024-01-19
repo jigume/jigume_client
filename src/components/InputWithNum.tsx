@@ -1,4 +1,3 @@
-import React from 'react';
 import { InputWithNumType } from '.';
 
 export default function InputWithNum({

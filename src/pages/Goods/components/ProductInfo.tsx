@@ -1,4 +1,3 @@
-import React from 'react';
 import { useQuery } from 'react-query';
 import { GoodsPageDTO } from '@src/types/goods';
 import getOpenGraph from '../../../api/og';

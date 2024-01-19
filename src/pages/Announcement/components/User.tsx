@@ -1,11 +1,10 @@
-import React from 'react';
 import Avatar from 'boring-avatars';
 import {
   primaryBlue,
   primaryJade,
   primaryPurple,
   primaryYello,
-} from '../../../common';
+} from '@src/common';
 
 const nickname = [
   'jeju',

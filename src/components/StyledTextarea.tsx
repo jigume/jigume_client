@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyledTextareaType } from '.';
 
 export default function StyledTextarea({

@@ -1,12 +1,11 @@
-import React from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useRecoilState } from 'recoil';
 import { add } from 'date-fns';
 import { AuthType } from '@src/types/data';
+import { authState } from '@src/data';
+import { codeProvide } from '@src/api/user';
 import Loading from '../Map/components/Loading';
-import { authState } from '../../data';
-import { codeProvide } from '../../api/user';
 
 export default function Auth() {
   const navigate = useNavigate();

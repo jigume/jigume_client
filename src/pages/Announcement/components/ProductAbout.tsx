@@ -1,5 +1,4 @@
-import React from 'react';
-import ItemComponent from '../../Map/components/BottomSheetComponent/components/ItemComponent';
+import ItemComponent from '@src/pages/Map/components/BottomSheetComponent/components/ItemComponent';
 
 export default function ProductAbout() {
   return (

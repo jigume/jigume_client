@@ -1,4 +1,3 @@
-import React from 'react';
 import { FilterType } from '../index.d';
 
 export default function CategoryTag({

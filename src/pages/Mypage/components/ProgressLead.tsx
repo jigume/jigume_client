@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function ProgressLead() {
   return (
     <div className="py-2">

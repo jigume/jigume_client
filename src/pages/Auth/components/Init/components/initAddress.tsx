@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import DaumPostcodeEmbed, { Address } from 'react-daum-postcode';
-import NextButton from '../../../../../components/NextButton';
-import CloseIcon from '../../../../../asset/icon/CloseIcon.svg';
+import NextButton from '@src/components/NextButton';
+import CloseIcon from '@src/asset/icon/CloseIcon.svg';
 import { InitContextType } from '../index.d';
 
 export default function InitAddress() {

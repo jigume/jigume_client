@@ -1,10 +1,9 @@
-import React from 'react';
 import { useRecoilState } from 'recoil';
 import { AuthType } from '@src/types/data';
-import logo from '../../../asset/images/login/login_logo.png';
-import kakaoImg from '../../../asset/images/login/kakao_login.png';
-import naverImg from '../../../asset/images/login/naver_login.png';
-import { authState } from '../../../data';
+import logo from '@src/asset/images/login/login_logo.png';
+import kakaoImg from '@src/asset/images/login/kakao_login.png';
+import naverImg from '@src/asset/images/login/naver_login.png';
+import { authState } from '@src/data';
 
 export default function Login() {
   const KAKAO_KEY = import.meta.env.VITE_KAKAO_REST_KEY;

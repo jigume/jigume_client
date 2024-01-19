@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function CommentsText() {
   return (
     <div className="m-4 flex flex-row pl-12 pr-5 text-[14px]">

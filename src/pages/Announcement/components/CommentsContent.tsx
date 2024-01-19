@@ -1,7 +1,6 @@
-import React from 'react';
+import addCommentIcon from '@src/asset/icon/addCommentIcon.svg';
 import User from './User';
 import CommentsText from './CommentsText';
-import addCommentIcon from '../../../asset/icon/addCommentIcon.svg';
 
 export default function CommentsContent() {
   return (

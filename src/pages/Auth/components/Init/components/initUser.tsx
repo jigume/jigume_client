@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { useMutation } from 'react-query';
-import NextButton from '../../../../../components/NextButton';
+import NextButton from '@src/components/NextButton';
+import { checkNickname } from '@src/api/user';
+import { handleTextFieldColor, validNickname } from '@src/utils';
 import CircularProgress from './circularProgress';
-import { checkNickname } from '../../../../../api/user';
-import { handleTextFieldColor, validNickname } from '../../../../../utils';
 import { InitContextType } from '../index.d';
 
 export default function InitUser() {

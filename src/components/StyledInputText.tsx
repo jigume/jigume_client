@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyledInputTextType } from './index.d';
 
 export default function StyledInputText({

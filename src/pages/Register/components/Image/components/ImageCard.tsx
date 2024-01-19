@@ -1,4 +1,3 @@
-import React from 'react';
 import CloseIcon from '../../../../../asset/icon/CloseIcon.svg';
 
 export default function ImageCard({

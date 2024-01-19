@@ -1,5 +1,4 @@
-import React from 'react';
-import SendIcon from '../../../asset/icon/SendIcon.svg';
+import SendIcon from '@src/asset/icon/SendIcon.svg';
 // import SendIcon from '../../../../../asset/icon/SendIcon.svg';
 
 export default function CommentsInput() {

@@ -1,7 +1,6 @@
-import React from 'react';
-import Camera from '../../../../../asset/icon/initAccess/camera.svg';
-import SaveArea from '../../../../../asset/icon/initAccess/saveArea.svg';
-import Position from '../../../../../asset/icon/initAccess/position.svg';
+import Camera from '@src/asset/icon/initAccess/camera.svg';
+import SaveArea from '@src/asset/icon/initAccess/saveArea.svg';
+import Position from '@src/asset/icon/initAccess/position.svg';
 
 export default function InitAccessRights() {
   return (
