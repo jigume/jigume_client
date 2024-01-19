@@ -53,7 +53,7 @@ function Register() {
           className="pr-2"
         >
           <img
-            className="h-12 w-12 cursor-pointer p-2"
+            className="size-12 cursor-pointer p-2"
             src={ChevronLeft}
             alt="뒤로가기"
           />

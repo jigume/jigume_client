@@ -20,7 +20,7 @@ export default function ItemList({
   if (preViewer && goodsArr.length > 0)
     return (
       <div
-        className="absolute top-[96px] h-full w-full overflow-x-scroll py-[96px]"
+        className="absolute top-[96px] size-full overflow-x-scroll py-[96px]"
         style={{ height: thresholds[sheetLevel] }}
       >
         <ItemComponent index={preViewer.goodsId} item={goodsArr[0]} />
@@ -31,7 +31,7 @@ export default function ItemList({
   if (goodsArr.length === 0)
     return (
       <div
-        className="absolute top-[96px] h-full w-full overflow-x-scroll pb-[192px] pt-[96px]"
+        className="absolute top-[96px] size-full overflow-x-scroll pb-[192px] pt-[96px]"
         style={{ height: thresholds[sheetLevel] }}
       >
         {[1, 2, 3].map((item) => (

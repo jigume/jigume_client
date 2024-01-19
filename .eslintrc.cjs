@@ -25,7 +25,6 @@ module.exports = {
     'postcss.config.js',
     '.eslintrc.cjs',
     '*d.ts',
-    'server.js',
   ],
   plugins: ['prettier', '@typescript-eslint', 'import'],
   rules: {
@@ -38,7 +37,6 @@ module.exports = {
         endOfLine: 'auto',
       },
     ],
-    'no-new': 0,
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/button-has-type': 0,

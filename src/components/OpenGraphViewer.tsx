@@ -11,12 +11,12 @@ export default function OpenGraphViewer({
       <div className={`aspect-square ${imgSize}`}>
         {openGraph?.image ? (
           <img
-            className="h-full w-full object-cover"
+            className="size-full object-cover"
             src={openGraph?.image?.url}
             alt="meta 이미지"
           />
         ) : (
-          <div className="h-full w-full animate-pulse bg-gray-300 object-cover" />
+          <div className="size-full animate-pulse bg-gray-300 object-cover" />
         )}
       </div>
 

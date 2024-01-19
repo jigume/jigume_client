@@ -14,7 +14,7 @@ export default function Submitted() {
   return (
     <div className="absolute top-0 z-20 h-[100svh] w-full max-w-screen-sm bg-black/60 p-4">
       <div
-        className="absolute left-0 top-0 z-10 h-full w-full"
+        className="absolute left-0 top-0 z-10 size-full"
         onClick={() => navigate(url)}
       />
 
@@ -24,9 +24,9 @@ export default function Submitted() {
           animate={{ scale: 1 }}
           transition={{ duration: 1, else: 'easeInOut' }}
           style={{ backgroundImage: `url(${submintted})` }}
-          className="apsolute z-0 h-full w-full bg-cover bg-center bg-no-repeat"
+          className="apsolute z-0 size-full bg-cover bg-center bg-no-repeat"
         />
-        <div className="absolute top-0 z-50 flex h-full w-full flex-col items-center justify-between gap-5 py-4">
+        <div className="absolute top-0 z-50 flex size-full flex-col items-center justify-between gap-5 py-4">
           <div />
           <div className="flex flex-col justify-center gap-4">
             <img

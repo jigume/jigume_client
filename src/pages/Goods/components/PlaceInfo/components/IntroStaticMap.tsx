@@ -16,13 +16,13 @@ export default function IntroStaticMap({
         <img src={markerPin} alt="위치" />
         <img
           src={img}
-          className="absolute left-[5px] top-[5px] z-50 h-[22px] w-[22px] rounded-full bg-gray-300 "
+          className="absolute left-[5px] top-[5px] z-50 size-[22px] rounded-full bg-gray-300"
           alt="거래 위치"
         />
       </div>
       {position ? (
         <StaticMap
-          className="h-full w-full rounded-xl"
+          className="size-full rounded-xl"
           marker={false}
           center={{
             // 마커를 위한 위치 조정

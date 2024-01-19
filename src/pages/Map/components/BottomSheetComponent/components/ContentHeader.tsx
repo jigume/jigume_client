@@ -70,11 +70,7 @@ export default function ContentHeader({
               {open ? (
                 '완료'
               ) : (
-                <img
-                  src={FilterIcon}
-                  className="h-[24px] w-[24px]"
-                  alt="필터"
-                />
+                <img src={FilterIcon} className="size-[24px]" alt="필터" />
               )}
             </div>
           </div>

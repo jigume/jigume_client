@@ -4,7 +4,7 @@ export default function ProgressLead() {
   return (
     <div className="py-2">
       <div className="flex gap-4 pb-3">
-        <div className="aspect-square h-16 w-16 rounded-md bg-zinc-300" />
+        <div className="aspect-square size-16 rounded-md bg-zinc-300" />
         <div className="text-sm">
           <div>오늘의 집에 이거 같이 사실 분~!!</div>
           <div className="flex gap-1 pt-1 font-light text-gray-600">

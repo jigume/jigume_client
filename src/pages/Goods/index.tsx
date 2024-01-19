@@ -47,7 +47,7 @@ export default function Goods() {
         className="absolute top-0 z-50 pr-2 pt-2"
       >
         <img
-          className="h-12 w-12 cursor-pointer p-2"
+          className="size-12 cursor-pointer p-2"
           src={ChevronLeft}
           alt="뒤로가기"
         />

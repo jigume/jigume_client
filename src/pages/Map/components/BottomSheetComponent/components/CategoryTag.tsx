@@ -29,7 +29,7 @@ export default function CategoryTag({
       }}
     >
       <img
-        className="mr-1 inline-block h-[16px] w-[16px]"
+        className="mr-1 inline-block size-[16px]"
         src={item.icon}
         alt="필터"
       />

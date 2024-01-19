@@ -35,7 +35,7 @@ function CalendarDate({
         {date.getFullYear()}년 {date.getMonth() + 1}월 {date.getDate()}일
       </button>
       {open && (
-        <div className="fixed inset-0 flex h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none ">
+        <div className="fixed inset-0 flex size-full items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none">
           <div
             className="fixed left-0 top-0 z-30 h-[100svh] w-screen bg-black/10"
             onClick={() => setOpen(false)}

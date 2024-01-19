@@ -8,7 +8,7 @@ export default function LoadingButton() {
       aria-label="Loading"
     >
       <svg
-        className="mx-auto h-6 w-6 animate-spin fill-white dark:text-white/50"
+        className="mx-auto size-6 animate-spin fill-white dark:text-white/50"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

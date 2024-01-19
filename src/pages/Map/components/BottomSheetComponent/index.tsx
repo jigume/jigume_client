@@ -53,7 +53,7 @@ export default function BottomSheetComponent({
     <>
       {isOpen && (
         <div
-          className="fixed left-0 top-0 z-[30] h-screen w-screen cursor-pointer touch-pan-y duration-300 ease-out"
+          className="size-screen fixed left-0 top-0 z-[30] cursor-pointer touch-pan-y duration-300 ease-out"
           onClick={() => handleSheet('min')}
         />
       )}

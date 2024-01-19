@@ -12,7 +12,7 @@ export default function ImageCard({
     <div className="relative mt-6 inline-flex aspect-square w-full shrink-0 justify-center rounded-lg bg-white">
       <img
         src={image}
-        className="box-content h-full w-full rounded-lg border border-gray-100 bg-gray-300 object-cover"
+        className="box-content size-full rounded-lg border border-gray-100 bg-gray-300 object-cover"
         alt="상품 이미지"
       />
       {/* close button */}

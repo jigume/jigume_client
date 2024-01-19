@@ -20,17 +20,17 @@ export default function ItemComponent({
 
   return (
     <div
-      className={`flex w-full cursor-pointer flex-row gap-4 px-4 pb-4 ${
+      className={`flex w-full cursor-pointer flex-row gap-4 px-4 pb-4${
         !item ? 'animate-pulse' : ''
       }`}
       onClick={() => navigate(`/goods/${index}`)}
     >
       {!item ? (
-        <div className="border-gray50 h-32 w-32 flex-none rounded-lg border bg-gray-100" />
+        <div className="border-gray50 size-32 flex-none rounded-lg border bg-gray-100" />
       ) : (
         <img
           src={item.goodsImagesList[0].goodsImgUrl}
-          className="border-gray50 h-32 w-32 flex-none rounded-lg border bg-gray-100 object-cover"
+          className="border-gray50 size-32 flex-none rounded-lg border bg-gray-100 object-cover"
           alt="상품 이미지"
         />
       )}
@@ -43,7 +43,7 @@ export default function ItemComponent({
 
         <div className="flex flex-row items-center gap-2 pb-2">
           {!item ? (
-            <div className="h-[18px] w-[18px] rounded-full bg-gray-100" />
+            <div className="size-[18px] rounded-full bg-gray-100" />
           ) : (
             <div />
           )}

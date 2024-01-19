@@ -72,15 +72,15 @@ export default function Edit() {
                 if (e.target.files) encodeFileToBase64(e.target.files[0]);
               }}
             />
-            <div className="relative aspect-square h-32 w-32">
+            <div className="relative aspect-square size-32">
               <img
-                className="h-full w-full rounded-full object-cover"
+                className="size-full rounded-full object-cover"
                 src={newProfile.image}
                 alt="프로필 이미지"
               />
               <img
                 src={cameraIcon}
-                className="absolute bottom-0 right-0 h-11 w-11 rounded-[20px] bg-white p-2.5 pt-3 shadow-md"
+                className="absolute bottom-0 right-0 size-11 rounded-[20px] bg-white p-2.5 pt-3 shadow-md"
                 alt="엘범에서 불러오기"
               />
             </div>
@@ -113,7 +113,7 @@ export default function Edit() {
           }`}
         >
           {valid && (
-            <div className="mr-2 inline-block h-2 w-2 rounded-full bg-green-500 leading-4" />
+            <div className="mr-2 inline-block size-2 rounded-full bg-green-500 leading-4" />
           )}
           <span>
             최소 2글자, 최대 10글자까지 한글,영어, 숫자만 입력가능해요.
@@ -121,7 +121,7 @@ export default function Edit() {
         </div>
         {isError && (
           <div className="text-xs text-red-600">
-            <div className="mr-2 inline-block h-2 w-2 rounded-full bg-red-600 leading-4" />
+            <div className="mr-2 inline-block size-2 rounded-full bg-red-600 leading-4" />
             <span>중복된 닉네임 입니다.</span>
           </div>
         )}

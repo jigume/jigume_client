@@ -86,7 +86,7 @@ function Links() {
                 onClick={() => setCategoryIdx(item.idx)}
               >
                 <img
-                  className="mr-2 inline-block h-[16px] w-[16px]"
+                  className="mr-2 inline-block size-[16px]"
                   src={item.icon}
                   alt={item.name}
                 />

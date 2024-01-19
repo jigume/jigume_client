@@ -38,7 +38,7 @@ export default function HeaderProfile({
         {data ? (
           <Avatar variant="beam" />
         ) : (
-          <div className="h-10 w-10 shrink-0 rounded-full bg-gray-200" />
+          <div className="size-10 shrink-0 rounded-full bg-gray-200" />
         )}
         {data ? (
           <div>

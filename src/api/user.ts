@@ -35,7 +35,7 @@ export const setNewUser = async (param: InitUserType) => {
  */
 export const handleRefreshToken = async (auth: AuthType) => {
   if (
-    (auth?.expired as Date).getTime() > new Date().getTime() ||
+    (auth?.expired as number) > new Date().getTime() ||
     !auth.accessToken ||
     !auth.refreshToken
   )

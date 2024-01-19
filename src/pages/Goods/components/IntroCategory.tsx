@@ -6,11 +6,7 @@ export default function IntroCategory({ idx }: { idx: number }) {
 
   return (
     <span className="rounded-md border border-gray-100 bg-white px-2 py-1">
-      <img
-        className="mr-1 inline-block h-[16px] w-[16px]"
-        src={icon}
-        alt={name}
-      />
+      <img className="mr-1 inline-block size-[16px]" src={icon} alt={name} />
       {name}
     </span>
   );

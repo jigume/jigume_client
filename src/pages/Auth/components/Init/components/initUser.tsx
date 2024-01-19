@@ -60,7 +60,7 @@ export default function InitUser() {
           }`}
         >
           {valid && (
-            <div className="mr-2 inline-block h-2 w-2 rounded-full bg-green-500 leading-4" />
+            <div className="mr-2 inline-block size-2 rounded-full bg-green-500 leading-4" />
           )}
           <span>
             최소 2글자, 최대 10글자까지 한글,영어, 숫자만 입력가능해요.
@@ -68,7 +68,7 @@ export default function InitUser() {
         </div>
         {isError && (
           <div className="text-xs text-red-600">
-            <div className="mr-2 inline-block h-2 w-2 rounded-full bg-red-600 leading-4" />
+            <div className="mr-2 inline-block size-2 rounded-full bg-red-600 leading-4" />
             <span>중복된 닉네임 입니다.</span>
           </div>
         )}
