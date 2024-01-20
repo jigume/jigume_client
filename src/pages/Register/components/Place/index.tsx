@@ -26,6 +26,18 @@ function Place() {
 
   const isMovable = data.address !== '';
 
+  const initAddress = () => {
+    setData((prev) => ({
+      ...prev,
+      address: '',
+      goodsDto: {
+        ...prev.goodsDto,
+        mapX: undefined,
+        mapY: undefined,
+      },
+    }));
+  };
+
   const { mutate, isLoading } = useMutation({
     mutationFn: getPlaces,
     onSuccess: (res) => {
@@ -88,6 +100,7 @@ function Place() {
         <Selector
           index={index}
           setIndex={setIndex}
+          initAddress={() => initAddress()}
           places={places}
           isLoading={position ? isLoading : true}
         />
