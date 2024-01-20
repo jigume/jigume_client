@@ -6,13 +6,11 @@ import { NearPlacesType } from '@src/types/register';
 export default function Selector({
   index,
   setIndex,
-  initAddress,
   places,
   isLoading,
 }: {
   index: number;
   setIndex: React.Dispatch<React.SetStateAction<number>>;
-  initAddress: () => void;
   places: NearPlacesType[];
   isLoading: boolean;
 }) {
@@ -57,10 +55,7 @@ export default function Selector({
           ) : (
             <>
               <div
-                onClick={() => {
-                  handleIdx(-1);
-                  initAddress();
-                }}
+                onClick={() => handleIdx(-1)}
                 className="cursor-pointer px-3 py-1.5 active:bg-slate-200"
               >
                 직접 입력할게요

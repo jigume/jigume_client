@@ -85,6 +85,8 @@ function Place() {
           mapY: places[index].y,
         },
       }));
+    } else if (index === -1) {
+      initAddress();
     }
   }, [index]);
 
@@ -100,7 +102,6 @@ function Place() {
         <Selector
           index={index}
           setIndex={setIndex}
-          initAddress={() => initAddress()}
           places={places}
           isLoading={position ? isLoading : true}
         />
