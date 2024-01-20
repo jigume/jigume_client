@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import DaumPostcodeEmbed, { Address } from 'react-daum-postcode';
 import { RegisterDataType } from '@src/types/register';
-import CloseIcon from '../../../../../asset/icon/CloseIcon.svg';
+import CloseIcon from '@src/asset/icon/CloseIcon.svg';
 
 function Postcode({
   data,
@@ -47,11 +47,11 @@ function Postcode({
   };
 
   return (
-    <div>
+    <div className="relative top-16">
       <button
         data-modal-target="defaultModal"
         data-modal-toggle="defaultModal"
-        className="w-full rounded-md border border-slate-300 p-3  text-right text-sm font-medium focus:border-success focus:outline-none focus:ring-1 focus:ring-success disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none"
+        className="w-full rounded-md border border-slate-300 p-3 text-right text-sm font-medium focus:border-success focus:outline-none focus:ring-1 focus:ring-success disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none"
         type="button"
         onClick={() => setOpen((prev) => !prev)}
         value={data.address}

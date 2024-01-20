@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { RegisterDataType } from '@src/types/register';
-import ChevronLeft from '../../asset/icon/chevronLeft.svg';
-import { vaildRegister } from '../../utils';
+import ChevronLeft from '@src/asset/icon/chevronLeft.svg';
+import { vaildRegister } from '@src/utils';
 
 export const initData: RegisterDataType = {
   image: [],
@@ -29,10 +29,10 @@ function Register() {
   const navigate = useNavigate();
 
   // 데이터의 유효성 확인하여 입력 데이터가 없는 페이지로 이동
-  useEffect(() => {
-    const url = vaildRegister(location.pathname, data);
-    if (url !== undefined) navigate(url);
-  }, [location]);
+  // useEffect(() => {
+  //   const url = vaildRegister(location.pathname, data);
+  //   if (url !== undefined) navigate(url);
+  // }, [location]);
 
   // 마운트 이벤트 시 폼 초기화
   useEffect(() => {

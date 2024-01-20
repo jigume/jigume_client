@@ -17,6 +17,19 @@ export const getCurrentLocation = async (
   return response;
 };
 
+export const getCurrentLocation2 = () => {
+  let response;
+
+  navigator.geolocation.getCurrentPosition((pos) => {
+    response = {
+      lat: pos.coords.latitude,
+      lng: pos.coords.longitude,
+    };
+  });
+
+  return response;
+};
+
 export const tempRandMarker = (position: PositionType) => {
   const radius = 500;
 

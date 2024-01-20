@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { GoodsPageDTO } from '@src/types/goods';
 import { PositionType } from '@src/types/map';
-import IntroStaticMap from '@src/components/StaticMapOnMarker';
+import IntroStaticMap from '@src/components/MarkerOnStaticMap';
 
 export default function PlaceInfo({
   data,

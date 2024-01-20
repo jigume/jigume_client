@@ -11,6 +11,10 @@ export default {
         primaryBlue: '#0D99FF',
         success: '#1EBAD2',
       },
+      transitionProperty: {
+        'height': 'height',
+        'max-height': 'max-height',
+      },
     },
     screens: {
       sm: '444px',

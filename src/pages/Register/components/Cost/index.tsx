@@ -5,8 +5,21 @@ import NextButton from '../../../../components/NextButton';
 
 function Cost() {
   const { data, setData } = useOutletContext<RegisterContextType>();
-
   const isMovable = data.goodsDto.goodsPrice && data.goodsDto.deliveryFee;
+
+  const handleChangeGoods = (value: string | undefined) => {
+    setData((prev) => ({
+      ...prev,
+      goodsDto: { ...prev.goodsDto, goodsPrice: Number(value) },
+    }));
+  };
+
+  const handleChangeDelivery = (value: string | undefined) => {
+    setData((prev) => ({
+      ...prev,
+      goodsDto: { ...prev.goodsDto, deliveryFee: Number(value) },
+    }));
+  };
 
   return (
     <div className="flex h-[calc(100svh-48px)] w-full flex-col justify-between">
@@ -22,12 +35,7 @@ function Cost() {
           <div className="mb-2 text-sm  font-thin">상품 구매가</div>
           <StyledCurrencyInput
             value={data.goodsDto.goodsPrice}
-            onValueChange={(value) =>
-              setData((prev) => ({
-                ...prev,
-                goodsDto: { ...prev.goodsDto, goodsPrice: Number(value) },
-              }))
-            }
+            onValueChange={handleChangeGoods}
           />
         </div>
         <div>
@@ -36,12 +44,7 @@ function Cost() {
           </div>
           <StyledCurrencyInput
             value={data.goodsDto.deliveryFee}
-            onValueChange={(value) =>
-              setData((prev) => ({
-                ...prev,
-                goodsDto: { ...prev.goodsDto, deliveryFee: Number(value) },
-              }))
-            }
+            onValueChange={handleChangeDelivery}
           />
         </div>
       </div>
