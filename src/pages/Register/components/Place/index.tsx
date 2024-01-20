@@ -53,13 +53,26 @@ function Place() {
   }, [position]);
 
   useEffect(() => {
+    // 거리 순으로 정렬
+    setPlaces((prev) => {
+      const temp = prev;
+      temp.sort((a, b) => a.distance - b.distance);
+      return temp;
+    });
+  }, [places]);
+
+  // 주변 위치를 거래 장소로 지정했을 시
+  useEffect(() => {
     if (index >= 0) {
-      console.log(index, places[index]);
-      // setData((prev) => ({
-      //   ...prev,
-      //   mapX: places[index].x,
-      //   mapY: places[index].y,
-      // }));
+      setData((prev) => ({
+        ...prev,
+        address: places[index].place_name,
+        goodsDto: {
+          ...prev.goodsDto,
+          mapX: places[index].x,
+          mapY: places[index].y,
+        },
+      }));
     }
   }, [index]);
 
@@ -80,21 +93,27 @@ function Place() {
         />
         <div className="flex flex-col gap-4">
           {index === -1 && <Postcode data={data} setData={setData} />}
-          {data.goodsDto.mapX ||
-            (index >= 0 && (
-              <div className="relative top-16">
-                <div className="mb-2 align-top text-sm font-thin">
-                  픽업 위치 확인
-                </div>
-                <MarkerOnStaticMap
-                  position={{
-                    lat: places[index].y,
-                    lng: places[index].x,
-                  }}
-                  markerImg={RegistMarker}
-                />
+          {(data.goodsDto.mapX || index >= 0) && (
+            <div className="relative top-16">
+              <div className="mb-2 align-top text-sm font-thin">
+                픽업 위치 확인
               </div>
-            ))}
+              <MarkerOnStaticMap
+                position={
+                  index >= 0
+                    ? {
+                        lat: places[index].y,
+                        lng: places[index].x,
+                      }
+                    : {
+                        lat: data.goodsDto.mapY as number,
+                        lng: data.goodsDto.mapX as number,
+                      }
+                }
+                markerImg={RegistMarker}
+              />
+            </div>
+          )}
         </div>
       </div>
 
