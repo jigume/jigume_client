@@ -10,7 +10,7 @@ import jigumeAxios from './axios';
 export const getGoodsList = async (
   bounds: kakao.maps.LatLngBounds | null
 ): Promise<GoodsMarkerListType | 'retry'> => {
-  if (!bounds) return 'retry';
+  // if (!bounds) return 'retry';
 
   const boundArr = stringLatLng2Arr(bounds);
   const response = await jigumeAxios
@@ -29,7 +29,7 @@ export const getGoodsList = async (
 export const getSheetGoods = async (
   preViewer: PreViewerMarker
 ): Promise<GoodsDetailDTO | 'retry'> => {
-  if (!preViewer) return 'retry';
+  // if (!preViewer) return 'retry';
 
   const response = await jigumeAxios
     .get(`/api/goods/${preViewer.goodsId}/page`)
@@ -43,7 +43,7 @@ export const getSheetList = async ({
 }: {
   bounds: kakao.maps.LatLngBounds | undefined;
 }): Promise<GoodsListDTO | 'retry'> => {
-  if (!bounds) return 'retry';
+  // if (!bounds) return 'retry';
 
   const boundArr = stringLatLng2Arr(bounds);
   const response = await jigumeAxios

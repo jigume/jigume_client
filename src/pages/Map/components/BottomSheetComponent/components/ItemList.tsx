@@ -30,7 +30,7 @@ export default function ItemList({
   if (goodsArr.length === 0)
     return (
       <div
-        className="absolute top-[96px] size-full overflow-x-scroll pb-[192px] pt-[96px]"
+        className="absolute top-[96px] flex size-full flex-col gap-2 overflow-x-scroll pb-[192px] pt-[96px]"
         style={{ height: thresholds[sheetLevel] }}
       >
         {[1, 2, 3].map((item) => (
@@ -40,7 +40,7 @@ export default function ItemList({
     );
 
   return (
-    <div className="absolute top-[96px] h-full overflow-x-scroll pb-[192px] pt-[96px]">
+    <div className="absolute top-[96px] flex h-full flex-col gap-2 overflow-x-scroll pb-[192px] pt-[96px]">
       {goodsArr.map((item) => {
         const trueArr = filter.filter(({ checked }) => checked);
 
