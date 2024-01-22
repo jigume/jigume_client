@@ -12,6 +12,7 @@ import { getPlaces } from '@src/api/register';
 import NextButton from '@src/components/NextButton';
 import MarkerOnStaticMap from '@src/components/MarkerOnStaticMap';
 import RegistMarker from '@src/asset/icon/RegistMarker.svg';
+import PreviewMap from '@src/components/PreviewMap';
 import Postcode from './components/postcode';
 import Selector from './components/Selector';
 
@@ -112,7 +113,21 @@ function Place() {
               <div className="mb-2 align-top text-sm font-thin">
                 픽업 위치 확인
               </div>
-              <MarkerOnStaticMap
+              {/* <MarkerOnStaticMap
+                position={
+                  index >= 0
+                    ? {
+                        lat: places[index].y,
+                        lng: places[index].x,
+                      }
+                    : {
+                        lat: data.goodsDto.mapY as number,
+                        lng: data.goodsDto.mapX as number,
+                      }
+                }
+                markerImg={RegistMarker}
+              /> */}
+              <PreviewMap
                 position={
                   index >= 0
                     ? {
