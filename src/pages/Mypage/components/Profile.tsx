@@ -40,7 +40,10 @@ export default function Profile() {
     <div className="mx-auto flex max-w-sm flex-col gap-2">
       <div className="flex items-center justify-between gap-4 pb-8 pt-4">
         <div className="flex items-center gap-4">
-          {/* <img className="h-14 w-14 rounded-full bg-zinc-300" /> */}
+          <img
+            className="size-14 rounded-full bg-zinc-300 text-[0px]"
+            alt="프로필 이미지"
+          />
           <div>
             <div className="text-base">
               <span>졸린 춘식이</span>
@@ -49,7 +52,7 @@ export default function Profile() {
                 onClick={() => navigate('/mypage/edit')}
                 className="inline-block aspect-square cursor-pointer pb-1 pl-1 active:scale-75"
                 src={EditIcon}
-                alt="프로필 이미지"
+                alt="프로필 수정"
               />
             </div>
             <div className="text-sm text-zinc-500">아직은 공동구매 새싹이</div>
