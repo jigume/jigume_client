@@ -23,7 +23,7 @@ export default function ProductInfo({
     >
       <div>상품정보</div>
 
-      <OpenGraphViewer openGraph={openGraph.data} link={data!.link} />
+      <OpenGraphViewer openGraph={openGraph.data} link={data?.link as string} />
       <div className="flex flex-col gap-2">
         {data ? (
           <>

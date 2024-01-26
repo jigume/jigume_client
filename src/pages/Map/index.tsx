@@ -57,9 +57,13 @@ export default function Map() {
       onSuccess: (res) => {
         // init map list
         if (res !== 'retry') {
-          initMap(res.markerList);
           // 중복 방지
-          if (!markerList) setMarkerList(res.markerList);
+          res.markerList.forEach((item) => {
+            setMarkerList((prev) =>
+              prev?.filter((prevItem) => prevItem.goodsId !== item.categoryId)
+            );
+          });
+          initMap(res.markerList);
         }
       },
     }

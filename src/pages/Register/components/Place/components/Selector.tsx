@@ -48,29 +48,27 @@ export default function Selector({
         className={`transition-max-height duration-200 ease-in-out ${open ? 'max-h-40 overflow-scroll' : 'max-h-0 overflow-hidden'}`}
       >
         <div className="pt-1.5">
+          <div
+            onClick={() => handleIdx(-1)}
+            className="cursor-pointer px-3 py-1.5 active:bg-slate-200"
+          >
+            직접 입력할게요
+          </div>
           {isLoading ? (
             <div className="cursor-pointer px-3 py-1.5 active:bg-slate-200">
               주변 장소 찾는 중...
             </div>
           ) : (
-            <>
+            places &&
+            places.map((item, idx) => (
               <div
-                onClick={() => handleIdx(-1)}
+                onClick={() => handleIdx(idx)}
                 className="cursor-pointer px-3 py-1.5 active:bg-slate-200"
+                key={item.id}
               >
-                직접 입력할게요
+                {item.place_name}
               </div>
-              {places &&
-                places.map((item, idx) => (
-                  <div
-                    onClick={() => handleIdx(idx)}
-                    className="cursor-pointer px-3 py-1.5 active:bg-slate-200"
-                    key={item.id}
-                  >
-                    {item.place_name}
-                  </div>
-                ))}
-            </>
+            ))
           )}
         </div>
       </div>
