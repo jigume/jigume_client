@@ -70,10 +70,7 @@ export default function Map() {
   );
 
   // 클러스터 완료되었을 때 데이터를 읽어 DOM으로 변환
-  const drawCluster = (
-    target: kakao.maps.MarkerClusterer,
-    clusters: kakao.maps.Cluster[]
-  ) => {
+  const drawCluster = () => {
     if (clusterRef.current)
       kakao.maps.event.addListener(
         clusterRef.current,
@@ -173,10 +170,10 @@ export default function Map() {
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
-      {position ? (
+      {position || user.position ? (
         <KakaoMap
           ref={mapRef}
-          center={position}
+          center={(position as PositionType) || user.position}
           isPanto
           className="h-[100svh] w-full"
           level={3}

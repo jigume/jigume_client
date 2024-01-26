@@ -17,6 +17,11 @@ export type GoodsListDTO = {
   categoryId: number;
 };
 
+export type GoodSheetDTO = {
+  goodsListDtoList: GoodsListDTO[];
+  hasNext: boolean;
+};
+
 // 지도의 마커용
 type Marker = {
   goodsId: number;

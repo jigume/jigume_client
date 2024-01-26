@@ -1,4 +1,4 @@
-import { GoodsPageDTO } from '@src/types/goods';
+import { GoodsListDTO, GoodsPageDTO } from '@src/types/goods';
 import { PreViewerMarker } from '@src/pages/Map/index.d';
 import ItemComponent from './ItemComponent';
 import { thresholds } from '../../../../../utils';
@@ -10,7 +10,7 @@ export default function ItemList({
   sheetLevel,
   preViewer,
 }: {
-  goodsArr: GoodsPageDTO[];
+  goodsArr: GoodsListDTO[];
   filter: FilterType[];
   sheetLevel: SheetLevelType;
   preViewer: PreViewerMarker;
@@ -22,7 +22,15 @@ export default function ItemList({
         className="absolute top-[96px] size-full overflow-x-scroll py-[96px]"
         style={{ height: thresholds[sheetLevel] }}
       >
-        <ItemComponent index={preViewer.goodsId} item={goodsArr[0]} />
+        <ItemComponent
+          index={preViewer.goodsId}
+          imageUrl={goodsArr[0].repImgUrl}
+          goodsName={goodsArr[0].goodsName}
+          sellerNickname={goodsArr[0].sellerInfoDto.sellerNickname}
+          sellCount={goodsArr[0].sellerInfoDto.sellCount}
+          goodsPrice={goodsArr[0].goodsPrice}
+          realDeliveryFee={goodsArr[0].goodsDeliveryPrice}
+        />
       </div>
     );
 
@@ -45,13 +53,18 @@ export default function ItemList({
         const trueArr = filter.filter(({ checked }) => checked);
 
         if (!trueArr.find(({ idx }) => idx === item.categoryId))
-          return <div key={item.boardId} />;
+          return <div key={item.goodsId} />;
         return (
           item && (
             <ItemComponent
-              key={item.boardId}
-              index={item.boardId}
-              item={item}
+              key={item.goodsId}
+              index={item.goodsId}
+              imageUrl={item.repImgUrl}
+              goodsName={item.goodsName}
+              sellerNickname={item.sellerInfoDto.sellerNickname}
+              sellCount={item.sellerInfoDto.sellCount}
+              goodsPrice={item.goodsPrice}
+              realDeliveryFee={item.goodsDeliveryPrice}
             />
           )
         );

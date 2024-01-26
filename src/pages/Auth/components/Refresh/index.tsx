@@ -21,8 +21,8 @@ export default function Refresh() {
       }));
     },
     onError: () => {
-      setAuth(initAuth);
-      setUser(initUser);
+      // setAuth(initAuth);
+      // setUser(initUser);
     },
   });
 

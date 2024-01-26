@@ -10,9 +10,7 @@ export default function HeaderProfile({
   const today = new Date();
 
   const getdDay = (date: string) => {
-    console.log(date);
     const dDay = differenceInDays(today, new Date(date));
-    console.log(dDay);
     if (dDay > 99) return '99+';
     return dDay;
   };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useMutation } from 'react-query';
-import { GoodsPageDTO } from '@src/types/goods';
+import { GoodsListDTO, GoodsPageDTO } from '@src/types/goods';
 import { getSheetGoods, getSheetList } from '../../../../api/goods';
 import { BottomSheetType, FilterType } from './index.d';
 import category from './data';
@@ -16,7 +16,7 @@ export default function BottomSheetComponent({
   preViewer,
   bounds,
 }: BottomSheetType) {
-  const [goodsArr, setGoodsArr] = useState<GoodsPageDTO[] | []>([]);
+  const [goodsArr, setGoodsArr] = useState<GoodsListDTO[]>([]);
   const [filter, setFilter] = useState<FilterType[]>(
     category.map((item) => ({ ...item, checked: true }))
   );
@@ -29,7 +29,21 @@ export default function BottomSheetComponent({
     mutationFn: () => getSheetGoods(preViewer),
     onSuccess: (res) => {
       if (res === 'retry') preViewMutate(preViewer);
-      else setGoodsArr([res.goodsPageDto]);
+      else
+        setGoodsArr([
+          {
+            goodsId: res.goodsPageDto.goodsId,
+            goodsName: res.goodsPageDto.goodsName,
+            sellerInfoDto: res.goodsPageDto.sellerInfoDto,
+            goodsPrice: res.goodsPageDto.goodsPrice,
+            goodsDeliveryPrice: res.goodsPageDto.realDeliveryFee,
+            goodsOrderCount: res.goodsPageDto.goodsOrderCount,
+            discountDeliveryPrice: res.goodsPageDto.discountDeliveryPrice,
+            repImgUrl: res.goodsPageDto.goodsImagesList[0].goodsImgUrl,
+            goodsStatus: res.goodsPageDto.goodsStatus,
+            categoryId: res.goodsPageDto.categoryId,
+          },
+        ]);
     },
   });
 
@@ -39,7 +53,7 @@ export default function BottomSheetComponent({
     onSuccess: (res) => {
       console.log(res);
       if (res === 'retry') allMutate({ bounds });
-      // else setGoodsArr(res)
+      else setGoodsArr(res.goodsListDtoList);
     },
   });
 

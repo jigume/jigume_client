@@ -31,7 +31,6 @@ export const setNewUser = async (param: InitUserType) => {
 
 /**
  * 토큰 만료일을 확인하여 리프레시 토큰을 재발급 받는다
- * @returns void
  */
 export const handleRefreshToken = async (auth: AuthType) => {
   if (
@@ -41,13 +40,10 @@ export const handleRefreshToken = async (auth: AuthType) => {
   )
     return 'valid';
 
-  const response = await jigumeAxios({
-    method: 'post',
-    url: '/api/member/token',
-    data: {
-      refreshToken: auth.refreshToken,
-    },
+  const response = await jigumeAxios.post('/api/member/token', {
+    refreshToken: auth.refreshToken,
   });
+
   return response.data;
 };
 
@@ -96,17 +92,9 @@ export const updateProfile = async (param: NewProfileType) => {
   const formData = new FormData();
   formData.append('UpdateMemberInfoDto', blobData);
 
-  const response = await jigumeAxios.post(
-    '/api/member/info',
-    {
-      data: formData,
-    },
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    }
-  );
+  const response = await jigumeAxios.post('/api/member/info', {
+    data: formData,
+  });
   console.log(response);
 
   return response;
