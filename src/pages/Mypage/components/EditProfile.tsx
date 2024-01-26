@@ -8,15 +8,21 @@ import { handleTextFieldColor, validNickname } from '../../../utils';
 import CircularProgress from '../../Auth/components/Init/components/circularProgress';
 import { MyPageContextType, NewProfileType } from '../index.d';
 
-export default function Edit() {
-  const { setTitle } = useOutletContext<MyPageContextType>();
+export default function EditProfile() {
+  const { setProfileHeader, profile } = useOutletContext<MyPageContextType>();
   const [valid, setValid] = useState(false);
   const [newProfile, setNewProfile] = useState<NewProfileType>({
     nickname: '',
     image: undefined,
   });
+  const [isChanged, setIsChanged] = useState({
+    image: false,
+    nickname: false,
+  });
 
   const handleNickname = (text: string) => {
+    setIsChanged((prev) => ({ ...prev, nickname: true }));
+
     setValid(validNickname(text));
     setNewProfile((prev) => ({ ...prev, nickname: text }));
   };
@@ -39,7 +45,11 @@ export default function Edit() {
   };
 
   useEffect(() => {
-    setTitle('');
+    // 수정 페이지 헤더 조정
+    setProfileHeader((prev) => ({
+      title: '',
+      isAlert: false,
+    }));
   }, []);
 
   const {
@@ -69,13 +79,16 @@ export default function Edit() {
               className="hidden"
               id="image"
               onChange={(e) => {
-                if (e.target.files) encodeFileToBase64(e.target.files[0]);
+                if (e.target.files) {
+                  encodeFileToBase64(e.target.files[0]);
+                  setIsChanged((prev) => ({ ...prev, image: true }));
+                }
               }}
             />
             <div className="relative aspect-square size-32">
               <img
-                className="size-full rounded-full object-cover"
-                src={newProfile.image}
+                className="size-full rounded-full bg-zinc-200 object-cover text-[0]"
+                src={profile?.profileImageUrl || newProfile.image}
                 alt="프로필 이미지"
               />
               <img
@@ -129,7 +142,7 @@ export default function Edit() {
       <NextButton
         content="수정하기"
         onClick={update}
-        isDisabled={!(newProfile.nickname.length > 1) && !valid}
+        isDisabled={!(isChanged.image || (isChanged.nickname && valid))}
       />
     </div>
   );

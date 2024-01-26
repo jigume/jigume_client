@@ -96,9 +96,17 @@ export const updateProfile = async (param: NewProfileType) => {
   const formData = new FormData();
   formData.append('UpdateMemberInfoDto', blobData);
 
-  const response = await jigumeAxios.post('/api/member/info', {
-    data: formData,
-  });
+  const response = await jigumeAxios.post(
+    '/api/member/info',
+    {
+      data: formData,
+    },
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  );
   console.log(response);
 
   return response;

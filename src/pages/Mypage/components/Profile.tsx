@@ -15,7 +15,7 @@ export default function Profile() {
   const navigate = useNavigate();
   const resetAuth = useResetRecoilState(authState);
 
-  const { setTitle } = useOutletContext<MyPageContextType>();
+  const { setProfileHeader } = useOutletContext<MyPageContextType>();
 
   const logout = useMutation('logout', () => kakaoLogout(), {
     onMutate: () => console.log('RUN logout'),
@@ -25,15 +25,8 @@ export default function Profile() {
     },
   });
 
-  // useQuery를 사용하여 fetch 함수 실행 (getProfile)
-  const { data: profile } = useQuery('getProfile', () => getProfile(), {
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  });
-
   useEffect(() => {
-    setTitle('마이페이지');
+    setProfileHeader({ title: '마이페이지', isAlert: true });
   }, []);
 
   return (

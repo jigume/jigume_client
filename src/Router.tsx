@@ -28,7 +28,7 @@ import Auth from './pages/Auth';
 import InitAccessRights from './pages/Auth/components/Init/components/initAccessRights';
 import Submitted from './pages/Goods/components/Submitted';
 import Profile from './pages/Mypage/components/Profile';
-import Edit from './pages/Mypage/components/Edit';
+import Edit from './pages/Mypage/components/EditProfile';
 
 export default function Router() {
   // recoil state로 access roles 관리

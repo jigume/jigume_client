@@ -1,8 +1,16 @@
+import { MemberInfoDto } from '@src/types/user';
+
 export type MyPageContextType = {
-  setTitle: React.Dispatch<React.SetStateAction<string>>;
+  setProfileHeader: React.Dispatch<React.SetStateAction<ProfileHeaderType>>;
+  profile: MemberInfoDto;
 };
 
 export type NewProfileType = {
   nickname: string;
   image: string | undefined;
+};
+
+export type ProfileHeaderType = {
+  title: string;
+  isAlert: boolean;
 };
