@@ -4,17 +4,12 @@ import { RegisterDataType } from './types/register';
 export const getCurrentLocation = async (
   setPosition: React.Dispatch<React.SetStateAction<PositionType | undefined>>
 ) => {
-  const response = navigator.geolocation.getCurrentPosition(
-    async (position) => {
-      const current = await position;
-      setPosition({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      });
-      return current;
-    }
-  );
-  return response;
+  navigator.geolocation.getCurrentPosition((data) => {
+    setPosition({
+      lat: data.coords.latitude,
+      lng: data.coords.longitude,
+    });
+  });
 };
 
 export const getCurrentLocation2 = () => {

@@ -33,8 +33,9 @@ export default function Map() {
     undefined
   );
   const [markerList, setMarkerList] = useState<Marker[] | undefined>(undefined);
+  const [isPositing, setIspositing] = useState(false);
 
-  const initMap = (list: Marker[]) => {
+  const initMap = (list: Marker[] | undefined) => {
     if (!list) return;
     // marker to array
     const markersArray = list?.map((item) => {
@@ -63,7 +64,7 @@ export default function Map() {
               prev?.filter((prevItem) => prevItem.goodsId !== item.categoryId)
             );
           });
-          initMap(res.markerList);
+          initMap(markerList);
         }
       },
     }
@@ -113,8 +114,19 @@ export default function Map() {
 
   // 지도 중앙으로 이동
   const handleToCenter = () => {
-    getCurrentLocation(setPosition).then(() => {
-      if (user.position) setPosition(user.position);
+    setIspositing(true);
+    navigator.geolocation.getCurrentPosition((data) => {
+      setPosition({
+        lat: data.coords.latitude,
+        lng: data.coords.longitude,
+      });
+      setUser((prev) => ({
+        ...prev,
+        position: {
+          lat: data.coords.latitude,
+          lng: data.coords.longitude,
+        },
+      }));
     });
   };
 
@@ -154,19 +166,29 @@ export default function Map() {
   useEffect(() => {
     if (user.position && position !== undefined) {
       handleAddress();
-    } else {
+    } else if (!user.position) {
+      // 초기 위치 기록
       setUser((prev) => ({
         ...prev,
         position,
       }));
     }
+
     refetch();
-  }, [position, user.position]);
+  }, [position]);
 
   // 미리보기 상태가 아닐 시 미리보기 콘텐츠 초기화
   useEffect(() => {
     if (sheetProvider.sheetLevel !== 'mid') setPreViewer(undefined);
   }, [sheetProvider.sheetLevel]);
+
+  useEffect(() => {
+    setIspositing(false);
+  }, [user.position]);
+
+  useEffect(() => {
+    console.log(isPositing);
+  }, [isPositing]);
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
