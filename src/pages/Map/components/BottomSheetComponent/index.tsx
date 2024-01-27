@@ -14,7 +14,7 @@ export default function BottomSheetComponent({
   handleToCenter,
   sheetProvider,
   preViewer,
-  bounds,
+  map,
 }: BottomSheetType) {
   const [goodsArr, setGoodsArr] = useState<GoodsListDTO[]>([]);
   const [filter, setFilter] = useState<FilterType[]>(
@@ -52,7 +52,7 @@ export default function BottomSheetComponent({
     mutationFn: getSheetList,
     onSuccess: (res) => {
       console.log(res);
-      if (res === 'retry') allMutate({ bounds });
+      if (res === 'retry') allMutate({ map });
       else setGoodsArr(res.goodsListDtoList);
     },
   });
@@ -60,7 +60,7 @@ export default function BottomSheetComponent({
   useEffect(() => {
     if (isOpen)
       if (preViewer) preViewMutate(preViewer);
-      else allMutate({ bounds });
+      else allMutate({ map });
   }, [isOpen]);
 
   return (

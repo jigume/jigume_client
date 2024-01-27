@@ -17,13 +17,10 @@ export const setNewUser = async (param: InitUserType) => {
   const randomIdx = Math.round(Math.random() * 2);
   if (!param.position) return undefined;
   const response = await jigumeAxios.post('/api/member/info', {
-    method: 'post',
-    data: {
-      nickname: param.nickname,
-      mapX: param.position.lng,
-      mapY: param.position.lat,
-      profileImgUrl: param.image || initProfiles[randomIdx],
-    },
+    nickname: param.nickname,
+    longitude: param.position.lng,
+    latitude: param.position.lat,
+    profileImgUrl: param.image || initProfiles[randomIdx],
   });
 
   return response;
@@ -82,20 +79,24 @@ export const checkNickname = async (nickname: string) => {
 };
 
 export const updateProfile = async (param: NewProfileType) => {
-  const blobData = new Blob(
-    [JSON.stringify({ nickname: param.nickname, profileImgUrl: param.image })],
-    {
-      type: 'application/json',
-    }
-  );
+  // const blobData = new Blob(
+  //   { request: param.image },
+  //   {
+  //     type: 'application/json',
+  //   }
+  // );
 
   const formData = new FormData();
-  formData.append('UpdateMemberInfoDto', blobData);
+  formData.append('imageUploadRequest', param.image as string);
 
-  const response = await jigumeAxios.post('/api/member/info', {
-    data: formData,
+  console.log(formData);
+
+  const response = await jigumeAxios.post('/api/member/profile', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
   });
   console.log(response);
 
-  return response;
+  return response.data;
 };

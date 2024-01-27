@@ -33,7 +33,10 @@ export default function InitAddress() {
       if (status === kakao.maps.services.Status.OK) {
         setInitUser((prev) => ({
           ...prev,
-          position: { lat: Number(result[0].x), lng: Number(result[0].y) },
+          position: {
+            latitude: Number(result[0].x),
+            longitude: Number(result[0].y),
+          },
         }));
         setAddress(fullAddress);
       }

@@ -51,24 +51,20 @@ export default function Map() {
     }
   };
 
-  const { refetch } = useQuery(
-    'getGoods',
-    () => getGoodsList(mapRef.current && mapRef.current.getBounds()),
-    {
-      onSuccess: (res) => {
-        // init map list
-        if (res !== 'retry') {
-          // 중복 방지
-          res.markerList.forEach((item) => {
-            setMarkerList((prev) =>
-              prev?.filter((prevItem) => prevItem.goodsId !== item.categoryId)
-            );
-          });
-          initMap(markerList);
-        }
-      },
-    }
-  );
+  const { refetch } = useQuery('getGoods', () => getGoodsList(mapRef.current), {
+    onSuccess: (res) => {
+      // init map list
+      if (res !== 'retry') {
+        // 중복 방지
+        res.markerList.forEach((item) => {
+          setMarkerList((prev) =>
+            prev?.filter((prevItem) => prevItem.goodsId !== item.categoryId)
+          );
+        });
+        initMap(markerList);
+      }
+    },
+  });
 
   // 클러스터 완료되었을 때 데이터를 읽어 DOM으로 변환
   const drawCluster = () => {
@@ -186,9 +182,9 @@ export default function Map() {
     setIspositing(false);
   }, [user.position]);
 
-  useEffect(() => {
-    console.log(isPositing);
-  }, [isPositing]);
+  // useEffect(() => {
+  //   console.log(isPositing);
+  // }, [isPositing]);
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
@@ -230,7 +226,7 @@ export default function Map() {
         handleToCenter={handleToCenter}
         sheetProvider={sheetProvider}
         preViewer={preViewer}
-        bounds={mapRef.current?.getBounds()}
+        map={mapRef.current}
       />
     </div>
   );

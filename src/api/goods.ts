@@ -10,20 +10,26 @@ import qs from 'qs';
 import jigumeAxios from './axios';
 
 export const getGoodsList = async (
-  bounds: kakao.maps.LatLngBounds | null
+  map: kakao.maps.Map | null
 ): Promise<GoodsMarkerListType | 'retry'> => {
-  if (!bounds) return 'retry';
+  if (!map) return 'retry';
 
-  const boundArr = stringLatLng2Arr(bounds);
+  const center = map.getCenter();
+  const bounds = map.getBounds();
+  const arr = stringLatLng2Arr(bounds);
+
+  // 인코딩
+  const query = qs.stringify({
+    coordinateRequestDto: {
+      latitude: center.getLat().toFixed(6),
+      longitude: center.getLng().toFixed(6),
+      latitudeDelta: (arr[1] - arr[0]).toFixed(6),
+      longitudeDelta: (arr[3] - arr[2]).toFixed(6),
+    },
+  });
+
   const response = await jigumeAxios
-    .get('/api/goods/marker/list', {
-      params: {
-        maxX: boundArr[3],
-        minX: boundArr[2],
-        maxY: boundArr[1],
-        minY: boundArr[0],
-      },
-    })
+    .get(`/api/goods/marker?${query}`)
     .then((res) => res.data);
   return response;
 };
@@ -41,19 +47,24 @@ export const getSheetGoods = async (
 };
 
 export const getSheetList = async ({
-  bounds,
+  map,
 }: {
-  bounds: kakao.maps.LatLngBounds | undefined;
+  map: kakao.maps.Map | null;
 }): Promise<GoodSheetDTO | 'retry'> => {
-  if (!bounds) return 'retry';
+  if (!map) return 'retry';
 
-  const boundArr = stringLatLng2Arr(bounds);
+  const center = map.getCenter();
+  const bounds = map.getBounds();
+  const arr = stringLatLng2Arr(bounds);
+
   // 특수문자 인코딩
   const query = qs.stringify({
-    maxX: boundArr[3],
-    minX: boundArr[2],
-    maxY: boundArr[1],
-    minY: boundArr[0],
+    coordinateRequestDto: {
+      latitude: center.getLat().toFixed(6),
+      longitude: center.getLng().toFixed(6),
+      latitudeDelta: (arr[1] - arr[0]).toFixed(6),
+      longitudeDelta: (arr[3] - arr[2]).toFixed(6),
+    },
     pageable: {
       page: 0,
       size: 5,

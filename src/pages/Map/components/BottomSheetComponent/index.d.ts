@@ -3,7 +3,7 @@ export type BottomSheetType = {
   handleToCenter: () => void;
   sheetProvider: sheetProvider;
   preViewer: PreViewerMarker;
-  bounds?: kakao.maps.LatLngBounds;
+  map: kakao.maps.Map | null;
 };
 
 export type sheetProvider = {
