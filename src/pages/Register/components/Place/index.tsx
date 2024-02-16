@@ -10,7 +10,6 @@ import { getCurrentLocation } from '@src/utils';
 import { useMutation } from 'react-query';
 import { getPlaces } from '@src/api/register';
 import NextButton from '@src/components/NextButton';
-import MarkerOnStaticMap from '@src/components/MarkerOnStaticMap';
 import RegistMarker from '@src/asset/icon/RegistMarker.svg';
 import PreviewMap from '@src/components/PreviewMap';
 import Postcode from './components/postcode';
@@ -31,10 +30,9 @@ function Place() {
     setData((prev) => ({
       ...prev,
       address: '',
-      goodsDto: {
-        ...prev.goodsDto,
-        mapX: undefined,
-        mapY: undefined,
+      position: {
+        lat: 0,
+        lng: 0,
       },
     }));
   };
@@ -80,10 +78,9 @@ function Place() {
       setData((prev) => ({
         ...prev,
         address: places[index].place_name,
-        goodsDto: {
-          ...prev.goodsDto,
-          mapX: places[index].x,
-          mapY: places[index].y,
+        position: {
+          lat: places[index].y,
+          lng: places[index].x,
         },
       }));
     } else if (index === -1) {
@@ -108,25 +105,11 @@ function Place() {
         />
         <div className="flex flex-col gap-4">
           {index === -1 && <Postcode data={data} setData={setData} />}
-          {(data.goodsDto.mapX || index >= 0) && (
+          {(data.position.lat || index >= 0) && (
             <div className="relative top-16">
               <div className="mb-2 align-top text-sm font-thin">
                 픽업 위치 확인
               </div>
-              {/* <MarkerOnStaticMap
-                position={
-                  index >= 0
-                    ? {
-                        lat: places[index].y,
-                        lng: places[index].x,
-                      }
-                    : {
-                        lat: data.goodsDto.mapY as number,
-                        lng: data.goodsDto.mapX as number,
-                      }
-                }
-                markerImg={RegistMarker}
-              /> */}
               <PreviewMap
                 position={
                   index >= 0
@@ -135,8 +118,8 @@ function Place() {
                         lng: places[index].x,
                       }
                     : {
-                        lat: data.goodsDto.mapY as number,
-                        lng: data.goodsDto.mapX as number,
+                        lat: data.position.lat as number,
+                        lng: data.position.lng as number,
                       }
                 }
                 markerImg={RegistMarker}

@@ -14,11 +14,13 @@ export const initData: RegisterDataType = {
     link: '',
     goodsPrice: 0,
     deliveryFee: 0,
-    mapX: undefined,
-    mapY: undefined,
     goodsLimitCount: 0,
     goodsLimitTime: new Date(),
     categoryId: -1,
+  },
+  position: {
+    lat: 0,
+    lng: 0,
   },
 };
 
@@ -37,9 +39,11 @@ function Register() {
   // 마운트 이벤트 시 폼 초기화
   useEffect(() => {
     setData(initData);
+    setData((prev) => ({ ...prev, image: [], imageInput: [] }));
 
     return () => {
       setData(initData);
+      setData((prev) => ({ ...prev, image: [], imageInput: [] }));
     };
   }, []);
 

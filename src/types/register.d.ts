@@ -1,3 +1,5 @@
+import { PositionType } from './map';
+
 type GoodsData = {
   goodsName: string;
   boardContent: string;
@@ -5,8 +7,6 @@ type GoodsData = {
   link: string;
   goodsPrice: number | string;
   deliveryFee: number | string;
-  mapX?: number;
-  mapY?: number;
   goodsLimitCount: number;
   goodsLimitTime: Date;
   categoryId: number;
@@ -17,6 +17,7 @@ export type RegisterDataType = {
   imageInput: File[];
   address: string;
   goodsDto: GoodsData;
+  position: PositionType;
 };
 
 export type RegisterContextType = {

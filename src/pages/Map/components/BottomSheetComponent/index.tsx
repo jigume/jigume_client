@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useMutation } from 'react-query';
 import { GoodsListDTO, GoodsPageDTO } from '@src/types/goods';
-import { getSheetGoods, getSheetList } from '../../../../api/goods';
+
+import { getGoodsList, getSheetGoods, getSheetList } from '@src/api/goods';
 import { BottomSheetType, FilterType } from './index.d';
 import category from './data';
 import SheetHeader from './components/SheetHeader';
@@ -26,7 +27,7 @@ export default function BottomSheetComponent({
   // 미리보기 fetch fn
   const { mutate: preViewMutate } = useMutation({
     mutationKey: 'getSheetDetail',
-    mutationFn: () => getSheetGoods(preViewer),
+    mutationFn: () => getSheetGoods(preViewer, map),
     onSuccess: (res) => {
       if (res === 'retry') preViewMutate(preViewer);
       else
@@ -52,7 +53,7 @@ export default function BottomSheetComponent({
     mutationFn: getSheetList,
     onSuccess: (res) => {
       console.log(res);
-      if (res === 'retry') allMutate({ map });
+      if (res === 'retry') allMutate(map);
       else setGoodsArr(res.goodsListDtoList);
     },
   });
@@ -60,7 +61,7 @@ export default function BottomSheetComponent({
   useEffect(() => {
     if (isOpen)
       if (preViewer) preViewMutate(preViewer);
-      else allMutate({ map });
+      else allMutate(map);
   }, [isOpen]);
 
   return (

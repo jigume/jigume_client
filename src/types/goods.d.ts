@@ -23,14 +23,12 @@ export type GoodSheetDTO = {
 };
 
 // 지도의 마커용
-type Marker = {
+export type Marker = {
   goodsId: number;
   categoryId: number;
-  address: {
-    mapX: number;
-    mapY: number;
-  };
-  goodsRepImgUrl: string;
+  latitude: number;
+  longitude: number;
+  goodsRepImgUrl?: string;
 };
 
 export type GoodsMarkerListType = {

@@ -9,7 +9,8 @@ import jigumeAxios from './axios';
 
 export const postGoods = async (
   images: File[],
-  goodsDto_: GoodsData
+  goodsDto_: GoodsData,
+  position: PositionType
 ): Promise<string> => {
   const imageFormData = new FormData();
   images.forEach((item, idx) => imageFormData.append(`images[${idx}]`, item));
@@ -28,7 +29,21 @@ export const postGoods = async (
         'Content-Type': 'multipart/form-data',
       },
     })
-    .then((res) => res.data);
+    .then(async (res) => {
+      const goodsId = res.data;
+      console.log('GOODS ID', goodsId);
+      await jigumeAxios
+        .post(`/api/goods/${goodsId}/coordinate/new`, {
+          latitude: position.lat,
+          longitude: position.lng,
+        })
+        .then(async () => {
+          await jigumeAxios.post(`/api/goods/${goodsId}/board`, {
+            content: goodsDto_.introduction,
+          });
+        });
+      return res.data;
+    });
 
   return response;
 };

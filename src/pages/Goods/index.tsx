@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate, Outlet, useLocation, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { add } from 'date-fns';
+import { getGoodsPage } from '@src/api/goods';
 import CarouselBox from './components/CarouselBox';
 import HeaderProfile from './components/HeaderProfile';
 import ProductInfo from './components/ProductInfo';
 import ProductContent from './components/ProductContent';
 import ChevronLeft from '../../asset/icon/chevronLeft.svg';
-import getIntroduce from '../../api/introduce';
 import PlaceInfo from './components/PlaceInfo';
 import IntroCategory from './components/IntroCategory';
 
@@ -27,12 +27,12 @@ export default function Goods() {
 
   const { data: goods, isSuccess } = useQuery(
     'itemDetail',
-    () => getIntroduce(idx as string),
+    () => getGoodsPage(idx as string),
     {
       onSuccess: (res) => {
         setLimitDate(dateFormetter(res.goodsPageDto.goodsLimitTime));
       },
-      onError: () => navigate('/err'),
+      // onError: () => navigate('/err'),
     }
   );
 

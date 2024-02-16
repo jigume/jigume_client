@@ -28,7 +28,7 @@ function Notice() {
 
   const mutate = useMutation(
     'post_goods',
-    () => postGoods(data.imageInput, data.goodsDto),
+    () => postGoods(data.imageInput, data.goodsDto, data.position),
     {
       retry: false,
       onSuccess: (res) => {

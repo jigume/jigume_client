@@ -14,7 +14,6 @@ function Image() {
   const [slidesPerView, setSlidePerView] = useState<
     number | 'auto' | undefined
   >(1);
-  const fileRef = useRef<HTMLInputElement>(null);
 
   const encodeFileToBase64 = (fileBlob: File) => {
     // 이미지 선택 취소 시 예외처리
@@ -40,13 +39,6 @@ function Image() {
 
   const isMovable = data.image.length === 0;
 
-  useEffect(() => {
-    if (fileRef.current) {
-      fileRef.current.value = '';
-      setData((prev) => ({ ...prev, image: [], imageInput: [] }));
-    }
-  }, []);
-
   return (
     <div className="absolute left-1/2 flex h-[calc(100svh-48px)] w-screen max-w-screen-sm -translate-x-1/2 flex-col justify-between">
       <div />
@@ -69,7 +61,6 @@ function Image() {
           >
             <label htmlFor="image">
               <input
-                ref={fileRef}
                 type="file"
                 accept="image/jpg,image/png,image/jpeg,image/gif"
                 className="hidden"

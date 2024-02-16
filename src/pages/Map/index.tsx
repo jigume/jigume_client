@@ -10,11 +10,12 @@ import { throttle } from 'lodash';
 import { Marker } from '@src/types/goods';
 import { UserType } from '@src/types/data';
 import { PositionType } from '@src/types/map';
+import { getGoodsList } from '@src/api/goods';
+import jigumeAxios from '@src/api/axios';
 import { getCurrentLocation } from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
 import { userState } from '../../data';
-import { getGoodsList } from '../../api/goods';
 import useBottomSheet from '../../hooks/useBottomSheet';
 import { setClusterDom, setMarkerDom } from './utils';
 import CurrentPoint from './components/CurrentPoint';
@@ -36,11 +37,10 @@ export default function Map() {
   const [isPositing, setIspositing] = useState(false);
 
   const initMap = (list: Marker[] | undefined) => {
-    if (!list) return;
     // marker to array
     const markersArray = list?.map((item) => {
       return new kakao.maps.CustomOverlay({
-        position: new kakao.maps.LatLng(item.address.mapY, item.address.mapX),
+        position: new kakao.maps.LatLng(item.latitude, item.longitude),
         content: setMarkerDom(item, sheetProvider, setPreViewer),
       });
     });
@@ -56,12 +56,14 @@ export default function Map() {
       // init map list
       if (res !== 'retry') {
         // 중복 방지
-        res.markerList.forEach((item) => {
-          setMarkerList((prev) =>
-            prev?.filter((prevItem) => prevItem.goodsId !== item.categoryId)
-          );
+        res.forEach((item) => {
+          setMarkerList((prev) => {
+            const temp = prev?.filter(
+              (prevItem) => prevItem.goodsId !== item.goodsId
+            );
+            return [...(temp || []), item];
+          });
         });
-        initMap(markerList);
       }
     },
   });
@@ -74,12 +76,8 @@ export default function Map() {
         'clustered',
         (cluster: kakao.maps.Cluster[]) => {
           cluster.forEach((item: any) => {
-            const imageUrl = item._markers[0].cc.querySelector('.prodImg').src;
-            const clusterDom = setClusterDom(
-              imageUrl,
-
-              item._markers.length
-            );
+            // const imageUrl = item._markers[0].cc.querySelector('.prodImg').src;
+            const clusterDom = setClusterDom('', item._markers.length);
             const clusterOberlay = item.getClusterMarker();
             clusterOberlay.setContent(clusterDom);
           });
@@ -158,7 +156,13 @@ export default function Map() {
     refetch();
   }, []);
 
-  // 주소 변환 및 마커 등록
+  // 마커 등록
+  useEffect(() => {
+    if (markerList) initMap(markerList);
+    console.log(markerList);
+  }, [markerList]);
+
+  // 주소 변환
   useEffect(() => {
     if (user.position && position !== undefined) {
       handleAddress();
