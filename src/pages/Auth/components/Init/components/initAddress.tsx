@@ -34,8 +34,8 @@ export default function InitAddress() {
         setInitUser((prev) => ({
           ...prev,
           position: {
-            latitude: Number(result[0].x),
-            longitude: Number(result[0].y),
+            lat: Number(result[0].x),
+            lng: Number(result[0].y),
           },
         }));
         setAddress(fullAddress);
@@ -51,8 +51,8 @@ export default function InitAddress() {
   }, []);
 
   return (
-    <>
-      <div className="px-4 pb-24">
+    <div className="flex h-full flex-col justify-between px-4 py-6">
+      <div className="pb-24">
         <div className="pb-10 text-lg font-bold">픽업 위치 지정</div>
 
         <button
@@ -91,9 +91,7 @@ export default function InitAddress() {
         )}
       </div>
 
-      <div className="absolute bottom-0 z-30 w-full max-w-screen-sm px-4">
-        <NextButton isDisabled={!initUser.position} linkTo="/auth/init/image" />
-      </div>
-    </>
+      <NextButton isDisabled={!initUser.position} linkTo="/auth/init/image" />
+    </div>
   );
 }

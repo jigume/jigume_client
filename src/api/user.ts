@@ -15,11 +15,11 @@ const initProfiles = [img0, img1, img2];
  */
 export const setNewUser = async (param: InitUserType) => {
   const randomIdx = Math.round(Math.random() * 2);
-  if (!param.position) return undefined;
+
   const response = await jigumeAxios.post('/api/member/info', {
     nickname: param.nickname,
-    longitude: param.position.lng,
-    latitude: param.position.lat,
+    longitude: 0,
+    latitude: 0,
     profileImgUrl: param.image || initProfiles[randomIdx],
   });
 

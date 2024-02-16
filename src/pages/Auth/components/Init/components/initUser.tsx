@@ -7,8 +7,11 @@ import { handleTextFieldColor, validNickname } from '@src/utils';
 import CircularProgress from './circularProgress';
 import { InitContextType } from '../index.d';
 
+const initText = '최소 2글자, 최대 10글자까지 한글,영어, 숫자만 입력가능해요.';
+
 export default function InitUser() {
   const [valid, setValid] = useState(false);
+  const [alertText, setAlertText] = useState(initText);
   const { initUser, setInitUser } = useOutletContext<InitContextType>();
 
   const handleNickname = (text: string) => {
@@ -16,24 +19,32 @@ export default function InitUser() {
     setInitUser((prev) => ({ ...prev, nickname: text }));
   };
 
-  const { mutate, isLoading, isError } = useMutation(
+  const { mutate, isLoading, isError, isSuccess } = useMutation(
     'checkNickname',
-    () => checkNickname(initUser.nickname),
-    {
-      onSuccess: (res) => {
-        console.log(res);
-      },
-    }
+    () => checkNickname(initUser.nickname)
   );
+
+  const getTextColor = () => {
+    if (initUser.nickname.length === 0) return 'text-gray-600';
+    return valid ? 'text-success' : 'text-red-600';
+  };
 
   useEffect(() => {
     handleNickname(initUser.nickname);
   }, []);
 
+  useEffect(() => {
+    if (valid) setAlertText('사용가능한 닉네임이에요!');
+    else if (isError) setAlertText('중복된 닉네임이에요!');
+    else setAlertText(initText);
+  }, [valid]);
+
   return (
     <div className="flex h-full flex-col justify-between px-4 py-6">
       <div className="pt-[33%]">
-        <div className="pb-12 font-semibold">닉네임을 입력해주세요.</div>
+        <div className="pb-12 text-xl font-semibold">
+          닉네임을 입력해주세요.
+        </div>
         <div className="flex gap-2">
           <input
             type="text"
@@ -52,29 +63,9 @@ export default function InitUser() {
             {isLoading ? <CircularProgress /> : '중복 확인'}
           </button>
         </div>
-        <div
-          className={`py-3 text-xs ${
-            initUser.nickname.length === 0 || valid
-              ? 'text-gray-600'
-              : 'text-red-600'
-          }`}
-        >
-          {valid && (
-            <div className="mr-2 inline-block size-2 rounded-full bg-green-500 leading-4" />
-          )}
-          <span>
-            최소 2글자, 최대 10글자까지 한글,영어, 숫자만 입력가능해요.
-          </span>
-        </div>
-        {isError && (
-          <div className="text-xs text-red-600">
-            <div className="mr-2 inline-block size-2 rounded-full bg-red-600 leading-4" />
-            <span>중복된 닉네임 입니다.</span>
-          </div>
-        )}
+        <div className={`py-3 text-xs ${getTextColor()}`}>{alertText}</div>
       </div>
-      {valid ? 'oo' : 'ss'}
-      <NextButton isDisabled={!valid} linkTo="/auth/init/address" />
+      <NextButton isDisabled={!valid || !isSuccess} linkTo="/auth/init/image" />
     </div>
   );
 }

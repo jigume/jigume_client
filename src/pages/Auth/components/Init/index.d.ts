@@ -4,6 +4,7 @@ export type InitUserType = {
   nickname: string;
   position: PositionType | undefined;
   image: string | undefined;
+  submitUser?: () => void;
 };
 
 export type InitContextType = {

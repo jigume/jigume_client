@@ -68,7 +68,7 @@ export default function Router() {
           children: [
             { index: true, element: <InitAccessRights /> },
             { path: 'user', element: <InitUser /> },
-            { path: 'address', element: <InitAddress /> },
+            // { path: 'address', element: <InitAddress /> },
             { path: 'image', element: <InitProfileImage /> },
           ],
           loader: () => {
