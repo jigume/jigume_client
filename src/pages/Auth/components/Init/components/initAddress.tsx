@@ -47,7 +47,8 @@ export default function InitAddress() {
 
   useEffect(() => {
     // 잘못된 요청 방지
-    if (!initUser.nickname) navigate('/auth/init');
+    if (!initUser.nickname && !initUser.agreement[1] && !initUser.agreement[2])
+      navigate('/auth/init');
   }, []);
 
   return (

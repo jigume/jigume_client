@@ -1,6 +1,6 @@
-import Camera from '@src/asset/icon/initAccess/camera.svg';
-import SaveArea from '@src/asset/icon/initAccess/saveArea.svg';
-import Position from '@src/asset/icon/initAccess/position.svg';
+import Camera from '@src/asset/icon/init/camera.svg';
+import SaveArea from '@src/asset/icon/init/saveArea.svg';
+import Position from '@src/asset/icon/init/position.svg';
 import NextButton from '@src/components/NextButton';
 
 export default function InitAccessRights() {

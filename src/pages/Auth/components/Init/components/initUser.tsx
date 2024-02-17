@@ -65,7 +65,10 @@ export default function InitUser() {
         </div>
         <div className={`py-3 text-xs ${getTextColor()}`}>{alertText}</div>
       </div>
-      <NextButton isDisabled={!valid || !isSuccess} linkTo="/auth/init/image" />
+      <NextButton
+        isDisabled={!valid || !isSuccess}
+        linkTo="/auth/init/agreement"
+      />
     </div>
   );
 }

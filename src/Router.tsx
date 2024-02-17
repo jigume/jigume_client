@@ -29,6 +29,10 @@ import InitAccessRights from './pages/Auth/components/Init/components/initAccess
 import Submitted from './pages/Goods/components/Submitted';
 import Profile from './pages/Mypage/components/Profile';
 import Edit from './pages/Mypage/components/EditProfile';
+import InitAgreement from './pages/Auth/components/Init/components/initAgreement';
+import ServiceAgreement from './pages/Auth/components/Init/components/ServiceAgreement';
+import PrivacyAgreement from './pages/Auth/components/Init/components/PrivacyAgreement';
+import MarketingAgreement from './pages/Auth/components/Init/components/MarketingAgreement';
 
 export default function Router() {
   // recoil state로 access roles 관리
@@ -70,6 +74,15 @@ export default function Router() {
             { path: 'user', element: <InitUser /> },
             // { path: 'address', element: <InitAddress /> },
             { path: 'image', element: <InitProfileImage /> },
+            {
+              path: 'agreement',
+              children: [
+                { index: true, element: <InitAgreement /> },
+                { path: 'service', element: <ServiceAgreement /> },
+                { path: 'privacy', element: <PrivacyAgreement /> },
+                { path: 'Marketing', element: <MarketingAgreement /> },
+              ],
+            },
           ],
           loader: () => {
             if (!auth.accessToken) return redirect('/auth/login');

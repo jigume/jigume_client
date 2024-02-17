@@ -5,6 +5,7 @@ export type InitUserType = {
   position: PositionType | undefined;
   image: string | undefined;
   submitUser?: () => void;
+  agreement: boolean[];
 };
 
 export type InitContextType = {

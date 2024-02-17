@@ -9,6 +9,7 @@ export default function Init() {
     nickname: '',
     position: undefined,
     image: undefined,
+    agreement: new Array(4).fill(false),
   });
   const location = useLocation();
 
