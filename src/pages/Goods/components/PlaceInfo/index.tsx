@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { GoodsPageDTO } from '@src/types/goods';
+import { Address } from '@src/types/goods';
 import { PositionType } from '@src/types/map';
 import IntroStaticMap from '@src/components/MarkerOnStaticMap';
 
 export default function PlaceInfo({
-  data,
+  coordinate,
+  image,
 }: {
-  data: GoodsPageDTO | undefined;
+  coordinate?: Address;
+  image?: string;
 }) {
   const { kakao } = window;
   const [address, setAddress] = useState('-');
@@ -28,9 +30,9 @@ export default function PlaceInfo({
     'revGeoCoder',
     () =>
       getAddress(
-        data && {
-          lat: data.address.mapY,
-          lng: data.address.mapX,
+        coordinate && {
+          lat: coordinate.latitude,
+          lng: coordinate.longitude,
         }
       ),
     { retryDelay: 500, retry: 3 }
@@ -40,16 +42,16 @@ export default function PlaceInfo({
     <div className="flex flex-col gap-4 rounded-xl bg-gray-50 p-4">
       <div className="relative aspect-[1.9197] w-full rounded-xl bg-gray-300">
         <IntroStaticMap
-          img={data?.goodsImagesList[0].goodsImgUrl}
+          img={image || undefined}
           position={
-            data && {
-              lat: data.address.mapY,
-              lng: data.address.mapX,
+            coordinate && {
+              lat: coordinate.latitude,
+              lng: coordinate.longitude,
             }
           }
         />
       </div>
-      {data ? (
+      {address ? (
         <div className="text-center ">
           <span className="mr-2 text-sm font-light text-gray-600">
             픽업 예정 장소 :
@@ -62,3 +64,8 @@ export default function PlaceInfo({
     </div>
   );
 }
+
+PlaceInfo.defaultProps = {
+  coordinate: undefined,
+  image: undefined,
+};

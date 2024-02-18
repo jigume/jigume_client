@@ -1,18 +1,16 @@
-import { GoodsPageDTO } from '@src/types/goods';
-
 export default function ProductContent({
-  data,
+  introduction,
 }: {
-  data: GoodsPageDTO | undefined;
+  introduction?: string;
 }) {
   return (
     <div
       className={`flex flex-col gap-2 border-b border-gray-300 py-8 ${
-        !data ? 'animate-pulse' : ''
+        !introduction ? 'animate-pulse' : ''
       }`}
     >
-      {data ? (
-        <div>{data.introduction}</div>
+      {introduction ? (
+        <div>{introduction}</div>
       ) : (
         <>
           <div className="h-3 w-3/4 rounded bg-gray-300" />
@@ -23,3 +21,7 @@ export default function ProductContent({
     </div>
   );
 }
+
+ProductContent.defaultProps = {
+  introduction: undefined,
+};

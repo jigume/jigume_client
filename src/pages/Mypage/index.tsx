@@ -7,11 +7,11 @@ import { ProfileHeaderType } from './index.d';
 
 export default function Mypage() {
   // useQuery를 사용하여 fetch 함수 실행 (getProfile)
-  // const { data: profile } = useQuery('getProfile', () => getProfile(), {
-  //   onSuccess: (data) => {
-  //     console.log(data);
-  //   },
-  // });
+  const { data: profile } = useQuery('getProfile', () => getProfile(), {
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
 
   const [profileHeader, setProfileHeader] = useState<ProfileHeaderType>({
     title: '마이페이지',

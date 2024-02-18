@@ -33,6 +33,7 @@ import InitAgreement from './pages/Auth/components/Init/components/initAgreement
 import ServiceAgreement from './pages/Auth/components/Init/components/ServiceAgreement';
 import PrivacyAgreement from './pages/Auth/components/Init/components/PrivacyAgreement';
 import MarketingAgreement from './pages/Auth/components/Init/components/MarketingAgreement';
+import Confirm from './pages/Register/components/Confirm';
 
 export default function Router() {
   // recoil state로 access roles 관리
@@ -141,6 +142,10 @@ export default function Router() {
             {
               path: 'notice',
               element: <Notice />,
+            },
+            {
+              path: 'confirm',
+              element: <Confirm />,
             },
           ],
         },

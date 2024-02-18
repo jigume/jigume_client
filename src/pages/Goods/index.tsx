@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Outlet, useLocation, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { add } from 'date-fns';
 import { getGoodsPage } from '@src/api/goods';
+import { dateFormetter } from '@src/utils';
 import CarouselBox from './components/CarouselBox';
 import HeaderProfile from './components/HeaderProfile';
 import ProductInfo from './components/ProductInfo';
@@ -15,25 +15,11 @@ export default function Goods() {
   const { idx } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const [limitDate, setLimitDate] = useState('');
 
   const isSubmitted = location.pathname.includes('submitted');
 
-  const dateFormetter = (param: string) => {
-    const date = add(new Date(param), { days: -1 });
-
-    return `${date.getMonth() + 1}월 ${date.getDate()}일 23시 59분`;
-  };
-
-  const { data: goods, isSuccess } = useQuery(
-    'itemDetail',
-    () => getGoodsPage(idx as string),
-    {
-      onSuccess: (res) => {
-        setLimitDate(dateFormetter(res.goodsPageDto.goodsLimitTime));
-      },
-      // onError: () => navigate('/err'),
-    }
+  const { data: goods, isSuccess } = useQuery('itemDetail', () =>
+    getGoodsPage(idx as string)
   );
 
   return (
@@ -55,16 +41,30 @@ export default function Goods() {
 
       {/* 상품 사진 */}
       {isSuccess ? (
-        <CarouselBox data={goods.goodsPageDto} />
+        <CarouselBox
+          images={goods?.goodsPageDto.goodsImagesList.map(
+            (item) => item.goodsImgUrl
+          )}
+        />
       ) : (
         <div className="aspect-square w-full animate-pulse bg-gray-300" />
       )}
 
       {/* 상품 정보 */}
       <section className="px-4">
-        <HeaderProfile data={goods?.goodsPageDto} />
-        <ProductInfo data={goods?.goodsPageDto} />
-        <ProductContent data={goods?.goodsPageDto} />
+        <HeaderProfile
+          goodsLimitTime={goods?.goodsPageDto.goodsLimitTime}
+          goodsName={goods?.goodsPageDto.goodsName}
+          sellerNickname={goods?.goodsPageDto.sellerInfoDto.sellerNickname}
+          sellCount={goods?.goodsPageDto.sellerInfoDto.sellCount}
+        />
+        <ProductInfo
+          deliveryFee={goods?.goodsPageDto.deliveryFee}
+          realDeliveryFee={goods?.goodsPageDto.realDeliveryFee}
+          link={goods?.goodsPageDto.link}
+          goodsPrice={goods?.goodsPageDto.goodsPrice}
+        />
+        <ProductContent introduction={goods?.goodsPageDto.introduction} />
       </section>
 
       <section className="px-4 pt-12 text-sm">
@@ -74,7 +74,10 @@ export default function Goods() {
 
         <section className="flex flex-col gap-2">
           {/* 상품 위치 정보 */}
-          <PlaceInfo data={goods && goods.goodsPageDto} />
+          <PlaceInfo
+            coordinate={goods?.goodsPageDto.coordinate}
+            image={goods?.goodsPageDto.goodsImagesList[0].goodsImgUrl}
+          />
 
           {/* 상품 마감일 */}
           <div className="rounded-xl bg-gray-50 p-6">
@@ -83,7 +86,7 @@ export default function Goods() {
                 <span className="mr-2 text-sm font-light text-gray-600">
                   구매종료일 :
                 </span>
-                <span>{limitDate}</span>
+                <span>{dateFormetter(goods?.goodsPageDto.goodsLimitTime)}</span>
               </div>
             ) : (
               <div className="mx-auto h-3 w-3/4 animate-pulse rounded-lg bg-gray-300" />

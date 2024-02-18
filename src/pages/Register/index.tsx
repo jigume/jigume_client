@@ -29,6 +29,8 @@ function Register() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const withoutPadding = location.pathname.includes('confirm');
+
   // 데이터의 유효성 확인하여 입력 데이터가 없는 페이지로 이동
   useEffect(() => {
     console.log(location.pathname);
@@ -49,7 +51,7 @@ function Register() {
 
   return (
     <>
-      <div className="mx-auto flex h-[48px] w-full max-w-screen-sm flex-row items-center px-4">
+      <div className="relative z-10 mx-auto flex h-[48px] w-full max-w-screen-sm flex-row items-center px-4">
         <div onClick={() => navigate(-1)} className="pr-2">
           <img
             className="size-12 cursor-pointer p-2"
@@ -59,7 +61,9 @@ function Register() {
         </div>
       </div>
 
-      <div className="container mx-auto max-w-screen-sm px-4">
+      <div
+        className={`container mx-auto max-w-screen-sm ${withoutPadding ? 'absolute top-0' : 'px-4'}`}
+      >
         <Outlet context={{ data, setData }} />
       </div>
     </>

@@ -37,9 +37,9 @@ export type GoodsMarkerListType = {
 
 type MemberStatus = 'ORDER' | 'SELLER' | 'NONE';
 
-type Address = {
-  mapX: number;
-  mapY: number;
+export type Address = {
+  longitude: number;
+  latitude: number;
 };
 
 export type GoodsImageDto = {
@@ -56,11 +56,13 @@ export type SellerInfoDto = {
 export type GoodsPageDTO = {
   goodsId: number;
   goodsName: string;
+  boardId: number;
   introduction: string;
   link: string;
   goodsPrice: number;
   deliveryFee: number;
-  address: Address;
+  goodsDeposit: number;
+  coordinate: Address;
   goodsLimitCount: number;
   goodsLimitTime: string;
   categoryId: number;
@@ -69,7 +71,6 @@ export type GoodsPageDTO = {
   sellerInfoDto: SellerInfoDto;
   goodsOrderCount: number;
   discountDeliveryPrice: number;
-  boardId: number;
   goodsImagesList: GoodsImageDto[];
 };
 

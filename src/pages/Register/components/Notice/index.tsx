@@ -1,11 +1,8 @@
-import { useNavigate, useOutletContext } from 'react-router-dom';
-import { useMutation } from 'react-query';
+import { useOutletContext } from 'react-router-dom';
 import { RegisterContextType } from '@src/types/register';
 import NextButton from '@src/components/NextButton';
 import StyledTextarea from '@src/components/StyledTextarea';
-import { postGoods } from '@src/api/register';
 import LoadingButton from '@src/components/LoadingButton';
-import { initData } from '../..';
 
 const notice = `픽업 기간은 배송 완료 예정일인 9월 10일부터 13일 까지 입니다. 댓글로 픽업 시간을 알려주세요!
 
@@ -17,7 +14,6 @@ const notice = `픽업 기간은 배송 완료 예정일인 9월 10일부터 13�
 
 function Notice() {
   const { data, setData } = useOutletContext<RegisterContextType>();
-  const navigate = useNavigate();
 
   const handleNotice = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setData((prev) => ({
@@ -25,18 +21,6 @@ function Notice() {
       goodsDto: { ...prev.goodsDto, introduction: e.target.value },
     }));
   };
-
-  const mutate = useMutation(
-    'post_goods',
-    () => postGoods(data.imageInput, data.goodsDto, data.position),
-    {
-      retry: false,
-      onSuccess: (res) => {
-        setData(initData);
-        navigate(`/goods/${res}/submitted`);
-      },
-    }
-  );
 
   return (
     <div className="flex h-[calc(100svh-48px)] w-full flex-col justify-between">
@@ -57,14 +41,11 @@ function Notice() {
           />
         </div>
       </div>
-      {mutate.isLoading ? (
-        <LoadingButton />
-      ) : (
-        <NextButton
-          content="공동 구매 폼 게시하기"
-          onClick={() => mutate.mutate()}
-        />
-      )}
+      <NextButton
+        content="공동 구매 폼 게시하기"
+        // onClick={() => mutate.mutate()}
+        linkTo="/register/confirm"
+      />
     </div>
   );
 }

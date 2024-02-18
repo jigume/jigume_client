@@ -1,11 +1,16 @@
-import { GoodsPageDTO } from '@src/types/goods';
 import Avatar from 'boring-avatars';
 import { differenceInDays } from 'date-fns';
 
 export default function HeaderProfile({
-  data,
+  goodsLimitTime,
+  goodsName,
+  sellerNickname,
+  sellCount,
 }: {
-  data: GoodsPageDTO | undefined;
+  goodsLimitTime?: string;
+  goodsName?: string;
+  sellerNickname?: string;
+  sellCount?: number;
 }) {
   const today = new Date();
 
@@ -18,16 +23,16 @@ export default function HeaderProfile({
   return (
     <div
       className={`mb-3 mt-8 flex flex-col gap-3 ${
-        !data ? 'animate-pulse' : ''
+        !goodsName ? 'animate-pulse' : ''
       }`}
     >
       {/* 상품 제목 등 */}
       <div className="flex items-center gap-2">
-        <div className="w16 rounded-2xl bg-gray-100 px-2 py-1 text-center text-sm text-gray-700">
-          {`D-${data ? getdDay(data.goodsLimitTime) : ''}`}
+        <div className="w-16 rounded-2xl bg-gray-100 px-2 py-1 text-center text-sm text-gray-700">
+          {`D-${goodsLimitTime ? getdDay(goodsLimitTime) : ''}`}
         </div>
-        {data ? (
-          <div className="font-bold">{data.goodsName}</div>
+        {goodsName ? (
+          <div className="font-bold">{goodsName}</div>
         ) : (
           <div className="h-4 w-full rounded bg-gray-200" />
         )}
@@ -35,16 +40,16 @@ export default function HeaderProfile({
 
       {/* 작성자 정보 */}
       <div className="flex items-center gap-3 border-b border-gray-300 pb-[20px]">
-        {data ? (
+        {sellCount ? (
           <Avatar variant="beam" />
         ) : (
           <div className="size-10 shrink-0 rounded-full bg-gray-200" />
         )}
-        {data ? (
+        {sellerNickname ? (
           <div>
-            {data.sellerInfoDto.sellerNickname}{' '}
+            {sellerNickname}{' '}
             <span className="text-zinc-400">
-              | {data.sellerInfoDto.sellCount}
+              | {sellCount}
               번째 구매 리드
             </span>
           </div>
@@ -55,3 +60,10 @@ export default function HeaderProfile({
     </div>
   );
 }
+
+HeaderProfile.defaultProps = {
+  goodsLimitTime: undefined,
+  goodsName: undefined,
+  sellerNickname: undefined,
+  sellCount: undefined,
+};

@@ -1,3 +1,4 @@
+import { add } from 'date-fns';
 import { PositionType } from './types/map';
 import { RegisterDataType } from './types/register';
 
@@ -85,13 +86,10 @@ export const vaildRegister = (link: string, data: RegisterDataType) => {
 
     case '/register/notice':
       if (
-        typeof data.goodsDto.mapX === 'number' &&
-        typeof data.goodsDto.mapY === 'number'
+        typeof data.position.lat === 'number' &&
+        typeof data.position.lng === 'number'
       )
-        if (
-          data.address === '' ||
-          data.goodsDto.mapX + data.goodsDto.mapY === 0
-        )
+        if (data.address === '' || data.position.lat + data.position.lng === 0)
           return '/register/place';
       break;
 
@@ -153,4 +151,10 @@ export const getToken = (): { accessToken: string; refreshToken: string } => {
     console.error(error);
     return { accessToken: '', refreshToken: '' };
   }
+};
+
+export const dateFormetter = (param: string) => {
+  const date = add(new Date(param), { days: -1 });
+
+  return `${date.getMonth() + 1}월 ${date.getDate()}일 23시 59분`;
 };
