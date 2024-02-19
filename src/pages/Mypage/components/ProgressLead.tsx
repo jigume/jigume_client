@@ -1,4 +1,9 @@
+import { getProgressLead } from '@src/api/mypage';
+import { useQuery } from 'react-query';
+
 export default function ProgressLead() {
+  const { data } = useQuery('progressLead', getProgressLead);
+
   return (
     <div className="py-2">
       <div className="flex gap-4 pb-3">

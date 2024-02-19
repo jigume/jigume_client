@@ -33,7 +33,7 @@ export type OpenGraph = {
 
 export type OpenGraphViewerType = {
   openGraph?: OpenGraph;
-  link: string;
+  link?: string;
   imgSize?: string;
 };
 

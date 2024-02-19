@@ -5,7 +5,7 @@ export type TokenProviderType = {
 
 export type MemberInfoDto = {
   nickname: string;
-  profileImageUrl: string;
-  mapX: number;
-  mapY: number;
+  profileImgUrl: string;
+  latitude: number;
+  longitude: number;
 };

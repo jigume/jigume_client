@@ -4,7 +4,7 @@ import { useResetRecoilState } from 'recoil';
 import { useMutation, useQuery } from 'react-query';
 import { authState } from '../../../data';
 import { kakaoLogout } from '../../../api/user';
-import getProfile from '../../../api/mypage';
+
 import EditIcon from '../../../asset/icon/EditIconBlack.svg';
 import chevronLeftBlue from '../../../asset/icon/chevronLeftBlue.svg';
 import ProgressLead from './ProgressLead';
@@ -15,7 +15,8 @@ export default function Profile() {
   const navigate = useNavigate();
   const resetAuth = useResetRecoilState(authState);
 
-  const { setProfileHeader } = useOutletContext<MyPageContextType>();
+  const { setProfileHeader, profile, isSuccess } =
+    useOutletContext<MyPageContextType>();
 
   const logout = useMutation('logout', () => kakaoLogout(), {
     onMutate: () => console.log('RUN logout'),
@@ -33,13 +34,23 @@ export default function Profile() {
     <div className="mx-auto flex max-w-sm flex-col gap-2">
       <div className="flex items-center justify-between gap-4 pb-8 pt-4">
         <div className="flex items-center gap-4">
-          <img
-            className="size-14 rounded-full bg-zinc-300 text-[0px]"
-            alt="프로필 이미지"
-          />
+          {isSuccess ? (
+            <img
+              className="size-14 rounded-full bg-zinc-300 text-[0px]"
+              src={profile.profileImgUrl}
+              alt="프로필 이미지"
+            />
+          ) : (
+            <div className="size-14 animate-pulse rounded-full bg-zinc-300" />
+          )}
+
           <div>
-            <div className="text-base">
-              <span>졸린 춘식이</span>
+            <div className="flex items-center text-base">
+              {isSuccess ? (
+                <span>{profile.nickname}</span>
+              ) : (
+                <div className="inline-block h-4 w-14 animate-pulse rounded-sm bg-zinc-300" />
+              )}
               <img
                 aria-hidden
                 onClick={() => navigate('/mypage/edit')}

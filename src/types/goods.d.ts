@@ -1,4 +1,5 @@
-type GoodsStatus = 'PROCESSING' | 'END';
+type GoodsStatus = 'PROCESSING' | 'END' | 'FINISHED';
+type OrderStatus = 'PROCESSING' | 'CONFIRMATION';
 
 // 상품에 관한 DTO
 export type GoodsListDTO = {
