@@ -117,7 +117,7 @@ export const handleTextFieldColor = (
   nickname: string,
   valid: boolean
 ): string => {
-  if (nickname.length === 0)
+  if (!nickname || nickname.length === 0)
     return 'focus:border-slate-300 focus:ring-slate-300 border-slate-300 ring-slate-300';
   if (valid)
     return 'focus:border-success focus:ring-success border-success ring-success';
@@ -157,4 +157,14 @@ export const dateFormetter = (param: string) => {
   const date = add(new Date(param), { days: -1 });
 
   return `${date.getMonth() + 1}월 ${date.getDate()}일 23시 59분`;
+};
+
+export const blobToFile = (theBlob: Blob, fileName: string): File => {
+  const b: any = theBlob;
+  // A Blob() is almost a File() - it's just missing the two properties below which we will add
+  b.lastModifiedDate = new Date();
+  b.name = fileName;
+
+  // Cast to a File() type
+  return theBlob as File;
 };

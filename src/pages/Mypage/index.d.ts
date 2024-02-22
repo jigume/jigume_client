@@ -9,6 +9,7 @@ export type MyPageContextType = {
 export type NewProfileType = {
   nickname: string;
   image: string | undefined;
+  imageInput: File | undefined;
 };
 
 export type ProfileHeaderType = {

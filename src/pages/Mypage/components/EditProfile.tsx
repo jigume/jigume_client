@@ -14,6 +14,7 @@ export default function EditProfile() {
   const [newProfile, setNewProfile] = useState<NewProfileType>({
     nickname: '',
     image: undefined,
+    imageInput: undefined,
   });
   const [isChanged, setIsChanged] = useState({
     image: false,
@@ -38,19 +39,12 @@ export default function EditProfile() {
       reader.onload = () => {
         setNewProfile((prev) => ({
           ...prev,
+          imageInput: fileBlob,
           image: reader.result as string,
         }));
       };
     });
   };
-
-  useEffect(() => {
-    // 수정 페이지 헤더 조정
-    setProfileHeader((prev) => ({
-      title: '',
-      isAlert: false,
-    }));
-  }, []);
 
   const {
     mutate: checkName,
@@ -60,13 +54,29 @@ export default function EditProfile() {
 
   const { mutate: update } = useMutation(
     'updateProfile',
-    () => updateProfile(newProfile),
+    () => updateProfile(newProfile.imageInput),
     {
       onSuccess: (res) => {
         console.log(res);
       },
     }
   );
+
+  useEffect(() => {
+    // 수정 페이지 헤더 조정
+    setProfileHeader((prev) => ({
+      title: '',
+      isAlert: false,
+    }));
+  }, []);
+
+  useEffect(() => {
+    setNewProfile({
+      nickname: profile?.nickname,
+      image: profile?.profileImgUrl,
+      imageInput: undefined,
+    });
+  }, [profile]);
 
   return (
     <div className="mx-auto flex h-[calc(100svh-3rem)] max-w-sm flex-col">
@@ -88,7 +98,7 @@ export default function EditProfile() {
             <div className="relative aspect-square size-32">
               <img
                 className="size-full rounded-full bg-zinc-200 object-cover text-[0]"
-                src={profile?.profileImageUrl || newProfile.image}
+                src={newProfile.image}
                 alt="프로필 이미지"
               />
               <img
@@ -102,7 +112,7 @@ export default function EditProfile() {
         <div className="flex gap-4 pt-12">
           <input
             type="text"
-            value={newProfile.nickname}
+            value={newProfile.nickname || ''}
             onChange={(e) => handleNickname(e.target.value)}
             maxLength={20}
             className={`block h-14 w-full rounded-md border bg-white p-3 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1 ${handleTextFieldColor(
@@ -118,13 +128,7 @@ export default function EditProfile() {
           </button>
         </div>
 
-        <div
-          className={`text-xs ${
-            newProfile.nickname.length === 0 || valid
-              ? 'text-gray-600'
-              : 'text-red-600'
-          }`}
-        >
+        <div className={`text-xs ${valid ? 'text-gray-600' : 'text-red-600'}`}>
           {valid && (
             <div className="mr-2 inline-block size-2 rounded-full bg-green-500 leading-4" />
           )}

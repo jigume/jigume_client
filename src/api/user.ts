@@ -6,6 +6,7 @@ import { AuthType } from '@src/types/data';
 import img0 from '@src/asset/images/profiles/initProfile0.png';
 import img1 from '@src/asset/images/profiles/initProfile1.png';
 import img2 from '@src/asset/images/profiles/initProfile2.png';
+import { Form } from 'react-router-dom';
 import jigumeAxios from './axios';
 
 const initProfiles = [img0, img1, img2];
@@ -78,25 +79,15 @@ export const checkNickname = async (nickname: string) => {
   return response;
 };
 
-export const updateProfile = async (param: NewProfileType) => {
-  // const blobData = new Blob(
-  //   { request: param.image },
-  //   {
-  //     type: 'application/json',
-  //   }
-  // );
-
+export const updateProfile = async (param?: File) => {
   const formData = new FormData();
-  formData.append('imageUploadRequest', param.image as string);
-
-  console.log(formData);
+  formData.append('multipartFile', param as File);
 
   const response = await jigumeAxios.post('/api/member/profile', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
-  console.log(response);
 
   return response.data;
 };
