@@ -36,14 +36,14 @@ export default function ProgressJoin() {
       <div className="flex flex-col gap-4 py-2">
         <div className="h-6 w-40 animate-pulse rounded-sm bg-zinc-300" />
         <OpenGraphViewer imgSize="h-24" />
-        <div className="flex gap-2 font-light">
+        {/* <div className="flex gap-2 font-light">
           <div className="w-full rounded-lg border py-4 text-center text-xs">
             예상 결제 내역 확인하기
           </div>
           <div className="w-full rounded-lg bg-success py-4 text-center text-xs text-white">
             공지방으로 이동하기
           </div>
-        </div>
+        </div> */}
       </div>
     );
 

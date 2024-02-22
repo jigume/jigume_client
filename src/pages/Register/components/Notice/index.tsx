@@ -2,7 +2,6 @@ import { useOutletContext } from 'react-router-dom';
 import { RegisterContextType } from '@src/types/register';
 import NextButton from '@src/components/NextButton';
 import StyledTextarea from '@src/components/StyledTextarea';
-import LoadingButton from '@src/components/LoadingButton';
 
 const notice = `픽업 기간은 배송 완료 예정일인 9월 10일부터 13일 까지 입니다. 댓글로 픽업 시간을 알려주세요!
 
@@ -41,11 +40,7 @@ function Notice() {
           />
         </div>
       </div>
-      <NextButton
-        content="공동 구매 폼 게시하기"
-        // onClick={() => mutate.mutate()}
-        linkTo="/register/confirm"
-      />
+      <NextButton content="공동 구매 폼 게시하기" linkTo="/register/confirm" />
     </div>
   );
 }

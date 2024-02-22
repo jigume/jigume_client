@@ -1,8 +1,8 @@
+import React from 'react';
 import { postGoods } from '@src/api/register';
 import LoadingButton from '@src/components/LoadingButton';
 import NextButton from '@src/components/NextButton';
 import { RegisterContextType } from '@src/types/register';
-import React, { useEffect } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import CarouselBox from '@src/pages/Goods/components/CarouselBox';
@@ -29,10 +29,6 @@ export default function Confirm() {
       },
     }
   );
-
-  useEffect(() => {
-    console.log(data);
-  }, []);
 
   return (
     <div className="w-full">
@@ -115,8 +111,7 @@ export default function Confirm() {
         ) : (
           <NextButton
             content="공동 구매 폼 게시하기"
-            // onClick={() => mutate.mutate()}
-            linkTo="/register/confirm"
+            onClick={() => mutate()}
           />
         )}
       </div>

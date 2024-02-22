@@ -39,7 +39,7 @@ export const postGoods = async (
         })
         .then(async () => {
           await jigumeAxios.post(`/api/goods/${goodsId}/board`, {
-            content: goodsDto_.introduction,
+            content: goodsDto_.boardContent,
           });
         });
       return res.data;
