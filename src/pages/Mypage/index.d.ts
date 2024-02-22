@@ -4,6 +4,7 @@ export type MyPageContextType = {
   setProfileHeader: React.Dispatch<React.SetStateAction<ProfileHeaderType>>;
   profile: MemberInfoDto;
   isSuccess: boolean;
+  refetch: () => Promise<QueryObserverResult<MemberInfoDto, unknown>>;
 };
 
 export type NewProfileType = {

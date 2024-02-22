@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import NextButton from '../../../components/NextButton';
 import cameraIcon from '../../../asset/icon/mdi_camera.svg';
-import { checkNickname, updateProfile } from '../../../api/user';
+import {
+  checkNickname,
+  updateMemberInfo,
+  updateProfile,
+} from '../../../api/user';
 import { handleTextFieldColor, validNickname } from '../../../utils';
 import CircularProgress from '../../Auth/components/Init/components/circularProgress';
 import { MyPageContextType, NewProfileType } from '../index.d';
 
 export default function EditProfile() {
-  const { setProfileHeader, profile } = useOutletContext<MyPageContextType>();
+  const { setProfileHeader, profile, refetch } =
+    useOutletContext<MyPageContextType>();
   const [valid, setValid] = useState(false);
   const [newProfile, setNewProfile] = useState<NewProfileType>({
     nickname: '',
@@ -20,6 +25,7 @@ export default function EditProfile() {
     image: false,
     nickname: false,
   });
+  const navigate = useNavigate();
 
   const handleNickname = (text: string) => {
     setIsChanged((prev) => ({ ...prev, nickname: true }));
@@ -52,15 +58,37 @@ export default function EditProfile() {
     isError,
   } = useMutation('checkNickname', () => checkNickname(newProfile.nickname));
 
-  const { mutate: update } = useMutation(
+  const { mutate: updateImage } = useMutation(
     'updateProfile',
     () => updateProfile(newProfile.imageInput),
     {
-      onSuccess: (res) => {
-        console.log(res);
+      onSuccess: () => {
+        refetch();
+        navigate('/mypage');
       },
     }
   );
+
+  const { mutate: updateName } = useMutation(
+    'updateNickname',
+    () =>
+      updateMemberInfo({
+        nickname: newProfile.nickname,
+        latitude: 0,
+        longitude: 0,
+      }),
+    {
+      onSuccess: () => {
+        refetch();
+        navigate('/mypage');
+      },
+    }
+  );
+
+  const handleSubmit = () => {
+    if (newProfile.imageInput) updateImage();
+    if (newProfile.nickname !== profile.nickname) updateName();
+  };
 
   useEffect(() => {
     // 수정 페이지 헤더 조정
@@ -145,7 +173,7 @@ export default function EditProfile() {
       </div>
       <NextButton
         content="수정하기"
-        onClick={update}
+        onClick={handleSubmit}
         isDisabled={!(isChanged.image || (isChanged.nickname && valid))}
       />
     </div>

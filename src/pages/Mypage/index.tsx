@@ -12,9 +12,11 @@ export default function Mypage() {
   });
 
   // useQuery를 사용하여 fetch 함수 실행 (getProfile)
-  const { data: profile, isSuccess } = useQuery('getProfile', () =>
-    getProfile()
-  );
+  const {
+    data: profile,
+    isSuccess,
+    refetch,
+  } = useQuery('getProfile', () => getProfile());
 
   return (
     <>
@@ -22,7 +24,14 @@ export default function Mypage() {
         title={profileHeader.title}
         isAlert={profileHeader.isAlert}
       />
-      <Outlet context={{ setProfileHeader, profile, isSuccess }} />
+      <Outlet
+        context={{
+          setProfileHeader,
+          profile,
+          isSuccess,
+          refetch: () => refetch(),
+        }}
+      />
     </>
   );
 }

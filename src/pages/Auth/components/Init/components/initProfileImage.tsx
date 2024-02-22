@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 import { AuthType } from '@src/types/data';
 import { authState } from '@src/data';
 import CameraIcon from '@src/asset/icon/mdi_camera.svg';
-import { setNewUser } from '@src/api/user';
+import { updateMemberInfo } from '@src/api/user';
 import NextButton from '@src/components/NextButton';
 import { InitContextType } from '../index.d';
 
@@ -14,7 +14,7 @@ export default function InitProfileImage() {
   const [, setAuth] = useRecoilState<AuthType>(authState);
   const { initUser, setInitUser } = useOutletContext<InitContextType>();
 
-  const { mutate } = useMutation('newUser', () => setNewUser(initUser), {
+  const { mutate } = useMutation('newUser', () => updateMemberInfo(initUser), {
     retry: false,
     onSuccess: () => {
       setAuth((prev) => ({ ...prev, role: 'USER' }));

@@ -1,30 +1,27 @@
 import axios from 'axios';
 import { TokenProviderType } from '@src/types/user';
 import { InitUserType } from '@src/pages/Auth/components/Init/index.d';
-import { NewProfileType } from '@src/pages/Mypage/index.d';
 import { AuthType } from '@src/types/data';
 import img0 from '@src/asset/images/profiles/initProfile0.png';
 import img1 from '@src/asset/images/profiles/initProfile1.png';
 import img2 from '@src/asset/images/profiles/initProfile2.png';
-import { Form } from 'react-router-dom';
 import jigumeAxios from './axios';
-
-const initProfiles = [img0, img1, img2];
 
 /**
  * 신규 유저의 닉네임 등의 정보를 입력하여 role을 USER로 변경한다
  */
-export const setNewUser = async (param: InitUserType) => {
-  const randomIdx = Math.round(Math.random() * 2);
-
+export const updateMemberInfo = async (param: {
+  nickname: string;
+  latitude: number;
+  longitude: number;
+}) => {
   const response = await jigumeAxios.post('/api/member/info', {
     nickname: param.nickname,
     longitude: 0,
     latitude: 0,
-    profileImgUrl: param.image || initProfiles[randomIdx],
   });
 
-  return response;
+  return response.data;
 };
 
 /**
@@ -79,9 +76,16 @@ export const checkNickname = async (nickname: string) => {
   return response;
 };
 
-export const updateProfile = async (param?: File) => {
+const initProfiles = [img0, img1, img2];
+
+export const updateProfile = async (file?: File) => {
   const formData = new FormData();
-  formData.append('multipartFile', param as File);
+  if (!file) {
+    const randomIdx = Math.round(Math.random() * 2);
+    formData.append('multipartFile', initProfiles[randomIdx]);
+  } else {
+    formData.append('multipartFile', file as File);
+  }
 
   const response = await jigumeAxios.post('/api/member/profile', formData, {
     headers: {
