@@ -51,6 +51,7 @@ export type GoodsImageDto = {
 export type SellerInfoDto = {
   sellerNickname: string;
   sellCount: number;
+  sellerProfileImage: string;
 };
 
 // 상품 상세 페이지

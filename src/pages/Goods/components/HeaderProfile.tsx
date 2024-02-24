@@ -1,23 +1,23 @@
-import Avatar from 'boring-avatars';
+import { SellerInfoDto } from '@src/types/goods';
 import { differenceInDays } from 'date-fns';
 
 export default function HeaderProfile({
   goodsLimitTime,
   goodsName,
-  sellerNickname,
-  sellCount,
+  sellerInfoDto,
 }: {
   goodsLimitTime?: string;
   goodsName?: string;
-  sellerNickname?: string;
-  sellCount?: number;
+  sellerInfoDto?: SellerInfoDto;
 }) {
-  const today = new Date();
-
   const getdDay = (date: string) => {
-    const dDay = differenceInDays(today, new Date(date));
+    const today = new Date();
+    const target = new Date(date);
+    const dDay = differenceInDays(target, today);
+
+    if (today.getDate() > target.getDate()) return '종료';
     if (dDay > 99) return '99+';
-    return dDay;
+    return `D-${dDay}`;
   };
 
   return (
@@ -29,7 +29,7 @@ export default function HeaderProfile({
       {/* 상품 제목 등 */}
       <div className="flex items-center gap-2">
         <div className="w-16 rounded-2xl bg-gray-100 px-2 py-1 text-center text-sm text-gray-700">
-          {`D-${goodsLimitTime ? getdDay(goodsLimitTime) : ''}`}
+          {`${goodsLimitTime ? getdDay(goodsLimitTime) : 'D- '}`}
         </div>
         {goodsName ? (
           <div className="font-bold">{goodsName}</div>
@@ -40,16 +40,20 @@ export default function HeaderProfile({
 
       {/* 작성자 정보 */}
       <div className="flex items-center gap-3 border-b border-gray-300 pb-[20px]">
-        {sellCount ? (
-          <Avatar variant="beam" />
+        {sellerInfoDto ? (
+          <img
+            src={sellerInfoDto.sellerProfileImage}
+            alt="판매자 프로필 이미지"
+            className="size-10 shrink-0 rounded-full bg-gray-200"
+          />
         ) : (
           <div className="size-10 shrink-0 rounded-full bg-gray-200" />
         )}
-        {sellerNickname ? (
+        {sellerInfoDto ? (
           <div>
-            {sellerNickname}{' '}
+            {sellerInfoDto.sellerNickname}{' '}
             <span className="text-zinc-400">
-              | {sellCount}
+              | {sellerInfoDto.sellCount}
               번째 구매 리드
             </span>
           </div>
@@ -64,6 +68,5 @@ export default function HeaderProfile({
 HeaderProfile.defaultProps = {
   goodsLimitTime: undefined,
   goodsName: undefined,
-  sellerNickname: undefined,
-  sellCount: undefined,
+  sellerInfoDto: undefined,
 };

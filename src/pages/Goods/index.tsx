@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate, Outlet, useLocation, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getGoodsPage } from '@src/api/goods';
 import { dateFormetter } from '@src/utils';
+import { useMotionValueEvent, useScroll } from 'framer-motion';
 import CarouselBox from './components/CarouselBox';
 import HeaderProfile from './components/HeaderProfile';
 import ProductInfo from './components/ProductInfo';
@@ -15,6 +16,11 @@ export default function Goods() {
   const { idx } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const targetRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    container: targetRef,
+  });
+  const [scrollDown, setScrollDown] = useState(false);
 
   const isSubmitted = location.pathname.includes('submitted');
 
@@ -22,21 +28,29 @@ export default function Goods() {
     getGoodsPage(idx as string)
   );
 
+  useMotionValueEvent(scrollYProgress, 'change', () => {
+    if (scrollYProgress.get() > 0.05) setScrollDown(true);
+    else setScrollDown(false);
+  });
+
   return (
     <div
       className={`container mx-auto h-[100svh] w-full max-w-screen-sm overflow-y-scroll px-0 pb-20 ${
         isSubmitted ? 'touch-none overflow-hidden' : ''
       }`}
+      ref={targetRef}
     >
+      {/* header */}
       <div
-        onClick={() => navigate(-1)}
-        className="absolute top-0 z-50 pr-2 pt-2"
+        className={`absolute top-0 z-50 h-[48px] w-full px-4 ${scrollDown ? 'bg-white' : 'bg-transparent'}`}
       >
-        <img
-          className="size-12 cursor-pointer p-2"
-          src={ChevronLeft}
-          alt="뒤로가기"
-        />
+        <button onClick={() => navigate(-1)}>
+          <img
+            className="h-12 w-10 cursor-pointer px-1 py-2"
+            src={ChevronLeft}
+            alt="뒤로가기"
+          />
+        </button>
       </div>
 
       {/* 상품 사진 */}
@@ -55,8 +69,7 @@ export default function Goods() {
         <HeaderProfile
           goodsLimitTime={goods?.goodsPageDto.goodsLimitTime}
           goodsName={goods?.goodsPageDto.goodsName}
-          sellerNickname={goods?.goodsPageDto.sellerInfoDto.sellerNickname}
-          sellCount={goods?.goodsPageDto.sellerInfoDto.sellCount}
+          sellerInfoDto={goods?.goodsPageDto.sellerInfoDto}
         />
         <ProductInfo
           deliveryFee={goods?.goodsPageDto.deliveryFee}
