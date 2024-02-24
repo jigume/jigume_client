@@ -168,3 +168,8 @@ export const blobToFile = (theBlob: Blob, fileName: string): File => {
   // Cast to a File() type
   return theBlob as File;
 };
+
+// 천자리 콤마
+export const setComma = (num: number | string) => {
+  return String(num).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};

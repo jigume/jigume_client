@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useMutation } from 'react-query';
-import { GoodsListDTO, GoodsPageDTO } from '@src/types/goods';
-
-import { getGoodsList, getSheetGoods, getSheetList } from '@src/api/goods';
+import { GoodsListDTO } from '@src/types/goods';
+import { getSheetGoods, getSheetList } from '@src/api/goods';
 import { BottomSheetType, FilterType } from './index.d';
 import category from './data';
 import SheetHeader from './components/SheetHeader';
@@ -27,8 +26,9 @@ export default function BottomSheetComponent({
   // 미리보기 fetch fn
   const { mutate: preViewMutate } = useMutation({
     mutationKey: 'getSheetDetail',
-    mutationFn: () => getSheetGoods(preViewer, map),
+    mutationFn: () => getSheetGoods(preViewer),
     onSuccess: (res) => {
+      console.log(res);
       if (res === 'retry') preViewMutate(preViewer);
       else
         setGoodsArr([

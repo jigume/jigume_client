@@ -11,7 +11,6 @@ import { Marker } from '@src/types/goods';
 import { UserType } from '@src/types/data';
 import { PositionType } from '@src/types/map';
 import { getGoodsList } from '@src/api/goods';
-import jigumeAxios from '@src/api/axios';
 import { getCurrentLocation } from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';

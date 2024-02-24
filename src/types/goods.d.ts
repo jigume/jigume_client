@@ -5,10 +5,7 @@ type OrderStatus = 'PROCESSING' | 'CONFIRMATION';
 export type GoodsListDTO = {
   goodsId: number;
   goodsName: string;
-  sellerInfoDto: {
-    sellerNickname: string;
-    sellCount: number;
-  };
+  sellerInfoDto: SellerInfoDto;
   goodsPrice: number;
   goodsDeliveryPrice: number;
   goodsOrderCount: number;

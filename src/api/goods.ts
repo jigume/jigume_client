@@ -27,13 +27,12 @@ export const getGoodsList = async (
 };
 
 export const getSheetGoods = async (
-  preViewer: PreViewerMarker,
-  map: kakao.maps.Map | null
+  preViewer: PreViewerMarker
 ): Promise<GoodsDetailDTO | 'retry'> => {
   // if (!preViewer) return 'retry';
 
   const response = await jigumeAxios
-    .get(`/api/goods/${preViewer.goodsId}/page`)
+    .get(`/api/goods/${preViewer.goodsId}`)
     .then((res) => res.data);
 
   return response;
@@ -56,15 +55,10 @@ export const getSheetList = async (
       latitudeDelta: (arr[1] - arr[0]).toFixed(6),
       longitudeDelta: (arr[3] - arr[2]).toFixed(6),
     },
-    pageable: {
-      page: 0,
-      size: 5,
-      sort: '',
-    },
   });
 
   const response = await jigumeAxios
-    .get(`/api/goods/list?${query}`)
+    .get(`/api/goods/marker/list?${query}`)
     .then((res) => res.data);
 
   console.log(response);
@@ -77,6 +71,30 @@ export const getGoodsPage = async (
 ): Promise<GoodsDetailDTO> => {
   const response = await jigumeAxios
     .get(`/api/goods/${id}`)
+    .then((res) => res.data);
+
+  return response;
+};
+
+export const setWishGoods = async ({
+  id,
+  isWished,
+}: {
+  id: number | string;
+  isWished: boolean;
+}) => {
+  // await console.log('hello', isWished);
+
+  const response = !isWished
+    ? await jigumeAxios.post(`/api/wish/${id}`)
+    : await jigumeAxios.delete(`/api/wish/${id}`);
+
+  return response.data;
+};
+
+export const deleteWishGoods = async (id: number | string) => {
+  const response = await jigumeAxios
+    .delete(`/api/wish/${id}`)
     .then((res) => res.data);
 
   return response;
