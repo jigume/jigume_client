@@ -27,7 +27,7 @@ export default function ItemComponent({ goods }: { goods?: GoodsListDTO }) {
 
   return (
     <div
-      className={`flex w-full cursor-pointer flex-row gap-4 px-4 pb-4${
+      className={`flex w-full cursor-pointer flex-row gap-4 p-4 first-of-type:pt-0 ${
         !goods ? 'animate-pulse' : ''
       }`}
     >
@@ -42,7 +42,7 @@ export default function ItemComponent({ goods }: { goods?: GoodsListDTO }) {
             <img
               src={isWished ? favoriteFilled : favoriteBordered}
               alt="좋아요"
-              className="size-7"
+              className="size-6"
             />
           </button>
           <img

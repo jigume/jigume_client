@@ -13,9 +13,7 @@ export default function CategoryTag({
 }) {
   return (
     <div
-      className={`rounded-[8px] border border-gray-100 p-[8px] ${
-        !item.checked ? 'bg-white' : 'bg-gray-900 text-white'
-      }`}
+      className="rounded-lg border border-gray-100 bg-white px-2 py-1 font-light"
       onClick={() => {
         const prevData = [...filter];
 
@@ -27,11 +25,7 @@ export default function CategoryTag({
         setFilter(prevData);
       }}
     >
-      <img
-        className="mr-1 inline-block size-[16px]"
-        src={item.icon}
-        alt="필터"
-      />
+      <img className="mr-1 inline-block size-4" src={item.icon} alt="필터" />
       <span className="text-xs">{item.name}</span>
     </div>
   );

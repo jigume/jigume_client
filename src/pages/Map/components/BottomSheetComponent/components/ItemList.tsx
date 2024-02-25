@@ -15,11 +15,12 @@ export default function ItemList({
   sheetLevel: SheetLevelType;
   preViewer: PreViewerMarker;
 }) {
+  const trueArr = filter.filter(({ checked }) => checked);
   // preViewer
   if (preViewer && goodsArr.length > 0)
     return (
       <div
-        className="absolute top-[96px] size-full overflow-x-scroll py-[96px]"
+        className="absolute top-[7.5rem] size-full overflow-x-scroll pt-[7.5rem]"
         style={{ height: thresholds[sheetLevel] }}
       >
         <ItemComponent goods={goodsArr[0]} />
@@ -30,7 +31,7 @@ export default function ItemList({
   if (goodsArr.length === 0)
     return (
       <div
-        className="absolute top-[96px] flex size-full flex-col gap-2 overflow-x-scroll pb-[192px] pt-[96px]"
+        className="absolute top-[7.5rem] flex size-full flex-col gap-2 overflow-x-scroll pb-48 pt-[7.5rem]"
         style={{ height: thresholds[sheetLevel] }}
       >
         {[1, 2, 3].map((item) => (
@@ -40,14 +41,14 @@ export default function ItemList({
     );
 
   return (
-    <div className="absolute top-[96px] flex h-full flex-col gap-2 overflow-x-scroll pb-[192px] pt-[96px]">
-      {goodsArr.map((item) => {
-        const trueArr = filter.filter(({ checked }) => checked);
-
-        if (!trueArr.find(({ idx }) => idx === item.categoryId))
-          return <div key={item.goodsId} />;
-        return item && <ItemComponent key={item.goodsId} goods={item} />;
-      })}
+    <div className="absolute top-[7.5rem] flex h-full flex-col divide-y overflow-x-scroll pb-48 pt-[7.5rem]">
+      {goodsArr
+        .filter((item) =>
+          trueArr.some((item2) => item2.idx === item.categoryId)
+        )
+        .map((item) => (
+          <ItemComponent key={item.goodsId} goods={item} />
+        ))}
     </div>
   );
 }

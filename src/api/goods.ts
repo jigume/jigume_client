@@ -49,21 +49,27 @@ export const getSheetList = async (
 
   // 특수문자 인코딩
   const query = qs.stringify({
-    coordinateRequestDto: {
-      latitude: center.getLat().toFixed(6),
-      longitude: center.getLng().toFixed(6),
-      latitudeDelta: (arr[1] - arr[0]).toFixed(6),
-      longitudeDelta: (arr[3] - arr[2]).toFixed(6),
-    },
+    // coordinateRequestDto: {
+    //   latitude: center.getLat().toFixed(6),
+    //   longitude: center.getLng().toFixed(6),
+    //   latitudeDelta: (arr[1] - arr[0]).toFixed(6),
+    //   longitudeDelta: (arr[3] - arr[2]).toFixed(6),
+    // },
+    // pageable: {
+    //   page: 0,
+    //   size: 10,
+    //   sort: [],
+    // },
+
+    latitude: center.getLat().toFixed(6),
+    longitude: center.getLng().toFixed(6),
+    latitudeDelta: (arr[1] - arr[0]).toFixed(6),
+    longitudeDelta: (arr[3] - arr[2]).toFixed(6),
   });
 
-  const response = await jigumeAxios
-    .get(`/api/goods/marker/list?${query}`)
-    .then((res) => res.data);
+  const response = await jigumeAxios.get(`/api/goods/marker/list?${query}`);
 
-  console.log(response);
-
-  return response;
+  return response.data;
 };
 
 export const getGoodsPage = async (

@@ -24,45 +24,11 @@ export default function ContentHeader({
             <div className="mb-0 text-lg font-bold">공동 구매 폼 내역 보기</div>
           </div>
           <div className="grid grid-cols-8 px-[16px] py-[12px]">
-            <div className="col-span-7 h-[1.5rem] overflow-x-scroll whitespace-nowrap text-gray-600">
-              {chekedItem.length === filter_.length || !chekedItem.length ? (
-                <div className="text-sm text-gray-600">
-                  제품군 카테고리 필터를 켜보세요
-                </div>
-              ) : (
-                filter_.map(
-                  (item, index) =>
-                    item.checked && (
-                      <motion.span
-                        className="cursor-pointer px-1"
-                        key={item.name}
-                        onClick={() => {
-                          const prevData = [...filter_];
-
-                          prevData[index] = {
-                            ...prevData[index],
-                            checked: !item.checked,
-                          };
-
-                          setFilter(prevData);
-                        }}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <span>{item.name}</span>
-                        <img
-                          src={CloseIcon}
-                          className="inline-block pb-[3px] "
-                          alt="closeIcon"
-                        />
-                      </motion.span>
-                    )
-                )
-              )}
+            <div className="col-span-7 flex h-8 flex-row items-center gap-2 overflow-x-scroll whitespace-nowrap text-sm text-gray-600">
+              {open
+                ? '제품군 카테고리를 선택하세요'
+                : '찾으시는 제품이 있나요?'}
             </div>
-
             <div
               className="col-span-1 flex h-[1.5rem] cursor-pointer justify-center transition-all duration-300 ease-in-out active:scale-95"
               onClick={() => setOpen((prev) => !prev)}
@@ -73,6 +39,46 @@ export default function ContentHeader({
                 <img src={FilterIcon} className="size-[24px]" alt="필터" />
               )}
             </div>
+          </div>
+
+          <div className="flex h-10 flex-row gap-2 overflow-x-scroll whitespace-nowrap border-y py-1 pl-4 text-gray-600">
+            {filter_.map(
+              (item, index) =>
+                item.checked && (
+                  <motion.div
+                    className="flex shrink-0 items-center justify-center gap-1 rounded-md border p-2"
+                    key={item.name}
+                    onClick={() => {
+                      const prevData = [...filter_];
+
+                      prevData[index] = {
+                        ...prevData[index],
+                        checked: !item.checked,
+                      };
+
+                      setFilter(prevData);
+                    }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <img
+                      src={item.icon}
+                      alt={item.name}
+                      className="inline-block size-4"
+                    />
+                    <div className="inline-block text-xs font-light">
+                      {item.name}
+                    </div>
+                    <img
+                      src={CloseIcon}
+                      className="inline-block size-3"
+                      alt="닫기"
+                    />
+                  </motion.div>
+                )
+            )}
           </div>
         </div>
 
