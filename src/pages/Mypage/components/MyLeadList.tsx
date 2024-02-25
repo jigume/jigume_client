@@ -11,16 +11,16 @@ const transitionValue = { bounce: 0.1, duration: 0.15 };
 function LeadItems({
   items,
   filter,
-  leadLoading,
+  isLoading,
 }: {
   items: SellHistoryDto[];
   filter: GoodsStatus;
-  leadLoading: boolean;
+  isLoading: boolean;
 }) {
   const processing = items?.filter((item) => item.goodsStatus === 'PROCESSING');
   const ended = items?.filter((item) => item.goodsStatus === 'END');
 
-  if (leadLoading)
+  if (isLoading)
     return (
       <div className="flex flex-col gap-3 px-4 py-5">
         <div className="h-4 w-48 animate-pulse rounded-sm bg-zinc-300" />
@@ -50,7 +50,7 @@ function LeadItems({
           processing.map((item) => (
             <div className="flex flex-col gap-3 px-4 py-5" key={item.goodsId}>
               <div className="text-zinc-500">
-                공동 구매 완료까지 {getdDay(new Date().toISOString())}
+                공동 구매 완료까지 {getdDay(item.goodsLimitTime)}
               </div>
               <div className="flex gap-3">
                 <img
@@ -69,13 +69,13 @@ function LeadItems({
                   </div>
                 </div>
               </div>
-              <div className="relative flex h-11 gap-2 text-sm">
+              <div className="relative flex h-11 gap-2 text-sm font-light">
                 <div className="h-full w-1/2 rounded-lg border text-center leading-[2.75rem]">
                   구매 공지방으로 이동하기
                 </div>
                 <Link
                   className="h-full w-1/2 rounded-lg bg-success text-center leading-[2.75rem] text-white"
-                  to={`/goods/${item.boardid}`}
+                  to={`/goods/${item.goodsId}`}
                 >
                   구매폼으로 이동하기
                 </Link>
@@ -113,8 +113,8 @@ function LeadItems({
                 </div>
               </div>
               <Link
-                className="h-11 w-full rounded-lg border text-center text-sm leading-[2.75rem]"
-                to={`/goods/${item.boardid}`}
+                className="h-11 w-full rounded-lg border text-center text-sm font-light leading-[2.75rem]"
+                to={`/goods/${item.goodsId}`}
               >
                 구매 공지방으로 이동하기
               </Link>
@@ -162,7 +162,7 @@ export default function MyLeadList() {
         />
       </div>
 
-      <LeadItems items={leadData} filter={filter} leadLoading={leadLoading} />
+      <LeadItems items={leadData} filter={filter} isLoading={leadLoading} />
     </>
   );
 }

@@ -11,8 +11,9 @@ export type SellHistoryDto = {
   discountDeliveryPrice: number;
   repImgUrl: string;
   goodsStatus: GoodsStatus;
+  goodsLimitTime: string;
   categoryId: number;
-  boardid: number;
+  boardId: number;
   sellId: number;
 };
 
@@ -27,6 +28,7 @@ export type OrderHistoryDto = {
   discountDeliveryPrice: number;
   repImgUrl: string;
   goodsStatus: GoodsStatus;
+  goodsLimitTime: string;
   categoryId: number;
   boardId: number;
   orderId: number;
