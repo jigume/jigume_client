@@ -1,4 +1,4 @@
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { useResetRecoilState } from 'recoil';
 import { useMutation, useQuery } from 'react-query';
@@ -14,7 +14,6 @@ import { MyPageContextType } from '../index.d';
 export default function Profile() {
   const navigate = useNavigate();
   const resetAuth = useResetRecoilState(authState);
-
   const { setProfileHeader, profile, isSuccess } =
     useOutletContext<MyPageContextType>();
 
@@ -76,28 +75,28 @@ export default function Profile() {
 
       <div className="flex justify-between py-1">
         <div className="text-lg text-zinc-900">구매 리드 내역</div>
-        <div>
+        <Link to="/mypage/lead">
           <span className="text-sm font-light text-primaryBlue">내역 상세</span>
           <img
             className="inline-block w-6 pb-[1px]"
             src={chevronLeftBlue}
             alt="상세 내역 확인"
           />
-        </div>
+        </Link>
       </div>
       <div className="h-[1px] w-full bg-zinc-200" />
       <ProgressLead />
 
       <div className="flex justify-between py-1">
         <div className="text-lg text-zinc-900">구매 참여 내역</div>
-        <div>
+        <Link to="/mypage/join">
           <span className="text-sm font-light text-primaryBlue">내역 상세</span>
           <img
             className="inline-block w-6 pb-[1px]"
             src={chevronLeftBlue}
             alt="상세 내역 확인"
           />
-        </div>
+        </Link>
       </div>
       <div className="h-[1px] w-full bg-zinc-200" />
       <ProgressJoin />

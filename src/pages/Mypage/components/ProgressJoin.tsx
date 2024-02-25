@@ -1,7 +1,8 @@
 import { useQuery } from 'react-query';
-import { getProgressJoin } from '@src/api/mypage';
+import { useOutletContext } from 'react-router-dom';
 import OpenGraphViewer from '../../../components/OpenGraphViewer';
 import getOpenGraph from '../../../api/og';
+import { MyPageContextType } from '../index.d';
 
 function JoinGoods({ url }: { url: string }) {
   const openGraph = useQuery('introOpenGraph', () => getOpenGraph(url), {
@@ -26,12 +27,9 @@ function JoinGoods({ url }: { url: string }) {
 }
 
 export default function ProgressJoin() {
-  const { data, isSuccess, isLoading } = useQuery(
-    'progressJoin',
-    getProgressJoin
-  );
+  const { joinData, joinLoading } = useOutletContext<MyPageContextType>();
 
-  if (isLoading)
+  if (joinLoading)
     return (
       <div className="flex flex-col gap-4 py-2">
         <div className="h-6 w-40 animate-pulse rounded-sm bg-zinc-300" />
@@ -49,8 +47,8 @@ export default function ProgressJoin() {
 
   return (
     <div className="flex flex-col gap-4 py-2">
-      {isSuccess && data.length > 0 ? (
-        <JoinGoods url={data[0]?.goodsLink as string} />
+      {joinData && joinData.length > 0 ? (
+        <JoinGoods url={joinData[0].goodsLink as string} />
       ) : (
         <div className="py-14 text-center text-zinc-500">
           참여중인 구매리드가 없습니다.

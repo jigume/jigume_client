@@ -1,5 +1,5 @@
 import { SellerInfoDto } from '@src/types/goods';
-import { differenceInDays } from 'date-fns';
+import { getdDay } from '@src/utils';
 
 export default function HeaderProfile({
   goodsLimitTime,
@@ -10,16 +10,6 @@ export default function HeaderProfile({
   goodsName?: string;
   sellerInfoDto?: SellerInfoDto;
 }) {
-  const getdDay = (date: string) => {
-    const today = new Date();
-    const target = new Date(date);
-    const dDay = differenceInDays(target, today);
-
-    if (today.getDate() > target.getDate()) return '종료';
-    if (dDay > 99) return '99+';
-    return `D-${dDay}`;
-  };
-
   return (
     <div
       className={`mb-3 mt-8 flex flex-col gap-3 ${

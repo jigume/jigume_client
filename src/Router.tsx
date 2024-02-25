@@ -19,7 +19,7 @@ import Notice from './pages/Register/components/Notice';
 import Login from './pages/Auth/components/login';
 import NotMatch from './pages/NotMatch';
 import InitUser from './pages/Auth/components/Init/components/initUser';
-import InitAddress from './pages/Auth/components/Init/components/initAddress';
+// import InitAddress from './pages/Auth/components/Init/components/initAddress';
 import Init from './pages/Auth/components/Init';
 import Refresh from './pages/Auth/components/Refresh';
 import InitProfileImage from './pages/Auth/components/Init/components/initProfileImage';
@@ -34,6 +34,8 @@ import ServiceAgreement from './pages/Auth/components/Init/components/ServiceAgr
 import PrivacyAgreement from './pages/Auth/components/Init/components/PrivacyAgreement';
 import MarketingAgreement from './pages/Auth/components/Init/components/MarketingAgreement';
 import Confirm from './pages/Register/components/Confirm';
+import MyLeadList from './pages/Mypage/components/MyLeadList';
+import MyJoinList from './pages/Mypage/components/MyJoinList';
 
 export default function Router() {
   // recoil state로 access roles 관리
@@ -156,6 +158,8 @@ export default function Router() {
           children: [
             { index: true, element: <Profile /> },
             { path: 'edit', element: <Edit /> },
+            { path: 'lead', element: <MyLeadList /> },
+            { path: 'join', element: <MyJoinList /> },
           ],
         },
       ],

@@ -1,4 +1,4 @@
-import { add } from 'date-fns';
+import { add, differenceInDays } from 'date-fns';
 import { PositionType } from './types/map';
 import { RegisterDataType } from './types/register';
 
@@ -172,4 +172,14 @@ export const blobToFile = (theBlob: Blob, fileName: string): File => {
 // 천자리 콤마
 export const setComma = (num: number | string) => {
   return String(num).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+export const getdDay = (date: string) => {
+  const today = new Date();
+  const target = new Date(date);
+  const dDay = differenceInDays(target, today);
+
+  if (today.getDate() > target.getDate()) return '종료';
+  if (dDay > 99) return '99+';
+  return `D-${dDay}`;
 };

@@ -5,6 +5,12 @@ export type MyPageContextType = {
   profile: MemberInfoDto;
   isSuccess: boolean;
   refetch: () => Promise<QueryObserverResult<MemberInfoDto, unknown>>;
+  leadData: SellHistoryDto[];
+  leadSuccess: boolean;
+  leadLoading: boolean;
+  joinData: OrderHistoryDto[];
+  joinSuccess: boolean;
+  joinLoading: boolean;
 };
 
 export type NewProfileType = {

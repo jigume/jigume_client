@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { getProfile } from '@src/api/mypage';
+import { getProfile, getProgressJoin, getProgressLead } from '@src/api/mypage';
 import { useQuery } from 'react-query';
 import MyPageHeader from './components/MyPageHeader';
 import { ProfileHeaderType } from './index.d';
@@ -18,6 +18,18 @@ export default function Mypage() {
     refetch,
   } = useQuery('getProfile', () => getProfile());
 
+  const {
+    data: leadData,
+    isSuccess: leadSuccess,
+    isLoading: leadLoading,
+  } = useQuery('progressLead', getProgressLead);
+
+  const {
+    data: joinData,
+    isSuccess: joinSuccess,
+    isLoading: joinLoading,
+  } = useQuery('progressJoin', getProgressJoin);
+
   return (
     <>
       <MyPageHeader
@@ -30,6 +42,12 @@ export default function Mypage() {
           profile,
           isSuccess,
           refetch: () => refetch(),
+          leadData,
+          leadSuccess,
+          leadLoading,
+          joinData,
+          joinSuccess,
+          joinLoading,
         }}
       />
     </>
