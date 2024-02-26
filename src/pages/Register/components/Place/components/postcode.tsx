@@ -62,7 +62,7 @@ function Postcode({
       </button>
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none">
-          <div className="fixed left-0 top-0 z-50 h-[100svh] w-screen bg-white">
+          <div className="fixed left-0 top-0 z-50 h-svh w-screen bg-white">
             <div onClick={() => setOpen(false)}>
               <img
                 src={CloseIcon}

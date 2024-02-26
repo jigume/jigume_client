@@ -5,7 +5,7 @@ export default function NotMatch() {
   const navigate = useNavigate();
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
-      <div className="flex h-[100svh] flex-col justify-evenly px-4">
+      <div className="flex h-svh flex-col justify-evenly px-4">
         <div className="text-center text-sm">
           <img
             src={logo}

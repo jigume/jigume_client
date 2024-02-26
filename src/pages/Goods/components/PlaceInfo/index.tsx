@@ -7,9 +7,11 @@ import IntroStaticMap from '@src/components/MarkerOnStaticMap';
 export default function PlaceInfo({
   coordinate,
   image,
+  bg,
 }: {
   coordinate?: Address;
   image?: string;
+  bg?: string;
 }) {
   const { kakao } = window;
   const [address, setAddress] = useState('-');
@@ -39,7 +41,7 @@ export default function PlaceInfo({
   );
 
   return (
-    <div className="flex flex-col gap-4 rounded-xl bg-gray-50 p-4">
+    <div className={`flex flex-col gap-4 rounded-xl p-4 ${bg}`}>
       <div className="relative aspect-[1.9197] w-full rounded-xl bg-gray-300">
         <IntroStaticMap
           img={image || undefined}
@@ -68,4 +70,5 @@ export default function PlaceInfo({
 PlaceInfo.defaultProps = {
   coordinate: undefined,
   image: undefined,
+  bg: 'bg-gray-100',
 };

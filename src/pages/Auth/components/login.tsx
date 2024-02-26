@@ -33,7 +33,7 @@ export default function Login() {
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
-      <div className="flex h-[100svh] flex-col justify-evenly px-4">
+      <div className="flex h-svh flex-col justify-evenly px-4">
         <div className="flex flex-col gap-5">
           <img src={logo} className="mx-auto max-w-[210px]" alt="JIGUME" />
           <p className="text-center font-light">

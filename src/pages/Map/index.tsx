@@ -196,7 +196,7 @@ export default function Map() {
           ref={mapRef}
           center={(position as PositionType) || user.position}
           isPanto
-          className="h-[100svh] w-full"
+          className="h-svh w-full"
           level={3}
           onDragEnd={handleDragMap}
           onZoomChanged={handleDragEndMap}

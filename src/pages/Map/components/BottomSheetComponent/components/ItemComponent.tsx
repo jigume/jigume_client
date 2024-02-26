@@ -54,7 +54,7 @@ export default function ItemComponent({ goods }: { goods?: GoodsListDTO }) {
       )}
       <div
         className="flex flex-col truncate pt-1"
-        onClick={() => navigate(`/goods/${goods?.goodsId}`)}
+        onClick={() => navigate(`/buying/${goods?.goodsId}`)}
       >
         {!goods ? (
           <div className="mb-[12px] h-[12px] w-48 rounded-sm bg-gray-100" />
@@ -68,7 +68,7 @@ export default function ItemComponent({ goods }: { goods?: GoodsListDTO }) {
           ) : (
             <img
               className="size-[18px] rounded-full bg-gray-100"
-              src={goods.sellerInfoDto.sellerProfileImage}
+              src={goods.sellerInfoDto?.sellerProfileImage || undefined}
               alt="판매자 프로필 이미지"
             />
           )}
@@ -77,7 +77,7 @@ export default function ItemComponent({ goods }: { goods?: GoodsListDTO }) {
             {!goods ? (
               <div className="w-16 rounded-sm bg-gray-100" />
             ) : (
-              <div>{goods?.sellerInfoDto.sellerNickname}</div>
+              <div>{goods?.sellerInfoDto?.sellerNickname || undefined}</div>
             )}
           </div>
         </div>

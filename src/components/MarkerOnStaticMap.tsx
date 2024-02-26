@@ -18,11 +18,11 @@ export default function MarkerOnStaticMap({
         {img ? (
           <img
             src={img}
-            className="absolute left-[5px] top-[5px] z-50 size-[22px] rounded-full bg-gray-300"
+            className="absolute left-[4px] top-[4px] z-50 size-6 rounded-full bg-gray-300"
             alt="거래 위치"
           />
         ) : (
-          <div className="absolute left-[5px] top-[5px] z-50 size-[22px] rounded-full bg-white" />
+          <div className="absolute left-[4px] top-[4px] z-50 size-6 rounded-full bg-white" />
         )}
       </div>
 

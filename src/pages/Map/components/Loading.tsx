@@ -5,7 +5,7 @@ export default function Loading({
 }) {
   return (
     <div
-      className="flex h-[100svh] w-full items-center justify-center bg-white pb-24"
+      className="flex h-svh w-full items-center justify-center bg-white pb-24"
       onClick={onClick}
     >
       <div role="status">

@@ -75,7 +75,7 @@ function LeadItems({
                 </div>
                 <Link
                   className="h-full w-1/2 rounded-lg bg-success text-center leading-[2.75rem] text-white"
-                  to={`/goods/${item.goodsId}`}
+                  to={`/buying/${item.goodsId}`}
                 >
                   구매폼으로 이동하기
                 </Link>
@@ -114,7 +114,7 @@ function LeadItems({
               </div>
               <Link
                 className="h-11 w-full rounded-lg border text-center text-sm font-light leading-[2.75rem]"
-                to={`/goods/${item.goodsId}`}
+                to={`/buying/${item.goodsId}`}
               >
                 구매 공지방으로 이동하기
               </Link>

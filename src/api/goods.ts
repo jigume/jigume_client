@@ -1,6 +1,12 @@
 import { PreViewerMarker } from '@src/pages/Map/index.d';
 import { stringLatLng2Arr } from '@src/utils';
-import { GoodSheetDTO, GoodsDetailDTO, Marker } from '@src/types/goods';
+import {
+  BoardDTO,
+  GetCommentsDTO,
+  GoodSheetDTO,
+  GoodsDetailDTO,
+  Marker,
+} from '@src/types/goods';
 import qs from 'qs';
 import jigumeAxios from './axios';
 
@@ -101,6 +107,63 @@ export const setWishGoods = async ({
 export const deleteWishGoods = async (id: number | string) => {
   const response = await jigumeAxios
     .delete(`/api/wish/${id}`)
+    .then((res) => res.data);
+
+  return response;
+};
+
+export const getNotice = async (
+  goodsId: number | string,
+  boardId: number | string
+): Promise<BoardDTO> => {
+  const response = await jigumeAxios
+    .get(`/api/goods/${goodsId}/board/${boardId}`)
+    .then((res) => res.data);
+
+  return response;
+};
+
+export const getComment = async (
+  goodsId: number | string,
+  boardId: number | string
+): Promise<GetCommentsDTO> => {
+  const response = await jigumeAxios
+    .get(`/api/goods/${goodsId}/board/${boardId}/comment`)
+    .then((res) => res.data);
+
+  return response;
+};
+
+export const postCommentAtBoard = async (
+  goodsId: number | string,
+  boardId: number | string,
+  content: string
+) => {
+  const response = await jigumeAxios
+    .post(`/api/goods/${goodsId}/board/${boardId}/comment`, {
+      content,
+    })
+    .then((res) => res.data);
+
+  return response;
+};
+
+export const postCommentAtComment = async ({
+  goodsId,
+  boardId,
+  parentCommentId,
+  content,
+}: {
+  goodsId: number | string;
+  boardId: number | string;
+  parentCommentId: number;
+  content: string;
+}) => {
+  const response = await jigumeAxios
+    .post(`/api/goods/${goodsId}/board/${boardId}/comment/reply`, {
+      parentCommentId,
+      content,
+    })
     .then((res) => res.data);
 
   return response;

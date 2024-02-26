@@ -1,34 +1,21 @@
 import { useNavigate, useOutletContext } from 'react-router-dom';
+import { SellHistoryDto } from '@src/types/mypage';
 import { MyPageContextType } from '../index.d';
 
-export default function ProgressLead() {
-  const { leadData, leadLoading, leadSuccess } =
-    useOutletContext<MyPageContextType>();
+function LeadGoods({
+  item,
+  leadSuccess,
+}: {
+  item: SellHistoryDto;
+  leadSuccess: boolean;
+}) {
   const navigate = useNavigate();
-  const len = leadData?.length || 0;
-
-  if (leadLoading)
-    return (
-      <div className="py-2">
-        <div className="flex gap-4 pb-3">
-          <div className="aspect-square size-16 animate-pulse rounded-md bg-zinc-300" />
-
-          <div className="text-sm">
-            <div className="mt-2 h-3 w-20 animate-pulse rounded-sm bg-zinc-300" />
-
-            <div className="mt-2 h-3 w-32 animate-pulse bg-zinc-300" />
-          </div>
-        </div>
-        <div className="h-[50px]" />
-      </div>
-    );
-
   return (
     <div className="py-2">
       <div className="flex gap-4 pb-3">
-        {leadData ? (
+        {leadSuccess ? (
           <img
-            src={leadData[len - 1].repImgUrl}
+            src={item.repImgUrl}
             alt="상품 이미지"
             className="aspect-square size-16 rounded-md object-cover"
           />
@@ -36,18 +23,18 @@ export default function ProgressLead() {
           <div className="aspect-square size-16 animate-pulse rounded-md bg-zinc-300" />
         )}
         <div className="text-sm">
-          {leadData ? (
-            <div>{leadData[len - 1].goodsName}</div>
+          {leadSuccess ? (
+            <div>{item.goodsName}</div>
           ) : (
             <div className="mt-2 h-3 w-20 animate-pulse rounded-sm bg-zinc-300" />
           )}
           <div className="flex gap-1 pt-1 font-light text-gray-600">
-            {leadData ? (
+            {leadSuccess ? (
               <>
-                <div>배송비: {leadData[len - 1].goodsDeliveryPrice}원</div> /
+                <div>배송비: {item.goodsDeliveryPrice}원</div> /
                 <div>
                   <span className="text-yellow-400">
-                    {leadData[len - 1].goodsOrderCount}
+                    {item.goodsOrderCount}
                   </span>
                   명 분할 중
                 </div>{' '}
@@ -69,13 +56,41 @@ export default function ProgressLead() {
         <button
           className="w-full rounded-lg bg-success py-4 text-center text-xs text-white active:scale-[99%] disabled:animate-pulse disabled:bg-zinc-400"
           disabled={!leadSuccess}
-          onClick={() =>
-            leadData && navigate(`/goods/${leadData[len - 1].goodsId}`)
-          }
+          onClick={() => navigate(`/buying/${item.goodsId}`)}
         >
           구매폼으로 이동하기
         </button>
       </div>
     </div>
+  );
+}
+
+export default function ProgressLead() {
+  const { leadData, leadLoading, leadSuccess } =
+    useOutletContext<MyPageContextType>();
+  const len = leadData?.length || 0;
+
+  if (leadLoading)
+    return (
+      <div className="py-2">
+        <div className="flex gap-4 pb-3">
+          <div className="aspect-square size-16 animate-pulse rounded-md bg-zinc-300" />
+
+          <div className="text-sm">
+            <div className="mt-2 h-3 w-20 animate-pulse rounded-sm bg-zinc-300" />
+
+            <div className="mt-2 h-3 w-32 animate-pulse bg-zinc-300" />
+          </div>
+        </div>
+        <div className="h-[50px]" />
+      </div>
+    );
+
+  return len === 0 ? (
+    <div className="py-14 text-center text-zinc-500">
+      진행중인 구매리드가 없습니다.
+    </div>
+  ) : (
+    <LeadGoods item={leadData[len - 1]} leadSuccess={leadSuccess} />
   );
 }

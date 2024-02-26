@@ -11,7 +11,7 @@ export default function Submitted() {
   const url = location.pathname.slice(0, idx - 1);
 
   return (
-    <div className="absolute top-0 z-20 h-[100svh] w-full max-w-screen-sm bg-black/60 p-4">
+    <div className="absolute top-0 z-20 h-svh w-full max-w-screen-sm bg-black/60 p-4">
       <div
         className="absolute left-0 top-0 z-10 size-full"
         onClick={() => navigate(url)}

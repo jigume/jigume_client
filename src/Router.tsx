@@ -8,7 +8,7 @@ import { authState } from './data';
 import Register from './pages/Register';
 import Map from './pages/Map';
 import Goods from './pages/Goods';
-import Announcement from './pages/Announcement';
+import GoodsNotice from './pages/Goods/components/GoodsNotice';
 import Image from './pages/Register/components/Image';
 import Detail from './pages/Register/components/Detail';
 import Links from './pages/Register/components/Links';
@@ -36,6 +36,7 @@ import MarketingAgreement from './pages/Auth/components/Init/components/Marketin
 import Confirm from './pages/Register/components/Confirm';
 import MyLeadList from './pages/Mypage/components/MyLeadList';
 import MyJoinList from './pages/Mypage/components/MyJoinList';
+import GoodsDetail from './pages/Goods/components/GoodsDetail';
 
 export default function Router() {
   // recoil state로 access roles 관리
@@ -106,14 +107,20 @@ export default function Router() {
         { index: true, element: <Map /> },
         // 상품 상세
         {
-          path: '/goods/:idx/*',
+          path: '/buying/:idx/*',
           element: <Goods />,
-          children: [{ path: 'submitted', element: <Submitted /> }],
-        },
-        // 상품 공지
-        {
-          path: '/announcement',
-          element: <Announcement />,
+          children: [
+            {
+              path: '*',
+              element: <GoodsDetail />,
+              children: [{ path: 'submitted', element: <Submitted /> }],
+            },
+            { path: 'modify', element: 'modify' },
+            {
+              path: 'notice',
+              element: <GoodsNotice />,
+            },
+          ],
         },
         // 상품 등록
         {

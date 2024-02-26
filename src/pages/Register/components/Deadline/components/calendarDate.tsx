@@ -37,7 +37,7 @@ function CalendarDate({
       {open && (
         <div className="fixed inset-0 flex size-full items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none">
           <div
-            className="fixed left-0 top-0 z-30 h-[100svh] w-screen bg-black/10"
+            className="fixed left-0 top-0 z-30 h-svh w-screen bg-black/10"
             onClick={() => setOpen(false)}
           />
           <Calendar

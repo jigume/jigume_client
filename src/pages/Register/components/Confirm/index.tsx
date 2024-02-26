@@ -25,7 +25,7 @@ export default function Confirm() {
       retry: false,
       onSuccess: (res) => {
         setData(initData);
-        navigate(`/goods/${res}/submitted`);
+        navigate(`/buying/${res}/submitted`);
       },
     }
   );

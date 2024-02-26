@@ -10,7 +10,7 @@ export type GoodsListDTO = {
   goodsDeliveryPrice: number;
   goodsOrderCount: number;
   discountDeliveryPrice: number;
-  repImgUrl: string;
+  repImgUrl?: string;
   goodsStatus: GoodsStatus;
   categoryId: number;
 };
@@ -74,6 +74,34 @@ export type GoodsPageDTO = {
 };
 
 export type GoodsDetailDTO = {
-  memberStatus: MemberStatus;
+  goodsMemberAuth: MemberStatus;
   goodsPageDto: GoodsPageDTO;
 };
+
+export type BoardDTO = {
+  title: string;
+  content: string;
+  hostName: string;
+  created_at: string;
+  modified_at: string;
+};
+
+export type CommentDTO = {
+  commentId: number;
+  content: string;
+  memberNickname: string;
+  memberProfileUrl: string;
+  created_at: string;
+  modified_at: string;
+  isDelete: boolean;
+};
+
+export type CommentWithReplyDTO = {
+  parent: CommentDTO;
+  reply: CommentDTO[];
+};
+
+export interface GetCommentsDTO {
+  commentDtoList: CommentWithReplyDTO[];
+  totalPages: number;
+}
