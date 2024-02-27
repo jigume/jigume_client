@@ -5,7 +5,7 @@ import { AuthType } from '@src/types/data';
 import img0 from '@src/asset/images/profiles/initProfile0.png';
 import img1 from '@src/asset/images/profiles/initProfile1.png';
 import img2 from '@src/asset/images/profiles/initProfile2.png';
-import jigumeAxios from './axios';
+import { axiosHeaderAuth, jigumeAxios } from './axios';
 
 /**
  * 신규 유저의 닉네임 등의 정보를 입력하여 role을 USER로 변경한다
@@ -54,7 +54,9 @@ export const codeProvide = async (
 
   const response: TokenProviderType = await axios
     .post(
-      `/api/member/login?login-provider=${domain}&authorization-code=${code}`
+      `/api/member/login?login-provider=${domain}&authorization-code=${code}`,
+      {},
+      { headers: axiosHeaderAuth }
     )
     .then((res) => res.data);
 
@@ -63,12 +65,17 @@ export const codeProvide = async (
 
 export const kakaoLogout = async () => {
   // kakao 서버에 요청
-  const response = await axios.post('https://kapi.kakao.com/v1/user/logout');
+  const response = await axios.post(
+    'https://kapi.kakao.com/v1/user/logout',
+    {},
+    { headers: axiosHeaderAuth }
+  );
   return response;
 };
 
 export const checkNickname = async (nickname: string) => {
   const response = await jigumeAxios.get('/api/member/nickname', {
+    headers: axiosHeaderAuth,
     params: {
       nickname,
     },
@@ -76,9 +83,8 @@ export const checkNickname = async (nickname: string) => {
   return response;
 };
 
-const initProfiles = [img0, img1, img2];
-
 export const updateProfile = async (file?: File) => {
+  const initProfiles = [img0, img1, img2];
   const formData = new FormData();
   if (!file) {
     const randomIdx = Math.round(Math.random() * 2);
@@ -89,6 +95,7 @@ export const updateProfile = async (file?: File) => {
 
   const response = await jigumeAxios.post('/api/member/profile', formData, {
     headers: {
+      ...axiosHeaderAuth,
       'Content-Type': 'multipart/form-data',
     },
   });

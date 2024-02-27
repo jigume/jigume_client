@@ -22,7 +22,7 @@ export default function Auth() {
           ...prev,
           accessToken: data.tokenDto.accessToken,
           refreshToken: data.tokenDto.refreshToken,
-          expired: add(new Date(), { days: 1 }).getTime(),
+          expired: add(new Date(), { hours: 12 }).getTime(),
         }));
         navigate('/auth/init');
         return;
@@ -33,7 +33,7 @@ export default function Auth() {
         role: 'USER',
         accessToken: data.tokenDto.accessToken,
         refreshToken: data.tokenDto.refreshToken,
-        expired: add(new Date(), { days: 1 }).getTime(),
+        expired: add(new Date(), { hours: 12 }).getTime(),
       }));
       navigate('/');
     },

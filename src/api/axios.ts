@@ -1,12 +1,14 @@
 import { getToken } from '@src/utils';
 import axios from 'axios';
 
-const jigumeAxios = axios.create({
+export const jigumeAxios = axios.create({
   headers: {
-    Authorization: `Bearer ${getToken().accessToken}`,
     withCredentials: true,
     crossDomain: true,
     credentials: 'include',
   },
 });
-export default jigumeAxios;
+
+export const axiosHeaderAuth = {
+  Authorization: `Bearer ${getToken().accessToken}`,
+};

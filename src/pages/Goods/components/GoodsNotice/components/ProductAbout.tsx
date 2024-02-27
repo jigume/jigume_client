@@ -49,7 +49,7 @@ export default function ProductAbout({
 
       <div className="flex flex-col gap-2 bg-gray-100 px-4 pt-8">
         {/* 위치 정보 */}
-        <PlaceInfo coordinate={data?.coordinate} />
+        <PlaceInfo coordinate={data?.coordinate} bg="bg-white" />
 
         {/* 공지사항 */}
         <div className="rounded-xl bg-white px-4 py-6">

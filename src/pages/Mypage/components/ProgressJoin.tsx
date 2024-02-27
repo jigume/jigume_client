@@ -1,10 +1,11 @@
 import { useQuery } from 'react-query';
-import { useOutletContext } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
+import { OrderHistoryDto } from '@src/types/mypage';
 import OpenGraphViewer from '../../../components/OpenGraphViewer';
 import getOpenGraph from '../../../api/og';
 import { MyPageContextType } from '../index.d';
 
-function JoinGoods({ url }: { url: string }) {
+function JoinGoods({ url, item }: { url: string; item: OrderHistoryDto }) {
   const openGraph = useQuery('introOpenGraph', () => getOpenGraph(url), {
     retryDelay: 500,
   });
@@ -18,9 +19,12 @@ function JoinGoods({ url }: { url: string }) {
         <div className="w-full rounded-lg border py-4 text-center text-xs">
           예상 결제 내역 확인하기
         </div>
-        <div className="w-full rounded-lg bg-success py-4 text-center text-xs text-white">
+        <Link
+          className="w-full rounded-lg bg-success py-4 text-center text-xs text-white"
+          to={`/buying/${item.goodsId}/notice`}
+        >
           공지방으로 이동하기
-        </div>
+        </Link>
       </div>
     </>
   );
@@ -48,7 +52,7 @@ export default function ProgressJoin() {
   return (
     <div className="flex flex-col gap-4 py-2">
       {joinData && joinData.length > 0 ? (
-        <JoinGoods url={joinData[0].goodsLink as string} />
+        <JoinGoods url={joinData[0].goodsLink as string} item={joinData[0]} />
       ) : (
         <div className="py-14 text-center text-zinc-500">
           참여중인 구매리드가 없습니다.

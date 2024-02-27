@@ -5,7 +5,7 @@ import {
 } from '@src/types/register';
 import axios from 'axios';
 import { PositionType } from '@src/types/map';
-import jigumeAxios from './axios';
+import { axiosHeaderAuth, jigumeAxios } from './axios';
 
 export const postGoods = async (
   images: File[],
@@ -27,20 +27,29 @@ export const postGoods = async (
     .post('/api/goods/new?repImg=0', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
+        ...axiosHeaderAuth,
       },
     })
     .then(async (res) => {
       const goodsId = res.data;
       console.log('GOODS ID', goodsId);
       await jigumeAxios
-        .post(`/api/goods/${goodsId}/coordinate/new`, {
-          latitude: position.lat,
-          longitude: position.lng,
-        })
+        .post(
+          `/api/goods/${goodsId}/coordinate/new`,
+          {
+            latitude: position.lat,
+            longitude: position.lng,
+          },
+          { headers: axiosHeaderAuth }
+        )
         .then(async () => {
-          await jigumeAxios.post(`/api/goods/${goodsId}/board`, {
-            content: goodsDto_.boardContent,
-          });
+          await jigumeAxios.post(
+            `/api/goods/${goodsId}/board`,
+            {
+              content: goodsDto_.boardContent,
+            },
+            { headers: axiosHeaderAuth }
+          );
         });
       return res.data;
     });

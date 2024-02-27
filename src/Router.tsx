@@ -38,16 +38,10 @@ import MyLeadList from './pages/Mypage/components/MyLeadList';
 import MyJoinList from './pages/Mypage/components/MyJoinList';
 import GoodsDetail from './pages/Goods/components/GoodsDetail';
 
+import { AuthType } from './types/data';
+
 export default function Router() {
-  // recoil state로 access roles 관리
-  /** @type {[{
-   *  accessToken: string;
-   *  refreshToken: string;
-   *  role: "ADMIN" | "USER" | "GUEST";
-   *  expired: TimeStapm
-   * }]}
-   * */
-  const [auth] = useRecoilState(authState);
+  const [auth] = useRecoilState<AuthType>(authState);
 
   const router = createBrowserRouter([
     // 로그인
@@ -172,6 +166,7 @@ export default function Router() {
       ],
       loader: () => {
         if (auth.role !== 'USER') return redirect('/auth/login');
+
         return null;
       },
     },

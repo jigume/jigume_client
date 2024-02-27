@@ -1,4 +1,4 @@
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { SellHistoryDto } from '@src/types/mypage';
 import { MyPageContextType } from '../index.d';
 
@@ -9,7 +9,6 @@ function LeadGoods({
   item: SellHistoryDto;
   leadSuccess: boolean;
 }) {
-  const navigate = useNavigate();
   return (
     <div className="py-2">
       <div className="flex gap-4 pb-3">
@@ -47,19 +46,18 @@ function LeadGoods({
       </div>
 
       <div className="flex gap-2 font-light">
-        <button
+        <Link
           className="w-full rounded-lg border py-4 text-center text-xs active:scale-[99%] disabled:animate-pulse "
-          disabled={!leadSuccess}
+          to={`/buying/${item.goodsId}/notice`}
         >
           공지방 관리하기
-        </button>
-        <button
+        </Link>
+        <Link
           className="w-full rounded-lg bg-success py-4 text-center text-xs text-white active:scale-[99%] disabled:animate-pulse disabled:bg-zinc-400"
-          disabled={!leadSuccess}
-          onClick={() => navigate(`/buying/${item.goodsId}`)}
+          to={`/buying/${item.goodsId}`}
         >
           구매폼으로 이동하기
-        </button>
+        </Link>
       </div>
     </div>
   );

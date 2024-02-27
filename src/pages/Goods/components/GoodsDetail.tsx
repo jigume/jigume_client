@@ -125,7 +125,7 @@ export default function GoodsDetail() {
             </Link>
             <Link
               className="w-full rounded-lg bg-success py-4 text-center"
-              to="/"
+              to={`/buying/${goods.goodsPageDto.boardId}/notice`}
             >
               공지방 바로가기
             </Link>

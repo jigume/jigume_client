@@ -1,5 +1,5 @@
 import { PreViewerMarker } from '@src/pages/Map/index.d';
-import { stringLatLng2Arr } from '@src/utils';
+import { getToken, stringLatLng2Arr } from '@src/utils';
 import {
   BoardDTO,
   GetCommentsDTO,
@@ -8,7 +8,7 @@ import {
   Marker,
 } from '@src/types/goods';
 import qs from 'qs';
-import jigumeAxios from './axios';
+import { axiosHeaderAuth, jigumeAxios } from './axios';
 
 export const getGoodsList = async (
   map: kakao.maps.Map | null
@@ -27,7 +27,9 @@ export const getGoodsList = async (
     longitudeDelta: (arr[3] - arr[2]).toFixed(6),
   });
 
-  const response = await jigumeAxios.get(`/api/goods/marker?${query}`);
+  const response = await jigumeAxios.get(`/api/goods/marker?${query}`, {
+    headers: axiosHeaderAuth,
+  });
 
   return response.data;
 };
@@ -38,7 +40,7 @@ export const getSheetGoods = async (
   // if (!preViewer) return 'retry';
 
   const response = await jigumeAxios
-    .get(`/api/goods/${preViewer.goodsId}`)
+    .get(`/api/goods/${preViewer.goodsId}`, { headers: axiosHeaderAuth })
     .then((res) => res.data);
 
   return response;
@@ -73,7 +75,9 @@ export const getSheetList = async (
     longitudeDelta: (arr[3] - arr[2]).toFixed(6),
   });
 
-  const response = await jigumeAxios.get(`/api/goods/marker/list?${query}`);
+  const response = await jigumeAxios.get(`/api/goods/marker/list?${query}`, {
+    headers: axiosHeaderAuth,
+  });
 
   return response.data;
 };
@@ -82,7 +86,7 @@ export const getGoodsPage = async (
   id: number | string
 ): Promise<GoodsDetailDTO> => {
   const response = await jigumeAxios
-    .get(`/api/goods/${id}`)
+    .get(`/api/goods/${id}`, { headers: axiosHeaderAuth })
     .then((res) => res.data);
 
   return response;
@@ -98,15 +102,19 @@ export const setWishGoods = async ({
   // await console.log('hello', isWished);
 
   const response = !isWished
-    ? await jigumeAxios.post(`/api/wish/${id}`)
-    : await jigumeAxios.delete(`/api/wish/${id}`);
+    ? await jigumeAxios.post(
+        `/api/wish/${id}`,
+        {},
+        { headers: axiosHeaderAuth }
+      )
+    : await jigumeAxios.delete(`/api/wish/${id}`, { headers: axiosHeaderAuth });
 
   return response.data;
 };
 
 export const deleteWishGoods = async (id: number | string) => {
   const response = await jigumeAxios
-    .delete(`/api/wish/${id}`)
+    .delete(`/api/wish/${id}`, { headers: axiosHeaderAuth })
     .then((res) => res.data);
 
   return response;
@@ -117,7 +125,7 @@ export const getNotice = async (
   boardId: number | string
 ): Promise<BoardDTO> => {
   const response = await jigumeAxios
-    .get(`/api/goods/${goodsId}/board/${boardId}`)
+    .get(`/api/goods/${goodsId}/board/${boardId}`, { headers: axiosHeaderAuth })
     .then((res) => res.data);
 
   return response;
@@ -128,7 +136,9 @@ export const getComment = async (
   boardId: number | string
 ): Promise<GetCommentsDTO> => {
   const response = await jigumeAxios
-    .get(`/api/goods/${goodsId}/board/${boardId}/comment`)
+    .get(`/api/goods/${goodsId}/board/${boardId}/comment`, {
+      headers: axiosHeaderAuth,
+    })
     .then((res) => res.data);
 
   return response;
@@ -140,9 +150,13 @@ export const postCommentAtBoard = async (
   content: string
 ) => {
   const response = await jigumeAxios
-    .post(`/api/goods/${goodsId}/board/${boardId}/comment`, {
-      content,
-    })
+    .post(
+      `/api/goods/${goodsId}/board/${boardId}/comment`,
+      {
+        content,
+      },
+      { headers: axiosHeaderAuth }
+    )
     .then((res) => res.data);
 
   return response;
@@ -160,10 +174,14 @@ export const postCommentAtComment = async ({
   content: string;
 }) => {
   const response = await jigumeAxios
-    .post(`/api/goods/${goodsId}/board/${boardId}/comment/reply`, {
-      parentCommentId,
-      content,
-    })
+    .post(
+      `/api/goods/${goodsId}/board/${boardId}/comment/reply`,
+      {
+        parentCommentId,
+        content,
+      },
+      { headers: axiosHeaderAuth }
+    )
     .then((res) => res.data);
 
   return response;
