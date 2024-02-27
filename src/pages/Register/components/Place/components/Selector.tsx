@@ -33,7 +33,7 @@ export default function Selector({
 
   return (
     <div
-      className={`text-md absolute z-20 w-[calc(100%-2rem)] max-w-screen-sm overflow-y-scroll rounded-md border border-slate-300 bg-white text-left font-light text-slate-600 ${!open ? 'py-3' : 'pt-3'}`}
+      className={`text-md absolute top-0 z-20 w-full max-w-screen-sm overflow-y-scroll rounded-md border border-slate-300 bg-white text-left font-light text-slate-600 ${!open ? 'py-3' : 'pt-3'}`}
       onClick={handleToggle}
     >
       <div className="flex justify-between px-3">

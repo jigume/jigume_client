@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import {
-  CategoryGroupCode,
-  NearPlacesType,
-  RegisterContextType,
-} from '@src/types/register';
+import { NearPlacesType, RegisterContextType } from '@src/types/register';
 import { PositionType } from '@src/types/map';
 import { getCurrentLocation } from '@src/utils';
 import { useMutation } from 'react-query';
@@ -12,10 +8,9 @@ import { getPlaces } from '@src/api/register';
 import NextButton from '@src/components/NextButton';
 import RegistMarker from '@src/asset/icon/RegistMarker.svg';
 import PreviewMap from '@src/components/PreviewMap';
+import { PlaceCodes } from '@src/common';
 import Postcode from './components/postcode';
 import Selector from './components/Selector';
-
-const category: CategoryGroupCode[] = ['MT1', 'CS2', 'SW8', 'BK9', 'PO3'];
 
 function Place() {
   const { data, setData } = useOutletContext<RegisterContextType>();
@@ -54,13 +49,15 @@ function Place() {
     },
   });
 
+  // 초기 위치 검색
   useEffect(() => {
     getCurrentLocation(setPosition);
   }, []);
 
+  // 등록된 코드를 통해 주변 위치 검색
   useEffect(() => {
     if (position)
-      category.forEach((CODE) => mutate({ position, CAT_CODE: CODE }));
+      PlaceCodes.forEach((CODE) => mutate({ position, CAT_CODE: CODE }));
   }, [position]);
 
   useEffect(() => {
@@ -97,12 +94,14 @@ function Place() {
           팔로워들과 만날 픽업 장소를 알려주세요.
         </div>
         <div className="mb-2 align-top text-sm font-thin">픽업 위치 지정</div>
-        <Selector
-          index={index}
-          setIndex={setIndex}
-          places={places}
-          isLoading={position ? isLoading : true}
-        />
+        <div className="relative">
+          <Selector
+            index={index}
+            setIndex={setIndex}
+            places={places}
+            isLoading={position ? isLoading : true}
+          />
+        </div>
         <div className="flex flex-col gap-4">
           {index === -1 && <Postcode data={data} setData={setData} />}
           {(data.position.lat || index >= 0) && (

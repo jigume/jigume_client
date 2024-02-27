@@ -158,7 +158,6 @@ export default function Map() {
   // 마커 등록
   useEffect(() => {
     if (markerList) initMap(markerList);
-    console.log(markerList);
   }, [markerList]);
 
   // 주소 변환

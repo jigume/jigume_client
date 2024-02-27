@@ -1,3 +1,5 @@
+import { CategoryGroupCode } from './types/register';
+
 export const primaryYello = '#FFAE39';
 export const primaryJade = '#8CDDE2';
 export const primaryPurple = '#E4CCFF';
@@ -62,3 +64,11 @@ export const prohibition = {
     '만약 특정 항목이나 물품에 대한 의문이 있을 경우, 담당자에게 문의해 주시기 바랍니다.',
   description4: '이용해 주셔서 감사합니다.',
 };
+
+export const PlaceCodes: CategoryGroupCode[] = [
+  'MT1',
+  'CS2',
+  'SW8',
+  'BK9',
+  'PO3',
+];

@@ -1,28 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calendar } from 'react-date-range';
 import locale from 'date-fns/locale/ko';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import { RegisterDataType } from '@src/types/register';
 import { primaryBlue } from '../../../../../common';
 
 function CalendarDate({
-  data,
-  setData,
+  date,
+  onChange,
 }: {
-  data: RegisterDataType;
-  setData: React.Dispatch<React.SetStateAction<RegisterDataType>>;
+  date: Date;
+  onChange: (date: Date) => void;
 }) {
   const [open, setOpen] = useState(false);
 
-  const handleDateChange = (newDate: Date) => {
-    setData((prev) => ({
-      ...prev,
-      goodsDto: { ...prev.goodsDto, goodsLimitTime: newDate },
-    }));
-    setOpen(false); // 날짜 선택 후 모달 닫기
-  };
-  const date = data.goodsDto.goodsLimitTime;
+  useEffect(() => {
+    setOpen(false);
+  }, [date]);
+
   return (
     <>
       <button
@@ -35,13 +30,13 @@ function CalendarDate({
         {date.getFullYear()}년 {date.getMonth() + 1}월 {date.getDate()}일
       </button>
       {open && (
-        <div className="fixed inset-0 flex size-full items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none">
+        <div className="fixed inset-0 z-50 flex size-full items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none">
           <div
             className="fixed left-0 top-0 z-30 h-svh w-screen bg-black/10"
             onClick={() => setOpen(false)}
           />
           <Calendar
-            onChange={handleDateChange}
+            onChange={onChange}
             date={date}
             locale={locale}
             color={primaryBlue}

@@ -1,8 +1,8 @@
 import { useOutletContext } from 'react-router-dom';
 import { RegisterContextType } from '@src/types/register';
-import CalendarDate from './components/calendarDate';
 import StyledCountInput from '../../../../components/StyledCountInput';
 import NextButton from '../../../../components/NextButton';
+import CalendarDate from './components/calendarDate';
 
 function Deadline() {
   const { data, setData } = useOutletContext<RegisterContextType>();
@@ -36,7 +36,15 @@ function Deadline() {
         </div>
         <div>
           <div className="mb-2 text-sm font-thin">공동구매 종료 시간</div>
-          <CalendarDate data={data} setData={setData} />
+          <CalendarDate
+            date={data.goodsDto.goodsLimitTime}
+            onChange={(newDate: Date) =>
+              setData((prev) => ({
+                ...prev,
+                goodsDto: { ...prev.goodsDto, goodsLimitTime: newDate },
+              }))
+            }
+          />
         </div>
       </div>
 

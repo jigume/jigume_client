@@ -12,6 +12,7 @@ export type StyledInputTextType = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   height?: numger;
+  disabled?: boolean;
 };
 
 export type StyledCurrencyInputType = {

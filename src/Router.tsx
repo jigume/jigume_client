@@ -39,6 +39,7 @@ import MyJoinList from './pages/Mypage/components/MyJoinList';
 import GoodsDetail from './pages/Goods/components/GoodsDetail';
 
 import { AuthType } from './types/data';
+import GoodsModify from './pages/Goods/components/GoodsModify';
 
 export default function Router() {
   const [auth] = useRecoilState<AuthType>(authState);
@@ -109,7 +110,7 @@ export default function Router() {
               element: <GoodsDetail />,
               children: [{ path: 'submitted', element: <Submitted /> }],
             },
-            { path: 'modify', element: 'modify' },
+            { path: 'modify', element: <GoodsModify /> },
             {
               path: 'notice',
               element: <GoodsNotice />,

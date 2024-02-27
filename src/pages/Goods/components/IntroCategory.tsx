@@ -1,4 +1,4 @@
-import category from '../../Map/components/BottomSheetComponent/data';
+import category from '@src/pages/Map/components/BottomSheetComponent/data';
 
 export default function IntroCategory({ idx }: { idx: number }) {
   const { icon, name } = category.filter((item) => item.idx === idx)[0];

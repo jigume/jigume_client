@@ -12,7 +12,7 @@ export default function PreviewMap({
   position?: PositionType;
 }) {
   return (
-    <div className="relative aspect-[1.9197] w-full rounded-xl bg-gray-300">
+    <div className="relative aspect-[1.9197] w-full rounded-md bg-gray-300">
       {position?.lat ? (
         // <StaticMap
         //   className="size-full rounded-xl"
