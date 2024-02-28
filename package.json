@@ -18,6 +18,7 @@
     "boring-avatars": "^1.10.1",
     "date-fns": "^2.30.0",
     "framer-motion": "^10.16.4",
+    "javascript-time-ago": "^2.5.9",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "match-sorter": "^6.3.1",
@@ -72,7 +73,7 @@
     "prettier-plugin-tailwindcss": "^0.5.6",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3",
-    "vite": "4.5.1",
+    "vite": "^4.5.2",
     "vite-tsconfig-paths": "^4.2.3"
   },
   "lint-staged": {

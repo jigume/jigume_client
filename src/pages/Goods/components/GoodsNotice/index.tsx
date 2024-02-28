@@ -17,7 +17,7 @@ export default function GoodsNotice() {
     <div className="container mx-auto h-svh w-full max-w-screen-sm overflow-y-scroll p-28 px-0 pt-14">
       <DetailHeader
         rightMenu={
-          <Link className="text-sm" to="/modify">
+          <Link className="text-sm" to="/buying/notice/modify">
             편집하기
           </Link>
         }

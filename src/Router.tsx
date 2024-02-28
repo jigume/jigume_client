@@ -110,10 +110,16 @@ export default function Router() {
               element: <GoodsDetail />,
               children: [{ path: 'submitted', element: <Submitted /> }],
             },
-            { path: 'modify', element: <GoodsModify /> },
             {
-              path: 'notice',
-              element: <GoodsNotice />,
+              path: 'modify',
+              element: <GoodsModify />,
+            },
+            {
+              path: 'notice/*',
+              children: [
+                { index: true, element: <GoodsNotice /> },
+                { path: 'modify', element: '공지 수정' },
+              ],
             },
           ],
         },

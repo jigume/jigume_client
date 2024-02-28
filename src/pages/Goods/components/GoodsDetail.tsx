@@ -119,13 +119,13 @@ export default function GoodsDetail() {
           <div className="flex w-full gap-4 text-white">
             <Link
               className="shrink-0 rounded-lg bg-zinc-950 p-4 text-center"
-              to="/"
+              to={`/buying/${goods.goodsPageDto.goodsId}/modify`}
             >
               편집하기
             </Link>
             <Link
               className="w-full rounded-lg bg-success py-4 text-center"
-              to={`/buying/${goods.goodsPageDto.boardId}/notice`}
+              to={`/buying/${goods.goodsPageDto.goodsId}/notice`}
             >
               공지방 바로가기
             </Link>

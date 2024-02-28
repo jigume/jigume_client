@@ -92,7 +92,7 @@ export default function ItemComponent({ goods }: { goods?: GoodsListDTO }) {
             {!goods ? (
               <div className="h-[12px] w-12 rounded-sm bg-gray-100" />
             ) : (
-              <span>배송비: {goods.goodsDeliveryPrice}</span>
+              <span>배송비: {setComma(goods.goodsDeliveryPrice)} 원</span>
             )}
             <span>/</span>
             {!goods ? (

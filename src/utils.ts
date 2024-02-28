@@ -185,7 +185,7 @@ export const getdDay = (date: string) => {
   return `D-${dDay}`;
 };
 
-export const getFormettedDate = (arg: string) => {
+export const getFormettedDate = (arg: string | number) => {
   const date = new Date(arg);
   const year = date.getFullYear();
   const month = `0${date.getMonth() + 1}`.slice(-2);
