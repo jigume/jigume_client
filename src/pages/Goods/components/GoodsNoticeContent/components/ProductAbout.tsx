@@ -1,30 +1,19 @@
 import ItemComponent from '@src/pages/Map/components/BottomSheetComponent/components/ItemComponent';
-import { GoodsPageDTO } from '@src/types/goods';
-import { useMutation } from 'react-query';
-import { getNotice } from '@src/api/goods';
-import { useEffect } from 'react';
+import { BoardDTO, GoodsPageDTO } from '@src/types/goods';
 import { NoticeSkeleton } from '@src/components/Skeltons';
 import PlaceInfo from '../../PlaceInfo';
 
 export default function ProductAbout({
   data,
+  notice,
   isSuccess,
+  isNoticeSuccess,
 }: {
   data: GoodsPageDTO;
+  notice: BoardDTO;
   isSuccess: boolean;
+  isNoticeSuccess: boolean;
 }) {
-  const {
-    data: notice,
-    mutate: getGoodsNotice,
-    isSuccess: isNoticeSuccess,
-  } = useMutation('goodsNotice', () =>
-    getNotice(data.goodsId as number, data.boardId as number)
-  );
-
-  useEffect(() => {
-    if (isSuccess) getGoodsNotice();
-  }, [isSuccess]);
-
   if (!isSuccess || !isNoticeSuccess) return <NoticeSkeleton />;
 
   return (

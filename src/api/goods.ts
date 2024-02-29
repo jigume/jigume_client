@@ -186,3 +186,28 @@ export const postCommentAtComment = async ({
 
   return response;
 };
+
+export const postModifyNotice = async ({
+  goodsId,
+  boardId,
+  parentCommentId,
+  content,
+}: {
+  goodsId: number | string;
+  boardId: number | string;
+  parentCommentId: number;
+  content: string;
+}) => {
+  const response = await jigumeAxios
+    .post(
+      `/api/goods/${goodsId}/board/${boardId}/comment/reply`,
+      {
+        parentCommentId,
+        content,
+      },
+      { headers: axiosHeaderAuth }
+    )
+    .then((res) => res.data);
+
+  return response;
+};

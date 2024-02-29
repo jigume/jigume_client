@@ -1,9 +1,24 @@
-import { Address, GoodsDetailDTO } from '@src/types/goods';
+import {
+  Address,
+  BoardDTO,
+  GetCommentsDTO,
+  GoodsDetailDTO,
+} from '@src/types/goods';
 
 export type GoodsContextType = {
   goods: GoodsDetailDTO;
   isSuccess: boolean;
 };
+
+export type GoodsNoticeContextType = {
+  goods: GoodsDetailDTO;
+  isSuccess: boolean;
+  isNoticeSuccess: boolean;
+  isCommentSuccess: boolean;
+  notice: BoardDTO;
+  comment: GetCommentsDTO;
+};
+
 export type PostCommentStateType = {
   value: string;
   targetCommentId: number;

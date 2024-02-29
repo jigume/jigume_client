@@ -40,6 +40,8 @@ import GoodsDetail from './pages/Goods/components/GoodsDetail';
 
 import { AuthType } from './types/data';
 import GoodsModify from './pages/Goods/components/GoodsModify';
+import GoodsNoticeModify from './pages/Goods/components/GoodsNoticeModify';
+import GoodsNoticeContent from './pages/Goods/components/GoodsNoticeContent';
 
 export default function Router() {
   const [auth] = useRecoilState<AuthType>(authState);
@@ -116,9 +118,10 @@ export default function Router() {
             },
             {
               path: 'notice/*',
+              element: <GoodsNotice />,
               children: [
-                { index: true, element: <GoodsNotice /> },
-                { path: 'modify', element: '공지 수정' },
+                { index: true, element: <GoodsNoticeContent /> },
+                { path: 'modify', element: <GoodsNoticeModify /> },
               ],
             },
           ],

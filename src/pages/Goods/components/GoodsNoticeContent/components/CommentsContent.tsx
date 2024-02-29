@@ -1,5 +1,5 @@
 import addCommentIcon from '@src/asset/icon/addCommentIcon.svg';
-import { GoodsPageDTO } from '@src/types/goods';
+import { GetCommentsDTO, GoodsPageDTO } from '@src/types/goods';
 import { useMutation } from 'react-query';
 import { getComment } from '@src/api/goods';
 import React, { useEffect } from 'react';
@@ -10,23 +10,17 @@ import TimeAgo from 'javascript-time-ago';
 import { add } from 'date-fns';
 
 export default function CommentsContent({
-  data,
+  comment,
   isSuccess,
+  isCommentSuccess,
   setContent,
 }: {
-  data: GoodsPageDTO;
+  comment: GetCommentsDTO;
   isSuccess: boolean;
+  isCommentSuccess: boolean;
   setContent: React.Dispatch<React.SetStateAction<PostCommentStateType>>;
 }) {
   const timeAgo = new TimeAgo('ko');
-
-  const {
-    data: comment,
-    mutate: getGoodsComment,
-    isSuccess: isCommentSuccess,
-  } = useMutation('goodsNotice', () =>
-    getComment(data.goodsId as number, data.boardId as number)
-  );
 
   const handleCommentType = (targetCommentId: number) => {
     setContent((prev) => ({ ...prev, targetCommentId }));
@@ -38,10 +32,6 @@ export default function CommentsContent({
       return getFormettedDate(date);
     return timeAgo.format(new Date(date));
   };
-
-  useEffect(() => {
-    if (isSuccess) getGoodsComment();
-  }, [isSuccess]);
 
   if (!isSuccess || !isCommentSuccess) return <CommentSkeleton />;
 
