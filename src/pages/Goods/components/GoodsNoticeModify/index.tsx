@@ -4,13 +4,15 @@ import Loading from '@src/pages/Map/components/Loading';
 import StyledTextarea from '@src/components/StyledTextarea';
 import { useMutation } from 'react-query';
 import { postModifyNotice } from '@src/api/goods';
-import DetailHeader from '../DetailHeader';
 import { GoodsNoticeContextType } from '../../index.d';
+import ConfirmAlert from '../ConfirmAlert';
+import NoticeModifyHeader from './components/NoticeModifyHeader';
 
 export default function GoodsNoticeModify() {
   const { isSuccess, isNoticeSuccess, notice } =
     useOutletContext<GoodsNoticeContextType>();
   const [newNotice, setNewNotice] = useState('');
+  const [isConfirm, setIsConfirm] = useState(false);
 
   const handleNotice = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewNotice(e.target.value);
@@ -33,11 +35,16 @@ export default function GoodsNoticeModify() {
     );
 
   return (
-    <div className="container mx-auto h-svh w-full max-w-screen-sm overflow-y-scroll p-28 px-4 pt-14">
-      <DetailHeader rightMenu={<button>완료</button>} />
+    <div className="container mx-auto h-svh w-full max-w-screen-sm overflow-y-scroll px-0 py-14">
+      <NoticeModifyHeader
+        rightMenu={<button className="text-sm">완료</button>}
+        curr={newNotice}
+        prev={notice.content}
+        setIsConfirm={setIsConfirm}
+      />
 
       {/* content */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 px-4">
         <div className="pt-20 text-xl font-bold">
           더 나은 안내가 필요하신가요?
           <br />
@@ -54,6 +61,7 @@ export default function GoodsNoticeModify() {
           />
         </div>
       </div>
+      {isConfirm && <ConfirmAlert setIsConfirm={setIsConfirm} />}
     </div>
   );
 }

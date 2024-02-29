@@ -1,5 +1,5 @@
 import { PreViewerMarker } from '@src/pages/Map/index.d';
-import { getToken, stringLatLng2Arr } from '@src/utils';
+import { stringLatLng2Arr } from '@src/utils';
 import {
   BoardDTO,
   GetCommentsDTO,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import RegistMarker from '@src/asset/icon/RegistMarker.svg';
 import camera from '@src/asset/icon/mdi_camera.svg';
@@ -25,6 +25,7 @@ import PostCodeModify from './components/PostCodeModify';
 import { GoodsContextType, GoodsModifyType } from '../../index.d';
 import ModifyHeader from './components/ModifyHeader';
 import ModifyCategory from './components/ModifyCategory';
+import ConfirmAlert from '../ConfirmAlert';
 
 const initModifyData: GoodsModifyType = {
   images: [],
@@ -40,7 +41,6 @@ const initModifyData: GoodsModifyType = {
 };
 
 export default function GoodsModify() {
-  const navigate = useNavigate();
   const { goods, isSuccess } = useOutletContext<GoodsContextType>();
   const [modify, setModify] = useState<GoodsModifyType>(initModifyData);
   const [prevData, setPrevData] = useState<GoodsModifyType>(initModifyData);
@@ -400,37 +400,7 @@ export default function GoodsModify() {
         </div>
       </div>
 
-      {isConfirm && (
-        <div
-          className="absolute top-0 z-50 flex size-full items-center justify-center bg-black/30 px-4"
-          onClick={() => setIsConfirm(false)}
-        >
-          <div className="flex w-full flex-col gap-6 rounded-[20px] bg-white py-4">
-            <div className="flex flex-col gap-1 pt-4">
-              <div className="text-center text-lg font-bold">
-                변경 사항을 취소 하시겠어요?
-              </div>
-              <div className="text-center text-sm">
-                수정하신 내용이 반영되지 않아요.
-              </div>
-            </div>
-            <div className="flex gap-4 px-4 text-sm">
-              <div
-                className="w-1/2 rounded-lg bg-gray-200 py-3 text-center active:opacity-80"
-                onClick={() => navigate(-1)}
-              >
-                수정 취소
-              </div>
-              <div
-                className="w-1/2 rounded-lg bg-success py-3 text-center text-white"
-                onClick={() => setIsConfirm(false)}
-              >
-                계속 편집
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {isConfirm && <ConfirmAlert setIsConfirm={setIsConfirm} />}
     </div>
   );
 }
