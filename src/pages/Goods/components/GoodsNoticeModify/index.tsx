@@ -9,7 +9,7 @@ import ConfirmAlert from '../ConfirmAlert';
 import NoticeModifyHeader from './components/NoticeModifyHeader';
 
 export default function GoodsNoticeModify() {
-  const { isSuccess, isNoticeSuccess, notice } =
+  const { goods, isSuccess, isNoticeSuccess, notice } =
     useOutletContext<GoodsNoticeContextType>();
   const [newNotice, setNewNotice] = useState('');
   const [isConfirm, setIsConfirm] = useState(false);
@@ -22,6 +22,15 @@ export default function GoodsNoticeModify() {
     'modifyNotice',
     postModifyNotice
   );
+
+  const handleModifyNotice = () => {
+    if (newNotice !== notice.content && newNotice.length === 0)
+      modifyNotice({
+        goodsId: goods.goodsPageDto.goodsId,
+        boardId: goods.goodsPageDto.boardId,
+        boardContent: newNotice,
+      });
+  };
 
   useEffect(() => {
     if (isSuccess && isNoticeSuccess) setNewNotice(notice.content);
@@ -37,7 +46,11 @@ export default function GoodsNoticeModify() {
   return (
     <div className="container mx-auto h-svh w-full max-w-screen-sm overflow-y-scroll px-0 py-14">
       <NoticeModifyHeader
-        rightMenu={<button className="text-sm">완료</button>}
+        rightMenu={
+          <button className="text-sm" onClick={handleModifyNotice}>
+            완료
+          </button>
+        }
         curr={newNotice}
         prev={notice.content}
         setIsConfirm={setIsConfirm}

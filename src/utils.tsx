@@ -142,6 +142,7 @@ export const stringLatLng2Arr = (bound: kakao.maps.LatLngBounds) => {
 };
 
 export const getToken = (): { accessToken: string; refreshToken: string } => {
+  // const [token] = useRecoilState(authState);
   try {
     const local = localStorage.getItem('recoil-persist');
     const token = JSON.parse(local as string)?.jigumeAuth;

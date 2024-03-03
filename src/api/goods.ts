@@ -27,9 +27,13 @@ export const getGoodsList = async (
     longitudeDelta: (arr[3] - arr[2]).toFixed(6),
   });
 
-  const response = await jigumeAxios.get(`/api/goods/marker?${query}`, {
-    headers: axiosHeaderAuth,
-  });
+  const response = await jigumeAxios
+    .get(`/api/goods/marker?${query}`, {
+      headers: axiosHeaderAuth,
+    })
+    .catch((res) => {
+      throw Error(res);
+    });
 
   return response.data;
 };
@@ -41,7 +45,10 @@ export const getSheetGoods = async (
 
   const response = await jigumeAxios
     .get(`/api/goods/${preViewer.goodsId}`, { headers: axiosHeaderAuth })
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .catch((res) => {
+      throw Error(res);
+    });
 
   return response;
 };
@@ -75,9 +82,13 @@ export const getSheetList = async (
     longitudeDelta: (arr[3] - arr[2]).toFixed(6),
   });
 
-  const response = await jigumeAxios.get(`/api/goods/marker/list?${query}`, {
-    headers: axiosHeaderAuth,
-  });
+  const response = await jigumeAxios
+    .get(`/api/goods/marker/list?${query}`, {
+      headers: axiosHeaderAuth,
+    })
+    .catch((res) => {
+      throw Error(res);
+    });
 
   return response.data;
 };
@@ -87,7 +98,10 @@ export const getGoodsPage = async (
 ): Promise<GoodsDetailDTO> => {
   const response = await jigumeAxios
     .get(`/api/goods/${id}`, { headers: axiosHeaderAuth })
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .catch((res) => {
+      throw Error(res);
+    });
 
   return response;
 };
@@ -102,12 +116,16 @@ export const setWishGoods = async ({
   // await console.log('hello', isWished);
 
   const response = !isWished
-    ? await jigumeAxios.post(
-        `/api/wish/${id}`,
-        {},
-        { headers: axiosHeaderAuth }
-      )
-    : await jigumeAxios.delete(`/api/wish/${id}`, { headers: axiosHeaderAuth });
+    ? await jigumeAxios
+        .post(`/api/wish/${id}`, {}, { headers: axiosHeaderAuth })
+        .catch((res) => {
+          throw Error(res);
+        })
+    : await jigumeAxios
+        .delete(`/api/wish/${id}`, { headers: axiosHeaderAuth })
+        .catch((res) => {
+          throw Error(res);
+        });
 
   return response.data;
 };
@@ -115,7 +133,10 @@ export const setWishGoods = async ({
 export const deleteWishGoods = async (id: number | string) => {
   const response = await jigumeAxios
     .delete(`/api/wish/${id}`, { headers: axiosHeaderAuth })
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .catch((res) => {
+      throw Error(res);
+    });
 
   return response;
 };
@@ -126,7 +147,10 @@ export const getNotice = async (
 ): Promise<BoardDTO> => {
   const response = await jigumeAxios
     .get(`/api/goods/${goodsId}/board/${boardId}`, { headers: axiosHeaderAuth })
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .catch((res) => {
+      throw Error(res);
+    });
 
   return response;
 };
@@ -139,7 +163,10 @@ export const getComment = async (
     .get(`/api/goods/${goodsId}/board/${boardId}/comment`, {
       headers: axiosHeaderAuth,
     })
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .catch((res) => {
+      throw Error(res);
+    });
 
   return response;
 };
@@ -157,7 +184,10 @@ export const postCommentAtBoard = async (
       },
       { headers: axiosHeaderAuth }
     )
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .catch((res) => {
+      throw Error(res);
+    });
 
   return response;
 };
@@ -182,7 +212,10 @@ export const postCommentAtComment = async ({
       },
       { headers: axiosHeaderAuth }
     )
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .catch((res) => {
+      throw Error(res);
+    });
 
   return response;
 };
@@ -190,24 +223,24 @@ export const postCommentAtComment = async ({
 export const postModifyNotice = async ({
   goodsId,
   boardId,
-  parentCommentId,
-  content,
+  boardContent,
 }: {
   goodsId: number | string;
   boardId: number | string;
-  parentCommentId: number;
-  content: string;
+  boardContent: string;
 }) => {
   const response = await jigumeAxios
     .post(
-      `/api/goods/${goodsId}/board/${boardId}/comment/reply`,
+      `/api/goods/${goodsId}/board/${boardId}`,
       {
-        parentCommentId,
-        content,
+        boardContent,
       },
       { headers: axiosHeaderAuth }
     )
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .catch((res) => {
+      throw Error(res);
+    });
 
   return response;
 };

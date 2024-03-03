@@ -32,7 +32,7 @@ export const postGoods = async (
     })
     .then(async (res) => {
       const goodsId = res.data;
-      console.log('GOODS ID', goodsId);
+      // console.log('GOODS ID', goodsId);
       await jigumeAxios
         .post(
           `/api/goods/${goodsId}/coordinate/new`,
@@ -43,15 +43,25 @@ export const postGoods = async (
           { headers: axiosHeaderAuth }
         )
         .then(async () => {
-          await jigumeAxios.post(
-            `/api/goods/${goodsId}/board`,
-            {
-              content: goodsDto_.boardContent,
-            },
-            { headers: axiosHeaderAuth }
-          );
+          await jigumeAxios
+            .post(
+              `/api/goods/${goodsId}/board`,
+              {
+                content: goodsDto_.boardContent,
+              },
+              { headers: axiosHeaderAuth }
+            )
+            .catch((err) => {
+              throw Error(err);
+            });
+        })
+        .catch((err) => {
+          throw Error(err);
         });
       return res.data;
+    })
+    .catch((err) => {
+      throw Error(err);
     });
 
   return response;
@@ -78,12 +88,16 @@ export const getPlaces = async ({
       Authorization: `KakaoAK ${KAKAO_KEY}`,
     },
   }).then((res) => {
-    return res.data.documents.map((item: NearPlacesType) => ({
-      ...item,
-      distance: Number(item.distance),
-      x: Number(item.x),
-      y: Number(item.y),
-    }));
+    return res.data.documents
+      .map((item: NearPlacesType) => ({
+        ...item,
+        distance: Number(item.distance),
+        x: Number(item.x),
+        y: Number(item.y),
+      }))
+      .catch((err: Error) => {
+        throw Error(err.message);
+      });
   });
   return response;
 };

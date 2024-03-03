@@ -15,11 +15,15 @@ export const updateMemberInfo = async (param: {
   latitude: number;
   longitude: number;
 }) => {
-  const response = await jigumeAxios.post('/api/member/info', {
-    nickname: param.nickname,
-    longitude: 0,
-    latitude: 0,
-  });
+  const response = await jigumeAxios
+    .post('/api/member/info', {
+      nickname: param.nickname,
+      longitude: 0,
+      latitude: 0,
+    })
+    .catch((err) => {
+      throw Error(err);
+    });
 
   return response.data;
 };
@@ -35,9 +39,13 @@ export const handleRefreshToken = async (auth: AuthType) => {
   )
     return 'valid';
 
-  const response = await jigumeAxios.post('/api/member/token', {
-    refreshToken: auth.refreshToken,
-  });
+  const response = await jigumeAxios
+    .post('/api/member/token', {
+      refreshToken: auth.refreshToken,
+    })
+    .catch((err) => {
+      throw Error(err);
+    });
 
   return response.data;
 };
@@ -58,28 +66,41 @@ export const codeProvide = async (
       {},
       { headers: axiosHeaderAuth }
     )
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .catch((err) => {
+      throw Error(err);
+    });
 
   return response;
 };
 
 export const kakaoLogout = async () => {
   // kakao 서버에 요청
-  const response = await axios.post(
-    'https://kapi.kakao.com/v1/user/logout',
-    {},
-    { headers: axiosHeaderAuth }
-  );
+  const response = await axios
+    .post(
+      'https://kapi.kakao.com/v1/user/logout',
+      {},
+      { headers: axiosHeaderAuth }
+    )
+    .catch((err) => {
+      throw Error(err);
+    });
+
   return response;
 };
 
 export const checkNickname = async (nickname: string) => {
-  const response = await jigumeAxios.get('/api/member/nickname', {
-    headers: axiosHeaderAuth,
-    params: {
-      nickname,
-    },
-  });
+  const response = await jigumeAxios
+    .get('/api/member/nickname', {
+      headers: axiosHeaderAuth,
+      params: {
+        nickname,
+      },
+    })
+    .catch((err) => {
+      throw Error(err);
+    });
+
   return response;
 };
 
@@ -93,12 +114,16 @@ export const updateProfile = async (file?: File) => {
     formData.append('multipartFile', file as File);
   }
 
-  const response = await jigumeAxios.post('/api/member/profile', formData, {
-    headers: {
-      ...axiosHeaderAuth,
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+  const response = await jigumeAxios
+    .post('/api/member/profile', formData, {
+      headers: {
+        ...axiosHeaderAuth,
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .catch((err) => {
+      throw Error(err);
+    });
 
   return response.data;
 };
