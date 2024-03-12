@@ -64,7 +64,7 @@ export const codeProvide = async (
     .post(
       `/api/member/login?login-provider=${domain}&authorization-code=${code}`,
       {},
-      { headers: { ...axiosHeaderAuth, 'X-Forwared-For': 'jigume.site' } }
+      { headers: axiosHeaderAuth }
     )
     .then((res) => res.data)
     .catch((err) => {

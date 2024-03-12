@@ -5,5 +5,6 @@ interface ImportMeta {
     VITE_NAVER_CLIENT_ID: string;
     VITE_NAVER_SECRET: string;
     VITE_OG_KEY: string;
+    VITE_MODE: string;
   };
 }
