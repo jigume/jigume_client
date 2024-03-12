@@ -16,5 +16,8 @@ export default defineConfig({
         ws: true,
       },
     },
+    headers: {
+      'X-Forwarded-For': 'jigume.site:5173',
+    },
   },
 });
