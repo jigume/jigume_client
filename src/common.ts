@@ -5,9 +5,10 @@ export const primaryJade = '#8CDDE2';
 export const primaryPurple = '#E4CCFF';
 export const primaryBlue = '#0D99FF';
 
-export const backURL = import.meta.env.DEV
-  ? 'http://43.201.105.35:8080'
-  : 'http://jigume.site:8080';
+export const backURL =
+  import.meta.env.VITE_MODE === 'prod'
+    ? 'http://43.201.105.35:8080'
+    : 'http://jigume.site:8080';
 // export const backURL = 'http://172.30.1.62:8080';
 
 export const prohibition = {
