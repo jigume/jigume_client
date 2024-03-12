@@ -4,6 +4,7 @@ import logo from '@src/asset/images/login/login_logo.png';
 import kakaoImg from '@src/asset/images/login/kakao_login.png';
 import naverImg from '@src/asset/images/login/naver_login.png';
 import { authState } from '@src/data';
+import { useEffect } from 'react';
 
 export default function Login() {
   const KAKAO_KEY = import.meta.env.VITE_KAKAO_REST_KEY;
@@ -30,6 +31,10 @@ export default function Login() {
     }));
     window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_KEY}&state=${NAVER_SECRET}&redirect_uri=${REDIRECT_URI}`;
   };
+
+  useEffect(() => {
+    fetch('/api/check').then((res) => console.log(res));
+  }, []);
 
   return (
     <div className="container mx-auto max-w-screen-sm px-0">
