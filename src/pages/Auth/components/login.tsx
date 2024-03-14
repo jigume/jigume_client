@@ -5,6 +5,7 @@ import kakaoImg from '@src/asset/images/login/kakao_login.png';
 import naverImg from '@src/asset/images/login/naver_login.png';
 import { authState } from '@src/data';
 import { useEffect } from 'react';
+import { jigumeAxios } from '@src/api/axios';
 
 export default function Login() {
   const KAKAO_KEY = import.meta.env.VITE_KAKAO_REST_KEY;
@@ -33,7 +34,7 @@ export default function Login() {
   };
 
   useEffect(() => {
-    fetch('/api/check').then((res) => console.log(res));
+    jigumeAxios.get('/api/check').then((res) => console.log(res));
   }, []);
 
   return (

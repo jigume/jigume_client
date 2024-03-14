@@ -5,6 +5,7 @@ import { AuthType } from '@src/types/data';
 import img0 from '@src/asset/images/profiles/initProfile0.png';
 import img1 from '@src/asset/images/profiles/initProfile1.png';
 import img2 from '@src/asset/images/profiles/initProfile2.png';
+import { backURL, siteDomain } from '@src/common';
 import { axiosHeaderAuth, jigumeAxios } from './axios';
 
 /**
@@ -62,9 +63,9 @@ export const codeProvide = async (
 
   const response: TokenProviderType = await axios
     .post(
-      `/api/member/login?login-provider=${domain}&authorization-code=${code}`,
+      `${backURL}/api/member/login?login-provider=${domain}&authorization-code=${code}`,
       {},
-      { headers: { ...axiosHeaderAuth, 'X-Forwarded-For': 'jigume.site:5173' } }
+      { headers: { ...axiosHeaderAuth, 'X-Forwarded-For': siteDomain } }
     )
     .then((res) => res.data)
     .catch((err) => {
