@@ -13,7 +13,7 @@ export default function Login() {
   const NAVER_SECRET = import.meta.env.VITE_NAVER_SECRET;
   const REDIRECT_URI = import.meta.env.DEV
     ? 'http://localhost:5173/auth'
-    : 'https://www.jigume.site/auth';
+    : 'https://www.jigume.site/auth/';
 
   const [, setAuth] = useRecoilState<AuthType>(authState);
 
