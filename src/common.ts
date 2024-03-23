@@ -9,7 +9,7 @@ export const backURL = 'http://api.jigume.site:8080';
 // export const backURL = 'http://172.30.1.62:8080';
 export const siteDomain = import.meta.env.DEV
   ? 'localhost:5173'
-  : 'www.jigume.site:5173';
+  : 'www.jigume.site';
 
 export const prohibition = {
   description1:

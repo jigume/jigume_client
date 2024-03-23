@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   server: {
     headers: {
-      'X-Forwarded-For': 'www.jigume.site:5173',
+      'X-Forwarded-For': 'www.jigume.site',
     },
   },
 });
