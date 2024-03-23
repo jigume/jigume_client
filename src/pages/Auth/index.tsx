@@ -13,33 +13,33 @@ export default function Auth() {
   const [searchParams] = useSearchParams();
   const code = searchParams.get('code');
 
-  useQuery('oauth', () => codeProvide(code, auth.domain), {
-    retry: false,
-    onSuccess: (data) => {
-      // 초기 유저의 정보 입력 폼
-      if (data.baseRole === 'GUEST') {
-        setAuth((prev) => ({
-          ...prev,
-          accessToken: data.tokenDto.accessToken,
-          refreshToken: data.tokenDto.refreshToken,
-          expired: add(new Date(), { hours: 12 }).getTime(),
-        }));
-        navigate('/auth/init');
-        return;
-      }
+  // useQuery('oauth', () => codeProvide(code, auth.domain), {
+  //   retry: false,
+  //   onSuccess: (data) => {
+  //     // 초기 유저의 정보 입력 폼
+  //     if (data.baseRole === 'GUEST') {
+  //       setAuth((prev) => ({
+  //         ...prev,
+  //         accessToken: data.tokenDto.accessToken,
+  //         refreshToken: data.tokenDto.refreshToken,
+  //         expired: add(new Date(), { hours: 12 }).getTime(),
+  //       }));
+  //       navigate('/auth/init');
+  //       return;
+  //     }
 
-      setAuth((prev) => ({
-        ...prev,
-        role: 'USER',
-        accessToken: data.tokenDto.accessToken,
-        refreshToken: data.tokenDto.refreshToken,
-        expired: add(new Date(), { hours: 12 }).getTime(),
-      }));
-      navigate('/');
-    },
-    onError: (err: string) => Error(err),
-    // onSettled: () => navigate('/'),
-  });
+  //     setAuth((prev) => ({
+  //       ...prev,
+  //       role: 'USER',
+  //       accessToken: data.tokenDto.accessToken,
+  //       refreshToken: data.tokenDto.refreshToken,
+  //       expired: add(new Date(), { hours: 12 }).getTime(),
+  //     }));
+  //     navigate('/');
+  //   },
+  //   onError: (err: string) => Error(err),
+  //   // onSettled: () => navigate('/'),
+  // });
 
   return (
     <Loading
