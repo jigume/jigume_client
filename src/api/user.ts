@@ -65,7 +65,7 @@ export const codeProvide = async (
     .post(
       `${backURL}/api/member/login?login-provider=${domain}&authorization-code=${code}`,
       {},
-      { headers: { ...axiosHeaderAuth, 'X-Forwarded-For': siteDomain } }
+      { headers: { ...axiosHeaderAuth } }
     )
     .then((res) => res.data)
     .catch((err) => {
