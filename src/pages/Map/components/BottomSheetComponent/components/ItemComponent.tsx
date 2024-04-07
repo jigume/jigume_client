@@ -7,8 +7,12 @@ import favoriteBordered from '@src/asset/icon/favoriteBordered.svg';
 import { useMutation } from 'react-query';
 import { throttle } from 'lodash';
 import { setWishGoods } from '@src/api/goods';
+import { authState } from '@src/data';
+import { AuthType } from '@src/types/data';
+import { useRecoilState } from 'recoil';
 
 export default function ItemComponent({ goods }: { goods?: GoodsListDTO }) {
+  const [auth] = useRecoilState<AuthType>(authState);
   const isWished = useRef<boolean>(false);
   const navigate = useNavigate();
 
@@ -19,7 +23,11 @@ export default function ItemComponent({ goods }: { goods?: GoodsListDTO }) {
   });
 
   const handleWish = () => {
-    setWish({ id: goods?.goodsId as number, isWished: isWished.current });
+    setWish({
+      id: goods?.goodsId as number,
+      isWished: isWished.current,
+      accessToken: auth.accessToken as string,
+    });
   };
 
   // 쓰롤틀링으로 요청 제한

@@ -1,7 +1,8 @@
 import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import React, { useEffect } from 'react';
-import { useResetRecoilState } from 'recoil';
-import { useMutation, useQuery } from 'react-query';
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useMutation } from 'react-query';
+import { AuthType } from '@src/types/data';
 import { authState } from '../../../data';
 import { kakaoLogout } from '../../../api/user';
 
@@ -16,8 +17,9 @@ export default function Profile() {
   const resetAuth = useResetRecoilState(authState);
   const { setProfileHeader, profile, isSuccess } =
     useOutletContext<MyPageContextType>();
+  const [auth] = useRecoilState<AuthType>(authState);
 
-  const logout = useMutation('logout', () => kakaoLogout(), {
+  const logout = useMutation('logout', () => kakaoLogout(auth.accessToken), {
     onMutate: () => console.log('RUN logout'),
     onSuccess: () => {
       resetAuth();

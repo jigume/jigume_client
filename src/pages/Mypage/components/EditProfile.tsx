@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useMutation } from 'react-query';
+import { authState } from '@src/data';
+import { AuthType } from '@src/types/data';
+import { useRecoilState } from 'recoil';
 import NextButton from '../../../components/NextButton';
 import cameraIcon from '../../../asset/icon/mdi_camera.svg';
 import {
@@ -25,6 +28,7 @@ export default function EditProfile() {
     image: false,
     nickname: false,
   });
+  const [auth] = useRecoilState<AuthType>(authState);
   const navigate = useNavigate();
 
   const handleNickname = (text: string) => {
@@ -56,7 +60,9 @@ export default function EditProfile() {
     mutate: checkName,
     isLoading,
     isError,
-  } = useMutation('checkNickname', () => checkNickname(newProfile.nickname));
+  } = useMutation('checkNickname', () =>
+    checkNickname(newProfile.nickname, auth.accessToken)
+  );
 
   const { mutate: updateImage } = useMutation(
     'updateProfile',

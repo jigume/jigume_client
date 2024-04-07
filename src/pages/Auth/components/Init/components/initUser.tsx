@@ -4,8 +4,11 @@ import { useMutation } from 'react-query';
 import NextButton from '@src/components/NextButton';
 import { checkNickname } from '@src/api/user';
 import { handleTextFieldColor, validNickname } from '@src/utils';
-import CircularProgress from './circularProgress';
+import { useRecoilState } from 'recoil';
+import { AuthType } from '@src/types/data';
+import { authState } from '@src/data';
 import { InitContextType } from '../index.d';
+import CircularProgress from './circularProgress';
 
 const initText = '최소 2글자, 최대 10글자까지 한글,영어, 숫자만 입력가능해요.';
 
@@ -13,6 +16,7 @@ export default function InitUser() {
   const [valid, setValid] = useState(false);
   const [alertText, setAlertText] = useState(initText);
   const { initUser, setInitUser } = useOutletContext<InitContextType>();
+  const [auth] = useRecoilState<AuthType>(authState);
 
   const handleNickname = (text: string) => {
     setValid(validNickname(text));
@@ -21,7 +25,7 @@ export default function InitUser() {
 
   const { mutate, isLoading, isError, isSuccess } = useMutation(
     'checkNickname',
-    () => checkNickname(initUser.nickname)
+    () => checkNickname(initUser.nickname, auth.accessToken)
   );
 
   const getTextColor = () => {

@@ -8,13 +8,13 @@ import { useRecoilState } from 'recoil';
 import { useQuery } from 'react-query';
 import { throttle } from 'lodash';
 import { Marker } from '@src/types/goods';
-import { UserType } from '@src/types/data';
+import { AuthType, UserType } from '@src/types/data';
 import { PositionType } from '@src/types/map';
 import { getGoodsList } from '@src/api/goods';
 import { getCurrentLocation } from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
-import { userState } from '../../data';
+import { authState, userState } from '../../data';
 import useBottomSheet from '../../hooks/useBottomSheet';
 import { setClusterDom, setMarkerDom } from './utils';
 import CurrentPoint from './components/CurrentPoint';
@@ -27,6 +27,7 @@ export default function Map() {
   const sheetProvider = useBottomSheet();
 
   const [user, setUser] = useRecoilState<UserType>(userState);
+  const [auth] = useRecoilState<AuthType>(authState);
   const [position, setPosition] = useState<PositionType | undefined>(undefined);
   const [address, setAddress] = useState('-');
   const [preViewer, setPreViewer] = useState<PreViewerMarker | undefined>(
@@ -50,22 +51,26 @@ export default function Map() {
     }
   };
 
-  const { refetch } = useQuery('getGoods', () => getGoodsList(mapRef.current), {
-    onSuccess: (res) => {
-      // init map list
-      if (res !== 'retry') {
-        // 중복 방지
-        res.forEach((item) => {
-          setMarkerList((prev) => {
-            const temp = prev?.filter(
-              (prevItem) => prevItem.goodsId !== item.goodsId
-            );
-            return [...(temp || []), item];
+  const { refetch } = useQuery(
+    'getGoods',
+    () => getGoodsList(mapRef.current, auth.accessToken as string),
+    {
+      onSuccess: (res) => {
+        // init map list
+        if (res !== 'retry') {
+          // 중복 방지
+          res.forEach((item) => {
+            setMarkerList((prev) => {
+              const temp = prev?.filter(
+                (prevItem) => prevItem.goodsId !== item.goodsId
+              );
+              return [...(temp || []), item];
+            });
           });
-        });
-      }
-    },
-  });
+        }
+      },
+    }
+  );
 
   // 클러스터 완료되었을 때 데이터를 읽어 DOM으로 변환
   const drawCluster = () => {

@@ -1,11 +1,10 @@
 import axios from 'axios';
 import { TokenProviderType } from '@src/types/user';
-import { InitUserType } from '@src/pages/Auth/components/Init/index.d';
 import { AuthType } from '@src/types/data';
 import img0 from '@src/asset/images/profiles/initProfile0.png';
 import img1 from '@src/asset/images/profiles/initProfile1.png';
 import img2 from '@src/asset/images/profiles/initProfile2.png';
-import { backURL, siteDomain } from '@src/common';
+import { backURL } from '@src/common';
 import { axiosHeaderAuth, jigumeAxios } from './axios';
 
 /**
@@ -41,9 +40,15 @@ export const handleRefreshToken = async (auth: AuthType) => {
     return 'valid';
 
   const response = await jigumeAxios
-    .post('/api/member/token', {
-      refreshToken: auth.refreshToken,
-    })
+    .post(
+      '/api/member/token',
+      {
+        refreshToken: auth.refreshToken,
+      },
+      {
+        headers: { ...axiosHeaderAuth(auth.accessToken) },
+      }
+    )
     .catch((err) => {
       throw Error(err);
     });
@@ -56,16 +61,18 @@ export const handleRefreshToken = async (auth: AuthType) => {
  */
 export const codeProvide = async (
   code: string | null,
-  domain?: string
+  auth: AuthType
 ): Promise<TokenProviderType> => {
   /** @type {string} */
   if (!code) throw Error('인가코드가 옳바르지 않습니다.');
 
   const response: TokenProviderType = await axios
     .post(
-      `${backURL}/api/member/login?login-provider=${domain}&authorization-code=${code}`,
+      `${backURL}/api/member/login?login-provider=${auth.domain}&authorization-code=${code}`,
       {},
-      { headers: { ...axiosHeaderAuth } }
+      {
+        headers: { ...axiosHeaderAuth(auth.accessToken) },
+      }
     )
     .then((res) => res.data)
     .catch((err) => {
@@ -75,13 +82,13 @@ export const codeProvide = async (
   return response;
 };
 
-export const kakaoLogout = async () => {
+export const kakaoLogout = async (accessToken?: string) => {
   // kakao 서버에 요청
   const response = await axios
     .post(
       'https://kapi.kakao.com/v1/user/logout',
       {},
-      { headers: axiosHeaderAuth }
+      { headers: axiosHeaderAuth(accessToken) }
     )
     .catch((err) => {
       throw Error(err);
@@ -90,10 +97,10 @@ export const kakaoLogout = async () => {
   return response;
 };
 
-export const checkNickname = async (nickname: string) => {
+export const checkNickname = async (nickname: string, accessToken?: string) => {
   const response = await jigumeAxios
     .get('/api/member/nickname', {
-      headers: axiosHeaderAuth,
+      headers: { ...axiosHeaderAuth(accessToken) },
       params: {
         nickname,
       },
@@ -105,7 +112,7 @@ export const checkNickname = async (nickname: string) => {
   return response;
 };
 
-export const updateProfile = async (file?: File) => {
+export const updateProfile = async (file?: File, accessToken?: string) => {
   const initProfiles = [img0, img1, img2];
   const formData = new FormData();
   if (!file) {
@@ -118,7 +125,7 @@ export const updateProfile = async (file?: File) => {
   const response = await jigumeAxios
     .post('/api/member/profile', formData, {
       headers: {
-        ...axiosHeaderAuth,
+        ...axiosHeaderAuth(accessToken),
         'Content-Type': 'multipart/form-data',
       },
     })

@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { useMutation } from 'react-query';
 import { GoodsListDTO } from '@src/types/goods';
 import { getSheetGoods, getSheetList } from '@src/api/goods';
+import { useRecoilState } from 'recoil';
+import { AuthType } from '@src/types/data';
+import { authState } from '@src/data';
 import { BottomSheetType, FilterType } from './index.d';
 import category from './data';
 import SheetHeader from './components/SheetHeader';
@@ -16,6 +19,7 @@ export default function BottomSheetComponent({
   preViewer,
   map,
 }: BottomSheetType) {
+  const [auth] = useRecoilState<AuthType>(authState);
   const [goodsArr, setGoodsArr] = useState<GoodsListDTO[]>([]);
   const [filter, setFilter] = useState<FilterType[]>(
     category.map((item) => ({ ...item, checked: true }))
@@ -26,7 +30,7 @@ export default function BottomSheetComponent({
   // 미리보기 fetch fn
   const { mutate: preViewMutate } = useMutation({
     mutationKey: 'getSheetDetail',
-    mutationFn: () => getSheetGoods(preViewer),
+    mutationFn: () => getSheetGoods(preViewer, auth.accessToken as string),
     onSuccess: (res) => {
       console.log(res);
       if (res === 'retry') preViewMutate(preViewer);
@@ -53,7 +57,8 @@ export default function BottomSheetComponent({
     mutationFn: getSheetList,
     onSuccess: (res) => {
       console.log(res);
-      if (res === 'retry') allMutate(map);
+      if (res === 'retry')
+        allMutate({ map, accessToken: auth.accessToken as string });
       else setGoodsArr(res.goodsListDtoList);
     },
   });
@@ -61,7 +66,7 @@ export default function BottomSheetComponent({
   useEffect(() => {
     if (isOpen)
       if (preViewer) preViewMutate(preViewer);
-      else allMutate(map);
+      else allMutate({ map, accessToken: auth.accessToken as string });
   }, [isOpen]);
 
   return (

@@ -1,5 +1,4 @@
 import { backURL } from '@src/common';
-import { getToken } from '@src/utils';
 import axios from 'axios';
 
 export const jigumeAxios = axios.create({
@@ -11,6 +10,6 @@ export const jigumeAxios = axios.create({
   },
 });
 
-export const axiosHeaderAuth = {
-  Authorization: `Bearer ${getToken().accessToken}`,
+export const axiosHeaderAuth = (token?: string) => {
+  return { Authorization: `Bearer ${token}` };
 };

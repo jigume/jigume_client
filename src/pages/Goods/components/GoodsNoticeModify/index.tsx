@@ -4,6 +4,9 @@ import Loading from '@src/pages/Map/components/Loading';
 import StyledTextarea from '@src/components/StyledTextarea';
 import { useMutation } from 'react-query';
 import { postModifyNotice } from '@src/api/goods';
+import { authState } from '@src/data';
+import { AuthType } from '@src/types/data';
+import { useRecoilState } from 'recoil';
 import { GoodsNoticeContextType } from '../../index.d';
 import ConfirmAlert from '../ConfirmAlert';
 import NoticeModifyHeader from './components/NoticeModifyHeader';
@@ -13,6 +16,7 @@ export default function GoodsNoticeModify() {
     useOutletContext<GoodsNoticeContextType>();
   const [newNotice, setNewNotice] = useState('');
   const [isConfirm, setIsConfirm] = useState(false);
+  const [auth] = useRecoilState<AuthType>(authState);
 
   const handleNotice = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewNotice(e.target.value);
@@ -29,6 +33,7 @@ export default function GoodsNoticeModify() {
         goodsId: goods.goodsPageDto.goodsId,
         boardId: goods.goodsPageDto.boardId,
         boardContent: newNotice,
+        accessToken: auth.accessToken as string,
       });
   };
 

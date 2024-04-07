@@ -3,6 +3,9 @@ import SendIcon from '@src/asset/icon/SendIcon.svg';
 import { GoodsPageDTO } from '@src/types/goods';
 import { useMutation } from 'react-query';
 import { PostCommentStateType } from '@src/pages/Goods/index.d';
+import { authState } from '@src/data';
+import { AuthType } from '@src/types/data';
+import { useRecoilState } from 'recoil';
 
 const initContent = { value: '', targetCommentId: -1 };
 
@@ -15,6 +18,7 @@ export default function CommentsInput({
   content: PostCommentStateType;
   setContent: React.Dispatch<React.SetStateAction<PostCommentStateType>>;
 }) {
+  const [auth] = useRecoilState<AuthType>(authState);
   const handleContent = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent((prev) => ({ ...prev, value: e.target.value }));
   };
@@ -25,7 +29,8 @@ export default function CommentsInput({
       postCommentAtBoard(
         data.goodsId as number,
         data.boardId as number,
-        content.value
+        content.value,
+        auth.accessToken as string
       ),
     {
       onSuccess: () => setContent(initContent),
@@ -49,6 +54,7 @@ export default function CommentsInput({
           boardId: data.boardId as number,
           parentCommentId: content.targetCommentId,
           content: content.value,
+          accessToken: auth.accessToken as string,
         });
     }
   };

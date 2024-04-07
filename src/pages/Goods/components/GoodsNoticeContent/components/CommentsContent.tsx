@@ -1,8 +1,6 @@
+import React from 'react';
 import addCommentIcon from '@src/asset/icon/addCommentIcon.svg';
-import { GetCommentsDTO, GoodsPageDTO } from '@src/types/goods';
-import { useMutation } from 'react-query';
-import { getComment } from '@src/api/goods';
-import React, { useEffect } from 'react';
+import { GetCommentsDTO } from '@src/types/goods';
 import { getFormettedDate } from '@src/utils';
 import { CommentSkeleton } from '@src/components/Skeltons';
 import { PostCommentStateType } from '@src/pages/Goods/index.d';

@@ -13,7 +13,7 @@ export default function Auth() {
   const [searchParams] = useSearchParams();
   const code = searchParams.get('code');
 
-  useQuery('oauth', () => codeProvide(code, auth.domain), {
+  useQuery('oauth', () => codeProvide(code, auth), {
     retry: false,
     onSuccess: (data) => {
       // 초기 유저의 정보 입력 폼
