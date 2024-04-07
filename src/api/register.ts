@@ -10,7 +10,8 @@ import { axiosHeaderAuth, jigumeAxios } from './axios';
 export const postGoods = async (
   images: File[],
   goodsDto_: GoodsData,
-  position: PositionType
+  position: PositionType,
+  accessToken: string
 ): Promise<string> => {
   const imageFormData = new FormData();
   images.forEach((item, idx) => imageFormData.append(`images[${idx}]`, item));
@@ -40,7 +41,7 @@ export const postGoods = async (
             latitude: position.lat,
             longitude: position.lng,
           },
-          { headers: axiosHeaderAuth }
+          { headers: { ...axiosHeaderAuth(accessToken) } }
         )
         .then(async () => {
           await jigumeAxios
@@ -49,7 +50,7 @@ export const postGoods = async (
               {
                 content: goodsDto_.boardContent,
               },
-              { headers: axiosHeaderAuth }
+              { headers: { ...axiosHeaderAuth(accessToken) } }
             )
             .catch((err) => {
               throw Error(err);

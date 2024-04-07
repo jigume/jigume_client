@@ -12,15 +12,25 @@ import ProductContent from '@src/pages/Goods/components/ProductContent';
 import PlaceInfo from '@src/pages/Goods/components/PlaceInfo';
 import { dateFormetter } from '@src/utils';
 import IntroCategory from '@src/pages/Goods/components/IntroCategory';
+import { useRecoilState } from 'recoil';
+import { AuthType } from '@src/types/data';
+import { authState } from '@src/data';
 import { initData } from '../..';
 
 export default function Confirm() {
   const navigate = useNavigate();
   const { data, setData } = useOutletContext<RegisterContextType>();
+  const [auth] = useRecoilState<AuthType>(authState);
 
   const { mutate, isSuccess, isLoading } = useMutation(
     'post_goods',
-    () => postGoods(data.imageInput, data.goodsDto, data.position),
+    () =>
+      postGoods(
+        data.imageInput,
+        data.goodsDto,
+        data.position,
+        auth.accessToken as string
+      ),
     {
       retry: false,
       onSuccess: (res) => {
