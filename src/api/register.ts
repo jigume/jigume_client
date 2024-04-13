@@ -78,27 +78,26 @@ export const getPlaces = async ({
   const KAKAO_KEY = import.meta.env.VITE_KAKAO_REST_KEY;
   const url = 'https://dapi.kakao.com/v2/local/search/category.json';
 
-  const response: NearPlacesType[] = await axios(url, {
-    params: {
-      category_group_code: CAT_CODE,
-      x: position?.lng,
-      y: position?.lat,
-      radius: 1000,
-    },
-    headers: {
-      Authorization: `KakaoAK ${KAKAO_KEY}`,
-    },
-  }).then((res) => {
-    return res.data.documents
-      .map((item: NearPlacesType) => ({
+  const response: NearPlacesType[] = await axios
+    .get(url, {
+      params: {
+        category_group_code: CAT_CODE,
+        x: position?.lng,
+        y: position?.lat,
+        radius: 1000,
+      },
+      headers: {
+        Authorization: `KakaoAK ${KAKAO_KEY}`,
+      },
+    })
+    .then((res) => {
+      console.log(res.data.documents);
+      return res.data.documents.map((item: NearPlacesType) => ({
         ...item,
         distance: Number(item.distance),
         x: Number(item.x),
         y: Number(item.y),
-      }))
-      .catch((err: Error) => {
-        throw Error(err.message);
-      });
-  });
+      }));
+    });
   return response;
 };
