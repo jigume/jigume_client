@@ -147,7 +147,6 @@ export const getToken = (): { accessToken: string; refreshToken: string } => {
     const local = localStorage.getItem('recoil-persist');
     const token = JSON.parse(local as string)?.jigumeAuth;
 
-    console.log(token);
     if (!token?.accessToken) throw Error('accessToken is not exist');
     return token;
   } catch (error) {

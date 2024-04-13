@@ -91,7 +91,6 @@ export const getPlaces = async ({
       },
     })
     .then((res) => {
-      console.log(res.data.documents);
       return res.data.documents.map((item: NearPlacesType) => ({
         ...item,
         distance: Number(item.distance),

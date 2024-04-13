@@ -43,7 +43,6 @@ function Links() {
       ...prev,
       goodsDto: { ...prev.goodsDto, categoryId: categoryIdx },
     }));
-    console.log(categoryIdx);
   }, [categoryIdx]);
 
   // observe filter

@@ -23,7 +23,7 @@ export default function Profile() {
     onMutate: () => console.log('RUN logout'),
     onSuccess: () => {
       resetAuth();
-      console.log('SUCCESS logout');
+      // console.log('SUCCESS logout');
     },
   });
 

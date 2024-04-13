@@ -112,8 +112,6 @@ export const setWishGoods = async ({
   isWished: boolean;
   accessToken: string;
 }) => {
-  // await console.log('hello', isWished);
-
   const response = !isWished
     ? await jigumeAxios
         .post(
