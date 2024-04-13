@@ -32,6 +32,7 @@ export default function BottomSheetComponent({
     mutationKey: 'getSheetDetail',
     mutationFn: () => getSheetGoods(preViewer, auth.accessToken as string),
     onSuccess: (res) => {
+      console.log(res);
       if (res === 'retry') preViewMutate(preViewer);
       else
         setGoodsArr([
@@ -40,7 +41,7 @@ export default function BottomSheetComponent({
             goodsName: res.goodsPageDto.goodsName,
             sellerInfoDto: res.goodsPageDto.sellerInfoDto,
             goodsPrice: res.goodsPageDto.goodsPrice,
-            goodsDeliveryPrice: res.goodsPageDto.realDeliveryFee,
+            goodsDeliveryPrice: res.goodsPageDto.deliveryFee,
             goodsOrderCount: res.goodsPageDto.goodsOrderCount,
             discountDeliveryPrice: res.goodsPageDto.discountDeliveryPrice,
             repImgUrl: res.goodsPageDto.goodsImagesList[0].goodsImgUrl,

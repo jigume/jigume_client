@@ -71,6 +71,7 @@ export type GoodsPageDTO = {
   goodsOrderCount: number;
   discountDeliveryPrice: number;
   goodsImagesList: GoodsImageDto[];
+  goodsDeliveryPrice: number;
 };
 
 export type GoodsDetailDTO = {

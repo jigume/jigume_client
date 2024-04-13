@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RegisterContextType } from '@src/types/register';
 import { useOutletContext } from 'react-router-dom';
 import { useMutation } from 'react-query';
