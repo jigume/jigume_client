@@ -128,8 +128,8 @@ export const updateMemberInfo = async (param: {
   longitude: number;
   token: string;
   imageInput?: File;
+  isImage: boolean;
 }) => {
-  console.log(param.token);
   const response = await jigumeAxios
     .post(
       '/api/member/info',
@@ -143,7 +143,7 @@ export const updateMemberInfo = async (param: {
       }
     )
     .then((res) => {
-      updateProfile(param.token, param.imageInput);
+      if (param.isImage) updateProfile(param.token, param.imageInput);
       return res.data;
     })
     .catch((err) => {

@@ -32,7 +32,7 @@ export default function Profile() {
   }, []);
 
   return (
-    <div className="mx-auto flex max-w-sm flex-col gap-2">
+    <div className="mx-auto flex max-w-screen-sm flex-col gap-2 px-4">
       <div className="flex items-center justify-between gap-4 pb-8 pt-4">
         <div className="flex items-center gap-4">
           {isSuccess ? (

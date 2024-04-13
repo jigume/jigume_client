@@ -23,6 +23,7 @@ export default function InitProfileImage() {
         longitude: initUser.position?.lng as number,
         token: auth.accessToken as string,
         imageInput: initUser.imageInput,
+        isImage: true,
       }),
     {
       retry: false,

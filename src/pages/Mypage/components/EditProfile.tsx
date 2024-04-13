@@ -58,10 +58,29 @@ export default function EditProfile() {
 
   const {
     mutate: checkName,
-    isLoading,
+    isLoading: checkNameLoading,
     isError,
   } = useMutation('checkNickname', () =>
     checkNickname(newProfile.nickname, auth.accessToken)
+  );
+
+  const { mutate: updateBoth } = useMutation(
+    'updateBoth',
+    () =>
+      updateMemberInfo({
+        nickname: newProfile.nickname,
+        latitude: 0,
+        longitude: 0,
+        token: auth.accessToken as string,
+        imageInput: newProfile.imageInput,
+        isImage: true,
+      }),
+    {
+      onSuccess: () => {
+        refetch();
+        navigate('/mypage');
+      },
+    }
   );
 
   const { mutate: updateImage } = useMutation(
@@ -83,6 +102,7 @@ export default function EditProfile() {
         latitude: 0,
         longitude: 0,
         token: auth.accessToken as string,
+        isImage: false,
       }),
     {
       onSuccess: () => {
@@ -93,8 +113,12 @@ export default function EditProfile() {
   );
 
   const handleSubmit = () => {
-    if (newProfile.imageInput) updateImage();
-    if (newProfile.nickname !== profile.nickname) updateName();
+    if (isChanged.image && isChanged.nickname) {
+      updateBoth();
+    } else {
+      if (isChanged.image) updateImage();
+      if (isChanged.nickname) updateName();
+    }
   };
 
   useEffect(() => {
@@ -106,15 +130,15 @@ export default function EditProfile() {
   }, []);
 
   useEffect(() => {
+    if (profile) setValid(validNickname(profile.nickname));
     setNewProfile({
       nickname: profile?.nickname,
       image: profile?.profileImgUrl,
       imageInput: undefined,
     });
   }, [profile]);
-
   return (
-    <div className="mx-auto flex h-[calc(100svh-3rem)] max-w-sm flex-col">
+    <div className="mx-auto flex h-[calc(100svh-3rem)] max-w-screen-sm flex-col px-4">
       <div className="flex h-full flex-col gap-4 pt-16">
         <div className="mx-auto">
           <label htmlFor="image">
@@ -159,12 +183,12 @@ export default function EditProfile() {
             className="flex min-w-[6rem] items-center justify-center rounded-lg bg-success px-3 py-4 text-center text-white transition-all duration-300 ease-in-out active:scale-[99%] disabled:bg-gray-300 active:disabled:scale-100"
             onClick={checkName as () => void}
           >
-            {isLoading ? <CircularProgress /> : '중복 확인'}
+            {checkNameLoading ? <CircularProgress /> : '중복 확인'}
           </button>
         </div>
 
         <div className={`text-xs ${valid ? 'text-gray-600' : 'text-red-600'}`}>
-          {valid && (
+          {profile && valid && (
             <div className="mr-2 inline-block size-2 rounded-full bg-green-500 leading-4" />
           )}
           <span>
