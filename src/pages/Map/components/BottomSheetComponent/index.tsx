@@ -32,7 +32,6 @@ export default function BottomSheetComponent({
     mutationKey: 'getSheetDetail',
     mutationFn: () => getSheetGoods(preViewer, auth.accessToken as string),
     onSuccess: (res) => {
-      console.log(res);
       if (res === 'retry') preViewMutate(preViewer);
       else
         setGoodsArr([
