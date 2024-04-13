@@ -66,8 +66,6 @@ export const codeProvide = async (
   /** @type {string} */
   if (!code) throw Error('인가코드가 옳바르지 않습니다.');
 
-  console.log('accessToken : ', auth.accessToken);
-
   const response: TokenProviderType = await axios
     .post(
       `${backURL}/api/member/login?login-provider=${auth.domain}&authorization-code=${code}`,

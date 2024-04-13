@@ -28,7 +28,7 @@ export const postGoods = async (
     .post('/api/goods/new?repImg=0', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
-        ...axiosHeaderAuth,
+        ...axiosHeaderAuth(accessToken),
       },
     })
     .then(async (res) => {

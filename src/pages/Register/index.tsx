@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { RegisterDataType } from '@src/types/register';
 import ChevronLeft from '@src/asset/icon/chevronLeft.svg';
+import { vaildRegister } from '@src/utils';
 
 export const initData: RegisterDataType = {
   image: [],
@@ -31,11 +32,28 @@ function Register() {
 
   const withoutPadding = location.pathname.includes('confirm');
 
+  const handleBackward = () => {
+    // navigate(-1);
+    if (location.pathname === '/register') navigate('/');
+    else if (location.pathname === '/register/detail') navigate('/register');
+    else if (location.pathname === '/register/link')
+      navigate('/register/detail');
+    else if (location.pathname === '/register/cost') navigate('/register/link');
+    else if (location.pathname === '/register/deadline')
+      navigate('/register/link');
+    else if (location.pathname === '/register/place')
+      navigate('/register/deadline');
+    else if (location.pathname === '/register/notice')
+      navigate('/register/place');
+    else if (location.pathname === '/register/confirm')
+      navigate('/register/notice');
+  };
+
   // 데이터의 유효성 확인하여 입력 데이터가 없는 페이지로 이동
   useEffect(() => {
-    console.log(location.pathname);
-    //   const url = vaildRegister(location.pathname, data);
-    //   if (url !== undefined) navigate(url);
+    // console.log(location.pathname);
+    const url = vaildRegister(location.pathname, data);
+    if (url !== undefined) navigate(url);
   }, [location]);
 
   // 마운트 이벤트 시 폼 초기화
@@ -52,7 +70,7 @@ function Register() {
   return (
     <>
       <div className="relative z-10 mx-auto flex h-[48px] w-full max-w-screen-sm flex-row items-center px-4">
-        <div onClick={() => navigate(-1)} className="pr-2">
+        <div onClick={handleBackward} className="pr-2">
           <img
             className="size-12 cursor-pointer p-2"
             src={ChevronLeft}
