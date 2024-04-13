@@ -17,25 +17,26 @@ export default function Auth() {
     retry: false,
     onSuccess: (data) => {
       // 초기 유저의 정보 입력 폼
-      if (data.baseRole === 'GUEST') {
-        setAuth((prev) => ({
-          ...prev,
-          accessToken: data.tokenDto.accessToken,
-          refreshToken: data.tokenDto.refreshToken,
-          expired: add(new Date(), { hours: 12 }).getTime(),
-        }));
-        navigate('/auth/init');
-        return;
-      }
 
-      setAuth((prev) => ({
-        ...prev,
-        role: 'USER',
+      const authTokens = {
         accessToken: data.tokenDto.accessToken,
         refreshToken: data.tokenDto.refreshToken,
         expired: add(new Date(), { hours: 12 }).getTime(),
-      }));
-      navigate('/');
+      };
+      if (data.baseRole === 'GUEST') {
+        setAuth((prev) => ({
+          ...prev,
+          ...authTokens,
+        }));
+        navigate('/auth/init');
+      } else if (data.baseRole === 'USER') {
+        setAuth((prev) => ({
+          ...prev,
+          role: 'USER',
+          ...authTokens,
+        }));
+        navigate('/');
+      }
     },
     onError: (err: string) => Error(err),
     // onSettled: () => navigate('/'),

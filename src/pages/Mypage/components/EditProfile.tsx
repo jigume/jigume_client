@@ -66,7 +66,7 @@ export default function EditProfile() {
 
   const { mutate: updateImage } = useMutation(
     'updateProfile',
-    () => updateProfile(newProfile.imageInput),
+    () => updateProfile(auth.accessToken as string, newProfile.imageInput),
     {
       onSuccess: () => {
         refetch();

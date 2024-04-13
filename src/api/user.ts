@@ -66,6 +66,8 @@ export const codeProvide = async (
   /** @type {string} */
   if (!code) throw Error('인가코드가 옳바르지 않습니다.');
 
+  console.log('accessToken : ', auth.accessToken);
+
   const response: TokenProviderType = await axios
     .post(
       `${backURL}/api/member/login?login-provider=${auth.domain}&authorization-code=${code}`,
@@ -112,7 +114,7 @@ export const checkNickname = async (nickname: string, accessToken?: string) => {
   return response;
 };
 
-export const updateProfile = async (file?: File, accessToken?: string) => {
+export const updateProfile = async (accessToken: string, file?: File) => {
   const initProfiles = [img0, img1, img2];
   const formData = new FormData();
   if (!file) {

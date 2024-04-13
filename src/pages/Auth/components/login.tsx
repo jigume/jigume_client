@@ -26,11 +26,12 @@ export default function Login() {
   };
 
   const handleNaverLogin = async () => {
-    setAuth((prev) => ({
-      ...prev,
-      domain: 'naver',
-    }));
-    window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_KEY}&state=${NAVER_SECRET}&redirect_uri=${REDIRECT_URI}`;
+    alert('미지원');
+    // setAuth((prev) => ({
+    //   ...prev,
+    //   domain: 'naver',
+    // }));
+    // window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_KEY}&state=${NAVER_SECRET}&redirect_uri=${REDIRECT_URI}`;
   };
 
   useEffect(() => {
