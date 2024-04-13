@@ -82,6 +82,7 @@ export default function EditProfile() {
         nickname: newProfile.nickname,
         latitude: 0,
         longitude: 0,
+        token: auth.accessToken as string,
       }),
     {
       onSuccess: () => {

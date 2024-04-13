@@ -11,16 +11,27 @@ import { InitContextType } from '../index.d';
 
 export default function InitProfileImage() {
   const navigate = useNavigate();
-  const [, setAuth] = useRecoilState<AuthType>(authState);
+  const [auth, setAuth] = useRecoilState<AuthType>(authState);
   const { initUser, setInitUser } = useOutletContext<InitContextType>();
 
-  const { mutate } = useMutation('newUser', () => updateMemberInfo(initUser), {
-    retry: false,
-    onSuccess: () => {
-      setAuth((prev) => ({ ...prev, role: 'USER' }));
-      navigate('/');
-    },
-  });
+  const { mutate } = useMutation(
+    'newUser',
+    () =>
+      updateMemberInfo({
+        nickname: initUser.nickname,
+        latitude: initUser.position?.lat as number,
+        longitude: initUser.position?.lng as number,
+        token: auth.accessToken as string,
+        imageInput: initUser.imageInput,
+      }),
+    {
+      retry: false,
+      onSuccess: () => {
+        setAuth((prev) => ({ ...prev, role: 'USER' }));
+        navigate('/');
+      },
+    }
+  );
   // const handleImageReset = () => {
   //   setInitUser((prev) => ({ ...prev, image: undefined }));
   // };
@@ -36,6 +47,7 @@ export default function InitProfileImage() {
       reader.onload = () => {
         setInitUser((prev) => ({
           ...prev,
+          imageInput: fileBlob,
           image: reader.result as string,
         }));
         // resolve();

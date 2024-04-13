@@ -5,28 +5,8 @@ import img0 from '@src/asset/images/profiles/initProfile0.png';
 import img1 from '@src/asset/images/profiles/initProfile1.png';
 import img2 from '@src/asset/images/profiles/initProfile2.png';
 import { backURL } from '@src/common';
+import { convertURLtoFile } from '@src/utils';
 import { axiosHeaderAuth, jigumeAxios } from './axios';
-
-/**
- * 신규 유저의 닉네임 등의 정보를 입력하여 role을 USER로 변경한다
- */
-export const updateMemberInfo = async (param: {
-  nickname: string;
-  latitude: number;
-  longitude: number;
-}) => {
-  const response = await jigumeAxios
-    .post('/api/member/info', {
-      nickname: param.nickname,
-      longitude: 0,
-      latitude: 0,
-    })
-    .catch((err) => {
-      throw Error(err);
-    });
-
-  return response.data;
-};
 
 /**
  * 토큰 만료일을 확인하여 리프레시 토큰을 재발급 받는다
@@ -115,9 +95,12 @@ export const checkNickname = async (nickname: string, accessToken?: string) => {
 export const updateProfile = async (accessToken: string, file?: File) => {
   const initProfiles = [img0, img1, img2];
   const formData = new FormData();
+
   if (!file) {
     const randomIdx = Math.round(Math.random() * 2);
-    formData.append('multipartFile', initProfiles[randomIdx]);
+    await convertURLtoFile(initProfiles[randomIdx]).then((res) => {
+      formData.append('multipartFile', res);
+    });
   } else {
     formData.append('multipartFile', file as File);
   }
@@ -128,6 +111,39 @@ export const updateProfile = async (accessToken: string, file?: File) => {
         ...axiosHeaderAuth(accessToken),
         'Content-Type': 'multipart/form-data',
       },
+    })
+    .catch((err) => {
+      throw Error(err);
+    });
+
+  return response.data;
+};
+
+/**
+ * 신규 유저의 닉네임 등의 정보를 입력하여 role을 USER로 변경한다
+ */
+export const updateMemberInfo = async (param: {
+  nickname: string;
+  latitude: number;
+  longitude: number;
+  token: string;
+  imageInput?: File;
+}) => {
+  const response = await jigumeAxios
+    .post(
+      '/api/member/info',
+      {
+        nickname: param.nickname,
+        longitude: 0,
+        latitude: 0,
+      },
+      {
+        headers: { ...axiosHeaderAuth(param.token) },
+      }
+    )
+    .then((res) => {
+      updateProfile(param.token, param.imageInput);
+      return res.data;
     })
     .catch((err) => {
       throw Error(err);

@@ -4,6 +4,7 @@ export type InitUserType = {
   nickname: string;
   position: PositionType | undefined;
   image: string | undefined;
+  imageInput?: File;
   submitUser?: () => void;
   agreement: boolean[];
 };
