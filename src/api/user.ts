@@ -51,7 +51,7 @@ export const codeProvide = async (
       `${backURL}/api/member/login?login-provider=${auth.domain}&authorization-code=${code}`,
       {},
       {
-        headers: { ...axiosHeaderAuth(auth.accessToken) },
+        headers: { ...axiosHeaderAuth(code) },
       }
     )
     .then((res) => res.data)
@@ -129,6 +129,7 @@ export const updateMemberInfo = async (param: {
   token: string;
   imageInput?: File;
 }) => {
+  console.log(param.token);
   const response = await jigumeAxios
     .post(
       '/api/member/info',
