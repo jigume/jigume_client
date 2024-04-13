@@ -1,7 +1,7 @@
 import { postCommentAtBoard, postCommentAtComment } from '@src/api/goods';
 import SendIcon from '@src/asset/icon/SendIcon.svg';
-import { GoodsPageDTO } from '@src/types/goods';
-import { useMutation } from 'react-query';
+import { GetCommentsDTO, GoodsPageDTO } from '@src/types/goods';
+import { UseMutateFunction, useMutation } from 'react-query';
 import { PostCommentStateType } from '@src/pages/Goods/index.d';
 import { authState } from '@src/data';
 import { AuthType } from '@src/types/data';
@@ -13,10 +13,12 @@ export default function CommentsInput({
   data,
   content,
   setContent,
+  getGoodsComment,
 }: {
   data: GoodsPageDTO;
   content: PostCommentStateType;
   setContent: React.Dispatch<React.SetStateAction<PostCommentStateType>>;
+  getGoodsComment: UseMutateFunction<GetCommentsDTO, unknown, void, unknown>;
 }) {
   const [auth] = useRecoilState<AuthType>(authState);
   const handleContent = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +35,10 @@ export default function CommentsInput({
         auth.accessToken as string
       ),
     {
-      onSuccess: () => setContent(initContent),
+      onSuccess: () => {
+        setContent(initContent);
+        getGoodsComment();
+      },
     }
   );
 
@@ -41,7 +46,10 @@ export default function CommentsInput({
     'postCommentAtComment',
     postCommentAtComment,
     {
-      onSuccess: () => setContent(initContent),
+      onSuccess: () => {
+        setContent(initContent);
+        getGoodsComment();
+      },
     }
   );
 
@@ -64,7 +72,7 @@ export default function CommentsInput({
       <div className="relative w-full">
         <input
           className="block w-full rounded-md border bg-white py-4 pl-3 pr-14 text-sm placeholder:text-slate-400 focus:border-success focus:outline-none focus:ring-1 focus:ring-success disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none"
-          placeholder="댓글을 입력하세요"
+          placeholder={`${content.targetCommentId === -1 ? '댓글' : '대댓글'}을 입력하세요`}
           onChange={handleContent}
           value={content.value}
         />

@@ -17,6 +17,7 @@ export type GoodsNoticeContextType = {
   isCommentSuccess: boolean;
   notice: BoardDTO;
   comment: GetCommentsDTO;
+  getGoodsComment: UseMutateFunction<GetCommentsDTO, unknown, void, unknown>;
 };
 
 export type PostCommentStateType = {

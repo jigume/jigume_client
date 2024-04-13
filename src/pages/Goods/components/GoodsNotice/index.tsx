@@ -51,6 +51,7 @@ export default function GoodsNotice() {
         isCommentSuccess,
         notice,
         comment,
+        getGoodsComment,
       }}
     />
   );

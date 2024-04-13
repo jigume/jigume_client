@@ -14,6 +14,7 @@ export default function GoodsNoticeContent() {
     isCommentSuccess,
     notice,
     comment,
+    getGoodsComment,
   } = useOutletContext<GoodsNoticeContextType>();
 
   const [content, setContent] = useState<PostCommentStateType>({
@@ -55,6 +56,7 @@ export default function GoodsNoticeContent() {
           data={goods?.goodsPageDto}
           content={content}
           setContent={setContent}
+          getGoodsComment={getGoodsComment}
         />
       </div>
     </div>

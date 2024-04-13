@@ -114,7 +114,7 @@ export default function GoodsDetail() {
       </section>
 
       {/* footer */}
-      <div className="absolute bottom-0 z-50 w-full border-t-[1px] bg-white px-4 pb-6 pt-4">
+      <div className="absolute bottom-0 z-50 w-full max-w-screen-sm border-t-[1px] bg-white px-4 pb-6 pt-4">
         {goods?.goodsMemberAuth === 'SELLER' ? (
           <div className="flex w-full gap-4 text-white">
             <Link
