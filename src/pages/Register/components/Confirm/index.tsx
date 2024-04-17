@@ -41,7 +41,7 @@ export default function Confirm() {
   );
 
   return (
-    <div className="w-full">
+    <div className="w-full overflow-x-scroll">
       {/* carousel images */}
       {!isSuccess ? (
         <CarouselBox images={data.image} />
