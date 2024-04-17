@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -7,6 +7,7 @@ import { authState } from '@src/data';
 import CameraIcon from '@src/asset/icon/mdi_camera.svg';
 import { updateMemberInfo } from '@src/api/user';
 import NextButton from '@src/components/NextButton';
+import { resizeFileProfile } from '@src/utils';
 import { InitContextType } from '../index.d';
 
 export default function InitProfileImage() {
@@ -56,6 +57,12 @@ export default function InitProfileImage() {
     });
   };
 
+  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      encodeFileToBase64((await resizeFileProfile(e.target.files[0])) as File);
+    }
+  };
+
   useEffect(() => {
     // 잘못된 요청 방지
     if (!initUser.nickname) navigate('/auth/init');
@@ -79,9 +86,7 @@ export default function InitProfileImage() {
             accept="image/jpg,image/png,image/jpeg,image/gif"
             className="hidden"
             id="image"
-            onChange={(e) => {
-              if (e.target.files) encodeFileToBase64(e.target.files[0]);
-            }}
+            onChange={handleImageChange}
           />
           {!initUser.image ? (
             <div className="mx-auto flex aspect-square w-3/5 flex-col items-center justify-center gap-2 rounded-full bg-gray-100 active:opacity-60">

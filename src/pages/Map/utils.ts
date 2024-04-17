@@ -16,6 +16,7 @@ export const setMarkerDom = (
   const markerImage = document.createElement('img');
   markerImage.className =
     'absolute left-[5px] top-[5px] z-[99] h-[30px] w-[30px] rounded-full bg-gray-300 prodImg';
+  markerElement.setAttribute('data-id', String(item.goodsId));
   // markerImage.src = item.goodsRepImgUrl;
   markerElement.appendChild(markerPin);
   markerElement.appendChild(markerImage);
@@ -35,7 +36,11 @@ export const setMarkerDom = (
   return markerElement;
 };
 
-export const setClusterDom = (imageUrl: string, count: number) => {
+export const setClusterDom = (
+  count: number,
+  sheetProvider: sheetProviderType,
+  imageUrl?: string
+) => {
   const markerElement = document.createElement('div');
   markerElement.className = 'relative z-30 w-[40px] h-[57px]';
   const markerPin = document.createElement('img');
@@ -51,6 +56,9 @@ export const setClusterDom = (imageUrl: string, count: number) => {
   markerElement.appendChild(markerPin);
   markerElement.appendChild(markerImage);
   markerElement.appendChild(markerCount);
+  markerElement.onclick = () => {
+    sheetProvider.handleSheet('mid');
+  };
 
   return markerElement;
 };

@@ -41,7 +41,8 @@ export default function ContentHeader({
             </div>
           </div>
 
-          <div className="flex h-10 flex-row gap-2 overflow-x-scroll whitespace-nowrap border-y py-1 pl-4 text-gray-600">
+          {/* 카테고리 */}
+          <div className="flex h-10 flex-row gap-2 overflow-x-scroll whitespace-nowrap border-t py-1 pl-4 text-gray-600 scrollbar-hide">
             {filter_.map(
               (item, index) =>
                 item.checked && (

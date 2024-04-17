@@ -1,4 +1,5 @@
 import { add, differenceInDays } from 'date-fns';
+import Resizer from 'react-image-file-resizer';
 import { PositionType } from './types/map';
 import { RegisterDataType } from './types/register';
 
@@ -205,3 +206,31 @@ export const convertURLtoFile = async (url: string) => {
   const metadata = { type: `image/${ext}` };
   return new File([data], filename!, metadata);
 };
+
+export const resizeFile = (file: File) =>
+  new Promise((res) => {
+    Resizer.imageFileResizer(
+      file,
+      1500,
+      1500,
+      'JPEG',
+      75,
+      0,
+      (uri) => res(uri),
+      'file'
+    );
+  });
+
+export const resizeFileProfile = (file: File) =>
+  new Promise((res) => {
+    Resizer.imageFileResizer(
+      file,
+      516,
+      516,
+      'JPEG',
+      75,
+      0,
+      (uri) => res(uri),
+      'file'
+    );
+  });

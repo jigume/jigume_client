@@ -53,6 +53,7 @@ export default function ItemComponent({ goods }: { goods?: GoodsListDTO }) {
               className="size-6"
             />
           </button>
+          {/* 상품 이미지 */}
           <img
             src={goods.repImgUrl}
             className="border-gray50 size-32 flex-none rounded-lg border bg-gray-100 object-cover"
@@ -61,15 +62,17 @@ export default function ItemComponent({ goods }: { goods?: GoodsListDTO }) {
         </div>
       )}
       <div
-        className="flex flex-col truncate pt-1"
+        className="flex flex-col truncate pt-1 text-sm"
         onClick={() => navigate(`/buying/${goods?.goodsId}`)}
       >
+        {/* 굿즈 이름 */}
         {!goods ? (
           <div className="mb-[12px] h-[12px] w-48 rounded-sm bg-gray-100" />
         ) : (
-          <div className="truncate text-lg">{goods.goodsName}</div>
+          <div className="truncate text-base">{goods.goodsName}</div>
         )}
 
+        {/* 판매자 프로필 */}
         <div className="flex flex-row items-center gap-2 pb-2">
           {!goods ? (
             <div className="size-[18px] rounded-full bg-gray-100" />
@@ -90,6 +93,7 @@ export default function ItemComponent({ goods }: { goods?: GoodsListDTO }) {
           </div>
         </div>
 
+        {/* 상품 정보 */}
         <div className="paragraph-sm text-gray-500">
           {!goods ? (
             <div className="mb-[6px] h-[12px] w-12 rounded-sm bg-gray-100" />

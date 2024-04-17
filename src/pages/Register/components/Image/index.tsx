@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { RegisterContextType } from '@src/types/register.d';
 import { useOutletContext } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { resizeFile } from '@src/utils';
 import CameraIcon from '../../../../asset/icon/mdi_camera.svg';
 import ImageCard from './components/ImageCard';
 import NextButton from '../../../../components/NextButton';
@@ -14,11 +15,13 @@ function Image() {
   const [slidesPerView, setSlidePerView] = useState<
     number | 'auto' | undefined
   >(1);
+  const isMovable = data.image.length === 0;
 
-  const encodeFileToBase64 = (fileBlob: File) => {
+  const encodeFileToBase64 = async (fileBlob: File) => {
     // 이미지 선택 취소 시 예외처리
     if (fileBlob === undefined) return null;
     const reader = new FileReader();
+    // reader.readAsDataURL(fileBlob);
     reader.readAsDataURL(fileBlob);
 
     return new Promise(() => {
@@ -37,7 +40,10 @@ function Image() {
     });
   };
 
-  const isMovable = data.image.length === 0;
+  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files)
+      encodeFileToBase64((await resizeFile(e.target.files[0])) as File);
+  };
 
   return (
     <div className="absolute left-1/2 flex h-[calc(100svh-48px)] w-screen max-w-screen-sm -translate-x-1/2 flex-col justify-between">
@@ -65,9 +71,7 @@ function Image() {
                 accept="image/jpg,image/png,image/jpeg,image/gif"
                 className="hidden"
                 id="image"
-                onChange={(e) => {
-                  if (e.target.files) encodeFileToBase64(e.target.files[0]);
-                }}
+                onChange={handleImageChange}
               />
               <div
                 className={`${

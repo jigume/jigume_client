@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { authState } from '@src/data';
@@ -11,7 +11,11 @@ import {
   updateMemberInfo,
   updateProfile,
 } from '../../../api/user';
-import { handleTextFieldColor, validNickname } from '../../../utils';
+import {
+  handleTextFieldColor,
+  resizeFileProfile,
+  validNickname,
+} from '../../../utils';
 import CircularProgress from '../../Auth/components/Init/components/circularProgress';
 import { MyPageContextType, NewProfileType } from '../index.d';
 
@@ -121,12 +125,19 @@ export default function EditProfile() {
     }
   };
 
+  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      encodeFileToBase64((await resizeFileProfile(e.target.files[0])) as File);
+      setIsChanged((prev) => ({ ...prev, image: true }));
+    }
+  };
+
   useEffect(() => {
     // 수정 페이지 헤더 조정
-    setProfileHeader((prev) => ({
+    setProfileHeader({
       title: '',
       isAlert: false,
-    }));
+    });
   }, []);
 
   useEffect(() => {
@@ -137,6 +148,7 @@ export default function EditProfile() {
       imageInput: undefined,
     });
   }, [profile]);
+
   return (
     <div className="mx-auto flex h-[calc(100svh-3rem)] max-w-screen-sm flex-col px-4">
       <div className="flex h-full flex-col gap-4 pt-16">
@@ -147,12 +159,7 @@ export default function EditProfile() {
               accept="image/jpg,image/png,image/jpeg,image/gif"
               className="hidden"
               id="image"
-              onChange={(e) => {
-                if (e.target.files) {
-                  encodeFileToBase64(e.target.files[0]);
-                  setIsChanged((prev) => ({ ...prev, image: true }));
-                }
-              }}
+              onChange={handleImageChange}
             />
             <div className="relative aspect-square size-32">
               <img
