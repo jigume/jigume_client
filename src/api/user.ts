@@ -48,7 +48,7 @@ export const codeProvide = async (
 
   const response: TokenProviderType = await axios
     .post(
-      `${backURL}/api/member/login?login-provider=${auth.domain}&authorization-code=${code}`,
+      `${backURL}/api/member/login?login-provider=kakao&authorization-code=${code}`,
       {},
       {
         headers: { ...axiosHeaderAuth(code) },

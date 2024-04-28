@@ -34,7 +34,6 @@ export default function Map() {
     undefined
   );
   const [markerList, setMarkerList] = useState<Marker[] | undefined>(undefined);
-  const [selectedClusterList, setSelectedClusterList] = useState<string[]>([]);
   const [isPositing, setIspositing] = useState(false);
 
   const initMap = (list: Marker[] | undefined) => {
@@ -83,15 +82,15 @@ export default function Map() {
           cluster.forEach((item: any) => {
             // const imageUrl = item._markers[0].cc.querySelector('.prodImg').src;
 
-            // 클러스터된 집합의 id list
-            setSelectedClusterList(
-              item._markers.map((clusterDiv: any) =>
-                clusterDiv.cc.getAttribute('data-id')
-              )
+            // 클러스터된 집합의 id list\
+            const clusterIdList: string[] = item._markers.map(
+              (clusterDiv: any) => clusterDiv.cc.getAttribute('data-id')
             );
             const clusterDom = setClusterDom(
+              setPreViewer,
               item._markers.length,
-              sheetProvider
+              sheetProvider,
+              clusterIdList
             );
             const clusterOberlay = item.getClusterMarker();
             clusterOberlay.setContent(clusterDom);

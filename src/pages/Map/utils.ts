@@ -20,6 +20,7 @@ export const setMarkerDom = (
   // markerImage.src = item.goodsRepImgUrl;
   markerElement.appendChild(markerPin);
   markerElement.appendChild(markerImage);
+
   markerElement.onclick = () => {
     sheetProvider.handleSheet('mid');
     setPreViewer({
@@ -37,11 +38,16 @@ export const setMarkerDom = (
 };
 
 export const setClusterDom = (
+  setPreViewer: React.Dispatch<
+    React.SetStateAction<PreViewerMarker | undefined>
+  >,
   count: number,
   sheetProvider: sheetProviderType,
+  clusterIdList: string[],
   imageUrl?: string
 ) => {
   const markerElement = document.createElement('div');
+
   markerElement.className = 'relative z-30 w-[40px] h-[57px]';
   const markerPin = document.createElement('img');
   markerPin.src = MarkerPin;
@@ -56,8 +62,19 @@ export const setClusterDom = (
   markerElement.appendChild(markerPin);
   markerElement.appendChild(markerImage);
   markerElement.appendChild(markerCount);
+
   markerElement.onclick = () => {
     sheetProvider.handleSheet('mid');
+    setPreViewer({
+      position: {
+        lat: -1,
+        lng: -1,
+      },
+      categoryId: -1,
+      goodsId: -1,
+      goodsRepImgUrl: '',
+      goodsIdList: clusterIdList.map((id) => Number(id)),
+    });
   };
 
   return markerElement;

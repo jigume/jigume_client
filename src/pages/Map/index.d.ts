@@ -9,6 +9,7 @@ export interface PreViewerMarker {
   categoryId: number;
   goodsId: number;
   goodsRepImgUrl?: string;
+  goodsIdList?: number[];
 }
 
 export type sheetProviderType = {

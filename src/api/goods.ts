@@ -5,6 +5,7 @@ import {
   GetCommentsDTO,
   GoodSheetDTO,
   GoodsDetailDTO,
+  GoodsListDTO,
   Marker,
 } from '@src/types/goods';
 import qs from 'qs';
@@ -101,6 +102,24 @@ export const getGoodsPage = async (
     });
 
   return response;
+};
+
+export const getClusterList = async ({
+  preViewer,
+  accessToken,
+}: {
+  preViewer: PreViewerMarker;
+  accessToken: string;
+}): Promise<GoodSheetDTO> => {
+  const response = await jigumeAxios
+    .get(`/api/goods/list?goodsIds=${preViewer.goodsIdList?.join(',')}`, {
+      headers: { ...axiosHeaderAuth(accessToken) },
+    })
+    .catch((res) => {
+      throw Error(res);
+    });
+
+  return response.data;
 };
 
 export const setWishGoods = async ({

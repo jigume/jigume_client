@@ -12,6 +12,8 @@ export type GoodsListDTO = {
   discountDeliveryPrice: number;
   repImgUrl?: string;
   goodsStatus: GoodsStatus;
+  isLike: Boolean;
+  likesCount: number;
   categoryId: number;
 };
 

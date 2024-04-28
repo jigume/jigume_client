@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useMutation } from 'react-query';
 import { GoodsListDTO } from '@src/types/goods';
-import { getSheetGoods, getSheetList } from '@src/api/goods';
+import { getClusterList, getSheetGoods, getSheetList } from '@src/api/goods';
 import { useRecoilState } from 'recoil';
 import { AuthType } from '@src/types/data';
 import { authState } from '@src/data';
@@ -46,6 +46,8 @@ export default function BottomSheetComponent({
             repImgUrl: res.goodsPageDto.goodsImagesList[0].goodsImgUrl,
             goodsStatus: res.goodsPageDto.goodsStatus,
             categoryId: res.goodsPageDto.categoryId,
+            likesCount: 0,
+            isLike: false,
           },
         ]);
     },
@@ -61,10 +63,28 @@ export default function BottomSheetComponent({
     },
   });
 
+  const { mutate: clusterMutate } = useMutation({
+    mutationKey: 'getClusterList',
+    mutationFn: getClusterList,
+    onSuccess: (res) => {
+      console.log(res);
+      // if (res === 'retry') clusterMutate(auth.accessToken as string, preViewer);
+      setGoodsArr(res.goodsListDtoList);
+    },
+  });
+
   useEffect(() => {
     if (isOpen)
-      if (preViewer) preViewMutate(preViewer);
-      else allMutate({ map, accessToken: auth.accessToken as string });
+      if (preViewer) {
+        if (preViewer.goodsIdList) {
+          // console.log('클러스터 조회', previewer.goodsIdList);
+          clusterMutate({ preViewer, accessToken: auth.accessToken as string });
+        } else {
+          preViewMutate(preViewer);
+        }
+      } else {
+        allMutate({ map, accessToken: auth.accessToken as string });
+      }
   }, [isOpen]);
 
   return (
