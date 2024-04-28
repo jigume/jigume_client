@@ -64,7 +64,7 @@ export const setClusterDom = (
   markerElement.appendChild(markerCount);
 
   markerElement.onclick = () => {
-    sheetProvider.handleSheet('mid');
+    sheetProvider.handleSheet('max');
     setPreViewer({
       position: {
         lat: -1,
