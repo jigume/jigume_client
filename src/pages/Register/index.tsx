@@ -80,7 +80,7 @@ function Register() {
       </div>
 
       <div
-        className={`container mx-auto max-w-screen-sm ${withoutPadding ? 'absolute top-0' : 'px-4'}`}
+        className={`mx-auto max-w-screen-sm ${withoutPadding ? '' : 'px-4'}`}
       >
         <Outlet context={{ data, setData }} />
       </div>

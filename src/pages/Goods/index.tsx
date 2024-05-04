@@ -4,14 +4,20 @@ import { useQuery } from 'react-query';
 import { getGoodsPage } from '@src/api/goods';
 import { useRecoilState } from 'recoil';
 import { AuthType } from '@src/types/data';
-import { authState } from '@src/data';
+import { authState, initAuth } from '@src/data';
 
 export default function Goods() {
   const { idx } = useParams();
-  const [auth] = useRecoilState<AuthType>(authState);
+  const [auth, setAuth] = useRecoilState<AuthType>(authState);
 
-  const { data: goods, isSuccess } = useQuery('goodsDetail', () =>
-    getGoodsPage(idx as string, auth.accessToken as string)
+  const { data: goods, isSuccess } = useQuery(
+    'goodsDetail',
+    () => getGoodsPage(idx as string, auth.accessToken as string),
+    {
+      onError: () => {
+        setAuth(initAuth);
+      },
+    }
   );
 
   return <Outlet context={{ goods, isSuccess }} />;

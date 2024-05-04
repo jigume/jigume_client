@@ -18,13 +18,12 @@ export const handleRefreshToken = async (auth: AuthType) => {
     !auth.refreshToken
   )
     return 'valid';
+  // console.log(auth);
 
   const response = await jigumeAxios
     .post(
-      '/api/member/token',
-      {
-        refreshToken: auth.refreshToken,
-      },
+      `/api/member/token?refreshToken=${auth.refreshToken}`,
+      {},
       {
         headers: { ...axiosHeaderAuth(auth.accessToken) },
       }

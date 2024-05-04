@@ -9,8 +9,11 @@ import NextButton from '@src/components/NextButton';
 import RegistMarker from '@src/asset/icon/RegistMarker.svg';
 import PreviewMap from '@src/components/PreviewMap';
 import { PlaceCodes } from '@src/common';
-import Postcode from './components/postcode';
+import { authState, initAuth } from '@src/data';
+import { AuthType } from '@src/types/data';
+import { useRecoilState } from 'recoil';
 import Selector from './components/Selector';
+import Postcode from './components/postcode';
 
 function Place() {
   const { data, setData } = useOutletContext<RegisterContextType>();
@@ -18,6 +21,7 @@ function Place() {
   const [index, setIndex] = useState(-2);
   const [places, setPlaces] = useState<NearPlacesType[]>([]);
   const [position, setPosition] = useState<PositionType | undefined>(undefined);
+  const [auth, setAuth] = useRecoilState<AuthType>(authState);
 
   const isMovable = data.address !== '';
 
@@ -46,6 +50,9 @@ function Place() {
         });
         return item;
       });
+    },
+    onError: () => {
+      setAuth(initAuth);
     },
   });
 

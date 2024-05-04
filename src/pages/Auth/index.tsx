@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import { useRecoilState } from 'recoil';
 import { add } from 'date-fns';
 import { AuthType } from '@src/types/data';
-import { authState } from '@src/data';
+import { authState, initAuth } from '@src/data';
 import { codeProvide } from '@src/api/user';
 import Loading from '../Map/components/Loading';
 
@@ -38,7 +38,10 @@ export default function Auth() {
         navigate('/');
       }
     },
-    onError: (err: string) => Error(err),
+    onError: (err: string) => {
+      // Error(err);
+      setAuth(initAuth);
+    },
     // onSettled: () => navigate('/'),
   });
 

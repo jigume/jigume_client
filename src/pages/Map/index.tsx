@@ -14,7 +14,7 @@ import { getGoodsList } from '@src/api/goods';
 import { getCurrentLocation } from '../../utils';
 import BottomSheetComponent from './components/BottomSheetComponent';
 import Loading from './components/Loading';
-import { authState, userState } from '../../data';
+import { authState, initAuth, userState } from '../../data';
 import useBottomSheet from '../../hooks/useBottomSheet';
 import { setClusterDom, setMarkerDom } from './utils';
 import CurrentPoint from './components/CurrentPoint';
@@ -27,7 +27,7 @@ export default function Map() {
   const sheetProvider = useBottomSheet();
 
   const [user, setUser] = useRecoilState<UserType>(userState);
-  const [auth] = useRecoilState<AuthType>(authState);
+  const [auth, setAuth] = useRecoilState<AuthType>(authState);
   const [position, setPosition] = useState<PositionType | undefined>(undefined);
   const [address, setAddress] = useState('-');
   const [preViewer, setPreViewer] = useState<PreViewerMarker | undefined>(
@@ -68,6 +68,9 @@ export default function Map() {
             });
           });
         }
+      },
+      onError: () => {
+        setAuth(initAuth);
       },
     }
   );

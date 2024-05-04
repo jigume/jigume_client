@@ -1,7 +1,7 @@
 import { useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoodsListDTO } from '@src/types/goods';
-import { setComma } from '@src/utils';
+import { getdDay, setComma } from '@src/utils';
 import favoriteFilled from '@src/asset/icon/favoriteFilled.svg';
 import favoriteBordered from '@src/asset/icon/favoriteBordered.svg';
 import { useMutation } from 'react-query';
@@ -94,13 +94,13 @@ export default function ItemComponent({ goods }: { goods?: GoodsListDTO }) {
         </div>
 
         {/* 상품 정보 */}
-        <div className="paragraph-sm text-gray-500">
+        <div className="paragraph-sm font-light text-gray-500">
           {!goods ? (
             <div className="mb-[6px] h-[12px] w-12 rounded-sm bg-gray-100" />
           ) : (
             <div>구매가: {setComma(goods.goodsPrice)} 원</div>
           )}
-          <div className="flex flex-row items-center gap-1 font-light">
+          <div className="flex flex-row items-center gap-1 ">
             {!goods ? (
               <div className="h-[12px] w-12 rounded-sm bg-gray-100" />
             ) : (
@@ -110,13 +110,13 @@ export default function ItemComponent({ goods }: { goods?: GoodsListDTO }) {
             {!goods ? (
               <div className="h-[12px] w-20 rounded-sm bg-gray-100" />
             ) : (
-              <span>
-                <span className="font-bold text-[#FFAE39]">
-                  {goods.goodsOrderCount}
-                </span>{' '}
-                명 분할 중
-              </span>
+              <span>{goods.goodsOrderCount} 명 분할 중</span>
             )}
+          </div>
+
+          {/* 공구 마감 D-Day */}
+          <div className="pt-2 font-normal">
+            공동 구매 완료까지 D- {getdDay(String(new Date()))}
           </div>
         </div>
       </div>

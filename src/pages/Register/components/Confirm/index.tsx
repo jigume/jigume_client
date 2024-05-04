@@ -14,13 +14,13 @@ import { dateFormetter } from '@src/utils';
 import IntroCategory from '@src/pages/Goods/components/IntroCategory';
 import { useRecoilState } from 'recoil';
 import { AuthType } from '@src/types/data';
-import { authState } from '@src/data';
+import { authState, initAuth } from '@src/data';
 import { initData } from '../..';
 
 export default function Confirm() {
   const navigate = useNavigate();
   const { data, setData } = useOutletContext<RegisterContextType>();
-  const [auth] = useRecoilState<AuthType>(authState);
+  const [auth, setAuth] = useRecoilState<AuthType>(authState);
 
   const { mutate, isSuccess, isLoading } = useMutation(
     'post_goods',
@@ -37,11 +37,14 @@ export default function Confirm() {
         setData(initData);
         navigate(`/buying/${res}/submitted`);
       },
+      onError: () => {
+        setAuth(initAuth);
+      },
     }
   );
 
   return (
-    <div className="w-full overflow-x-scroll">
+    <div className="relative mx-auto w-full overflow-x-scroll">
       {/* carousel images */}
       {!isSuccess ? (
         <CarouselBox images={data.image} />

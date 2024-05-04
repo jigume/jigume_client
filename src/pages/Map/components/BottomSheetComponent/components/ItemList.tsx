@@ -41,7 +41,7 @@ export default function ItemList({
     );
 
   return (
-    <div className="absolute top-[7.5rem] flex h-full flex-col divide-y overflow-x-scroll pb-48 pt-[7.5rem]">
+    <div className="absolute top-[7.5rem] flex size-full flex-col divide-y overflow-x-scroll pb-48 pt-[7.5rem]">
       {goodsArr
         .filter((item) =>
           trueArr.some((item2) => item2.idx === item.categoryId)
