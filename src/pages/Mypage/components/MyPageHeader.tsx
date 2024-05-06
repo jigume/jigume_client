@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import ChevronLeft from '../../../asset/icon/chevronLeft.svg';
-import Notification from '../../../asset/icon/Notification.svg';
+import ChevronLeft from '@src/asset/icon/chevronLeft.svg';
+import favoriteMypage from '@src/asset/icon/favoriteMypage.svg';
+import Notification from '@src/asset/icon/Notification.svg';
 import { ProfileHeaderType } from '../index.d';
 
 export default function MyPageHeader({ title, isAlert }: ProfileHeaderType) {
@@ -18,9 +19,14 @@ export default function MyPageHeader({ title, isAlert }: ProfileHeaderType) {
         <div className="font-bole mt-1 font-semibold">{title}</div>
       </div>
       {isAlert && (
-        <button>
-          <img className="mt-1 h-12 w-10" src={Notification} alt="알림" />
-        </button>
+        <div>
+          <button onClick={() => navigate('/mypage/liked')}>
+            <img className="mt-1 h-12 w-10" src={favoriteMypage} alt="liked" />
+          </button>
+          <button onClick={() => navigate('/mypage/notice')}>
+            <img className="mt-1 h-12 w-10" src={Notification} alt="알림" />
+          </button>
+        </div>
       )}
     </div>
   );

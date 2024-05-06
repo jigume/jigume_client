@@ -116,7 +116,8 @@ export default function ItemComponent({ goods }: { goods?: GoodsListDTO }) {
 
           {/* 공구 마감 D-Day */}
           <div className="pt-2 font-normal">
-            공동 구매 완료까지 D- {getdDay(String(new Date()))}
+            {/* 공동 구매 완료까지 D- {getdDay(String(new Date()))} */}
+            공동 구매 완료까지 D-5
           </div>
         </div>
       </div>

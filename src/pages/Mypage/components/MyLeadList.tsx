@@ -60,6 +60,7 @@ function LeadItems({
                     className="size-16 rounded-md object-cover"
                   />
                   <div className="flex flex-col gap-1 font-light">
+                    {/* title */}
                     <div>{item.goodsName}</div>
                     <div className="text-sm text-zinc-500">
                       배송비: {setComma(item.goodsDeliveryPrice)}원 /{' '}
@@ -70,7 +71,7 @@ function LeadItems({
                     </div>
                   </div>
                 </div>
-                <div className="relative flex h-11 gap-2 text-sm font-light">
+                <div className="relative flex h-11 gap-2 text-xs font-light">
                   <div className="h-full w-1/2 rounded-lg border text-center leading-[2.75rem]">
                     구매 공지방으로 이동하기
                   </div>

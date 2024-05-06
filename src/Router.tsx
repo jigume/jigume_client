@@ -4,44 +4,46 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { authState } from './data';
-import Register from './pages/Register';
-import Map from './pages/Map';
-import Goods from './pages/Goods';
-import GoodsNotice from './pages/Goods/components/GoodsNotice';
-import Image from './pages/Register/components/Image';
-import Detail from './pages/Register/components/Detail';
-import Links from './pages/Register/components/Links';
-import Cost from './pages/Register/components/Cost';
-import Deadline from './pages/Register/components/Deadline';
-import Place from './pages/Register/components/Place';
-import Notice from './pages/Register/components/Notice';
-import Login from './pages/Auth/components/login';
-import NotMatch from './pages/NotMatch';
-import InitUser from './pages/Auth/components/Init/components/initUser';
-// import InitAddress from './pages/Auth/components/Init/components/initAddress';
-import Init from './pages/Auth/components/Init';
-import Refresh from './pages/Auth/components/Refresh';
-import InitProfileImage from './pages/Auth/components/Init/components/initProfileImage';
-import Mypage from './pages/Mypage';
-import Auth from './pages/Auth';
-import InitAccessRights from './pages/Auth/components/Init/components/initAccessRights';
-import Submitted from './pages/Goods/components/Submitted';
-import Profile from './pages/Mypage/components/Profile';
-import Edit from './pages/Mypage/components/EditProfile';
-import InitAgreement from './pages/Auth/components/Init/components/initAgreement';
-import ServiceAgreement from './pages/Auth/components/Init/components/ServiceAgreement';
-import PrivacyAgreement from './pages/Auth/components/Init/components/PrivacyAgreement';
-import MarketingAgreement from './pages/Auth/components/Init/components/MarketingAgreement';
-import Confirm from './pages/Register/components/Confirm';
-import MyLeadList from './pages/Mypage/components/MyLeadList';
-import MyJoinList from './pages/Mypage/components/MyJoinList';
-import GoodsDetail from './pages/Goods/components/GoodsDetail';
+import { authState } from '@src/data';
+import Register from '@src/pages/Register';
+import Map from '@src/pages/Map';
+import Goods from '@src/pages/Goods';
+import GoodsNotice from '@src/pages/Goods/components/GoodsNotice';
+import Image from '@src/pages/Register/components/Image';
+import Detail from '@src/pages/Register/components/Detail';
+import Links from '@src/pages/Register/components/Links';
+import Cost from '@src/pages/Register/components/Cost';
+import Deadline from '@src/pages/Register/components/Deadline';
+import Place from '@src/pages/Register/components/Place';
+import Notice from '@src/pages/Register/components/Notice';
+import Login from '@src/pages/Auth/components/login';
+import NotMatch from '@src/pages/NotMatch';
+import InitUser from '@src/pages/Auth/components/Init/components/initUser';
+// import InitAddress from '@src/pages/Auth/components/Init/components/initAddress';
+import Init from '@src/pages/Auth/components/Init';
+import Refresh from '@src/pages/Auth/components/Refresh';
+import InitProfileImage from '@src/pages/Auth/components/Init/components/initProfileImage';
+import Mypage from '@src/pages/Mypage';
+import Auth from '@src/pages/Auth';
+import InitAccessRights from '@src/pages/Auth/components/Init/components/initAccessRights';
+import Submitted from '@src/pages/Goods/components/Submitted';
+import Profile from '@src/pages/Mypage/components/Profile';
+import Edit from '@src/pages/Mypage/components/EditProfile';
+import InitAgreement from '@src/pages/Auth/components/Init/components/initAgreement';
+import ServiceAgreement from '@src/pages/Auth/components/Init/components/ServiceAgreement';
+import PrivacyAgreement from '@src/pages/Auth/components/Init/components/PrivacyAgreement';
+import MarketingAgreement from '@src/pages/Auth/components/Init/components/MarketingAgreement';
+import Confirm from '@src/pages/Register/components/Confirm';
+import MyLeadList from '@src/pages/Mypage/components/MyLeadList';
+import MyJoinList from '@src/pages/Mypage/components/MyJoinList';
+import GoodsDetail from '@src/pages/Goods/components/GoodsDetail';
+import GoodsModify from '@src/pages/Goods/components/GoodsModify';
+import GoodsNoticeModify from '@src/pages/Goods/components/GoodsNoticeModify';
+import GoodsNoticeContent from '@src/pages/Goods/components/GoodsNoticeContent';
+import MyNotice from '@src/pages/Mypage/components/MyNotice';
+import MyLiked from '@src/pages/Mypage/components/MyLiked';
 
-import { AuthType } from './types/data';
-import GoodsModify from './pages/Goods/components/GoodsModify';
-import GoodsNoticeModify from './pages/Goods/components/GoodsNoticeModify';
-import GoodsNoticeContent from './pages/Goods/components/GoodsNoticeContent';
+import { AuthType } from '@src/types/data';
 
 export default function Router() {
   const [auth] = useRecoilState<AuthType>(authState);
@@ -171,6 +173,8 @@ export default function Router() {
             { path: 'edit', element: <Edit /> },
             { path: 'lead', element: <MyLeadList /> },
             { path: 'join', element: <MyJoinList /> },
+            { path: 'notice', element: <MyNotice /> },
+            { path: 'liked', element: <MyLiked /> },
           ],
         },
       ],

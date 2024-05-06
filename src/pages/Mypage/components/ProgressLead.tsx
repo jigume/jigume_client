@@ -47,13 +47,13 @@ function LeadGoods({
 
       <div className="flex gap-2 font-light">
         <Link
-          className="w-full rounded-lg border py-4 text-center text-xs active:scale-[99%] disabled:animate-pulse "
+          className="w-full rounded-lg border py-3 text-center text-xs active:scale-[99%] disabled:animate-pulse "
           to={`/buying/${item.goodsId}/notice`}
         >
           공지방 관리하기
         </Link>
         <Link
-          className="w-full rounded-lg bg-success py-4 text-center text-xs text-white active:scale-[99%] disabled:animate-pulse disabled:bg-zinc-400"
+          className="w-full rounded-lg bg-success py-3 text-center text-xs text-white active:scale-[99%] disabled:animate-pulse disabled:bg-zinc-400"
           to={`/buying/${item.goodsId}`}
         >
           구매폼으로 이동하기
